@@ -1,14 +1,12 @@
 package edu.ben.rate_review.app;
 
-import static spark.Spark.delete;
-import static spark.Spark.get;
 import static spark.Spark.port;
-import static spark.Spark.post;
-import static spark.Spark.put;
 import static spark.Spark.staticFiles;
+import static spark.Spark.*;
 
 import edu.ben.rate_review.controller.home.HomeController;
 import edu.ben.rate_review.controller.home.LogInController;
+import edu.ben.rate_review.controller.session.SessionsController;
 import edu.ben.rate_review.controllers.user.UsersController;
 import edu.ben.rate_review.daos.DaoManager;
 import spark.Spark;
@@ -18,7 +16,8 @@ public class Application {
 	private static UsersController usersController = new UsersController();
 	private static HomeController homeController = new HomeController();
 	private static LogInController loginController = new LogInController();
-
+	private static SessionsController sessionsController = new SessionsController();
+	
 	public static String USERS_PATH = "/users";
 	public static String USER_PATH = "/user";
 
@@ -44,8 +43,12 @@ public class Application {
 	 * and use this structure when you can
 	 */
 	private static void configRoutes() {
-
+		
 		get("/", (req, res) -> homeController.showHomePage(req, res), new HandlebarsTemplateEngine());
+		
+		// Session Routes
+		get("/register", (req,res) -> sessionsController.showRegister(req, res), new HandlebarsTemplateEngine());
+		post("/register", (req,res) -> sessionsController.register(req, res));
 
 		// User Routes
 

@@ -1,9 +1,7 @@
 package edu.ben.rate_review.controller.home;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import edu.ben.rate_review.models.User;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
