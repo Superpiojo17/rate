@@ -4,6 +4,7 @@ import static spark.Spark.redirect;
 
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.UserDao;
+import edu.ben.rate_review.email.Email;
 import edu.ben.rate_review.encryption.SecurePassword;
 import edu.ben.rate_review.models.User;
 //import edu.ben.rate_review.email;
@@ -68,12 +69,10 @@ public class SessionsController {
 				// creates the user
 				else {
 
-
 					// checks if email has already been registered
 					if (!userDao.checkEmail(req.params("email"))) {
 
-						// will determine if account has confirmed registration through
-						// email
+						// will determine if account has confirmed registration
 						boolean registrationConfirmed = false;
 						// will determine whether or not account is currently active
 						boolean accountActive = true;
@@ -125,16 +124,15 @@ public class SessionsController {
 			char[] name = fullName.toCharArray();
 
 			// checks that each character of name is a letter
-			for (int i = 0; i < fullName.length(); i++) {
+			for (int i = 0; i < name.length; i++) {
 				if (!Character.isAlphabetic(name[i])) {
 					return false;
-				} else {
-					return true;
 				}
 			}
+			return true;
+		} else {
+			return false;
 		}
-		return false;
-
 	}
 
 	/**
@@ -179,6 +177,7 @@ public class SessionsController {
 	private static void confirmRegistration(String first_name, String email, int role_id) {
 
 		String accountType = "";
+		
 		if (role_id == 1) {
 			accountType = "ADMIN";
 		} else if (role_id == 2) {
@@ -196,7 +195,7 @@ public class SessionsController {
 		String messageFooter = "\n\n\nSincerely,\n\nThe Rate&Review Team";
 		String message = messageHeader + messageBody + messageFooter;
 
-		//Email.deliverEmail(first_name, email, subject, message);
+		Email.deliverEmail(first_name, email, subject, message);
 
 	}
 }
