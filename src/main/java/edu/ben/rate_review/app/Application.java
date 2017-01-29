@@ -1,28 +1,39 @@
 package edu.ben.rate_review.app;
-
-import static spark.Spark.port;
-import static spark.Spark.staticFiles;
 import static spark.Spark.*;
-
+import edu.ben.rate_review.controller.session.SessionsController;
+import edu.ben.rate_review.controller.home.AboutUsController;
+import edu.ben.rate_review.controller.home.ContactUsController;
 import edu.ben.rate_review.controller.home.HomeController;
 import edu.ben.rate_review.controller.home.LogInController;
-import edu.ben.rate_review.controller.session.SessionsController;
+import edu.ben.rate_review.controller.home.RegisterController;
+import edu.ben.rate_review.controllers.user.StudentDashboardController;
 import edu.ben.rate_review.controllers.user.UsersController;
 import edu.ben.rate_review.daos.DaoManager;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class Application {
+	// controllers
 	private static UsersController usersController = new UsersController();
+	private static SessionsController sessionsController = new SessionsController();
 	private static HomeController homeController = new HomeController();
 	private static LogInController loginController = new LogInController();
-	private static SessionsController sessionsController = new SessionsController();
-	
+	private static AboutUsController aboutusController = new AboutUsController();
+	private static RegisterController registerController = new RegisterController();
+	private static ContactUsController contactusController = new ContactUsController();
+	private static StudentDashboardController studentdashController = new StudentDashboardController();
+
+	// match up paths
 	public static String USERS_PATH = "/users";
 	public static String USER_PATH = "/user";
+	public static String LOGIN_PATH = "/login";
+	public static String ABOUTUS_PATH = "/aboutus";
+	public static String REGISTER_PATH = "/register";
+	public static String CONTACTUS_PATH = "/contactus";
+	public static String STUDENTDASHBOARD_PATH = "/studentdashboard";
 
 	public static void main(String[] args) throws Exception {
-		
+
 		// Set what port you want to run on
 		port(3000);
 
@@ -50,6 +61,14 @@ public class Application {
 		get("/register", (req,res) -> sessionsController.showRegister(req, res), new HandlebarsTemplateEngine());
 		post("/register", (req,res) -> sessionsController.register(req, res));
 
+		get("/", (req, res) -> homeController.showHomePage(req, res), new HandlebarsTemplateEngine());
+		get(LOGIN_PATH, (req, res) -> loginController.showLoginPage(req, res), new HandlebarsTemplateEngine());
+		get(ABOUTUS_PATH, (req, res) -> aboutusController.showAboutUsPage(req, res), new HandlebarsTemplateEngine());
+		get(REGISTER_PATH, (req, res) -> registerController.showRegisterPage(req, res), new HandlebarsTemplateEngine());
+		get(CONTACTUS_PATH, (req, res) -> contactusController.showContactUsPage(req, res),
+				new HandlebarsTemplateEngine());
+		get(STUDENTDASHBOARD_PATH, (req, res) -> studentdashController.showStudentDashboardPage(req, res),
+				new HandlebarsTemplateEngine());
 		// User Routes
 
 		// List all Users

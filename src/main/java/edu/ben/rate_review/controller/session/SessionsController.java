@@ -2,9 +2,12 @@ package edu.ben.rate_review.controller.session;
 
 import static spark.Spark.redirect;
 
-import edu.ben.rate_review.email;
-import edu.ben.rate_review.daos;
-import edu.ben.rate_review.models;
+import edu.ben.rate_review.daos.DaoManager;
+import edu.ben.rate_review.daos.UserDao;
+import edu.ben.rate_review.encryption.SecurePassword;
+import edu.ben.rate_review.models.User;
+//import edu.ben.rate_review.email;
+//import edu.ben.rate_review.daos;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -17,6 +20,7 @@ public class SessionsController {
 	}
 
 	public String register(Request req, Response res) {
+		UserDao userDao = DaoManager.getInstance().getUserDao();
 		// String data = req.params("the_name_field_of_the_input");
 		// variables to keep track of empty field
 		boolean emptyField = false;
@@ -64,10 +68,9 @@ public class SessionsController {
 				// creates the user
 				else {
 
-					UserDao user = new UserDao();
 
 					// checks if email has already been registered
-					if (!user.checkEmail(req.params("email"))) {
+					if (!userDao.checkEmail(req.params("email"))) {
 
 						// will determine if account has confirmed registration through
 						// email
@@ -129,9 +132,8 @@ public class SessionsController {
 					return true;
 				}
 			}
-		} else {
-			return false;
 		}
+		return false;
 
 	}
 
@@ -161,10 +163,9 @@ public class SessionsController {
 	 */
 	public static void createUser(String first_name, String last_name, String email, String password, int role_id,
 			boolean confirmed, boolean active) {
-		UserDao user = new UserDao();
-		UserModel newUser = new UserModel(first_name, last_name, email, SecurePassword.getHashPassword(password),
-				role_id, confirmed, active);
-		user.addUser(newUser);
+		UserDao user = DaoManager.getInstance().getUserDao();
+		//User newUser = new User(first_name, last_name, email, SecurePassword.getHashPassword(password), role_id, confirmed, active);
+		//user.addUser(newUser);
 		confirmRegistration(first_name, email, role_id);
 	}
 
@@ -195,7 +196,7 @@ public class SessionsController {
 		String messageFooter = "\n\n\nSincerely,\n\nThe Rate&Review Team";
 		String message = messageHeader + messageBody + messageFooter;
 
-		Email.deliverEmail(first_name, email, subject, message);
+		//Email.deliverEmail(first_name, email, subject, message);
 
 	}
 }

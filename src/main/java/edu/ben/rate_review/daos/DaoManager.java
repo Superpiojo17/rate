@@ -2,13 +2,11 @@ package edu.ben.rate_review.daos;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-
+import com.mysql.cj.jdbc.MysqlDataSource;
 import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.mysql.cj.jdbc.MysqlDataSource;
 
 public class DaoManager {
 	private final String HOST = "jdbc:mysql://localhost:3306";

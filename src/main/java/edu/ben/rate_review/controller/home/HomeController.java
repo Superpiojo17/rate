@@ -9,7 +9,11 @@ import spark.Response;
 public class HomeController {
 	
 	 /**
+<<<<<<< HEAD
      * Show page to list all Users
+=======
+     * Show home page
+>>>>>>> 2007a197e794cf3c217c859c2ae15b6b0ac6d37b
      */
     public ModelAndView showHomePage(Request req, Response res) {
         // Just a hash to pass data from the servlet to the page

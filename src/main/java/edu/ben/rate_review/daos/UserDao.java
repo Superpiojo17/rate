@@ -19,6 +19,10 @@ public class UserDao implements Dao<User> {
 	public UserDao(Connection conn) {
 		this.conn = conn;
 	}
+	
+	public boolean checkEmail(String email) {
+		return false;
+	}
 
 	private List<User> mapRows(ResultSet rs) {
 		List<User> users = new ArrayList<User>();
@@ -36,8 +40,27 @@ public class UserDao implements Dao<User> {
 		return users;
 	}
 
-	public User save(User entity) {
-		return null;
+	public User save(User User) {
+		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE first_name = '" + User.getFirst_name() + "'";
+		User tmp = new User();
+//		tmp.setId(rs.getLong("user_id"));
+//		tmp.setEmail(rs.getString("email"));
+
+		try {
+			PreparedStatement query = conn.prepareStatement(sql);
+			ResultSet rs = query.executeQuery();
+			if (!rs.next()) {
+				PreparedStatement ps = conn.prepareStatement("INSERT INTO " + TABLE_NAME
+						+ "(first_name, last_name, email, encryptedPassword, role_id)" + " VALUES ('"
+						+ User.getFirst_name() + "', '" + User.getLast_name() + "', '" + User.getEmail() + "', '"
+						+ User.getEncryptedPassword() + "', '" + "', '" + User.getRole_id() + "')");
+
+				ps.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return User;
 	}
 
 	public List<User> all() {
@@ -55,7 +78,7 @@ public class UserDao implements Dao<User> {
 	public User find(Long id) {
 		return null;
 	}
-	
+
 	public void close() {
 		try {
 			this.conn.close();
