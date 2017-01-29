@@ -39,8 +39,8 @@ public class UserDao implements Dao<User> {
 	public User save(User User) {
 		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE first_name = '" + User.getFirst_name() + "'";
 		User tmp = new User();
-		tmp.setId(rs.getLong("user_id"));
-		tmp.setEmail(rs.getString("email"));
+//		tmp.setId(rs.getLong("user_id"));
+//		tmp.setEmail(rs.getString("email"));
 
 		try {
 			PreparedStatement query = conn.prepareStatement(sql);
