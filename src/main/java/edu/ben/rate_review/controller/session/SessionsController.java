@@ -22,7 +22,6 @@ public class SessionsController {
 
 	public String register(Request req, Response res) {
 		UserDao userDao = DaoManager.getInstance().getUserDao();
-		// String data = req.params("the_name_field_of_the_input");
 		// variables to keep track of empty field
 		boolean emptyField = false;
 		String emptyFieldName = "";
@@ -51,48 +50,49 @@ public class SessionsController {
 		}
 
 		// Checks that the user's first and last name are valid. They must each
-				// be at least 2 characters long and only contain letters.
-				if (!validateName(req.params("first_name"), req.params("last_name"))) {
-					// error message - "First and last name must be at least 2 characters long and only contain letters."
-					res.redirect("/register");
-				}
-				// Checks that the password and verify password fields match.
-				else if (!req.params("password").equals(req.params("verify_password"))) {
-					//"Passwords do not match."
-					res.redirect("/register");
-				}
-				// Checks that a benedictine email is being used to register.
-				else if (!validateEmail(req.params("email"))) {
-					//"You must use a benedictine e-mail to register."
-					res.redirect("/register");
-				}
-				// creates the user
-				else {
+		// be at least 2 characters long and only contain letters.
+		if (!validateName(req.params("first_name"), req.params("last_name"))) {
+			// error message - "First and last name must be at least 2
+			// characters long and only contain letters."
+			res.redirect("/register");
+		}
+		// Checks that the password and verify password fields match.
+		else if (!req.params("password").equals(req.params("verify_password"))) {
+			// "Passwords do not match."
+			res.redirect("/register");
+		}
+		// Checks that a benedictine email is being used to register.
+		else if (!validateEmail(req.params("email"))) {
+			// "You must use a benedictine e-mail to register."
+			res.redirect("/register");
+		}
+		// creates the user
+		else {
 
-					// checks if email has already been registered
-					if (!userDao.checkEmail(req.params("email"))) {
+			// checks if email has already been registered
+			if (!userDao.checkEmail(req.params("email"))) {
 
-						// will determine if account has confirmed registration
-						boolean registrationConfirmed = false;
-						// will determine whether or not account is currently active
-						boolean accountActive = true;
+				// will determine if account has confirmed registration
+				boolean registrationConfirmed = false;
+				// will determine whether or not account is currently active
+				boolean accountActive = true;
 
-						createUser(req.params("first_name"), req.params("last_name"),
-								req.params("email"), req.params("password"),
-								Integer.parseInt(req.params("role_id")), registrationConfirmed, accountActive);
+				createUser(req.params("first_name"), req.params("last_name"), req.params("email"),
+						req.params("password"), Integer.parseInt(req.params("role_id")), registrationConfirmed,
+						accountActive);
 
-						res.redirect("/login");
+				res.redirect("/login");
 
-					} else {
-						//"This email is already in use."
-						res.redirect("/register");
-					}
+			} else {
+				// "This email is already in use."
+				res.redirect("/register");
+			}
 
-				}
-		
+		}
+
 		return "";
 	}
-	
+
 	/**
 	 * Creates the output the user sees when they did not fill in all their
 	 * fields. It will tell them the name of the first field they failed to fill
@@ -162,8 +162,10 @@ public class SessionsController {
 	public static void createUser(String first_name, String last_name, String email, String password, int role_id,
 			boolean confirmed, boolean active) {
 		UserDao user = DaoManager.getInstance().getUserDao();
-		//User newUser = new User(first_name, last_name, email, SecurePassword.getHashPassword(password), role_id, confirmed, active);
-		//user.addUser(newUser);
+		// User newUser = new User(first_name, last_name, email,
+		// SecurePassword.getHashPassword(password), role_id, confirmed,
+		// active);
+		// user.addUser(newUser);
 		confirmRegistration(first_name, email, role_id);
 	}
 
@@ -177,7 +179,7 @@ public class SessionsController {
 	private static void confirmRegistration(String first_name, String email, int role_id) {
 
 		String accountType = "";
-		
+
 		if (role_id == 1) {
 			accountType = "ADMIN";
 		} else if (role_id == 2) {
@@ -197,5 +199,27 @@ public class SessionsController {
 
 		Email.deliverEmail(first_name, email, subject, message);
 
+	}
+
+	/**
+	 * Getter for validateName
+	 * 
+	 * @param first
+	 * @param last
+	 * @return
+	 */
+	public boolean getValidateName(String first, String last) {
+		return validateName(first, last);
+	}
+
+	/**
+	 * Getter for validateEmail
+	 * 
+	 * @param first
+	 * @param last
+	 * @return
+	 */
+	public boolean getValidateEmail(String email) {
+		return validateEmail(email);
 	}
 }
