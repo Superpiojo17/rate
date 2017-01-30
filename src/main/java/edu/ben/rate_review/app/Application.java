@@ -1,4 +1,5 @@
 package edu.ben.rate_review.app;
+
 import static spark.Spark.*;
 import edu.ben.rate_review.controller.session.SessionsController;
 import edu.ben.rate_review.controller.home.AboutUsController;
@@ -41,11 +42,11 @@ public class Application {
 		// available from the server endpoint
 		staticFiles.location("/public");
 		configRoutes();
-		
+
 		Spark.exception(Exception.class, (exception, request, response) -> {
-		    exception.printStackTrace();
+			exception.printStackTrace();
 		});
-		
+
 		DaoManager d = new DaoManager();
 	}
 
@@ -54,14 +55,19 @@ public class Application {
 	 * and use this structure when you can
 	 */
 	private static void configRoutes() {
-		
-		get("/", (req, res) -> homeController.showHomePage(req, res), new HandlebarsTemplateEngine());
-		
-		// Session Routes
-		get("/register", (req,res) -> sessionsController.showRegister(req, res), new HandlebarsTemplateEngine());
-		post("/register", (req,res) -> sessionsController.register(req, res));
 
 		get("/", (req, res) -> homeController.showHomePage(req, res), new HandlebarsTemplateEngine());
+
+		// Session Routes
+		get("/register", (req, res) -> sessionsController.showRegister(req, res), new HandlebarsTemplateEngine());
+		post("/register", (req, res) -> sessionsController.register(req, res));
+
+		
+		get("/", (req, res) -> homeController.showHomePage(req, res), new HandlebarsTemplateEngine());
+		post(LOGIN_PATH, (req, res) -> loginController.login(req, res));
+		
+		
+		
 		get(LOGIN_PATH, (req, res) -> loginController.showLoginPage(req, res), new HandlebarsTemplateEngine());
 		get(ABOUTUS_PATH, (req, res) -> aboutusController.showAboutUsPage(req, res), new HandlebarsTemplateEngine());
 		get(REGISTER_PATH, (req, res) -> registerController.showRegisterPage(req, res), new HandlebarsTemplateEngine());
