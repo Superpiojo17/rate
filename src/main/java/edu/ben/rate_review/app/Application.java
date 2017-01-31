@@ -59,16 +59,17 @@ public class Application {
 		get("/", (req, res) -> homeController.showHomePage(req, res), new HandlebarsTemplateEngine());
 
 		// Session Routes
-		get("/register", (req, res) -> sessionsController.showRegister(req, res), new HandlebarsTemplateEngine());
+//		get("/register", (req, res) -> sessionsController.showRegister(req, res), new HandlebarsTemplateEngine());
 		post("/register", (req, res) -> sessionsController.register(req, res));
 
 		
 		get("/", (req, res) -> homeController.showHomePage(req, res), new HandlebarsTemplateEngine());
-		post(LOGIN_PATH, (req, res) -> loginController.login(req, res));
-		
-		
+	
 		
 		get(LOGIN_PATH, (req, res) -> loginController.showLoginPage(req, res), new HandlebarsTemplateEngine());
+		post("/login", (req, res) -> loginController.login(req, res));
+		
+		
 		get(ABOUTUS_PATH, (req, res) -> aboutusController.showAboutUsPage(req, res), new HandlebarsTemplateEngine());
 		get(REGISTER_PATH, (req, res) -> registerController.showRegisterPage(req, res), new HandlebarsTemplateEngine());
 		get(CONTACTUS_PATH, (req, res) -> contactusController.showContactUsPage(req, res),

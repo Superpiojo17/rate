@@ -1,11 +1,11 @@
 package edu.ben.rate_review.controller.session;
 
-import static spark.Spark.redirect;
+//import static spark.Spark.redirect;
 
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.email.Email;
-import edu.ben.rate_review.encryption.SecurePassword;
+//import edu.ben.rate_review.encryption.SecurePassword;
 import edu.ben.rate_review.models.User;
 //import edu.ben.rate_review.email;
 //import edu.ben.rate_review.daos;
@@ -19,6 +19,7 @@ public class SessionsController {
 
 		return new ModelAndView(null, "sessions/register.hbs");
 	}
+	
 
 	public String register(Request req, Response res) {
 		UserDao userDao = DaoManager.getInstance().getUserDao();
@@ -61,9 +62,9 @@ public class SessionsController {
 			// "Passwords do not match."
 			res.redirect("/register");
 		}
-		// Checks that a benedictine email is being used to register.
+		// Checks that a Benedictine email is being used to register.
 		else if (!validateEmail(req.queryParams("email"))) {
-			// "You must use a benedictine e-mail to register."
+			// "You must use a Benedictine e-mail to register."
 			res.redirect("/register");
 		}
 
@@ -88,9 +89,8 @@ public class SessionsController {
 
 				if (tmp != null) {
 					res.redirect("/login");
-				} else {
+				} 
 					res.redirect("/register");
-				}
 
 			} else {
 				// "This email is already in use."

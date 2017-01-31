@@ -30,6 +30,7 @@ public class UserDao implements Dao<User> {
 		User tmp = new User();
 		tmp.setId(rs.getLong("user_id"));
 		tmp.setEmail(rs.getString("email"));
+		tmp.setPassword(rs.getString("encryptedPassword"));
 		return tmp;
 	}
 
@@ -54,12 +55,14 @@ public class UserDao implements Dao<User> {
 
 	public User findByEmail(String email) {
 		// Declare SQL template query
-		String sql = "SELECT * FROM " + TABLE_NAME + "WHERE email = ? LIMIT 1";
+		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE email = ? LIMIT 1";
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement q = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
 			q.setString(1, email);
+			
+			
 
 			// Run your shit
 			ResultSet rs = q.executeQuery();

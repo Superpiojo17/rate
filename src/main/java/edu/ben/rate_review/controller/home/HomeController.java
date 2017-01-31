@@ -16,6 +16,7 @@ public class HomeController {
 >>>>>>> 2007a197e794cf3c217c859c2ae15b6b0ac6d37b
      */
     public ModelAndView showHomePage(Request req, Response res) {
+    	System.out.println("HELLO");
         // Just a hash to pass data from the servlet to the page
         HashMap<String, Object> model = new HashMap<>();
         // Tell the server to render the index page with the data in the model

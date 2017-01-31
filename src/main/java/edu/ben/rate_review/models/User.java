@@ -56,6 +56,10 @@ public class User {
 	public void setEncryptedPassword(String encryptedPassword) {
 		this.encryptedPassword = SecurePassword.getHashPassword(encryptedPassword);
 	}
+	
+	public void setPassword(String encryptedPassword) {
+		this.encryptedPassword = encryptedPassword;
+	}
 
 	public int getRole() {
 		return role;
