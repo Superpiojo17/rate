@@ -13,7 +13,6 @@
 //
 //	// accountID, Balance, Deposits,Withdrawals,active
 //	User user1 = new User("Daniel", "Nohl", "dnohl@gmail.com", "123", 1);
-//	
 //
 //	@Test
 //	public void testAddAccount() throws SQLException {

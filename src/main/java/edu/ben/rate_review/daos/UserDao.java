@@ -19,56 +19,99 @@ public class UserDao implements Dao<User> {
 	public UserDao(Connection conn) {
 		this.conn = conn;
 	}
-	
+
 	public boolean checkEmail(String email) {
 		return false;
 	}
 
-	private List<User> mapRows(ResultSet rs) {
-		List<User> users = new ArrayList<User>();
-		try {
-			while (rs.next()) {
-				// Create user object and pass to array
-				User tmp = new User();
-				tmp.setId(rs.getLong("user_id"));
-				tmp.setEmail(rs.getString("email"));
-				users.add(tmp);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return users;
-	}
+	private User mapRow(ResultSet rs) throws SQLException {
 
-	public User save(User User) {
-		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE first_name = '" + User.getFirst_name() + "'";
+		// Create user object and pass to array
 		User tmp = new User();
-//		tmp.setId(rs.getLong("user_id"));
-//		tmp.setEmail(rs.getString("email"));
+		tmp.setId(rs.getLong("user_id"));
+		tmp.setEmail(rs.getString("email"));
+		tmp.setPassword(rs.getString("encryptedPassword"));
+		return tmp;
+	}
 
+	public User save(User user) {
+		final String sql = "INSERT INTO " + TABLE_NAME
+				+ "(first_name, last_name, email, encryptedPassword, role_id) VALUES(?,?,?,?,?)";
 		try {
-			PreparedStatement query = conn.prepareStatement(sql);
-			ResultSet rs = query.executeQuery();
-			if (!rs.next()) {
-				PreparedStatement ps = conn.prepareStatement("INSERT INTO " + TABLE_NAME
-						+ "(first_name, last_name, email, encryptedPassword, role_id)" + " VALUES ('"
-						+ User.getFirst_name() + "', '" + User.getLast_name() + "', '" + User.getEmail() + "', '"
-						+ User.getEncryptedPassword() + "', '" + "', '" + User.getRole_id() + "')");
-
-				ps.executeUpdate();
-			}
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, user.getFirst_name());
+			ps.setString(2, user.getLast_name());
+			ps.setString(3, user.getEmail());
+			ps.setString(4, user.getEncryptedPassword());
+			ps.setInt(5, user.getRole());
+			ps.executeUpdate();
+			return user;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return User;
+		return null;
+
 	}
+
+	public User findByEmail(String email) {
+		// Declare SQL template query
+		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE email = ? LIMIT 1";
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement q = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			q.setString(1, email);
+			
+			
+
+			// Run your shit
+			ResultSet rs = q.executeQuery();
+			if (rs.next()) {
+				return mapRow(rs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// If you don't find a model
+		return null;
+
+	}
+
+	/**
+	 * 
+	 * @return all users from the database.
+	 */
+	// public ArrayList<User> getAll() {
+	//
+	// List<User> users = new ArrayList<User>();
+	// String sql = "SELECT * FROM user";
+	//
+	// try {
+	// users = jdbcTemplate.query(sql, mapRows());
+	//
+	// return (ArrayList<User>) users;
+	// } catch (EmptyResultDataAccessException e) {
+	// e.printStackTrace();
+	// return null;
+	// }
+	// }
 
 	public List<User> all() {
 		final String SELECT = "SELECT * FROM " + TABLE_NAME;
 		List<User> users = null;
 		try {
 			PreparedStatement ps = conn.prepareStatement(SELECT);
-			users = mapRows(ps.executeQuery(SELECT));
+			users = new ArrayList<User>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					users.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return users;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

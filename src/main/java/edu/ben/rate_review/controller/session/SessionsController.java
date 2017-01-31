@@ -1,11 +1,11 @@
 package edu.ben.rate_review.controller.session;
 
-import static spark.Spark.redirect;
+//import static spark.Spark.redirect;
 
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.email.Email;
-import edu.ben.rate_review.encryption.SecurePassword;
+//import edu.ben.rate_review.encryption.SecurePassword;
 import edu.ben.rate_review.models.User;
 //import edu.ben.rate_review.email;
 //import edu.ben.rate_review.daos;
@@ -19,6 +19,7 @@ public class SessionsController {
 
 		return new ModelAndView(null, "sessions/register.hbs");
 	}
+	
 
 	public String register(Request req, Response res) {
 		UserDao userDao = DaoManager.getInstance().getUserDao();
@@ -27,16 +28,16 @@ public class SessionsController {
 		String emptyFieldName = "";
 
 		// Checks to see if each field is filled out.
-		if (req.params("first_name").isEmpty()) {
+		if (req.queryParams("first_name").isEmpty()) {
 			emptyFieldName = "First name";
 			emptyField = true;
-		} else if (req.params("last_name").isEmpty()) {
+		} else if (req.queryParams("last_name").isEmpty()) {
 			emptyFieldName = "Last name";
 			emptyField = true;
-		} else if (req.params("email").isEmpty()) {
+		} else if (req.queryParams("email").isEmpty()) {
 			emptyFieldName = "Email";
 			emptyField = true;
-		} else if (req.params("password").isEmpty()) {
+		} else if (req.queryParams("password").isEmpty()) {
 			emptyFieldName = "Password";
 			emptyField = true;
 		}
@@ -51,37 +52,45 @@ public class SessionsController {
 
 		// Checks that the user's first and last name are valid. They must each
 		// be at least 2 characters long and only contain letters.
-		if (!validateName(req.params("first_name"), req.params("last_name"))) {
+		if (!validateName(req.queryParams("first_name"), req.queryParams("last_name"))) {
 			// error message - "First and last name must be at least 2
 			// characters long and only contain letters."
 			res.redirect("/register");
 		}
 		// Checks that the password and verify password fields match.
-		else if (!req.params("password").equals(req.params("verify_password"))) {
+		else if (!req.queryParams("password").equals(req.queryParams("verify_password"))) {
 			// "Passwords do not match."
 			res.redirect("/register");
 		}
-		// Checks that a benedictine email is being used to register.
-		else if (!validateEmail(req.params("email"))) {
-			// "You must use a benedictine e-mail to register."
+		// Checks that a Benedictine email is being used to register.
+		else if (!validateEmail(req.queryParams("email"))) {
+			// "You must use a Benedictine e-mail to register."
 			res.redirect("/register");
 		}
+
+		// check to see if the role was valid
+
 		// creates the user
 		else {
-
+			User user = userDao.findByEmail(req.queryParams("email"));
 			// checks if email has already been registered
-			if (!userDao.checkEmail(req.params("email"))) {
+			if (user == null) {
 
 				// will determine if account has confirmed registration
 				boolean registrationConfirmed = false;
 				// will determine whether or not account is currently active
 				boolean accountActive = true;
 
-				createUser(req.params("first_name"), req.params("last_name"), req.params("email"),
-						req.params("password"), Integer.parseInt(req.params("role_id")), registrationConfirmed,
-						accountActive);
+				User tmp = createUser(req.queryParams("first_name"), req.queryParams("last_name"),
+						req.queryParams("email"), req.queryParams("password"),
+						Integer.parseInt(req.queryParams("role_id")), registrationConfirmed, accountActive);
+				System.out.println("right before check");
+				System.out.println(tmp.getFirst_name());
 
-				res.redirect("/login");
+				if (tmp != null) {
+					res.redirect("/login");
+				} 
+					res.redirect("/register");
 
 			} else {
 				// "This email is already in use."
@@ -159,14 +168,23 @@ public class SessionsController {
 	 * @param confirmed
 	 * @param active
 	 */
-	public static void createUser(String first_name, String last_name, String email, String password, int role_id,
+	private static User createUser(String first_name, String last_name, String email, String password, int role,
 			boolean confirmed, boolean active) {
 		UserDao user = DaoManager.getInstance().getUserDao();
-		// User newUser = new User(first_name, last_name, email,
-		// SecurePassword.getHashPassword(password), role_id, confirmed,
-		// active);
-		// user.addUser(newUser);
-		confirmRegistration(first_name, email, role_id);
+		User newUser = new User();
+		newUser.setFirst_name(first_name);
+		newUser.setLast_name(last_name);
+		newUser.setEmail(email);
+		newUser.setEncryptedPassword(password);
+		newUser.setRole(role);
+		newUser.setConfirmed(confirmed);
+		newUser.setActive(active);
+
+		User u = user.save(newUser);
+		if (u != null) {
+			confirmRegistration(newUser);
+		}
+		return u;
 	}
 
 	/**
@@ -176,28 +194,28 @@ public class SessionsController {
 	 * @param email
 	 * @param role_id
 	 */
-	private static void confirmRegistration(String first_name, String email, int role_id) {
+	private static void confirmRegistration(User user) {
 
 		String accountType = "";
 
-		if (role_id == 1) {
+		if (user.getRole() == 1) {
 			accountType = "ADMIN";
-		} else if (role_id == 2) {
+		} else if (user.getRole() == 2) {
 			accountType = "PROFESSOR";
-		} else if (role_id == 3) {
+		} else if (user.getRole() == 3) {
 			accountType = "TUTOR";
 		} else {
 			accountType = "STUDENT";
 		}
 
 		String subject = "Rate&Review Registration";
-		String messageHeader = "Hello " + first_name + ",\n\n\n";
+		String messageHeader = "Hello " + user.getFirst_name() + ",\n\n\n";
 		String messageBody = "This message is to confirm that you have successfully signed up for Rate&Review as a "
 				+ accountType + ". Please join us on the website to get started!";
 		String messageFooter = "\n\n\nSincerely,\n\nThe Rate&Review Team";
 		String message = messageHeader + messageBody + messageFooter;
 
-		Email.deliverEmail(first_name, email, subject, message);
+		Email.deliverEmail(user.getFirst_name(), user.getEmail(), subject, message);
 
 	}
 
