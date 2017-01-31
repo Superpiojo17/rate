@@ -66,6 +66,9 @@ public class SessionsController {
 			// "You must use a benedictine e-mail to register."
 			res.redirect("/register");
 		}
+
+		// check to see if the role was valid
+
 		// creates the user
 		else {
 			User user = userDao.findByEmail(req.queryParams("email"));
@@ -80,6 +83,9 @@ public class SessionsController {
 				User tmp = createUser(req.queryParams("first_name"), req.queryParams("last_name"),
 						req.queryParams("email"), req.queryParams("password"),
 						Integer.parseInt(req.queryParams("role_id")), registrationConfirmed, accountActive);
+				System.out.println("right before check");
+				System.out.println(tmp.getFirst_name());
+
 				if (tmp != null) {
 					res.redirect("/login");
 				} else {

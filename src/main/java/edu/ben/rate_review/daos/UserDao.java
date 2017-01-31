@@ -38,18 +38,18 @@ public class UserDao implements Dao<User> {
 				+ "(first_name, last_name, email, encryptedPassword, role_id) VALUES(?,?,?,?,?)";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(0, user.getFirst_name());
-			ps.setString(1, user.getLast_name());
-			ps.setString(2, user.getEmail());
-			ps.setString(3, user.getEncryptedPassword());
-			ps.setInt(4, user.getRole());
+			ps.setString(1, user.getFirst_name());
+			ps.setString(2, user.getLast_name());
+			ps.setString(3, user.getEmail());
+			ps.setString(4, user.getEncryptedPassword());
+			ps.setInt(5, user.getRole());
 			ps.executeUpdate();
 			return user;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
-		
+
 	}
 
 	public User findByEmail(String email) {
@@ -59,7 +59,7 @@ public class UserDao implements Dao<User> {
 			// Create Prepared Statement from query
 			PreparedStatement q = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
-			q.setString(0, email);
+			q.setString(1, email);
 
 			// Run your shit
 			ResultSet rs = q.executeQuery();
