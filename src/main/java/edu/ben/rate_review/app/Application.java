@@ -4,9 +4,11 @@ import static spark.Spark.*;
 import edu.ben.rate_review.controller.session.SessionsController;
 import edu.ben.rate_review.controller.home.AboutUsController;
 import edu.ben.rate_review.controller.home.ContactUsController;
+import edu.ben.rate_review.controller.home.DepartmentsController;
 import edu.ben.rate_review.controller.home.HomeController;
 import edu.ben.rate_review.controller.home.LogInController;
 import edu.ben.rate_review.controller.home.RegisterController;
+import edu.ben.rate_review.controller.home.TutorsController;
 import edu.ben.rate_review.controllers.user.StudentDashboardController;
 import edu.ben.rate_review.controllers.user.UsersController;
 import edu.ben.rate_review.daos.DaoManager;
@@ -23,6 +25,8 @@ public class Application {
 	private static RegisterController registerController = new RegisterController();
 	private static ContactUsController contactusController = new ContactUsController();
 	private static StudentDashboardController studentdashController = new StudentDashboardController();
+	private static DepartmentsController departmentsController = new DepartmentsController();
+	private static TutorsController tutorsController = new TutorsController();
 
 	// match up paths
 	public static String USERS_PATH = "/users";
@@ -32,6 +36,8 @@ public class Application {
 	public static String REGISTER_PATH = "/register";
 	public static String CONTACTUS_PATH = "/contactus";
 	public static String STUDENTDASHBOARD_PATH = "/studentdashboard";
+	public static String DEPARTMENTS_PATH = "/departments";
+	public static String TUTORS_PATH = "/tutors";
 
 	public static void main(String[] args) throws Exception {
 
@@ -73,6 +79,10 @@ public class Application {
 		get(ABOUTUS_PATH, (req, res) -> aboutusController.showAboutUsPage(req, res), new HandlebarsTemplateEngine());
 		get(REGISTER_PATH, (req, res) -> registerController.showRegisterPage(req, res), new HandlebarsTemplateEngine());
 		get(CONTACTUS_PATH, (req, res) -> contactusController.showContactUsPage(req, res),
+				new HandlebarsTemplateEngine());
+		get(DEPARTMENTS_PATH, (req, res) -> departmentsController.showDepartmentsPage(req, res),
+				new HandlebarsTemplateEngine());
+		get(TUTORS_PATH, (req, res) -> tutorsController.showTutorsPage(req, res),
 				new HandlebarsTemplateEngine());
 		get(STUDENTDASHBOARD_PATH, (req, res) -> studentdashController.showStudentDashboardPage(req, res),
 				new HandlebarsTemplateEngine());
