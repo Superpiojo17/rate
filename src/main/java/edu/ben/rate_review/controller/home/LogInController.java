@@ -33,7 +33,8 @@ public class LogInController {
 	public String login(Request req, Response res) {
 
 		if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()) {
-			if (confirmRegistered(req.queryParams("email"), req.queryParams("password"))) {
+			if (confirmRegistered(req.queryParams("email"), req.queryParams("password"))
+					&& accountConfirmed(req.queryParams("email")) && accountActive(req.queryParams("email"))) {
 				int role = getAccountType(req.queryParams("email"), req.queryParams("password"));
 				if (role == 4) {
 					res.redirect("/studentdashboard");
@@ -58,6 +59,42 @@ public class LogInController {
 		// res.redirect("/login");
 
 		return "";
+	}
+	
+	/**
+	 * While attempting to log-in, this method checks that the account the user
+	 * is logging in with is currently activated.
+	 * 
+	 * @param email
+	 * @return
+	 */
+	public static boolean accountActive(String email) {
+		UserDao userDao = DaoManager.getInstance().getUserDao();
+		User u = new User();
+		u = userDao.findByEmail(email);
+
+		if (u != null && u.isActive()) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * While attempting to log-in, this method checks that the account the user
+	 * is logging in with has been confirmed.
+	 * 
+	 * @param email
+	 * @return
+	 */
+	public static boolean accountConfirmed(String email) {
+		UserDao userDao = DaoManager.getInstance().getUserDao();
+		User u = new User();
+		u = userDao.findByEmail(email);
+
+		if (u != null && u.isConfirmed()) {
+			return true;
+		}
+		return false;
 	}
 
 	/**

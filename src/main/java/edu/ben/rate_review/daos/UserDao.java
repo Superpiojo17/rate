@@ -32,6 +32,8 @@ public class UserDao implements Dao<User> {
 		tmp.setEmail(rs.getString("email"));
 		tmp.setPassword(rs.getString("encryptedPassword"));
 		tmp.setRole(rs.getInt("role_id"));
+		tmp.setConfirmed(rs.getBoolean("confirmed"));
+		tmp.setActive(rs.getBoolean("active"));
 		return tmp;
 	}
 
