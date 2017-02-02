@@ -14,8 +14,4 @@ public class TutorsController {
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "home/tutors.hbs");
 	}
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> joel

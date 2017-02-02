@@ -35,9 +35,6 @@ public class Application {
 	private static FacultyDashboardController facultydashController = new FacultyDashboardController();
 	private static TutorDashboardController tutordashController = new TutorDashboardController();
 	private static TeacherController teacherController = new TeacherController();
-	private static DepartmentsController departmentsController = new DepartmentsController();
-	private static TutorsController tutorsController = new TutorsController();
-	
 
 	// match up paths
 	public static String USERS_PATH = "/users";

@@ -14,8 +14,4 @@ public class DepartmentsController {
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "home/departments.hbs");
 	}
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> joel

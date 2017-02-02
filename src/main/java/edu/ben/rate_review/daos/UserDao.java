@@ -37,7 +37,7 @@ public class UserDao implements Dao<User> {
 
 	public User save(User user) {
 		final String sql = "INSERT INTO " + TABLE_NAME
-				+ "(first_name, last_name, email, encryptedPassword, role_id) VALUES(?,?,?,?,?)";
+				+ " (first_name, last_name, email, encryptedPassword, role_id) VALUES(?,?,?,?,?)";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, user.getFirst_name());
