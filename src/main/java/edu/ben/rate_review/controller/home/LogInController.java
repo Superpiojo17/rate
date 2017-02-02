@@ -34,7 +34,17 @@ public class LogInController {
 
 		if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()) {
 			if (confirmRegistered(req.queryParams("email"), req.queryParams("password"))) {
-				res.redirect("/contactus");
+				int role = getAccountType(req.queryParams("email"), req.queryParams("password"));
+				if (role == 4) {
+					res.redirect("/studentdashboard");
+				} else if (role == 3) {
+					res.redirect("/tutordashboard");
+				} else if (role == 2) {
+					res.redirect("/facultydashboard");
+				} else if (role == 1) {
+					res.redirect("/admindashboard");
+				}
+
 			} else {
 				// if email is not found in the system, outputs message
 				// "Incorrect E-mail or Password. Please try again."
@@ -62,15 +72,27 @@ public class LogInController {
 		User u = new User();
 		u = userDao.findByEmail(email);
 
-		System.out.println(password);
-		System.out.println(u.getEncryptedPassword());
-		System.out.println(u.getId());
 		if (u != null) {
 			if (SecurePassword.getCheckPassword(password, u.getEncryptedPassword())) {
 				return true;
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Checks that the account logging in is registered for the site
+	 * 
+	 * @param email
+	 * @param password
+	 * @return
+	 */
+	public static int getAccountType(String email, String password) {
+		UserDao userDao = DaoManager.getInstance().getUserDao();
+		User u = new User();
+		u = userDao.findByEmail(email);
+
+		return u.getRole();
 	}
 
 }

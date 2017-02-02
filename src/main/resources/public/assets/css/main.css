@@ -3331,7 +3331,7 @@
 			background-color: #1E2832;
 			color: rgba(255, 255, 255, 0.75);
 			background-attachment: fixed;
-			background-image: url("images/overlay.png"), url("../../images/snowyBu.jpg");
+			background-image: url("images/overlay.png"), url("../../images/lowerbannerHome.jpg");
 			background-size: cover;
 		}
 
@@ -3871,15 +3871,31 @@
 			}
 
 		}
+		
+		/** custom **/
+		.hide{
+		display: none;
+		}
 
 /* Banner */
+
+#studenttest {
+   background-image: url("images/overlay.png"), url("../../images/BUbanner.jpg");
+   height: 100px;
+   background-size: 100%;
+}
+#facultytest {
+   background-image: url("images/overlay.png"), url("../../images/pic10.jpg");
+   height: 100px;
+   background-size: 100%;
+}
 
 	#banner {
 		padding: 8em 0 6em 0;
 		background-color: #1E2832;
 		color: rgba(255, 255, 255, 0.75);
 		background-attachment: fixed;
-		background-image: url("images/overlay.png"), url("../../images/BUBanner.jpg");
+		background-image: url("images/overlay.png"), url("../../images/BUbanner.jpg");
 		background-size: cover;
 		text-align: center;
 	}
