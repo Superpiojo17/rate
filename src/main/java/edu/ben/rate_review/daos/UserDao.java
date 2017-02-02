@@ -56,6 +56,35 @@ public class UserDao implements Dao<User> {
 
 	}
 
+	/**
+	 * Method which will either activate or deactivate an account based on their
+	 * current state
+	 * 
+	 * @param email
+	 * @return
+	 */
+	public User activateDeactivate(String email) {
+		// Declare SQL template query
+		String sql = "UPDATE " + TABLE_NAME + " SET confirmed = NOT confirmed WHERE email = ? LIMIT 1";
+		;
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement q = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			q.setString(1, email);
+			// Runs query
+			ResultSet rs = q.executeQuery();
+			if (rs.next()) {
+				return mapRow(rs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+
+	}
+
 	public User findByEmail(String email) {
 		// Declare SQL template query
 		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE email = ? LIMIT 1";
