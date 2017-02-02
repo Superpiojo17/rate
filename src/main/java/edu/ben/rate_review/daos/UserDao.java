@@ -31,6 +31,7 @@ public class UserDao implements Dao<User> {
 		tmp.setId(rs.getLong("user_id"));
 		tmp.setEmail(rs.getString("email"));
 		tmp.setPassword(rs.getString("encryptedPassword"));
+		tmp.setRole(rs.getInt("role_id"));
 		return tmp;
 	}
 
@@ -61,8 +62,6 @@ public class UserDao implements Dao<User> {
 			PreparedStatement q = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
 			q.setString(1, email);
-			
-			
 
 			// Run your shit
 			ResultSet rs = q.executeQuery();

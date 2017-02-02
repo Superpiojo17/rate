@@ -8,8 +8,12 @@ import edu.ben.rate_review.controller.home.DepartmentsController;
 import edu.ben.rate_review.controller.home.HomeController;
 import edu.ben.rate_review.controller.home.LogInController;
 import edu.ben.rate_review.controller.home.RegisterController;
+import edu.ben.rate_review.controller.home.TeacherController;
 import edu.ben.rate_review.controller.home.TutorsController;
+import edu.ben.rate_review.controllers.user.AdminDashboardController;
+import edu.ben.rate_review.controllers.user.FacultyDashboardController;
 import edu.ben.rate_review.controllers.user.StudentDashboardController;
+import edu.ben.rate_review.controllers.user.TutorDashboardController;
 import edu.ben.rate_review.controllers.user.UsersController;
 import edu.ben.rate_review.daos.DaoManager;
 import spark.Spark;
@@ -27,6 +31,13 @@ public class Application {
 	private static StudentDashboardController studentdashController = new StudentDashboardController();
 	private static DepartmentsController departmentsController = new DepartmentsController();
 	private static TutorsController tutorsController = new TutorsController();
+	private static AdminDashboardController admindashController = new AdminDashboardController();
+	private static FacultyDashboardController facultydashController = new FacultyDashboardController();
+	private static TutorDashboardController tutordashController = new TutorDashboardController();
+	private static TeacherController teacherController = new TeacherController();
+	private static DepartmentsController departmentsController = new DepartmentsController();
+	private static TutorsController tutorsController = new TutorsController();
+	
 
 	// match up paths
 	public static String USERS_PATH = "/users";
@@ -36,8 +47,13 @@ public class Application {
 	public static String REGISTER_PATH = "/register";
 	public static String CONTACTUS_PATH = "/contactus";
 	public static String STUDENTDASHBOARD_PATH = "/studentdashboard";
+	public static String FACULTYDASHBOARD_PATH = "/facultydashboard";
+	public static String ADMINDASHBOARD_PATH = "/admindashboard";
+	public static String TUTORDASHBOARD_PATH = "/tutordashboard";
+	public static String TEACHER_PATH = "/teacher";
 	public static String DEPARTMENTS_PATH = "/departments";
 	public static String TUTORS_PATH = "/tutors";
+
 
 	public static void main(String[] args) throws Exception {
 
@@ -61,21 +77,33 @@ public class Application {
 	 * and use this structure when you can
 	 */
 	private static void configRoutes() {
+		
+		get(TEACHER_PATH, (req, res) -> teacherController.showTeacherPage(req, res), new HandlebarsTemplateEngine());
+		
+		get(DEPARTMENTS_PATH, (req, res) -> departmentsController.showDepartmentsPage(req, res),
+				new HandlebarsTemplateEngine());
+		get(TUTORS_PATH, (req, res) -> tutorsController.showTutorsPage(req, res),
+				new HandlebarsTemplateEngine());
 
 		get("/", (req, res) -> homeController.showHomePage(req, res), new HandlebarsTemplateEngine());
 
 		// Session Routes
-//		get("/register", (req, res) -> sessionsController.showRegister(req, res), new HandlebarsTemplateEngine());
+		// get("/register", (req, res) -> sessionsController.showRegister(req,
+		// res), new HandlebarsTemplateEngine());
 		post("/register", (req, res) -> sessionsController.register(req, res));
 
-		
 		get("/", (req, res) -> homeController.showHomePage(req, res), new HandlebarsTemplateEngine());
-	
-		
+
 		get(LOGIN_PATH, (req, res) -> loginController.showLoginPage(req, res), new HandlebarsTemplateEngine());
 		post("/login", (req, res) -> loginController.login(req, res));
-		
-		
+		get(FACULTYDASHBOARD_PATH, (req, res) -> facultydashController.showFacultyDashboardPage(req, res),
+				new HandlebarsTemplateEngine());
+		get(ADMINDASHBOARD_PATH, (req, res) -> admindashController.showAdminDashboardPage(req, res),
+				new HandlebarsTemplateEngine());
+
+		get(TUTORDASHBOARD_PATH, (req, res) -> tutordashController.showTutorDashboardPage(req, res),
+				new HandlebarsTemplateEngine());
+
 		get(ABOUTUS_PATH, (req, res) -> aboutusController.showAboutUsPage(req, res), new HandlebarsTemplateEngine());
 		get(REGISTER_PATH, (req, res) -> registerController.showRegisterPage(req, res), new HandlebarsTemplateEngine());
 		get(CONTACTUS_PATH, (req, res) -> contactusController.showContactUsPage(req, res),
