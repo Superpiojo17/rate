@@ -12,6 +12,7 @@ import edu.ben.rate_review.controller.home.LogInController;
 import edu.ben.rate_review.controller.home.RegisterController;
 import edu.ben.rate_review.controller.home.TeacherController;
 import edu.ben.rate_review.controller.home.TutorsController;
+import edu.ben.rate_review.controller.home.ChangePasswordController;
 import edu.ben.rate_review.controllers.user.AdminDashboardController;
 import edu.ben.rate_review.controllers.user.FacultyDashboardController;
 import edu.ben.rate_review.controllers.user.StudentDashboardController;
@@ -39,6 +40,7 @@ public class Application {
 	private static TeacherController teacherController = new TeacherController();
 	private static ActivationController activationController = new ActivationController();
 	private static ConfirmationController confirmationController = new ConfirmationController();
+	private static ChangePasswordController changePasswordController = new ChangePasswordController();
 
 	// match up paths
 	public static String USERS_PATH = "/users";
@@ -57,6 +59,7 @@ public class Application {
 	public static String ACTIVATION_PATH = "/activation";
 	public static String CONFIRMATION_PATH = "/confirmation";
 	public static String DEACTIVATION_PATH = "/deactivation";
+	public static String CHANGEPASSWORD_PATH = "/changepassword";
 
 
 	public static void main(String[] args) throws Exception {
@@ -90,6 +93,9 @@ public class Application {
 		
 		get(CONFIRMATION_PATH, (req, res) -> confirmationController.showConfirmationPage(req, res), new HandlebarsTemplateEngine());
 		post(CONFIRMATION_PATH, (req, res) -> confirmationController.confirm(req, res));
+		
+		get(CHANGEPASSWORD_PATH, (req, res) -> changePasswordController.showChangePasswordPage(req, res), new HandlebarsTemplateEngine());
+		post(CHANGEPASSWORD_PATH, (req, res) -> changePasswordController.changePassword(req, res));
 		
 		get(DEPARTMENTS_PATH, (req, res) -> departmentsController.showDepartmentsPage(req, res),
 				new HandlebarsTemplateEngine());

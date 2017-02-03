@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.ben.rate_review.encryption.SecurePassword;
 import edu.ben.rate_review.models.User;
 
 /**
@@ -233,5 +234,30 @@ public class UserDao implements Dao<User> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Updates user's password to their new password
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public User updatePassword(User user) {
+		String sql = "UPDATE " + TABLE_NAME + " SET encryptedPassword = ? WHERE email = ? LIMIT 1";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setString(1, SecurePassword.getHashPassword(user.getEncryptedPassword()));
+			ps.setString(2, user.getEmail());
+			// Runs query
+			ps.execute();
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
 	}
 }
