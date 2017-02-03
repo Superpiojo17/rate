@@ -3,6 +3,8 @@ package edu.ben.rate_review.app;
 import static spark.Spark.*;
 import edu.ben.rate_review.controller.session.SessionsController;
 import edu.ben.rate_review.controller.home.AboutUsController;
+import edu.ben.rate_review.controller.home.ActivationController;
+import edu.ben.rate_review.controller.home.ConfirmationController;
 import edu.ben.rate_review.controller.home.ContactUsController;
 import edu.ben.rate_review.controller.home.DepartmentsController;
 import edu.ben.rate_review.controller.home.HomeController;
@@ -35,6 +37,8 @@ public class Application {
 	private static FacultyDashboardController facultydashController = new FacultyDashboardController();
 	private static TutorDashboardController tutordashController = new TutorDashboardController();
 	private static TeacherController teacherController = new TeacherController();
+	private static ActivationController activationController = new ActivationController();
+	private static ConfirmationController confirmationController = new ConfirmationController();
 
 	// match up paths
 	public static String USERS_PATH = "/users";
@@ -50,6 +54,9 @@ public class Application {
 	public static String TEACHER_PATH = "/teacher";
 	public static String DEPARTMENTS_PATH = "/departments";
 	public static String TUTORS_PATH = "/tutors";
+	public static String ACTIVATION_PATH = "/activation";
+	public static String CONFIRMATION_PATH = "/confirmation";
+	public static String DEACTIVATION_PATH = "/deactivation";
 
 
 	public static void main(String[] args) throws Exception {
@@ -77,6 +84,12 @@ public class Application {
 		
 		get(TEACHER_PATH, (req, res) -> teacherController.showTeacherPage(req, res), new HandlebarsTemplateEngine());
 		
+		get(ACTIVATION_PATH, (req, res) -> activationController.showActivationPage(req, res), new HandlebarsTemplateEngine());
+		
+		get(DEACTIVATION_PATH, (req, res) -> activationController.showDeActivationPage(req, res), new HandlebarsTemplateEngine());
+		
+		get(CONFIRMATION_PATH, (req, res) -> confirmationController.showConfirmationPage(req, res), new HandlebarsTemplateEngine());
+		
 		get(DEPARTMENTS_PATH, (req, res) -> departmentsController.showDepartmentsPage(req, res),
 				new HandlebarsTemplateEngine());
 		get(TUTORS_PATH, (req, res) -> tutorsController.showTutorsPage(req, res),
@@ -88,6 +101,8 @@ public class Application {
 		// get("/register", (req, res) -> sessionsController.showRegister(req,
 		// res), new HandlebarsTemplateEngine());
 		post("/register", (req, res) -> sessionsController.register(req, res));
+		
+//		post("/ACTIVATION_PATH", (req, res) -> activationController.activation(req, res));
 
 		get("/", (req, res) -> homeController.showHomePage(req, res), new HandlebarsTemplateEngine());
 
