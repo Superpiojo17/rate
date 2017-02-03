@@ -11,19 +11,31 @@ import edu.ben.rate_review.models.User;
 
 /**
  * UserDao is a dao that will connect and provide interaction to the database
+ * 
+ * @author Mike
+ * @version 2-2-2017
  */
 public class UserDao implements Dao<User> {
 	String TABLE_NAME = "users";
 	Connection conn = null;
 
+	/**
+	 * UserDao connection
+	 * 
+	 * @param conn
+	 */
 	public UserDao(Connection conn) {
 		this.conn = conn;
 	}
 
-	public boolean checkEmail(String email) {
-		return false;
-	}
-
+	/**
+	 * When searching the database, this method creates a user object to pass to
+	 * methods.
+	 * 
+	 * @param rs
+	 * @return
+	 * @throws SQLException
+	 */
 	private User mapRow(ResultSet rs) throws SQLException {
 
 		// Create user object and pass to array
@@ -32,9 +44,14 @@ public class UserDao implements Dao<User> {
 		tmp.setEmail(rs.getString("email"));
 		tmp.setPassword(rs.getString("encryptedPassword"));
 		tmp.setRole(rs.getInt("role_id"));
+		tmp.setConfirmed(rs.getBoolean("confirmed"));
+		tmp.setActive(rs.getBoolean("active"));
 		return tmp;
 	}
 
+	/**
+	 * Method which stores a new user in the database.
+	 */
 	public User save(User user) {
 		final String sql = "INSERT INTO " + TABLE_NAME
 				+ " (first_name, last_name, email, encryptedPassword, role_id) VALUES(?,?,?,?,?)";
@@ -54,6 +71,41 @@ public class UserDao implements Dao<User> {
 
 	}
 
+	/**
+	 * Method which will either activate or deactivate an account based on their
+	 * current state
+	 * 
+	 * @param email
+	 * @return
+	 */
+	public User activateDeactivate(String email) {
+		// Declare SQL template query
+		String sql = "UPDATE " + TABLE_NAME + " SET active = NOT active WHERE email = ? LIMIT 1";
+		;
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement q = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			q.setString(1, email);
+			// Runs query
+			ResultSet rs = q.executeQuery();
+			if (rs.next()) {
+				return mapRow(rs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+
+	}
+
+	/**
+	 * Searched the database for a user by using the user's email
+	 * 
+	 * @param email
+	 * @return
+	 */
 	public User findByEmail(String email) {
 		// Declare SQL template query
 		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE email = ? LIMIT 1";
