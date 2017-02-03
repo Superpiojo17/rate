@@ -195,7 +195,9 @@ public class SessionsController {
 	 * @param role_id
 	 */
 	private static void confirmRegistration(User user) {
-
+		
+		String domain = "localhost:3000";
+		
 		String accountType = "";
 
 		if (user.getRole() == 1) {
@@ -211,7 +213,7 @@ public class SessionsController {
 		String subject = "Rate&Review Registration";
 		String messageHeader = "Hello " + user.getFirst_name() + ",\n\n\n";
 		String messageBody = "This message is to confirm that you have successfully signed up for Rate&Review as a "
-				+ accountType + ". Please join us on the website to get started!";
+				+ accountType + ". Please confirm your registration at " + domain + "/confirmation to get started!";
 		String messageFooter = "\n\n\nSincerely,\n\nThe Rate&Review Team";
 		String message = messageHeader + messageBody + messageFooter;
 

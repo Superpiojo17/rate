@@ -72,6 +72,33 @@ public class UserDao implements Dao<User> {
 	}
 
 	/**
+	 * Method which will confirm a new account in the database. Will not allow
+	 * reversing of confirmation.
+	 * 
+	 * @param email
+	 * @return
+	 */
+	public User accountConfirmed(User user) {
+		// Declare SQL template query
+		String sql = "UPDATE " + TABLE_NAME
+				+ " SET confirmed = CASE confirmed WHEN 0 THEN 1 ELSE confirmed END WHERE email = ? LIMIT 1";
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setString(1, user.getEmail());
+			// Runs query
+			ps.execute();
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+
+	}
+
+	/**
 	 * Method which will activate a deactivated account
 	 * 
 	 * @param email

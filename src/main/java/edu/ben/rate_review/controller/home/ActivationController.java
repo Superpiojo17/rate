@@ -40,7 +40,6 @@ public class ActivationController {
 	 */
 	public String activate(Request req, Response res) {
 		boolean activated = false;
-		System.out.println("activation");
 		// checks the email and password fields are filled out
 		if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()) {
 			if (LogInController.confirmRegistered(req.queryParams("email"), req.queryParams("password"))) {

@@ -89,6 +89,7 @@ public class Application {
 		get(DEACTIVATION_PATH, (req, res) -> activationController.showDeActivationPage(req, res), new HandlebarsTemplateEngine());
 		
 		get(CONFIRMATION_PATH, (req, res) -> confirmationController.showConfirmationPage(req, res), new HandlebarsTemplateEngine());
+		post(CONFIRMATION_PATH, (req, res) -> confirmationController.confirm(req, res));
 		
 		get(DEPARTMENTS_PATH, (req, res) -> departmentsController.showDepartmentsPage(req, res),
 				new HandlebarsTemplateEngine());
