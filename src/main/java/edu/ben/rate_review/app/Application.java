@@ -102,7 +102,8 @@ public class Application {
 		// res), new HandlebarsTemplateEngine());
 		post("/register", (req, res) -> sessionsController.register(req, res));
 		
-//		post("/ACTIVATION_PATH", (req, res) -> activationController.activation(req, res));
+		post(ACTIVATION_PATH, (req, res) -> activationController.activate(req, res));
+		post(DEACTIVATION_PATH, (req, res) -> activationController.deactivate(req, res));
 
 		get("/", (req, res) -> homeController.showHomePage(req, res), new HandlebarsTemplateEngine());
 
