@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.UserDao;
+import edu.ben.rate_review.email.Email;
 import edu.ben.rate_review.models.User;
 import spark.ModelAndView;
 import spark.Request;
@@ -21,7 +22,7 @@ public class ChangePasswordController {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 		// Tell the server to render the index page with the data in the model
-		return new ModelAndView(model, "users/changepassword.hbs");
+		return new ModelAndView(model, "home/changepassword.hbs");
 	}
 
 	/**
@@ -36,8 +37,8 @@ public class ChangePasswordController {
 		if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()
 				&& !req.queryParams("new_password").isEmpty() && !req.queryParams("verify_password").isEmpty()) {
 			if (LogInController.confirmRegistered(req.queryParams("email"), req.queryParams("password"))) {
-				if (req.queryParams("new_password") == req.queryParams("verify_password")) {
-					attemptUpdatePassword(req.queryParams("email"));
+				if (req.queryParams("new_password").equals(req.queryParams("verify_password"))) {
+					attemptUpdatePassword(req.queryParams("email"), req.queryParams("new_password"));
 					res.redirect("/login");
 				} else {
 					res.redirect("/changepassword");
@@ -59,17 +60,32 @@ public class ChangePasswordController {
 	 * 
 	 * @param email
 	 */
-	public static void attemptUpdatePassword(String email) {
+	public static void attemptUpdatePassword(String email, String password) {
 		UserDao userDao = DaoManager.getInstance().getUserDao();
 		User user = new User();
 		user = userDao.findByEmail(email);
 
 		if (user != null) {
+			user.setEncryptedPassword(password);
 			userDao.updatePassword(user);
+			sendConfirmChangePasswordEmail(user);
 		}
 	}
 
-	public void sendEmail() {
+	/**
+	 * Send email to user confirming their change of password.
+	 * 
+	 * @param user
+	 */
+	private static void sendConfirmChangePasswordEmail(User user) {
 
+		String subject = "Rate&Review Password Change";
+		String messageHeader = "Hello " + user.getFirst_name() + ",\n\n\n";
+		String messageBody = "This message is to confirm that you have successfully changed "
+				+ "your password! If this was not performed by you, please go to the account recovery page!";
+		String messageFooter = "\n\n\nSincerely,\n\nThe Rate&Review Team";
+		String message = messageHeader + messageBody + messageFooter;
+
+		Email.deliverEmail(user.getFirst_name(), user.getEmail(), subject, message);
 	}
 }

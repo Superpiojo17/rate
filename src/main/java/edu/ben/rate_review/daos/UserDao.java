@@ -47,6 +47,8 @@ public class UserDao implements Dao<User> {
 		tmp.setRole(rs.getInt("role_id"));
 		tmp.setConfirmed(rs.getBoolean("confirmed"));
 		tmp.setActive(rs.getBoolean("active"));
+		tmp.setFirst_name(rs.getString("first_name"));
+		tmp.setLast_name(rs.getString("last_name"));
 		return tmp;
 	}
 
@@ -249,7 +251,7 @@ public class UserDao implements Dao<User> {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
-			ps.setString(1, SecurePassword.getHashPassword(user.getEncryptedPassword()));
+			ps.setString(1, user.getEncryptedPassword());
 			ps.setString(2, user.getEmail());
 			// Runs query
 			ps.execute();
