@@ -11,19 +11,31 @@ import edu.ben.rate_review.models.User;
 
 /**
  * UserDao is a dao that will connect and provide interaction to the database
+ * 
+ * @author Mike
+ * @version 2-2-2017
  */
 public class UserDao implements Dao<User> {
 	String TABLE_NAME = "users";
 	Connection conn = null;
 
+	/**
+	 * UserDao connection
+	 * 
+	 * @param conn
+	 */
 	public UserDao(Connection conn) {
 		this.conn = conn;
 	}
 
-	public boolean checkEmail(String email) {
-		return false;
-	}
-
+	/**
+	 * When searching the database, this method creates a user object to pass to
+	 * methods.
+	 * 
+	 * @param rs
+	 * @return
+	 * @throws SQLException
+	 */
 	private User mapRow(ResultSet rs) throws SQLException {
 
 		// Create user object and pass to array
@@ -37,6 +49,9 @@ public class UserDao implements Dao<User> {
 		return tmp;
 	}
 
+	/**
+	 * Method which stores a new user in the database.
+	 */
 	public User save(User user) {
 		final String sql = "INSERT INTO " + TABLE_NAME
 				+ " (first_name, last_name, email, encryptedPassword, role_id) VALUES(?,?,?,?,?)";
@@ -65,7 +80,7 @@ public class UserDao implements Dao<User> {
 	 */
 	public User activateDeactivate(String email) {
 		// Declare SQL template query
-		String sql = "UPDATE " + TABLE_NAME + " SET confirmed = NOT confirmed WHERE email = ? LIMIT 1";
+		String sql = "UPDATE " + TABLE_NAME + " SET active = NOT active WHERE email = ? LIMIT 1";
 		;
 		try {
 			// Create Prepared Statement from query
@@ -85,6 +100,12 @@ public class UserDao implements Dao<User> {
 
 	}
 
+	/**
+	 * Searched the database for a user by using the user's email
+	 * 
+	 * @param email
+	 * @return
+	 */
 	public User findByEmail(String email) {
 		// Declare SQL template query
 		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE email = ? LIMIT 1";
