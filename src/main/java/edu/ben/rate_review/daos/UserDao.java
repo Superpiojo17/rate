@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.ben.rate_review.encryption.SecurePassword;
 import edu.ben.rate_review.models.User;
 
 /**
@@ -46,6 +47,8 @@ public class UserDao implements Dao<User> {
 		tmp.setRole(rs.getInt("role_id"));
 		tmp.setConfirmed(rs.getBoolean("confirmed"));
 		tmp.setActive(rs.getBoolean("active"));
+		tmp.setFirst_name(rs.getString("first_name"));
+		tmp.setLast_name(rs.getString("last_name"));
 		return tmp;
 	}
 
@@ -72,26 +75,80 @@ public class UserDao implements Dao<User> {
 	}
 
 	/**
-	 * Method which will either activate or deactivate an account based on their
-	 * current state
+	 * Method which will confirm a new account in the database. Will not allow
+	 * reversing of confirmation.
 	 * 
 	 * @param email
 	 * @return
 	 */
-	public User activateDeactivate(String email) {
+	public User accountConfirmed(User user) {
 		// Declare SQL template query
-		String sql = "UPDATE " + TABLE_NAME + " SET active = NOT active WHERE email = ? LIMIT 1";
-		;
+		String sql = "UPDATE " + TABLE_NAME
+				+ " SET confirmed = CASE confirmed WHEN 0 THEN 1 ELSE confirmed END WHERE email = ? LIMIT 1";
 		try {
 			// Create Prepared Statement from query
-			PreparedStatement q = conn.prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
-			q.setString(1, email);
+			ps.setString(1, user.getEmail());
 			// Runs query
-			ResultSet rs = q.executeQuery();
-			if (rs.next()) {
-				return mapRow(rs);
-			}
+			ps.execute();
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+
+	}
+
+	/**
+	 * Method which will activate a deactivated account
+	 * 
+	 * @param email
+	 * @return
+	 */
+	public User activateAccount(User user) {
+		// previously: UPDATE rate.users SET active = NOT active WHERE email = ?
+		// LIMIT 1;
+		// Declare SQL template query
+		String sql = "UPDATE " + TABLE_NAME
+				+ " SET active = CASE active WHEN 0 THEN 1 ELSE active END WHERE email = ? LIMIT 1";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setString(1, user.getEmail());
+			// Runs query
+			ps.execute();
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+
+	}
+
+	/**
+	 * Method which will deactivate an active account
+	 * 
+	 * @param email
+	 * @return
+	 */
+	public User deactivateAccount(User user) {
+		// Declare SQL template query
+		String sql = "UPDATE " + TABLE_NAME
+				+ " SET active = CASE active WHEN 1 THEN 0 ELSE active END WHERE email = ? LIMIT 1";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setString(1, user.getEmail());
+			// Runs query
+			ps.execute();
+			return user;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -179,5 +236,30 @@ public class UserDao implements Dao<User> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Updates user's password to their new password
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public User updatePassword(User user) {
+		String sql = "UPDATE " + TABLE_NAME + " SET encryptedPassword = ? WHERE email = ? LIMIT 1";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setString(1, user.getEncryptedPassword());
+			ps.setString(2, user.getEmail());
+			// Runs query
+			ps.execute();
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
 	}
 }
