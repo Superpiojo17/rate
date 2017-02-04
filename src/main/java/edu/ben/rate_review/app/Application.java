@@ -12,6 +12,7 @@ import edu.ben.rate_review.controller.home.LogInController;
 import edu.ben.rate_review.controller.home.RegisterController;
 import edu.ben.rate_review.controller.home.TeacherController;
 import edu.ben.rate_review.controller.home.TutorsController;
+import edu.ben.rate_review.controllers.user.AccountRecoveryController;
 import edu.ben.rate_review.controllers.user.AdminDashboardController;
 import edu.ben.rate_review.controllers.user.FacultyDashboardController;
 import edu.ben.rate_review.controllers.user.StudentDashboardController;
@@ -39,6 +40,7 @@ public class Application {
 	private static TeacherController teacherController = new TeacherController();
 	private static ActivationController activationController = new ActivationController();
 	private static ConfirmationController confirmationController = new ConfirmationController();
+	private static AccountRecoveryController accountrecoveryController = new AccountRecoveryController();
 
 	// match up paths
 	public static String USERS_PATH = "/users";
@@ -57,6 +59,8 @@ public class Application {
 	public static String ACTIVATION_PATH = "/activation";
 	public static String CONFIRMATION_PATH = "/confirmation";
 	public static String DEACTIVATION_PATH = "/deactivation";
+	public static String ACCOUNTRECOVERY_PATH = "/accountrecovery";
+	public static String NEWINFO_PATH = "/newinfo";
 
 
 	public static void main(String[] args) throws Exception {
@@ -89,6 +93,11 @@ public class Application {
 		get(DEACTIVATION_PATH, (req, res) -> activationController.showDeActivationPage(req, res), new HandlebarsTemplateEngine());
 		
 		get(CONFIRMATION_PATH, (req, res) -> confirmationController.showConfirmationPage(req, res), new HandlebarsTemplateEngine());
+		
+		get(ACCOUNTRECOVERY_PATH, (req, res) -> accountrecoveryController.showAccountRecoveryEmailPage(req, res), new HandlebarsTemplateEngine());
+		
+		get(NEWINFO_PATH, (req, res) -> accountrecoveryController.showAccountRecoveryNewInfoPage(req, res), new HandlebarsTemplateEngine());
+		
 		
 		get(DEPARTMENTS_PATH, (req, res) -> departmentsController.showDepartmentsPage(req, res),
 				new HandlebarsTemplateEngine());

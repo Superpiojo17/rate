@@ -19,7 +19,6 @@ public class SessionsController {
 
 		return new ModelAndView(null, "sessions/register.hbs");
 	}
-	
 
 	public String register(Request req, Response res) {
 		UserDao userDao = DaoManager.getInstance().getUserDao();
@@ -87,10 +86,12 @@ public class SessionsController {
 				System.out.println("right before check");
 				System.out.println(tmp.getFirst_name());
 
-				if (tmp != null) {
-					res.redirect("/login");
-				} 
+				if (tmp == null) {
 					res.redirect("/register");
+				} else {
+					res.redirect("/login");
+					return "";
+				}
 
 			} else {
 				// "This email is already in use."
