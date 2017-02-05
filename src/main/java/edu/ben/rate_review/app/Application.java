@@ -43,6 +43,7 @@ public class Application {
 	private static AccountRecoveryController accountrecoveryController = new AccountRecoveryController();
 
 	// match up paths
+	public static String HOME_PATH = "/";
 	public static String USERS_PATH = "/users";
 	public static String USER_PATH = "/user";
 	public static String LOGIN_PATH = "/login";
@@ -61,7 +62,6 @@ public class Application {
 	public static String DEACTIVATION_PATH = "/deactivation";
 	public static String ACCOUNTRECOVERY_PATH = "/accountrecovery";
 	public static String NEWINFO_PATH = "/newinfo";
-
 
 	public static void main(String[] args) throws Exception {
 
@@ -85,38 +85,15 @@ public class Application {
 	 * and use this structure when you can
 	 */
 	private static void configRoutes() {
-		
+
 		get(TEACHER_PATH, (req, res) -> teacherController.showTeacherPage(req, res), new HandlebarsTemplateEngine());
-		
-		get(ACTIVATION_PATH, (req, res) -> activationController.showActivationPage(req, res), new HandlebarsTemplateEngine());
-		
-		get(DEACTIVATION_PATH, (req, res) -> activationController.showDeActivationPage(req, res), new HandlebarsTemplateEngine());
-		
-		get(CONFIRMATION_PATH, (req, res) -> confirmationController.showConfirmationPage(req, res), new HandlebarsTemplateEngine());
-		
-		get(ACCOUNTRECOVERY_PATH, (req, res) -> accountrecoveryController.showAccountRecoveryEmailPage(req, res), new HandlebarsTemplateEngine());
-		
-		get(NEWINFO_PATH, (req, res) -> accountrecoveryController.showAccountRecoveryNewInfoPage(req, res), new HandlebarsTemplateEngine());
-		
-		
+
 		get(DEPARTMENTS_PATH, (req, res) -> departmentsController.showDepartmentsPage(req, res),
 				new HandlebarsTemplateEngine());
-		get(TUTORS_PATH, (req, res) -> tutorsController.showTutorsPage(req, res),
-				new HandlebarsTemplateEngine());
+		get(TUTORS_PATH, (req, res) -> tutorsController.showTutorsPage(req, res), new HandlebarsTemplateEngine());
 
-		get("/", (req, res) -> homeController.showHomePage(req, res), new HandlebarsTemplateEngine());
+		get(HOME_PATH, (req, res) -> homeController.showHomePage(req, res), new HandlebarsTemplateEngine());
 
-		// Session Routes
-		// get("/register", (req, res) -> sessionsController.showRegister(req,
-		// res), new HandlebarsTemplateEngine());
-		post("/register", (req, res) -> sessionsController.register(req, res));
-		
-//		post("/ACTIVATION_PATH", (req, res) -> activationController.activation(req, res));
-
-		get("/", (req, res) -> homeController.showHomePage(req, res), new HandlebarsTemplateEngine());
-
-		get(LOGIN_PATH, (req, res) -> loginController.showLoginPage(req, res), new HandlebarsTemplateEngine());
-		post("/login", (req, res) -> loginController.login(req, res));
 		get(FACULTYDASHBOARD_PATH, (req, res) -> facultydashController.showFacultyDashboardPage(req, res),
 				new HandlebarsTemplateEngine());
 		get(ADMINDASHBOARD_PATH, (req, res) -> admindashController.showAdminDashboardPage(req, res),
@@ -126,17 +103,46 @@ public class Application {
 				new HandlebarsTemplateEngine());
 
 		get(ABOUTUS_PATH, (req, res) -> aboutusController.showAboutUsPage(req, res), new HandlebarsTemplateEngine());
-		get(REGISTER_PATH, (req, res) -> registerController.showRegisterPage(req, res), new HandlebarsTemplateEngine());
+
 		get(CONTACTUS_PATH, (req, res) -> contactusController.showContactUsPage(req, res),
 				new HandlebarsTemplateEngine());
 		get(DEPARTMENTS_PATH, (req, res) -> departmentsController.showDepartmentsPage(req, res),
 				new HandlebarsTemplateEngine());
-		get(TUTORS_PATH, (req, res) -> tutorsController.showTutorsPage(req, res),
-				new HandlebarsTemplateEngine());
+		get(TUTORS_PATH, (req, res) -> tutorsController.showTutorsPage(req, res), new HandlebarsTemplateEngine());
 		get(STUDENTDASHBOARD_PATH, (req, res) -> studentdashController.showStudentDashboardPage(req, res),
 				new HandlebarsTemplateEngine());
-		// User Routes
 
+		// Confirmation paths
+		get(CONFIRMATION_PATH, (req, res) -> confirmationController.showConfirmationPage(req, res),
+				new HandlebarsTemplateEngine());
+		post(CONFIRMATION_PATH, (req, res) -> confirmationController.confirm(req, res));
+
+		// Account activation and deactivation
+		get(ACTIVATION_PATH, (req, res) -> activationController.showActivationPage(req, res),
+				new HandlebarsTemplateEngine());
+		get(DEACTIVATION_PATH, (req, res) -> activationController.showDeActivationPage(req, res),
+				new HandlebarsTemplateEngine());
+		post(ACTIVATION_PATH, (req, res) -> activationController.activate(req, res));
+		post(DEACTIVATION_PATH, (req, res) -> activationController.deactivate(req, res));
+
+		// Account Recovery
+		// request recovery
+		get(ACCOUNTRECOVERY_PATH, (req, res) -> accountrecoveryController.showAccountRecoveryEmailPage(req, res),
+				new HandlebarsTemplateEngine());
+		post(ACCOUNTRECOVERY_PATH, (req, res) -> accountrecoveryController.enterEmailRecoverAccount(req, res));
+		// recover account with new info
+		get(NEWINFO_PATH, (req, res) -> accountrecoveryController.showAccountRecoveryNewInfoPage(req, res),
+				new HandlebarsTemplateEngine());
+
+		// Session Routes
+		// register route
+		get(REGISTER_PATH, (req, res) -> registerController.showRegisterPage(req, res), new HandlebarsTemplateEngine());
+		post(REGISTER_PATH, (req, res) -> sessionsController.register(req, res));
+		// login route
+		get(LOGIN_PATH, (req, res) -> loginController.showLoginPage(req, res), new HandlebarsTemplateEngine());
+		post(LOGIN_PATH, (req, res) -> loginController.login(req, res));
+
+		// User Routes
 		// List all Users
 		get(USERS_PATH, (req, res) -> usersController.index(req, res), new HandlebarsTemplateEngine());
 		// New User form
