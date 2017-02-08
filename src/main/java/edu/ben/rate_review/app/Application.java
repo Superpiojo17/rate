@@ -133,6 +133,7 @@ public class Application {
 		// recover account with new info
 		get(NEWINFO_PATH, (req, res) -> accountrecoveryController.showAccountRecoveryNewInfoPage(req, res),
 				new HandlebarsTemplateEngine());
+		post(NEWINFO_PATH, (req, res) -> accountrecoveryController.recoverAccount(req, res));
 
 		// Session Routes
 		// register route

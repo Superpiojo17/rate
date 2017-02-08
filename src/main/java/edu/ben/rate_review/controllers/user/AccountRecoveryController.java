@@ -6,6 +6,8 @@ import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.email.Email;
+import edu.ben.rate_review.encryption.SecurePassword;
+import edu.ben.rate_review.models.RecoveringUser;
 import edu.ben.rate_review.models.User;
 import spark.ModelAndView;
 import spark.Request;
@@ -47,6 +49,56 @@ public class AccountRecoveryController {
 	}
 
 	/**
+	 * Method which is called after submitting the new info form. Recovers a
+	 * user's lost account
+	 * 
+	 * @param req
+	 * @param res
+	 * @return
+	 */
+	public String recoverAccount(Request req, Response res) {
+
+		UserDao userDao = DaoManager.getInstance().getUserDao();
+		User user = new User();
+		RecoveringUser rUser = new RecoveringUser();
+
+		if (!req.queryParams("email").isEmpty() && !req.queryParams("temp_password").isEmpty()
+				&& !req.queryParams("new_password").isEmpty() && !req.queryParams("verify_password").isEmpty()) {
+			if (req.queryParams("new_password").equals(req.queryParams("verify_password"))) {
+				user = userDao.findByEmail(req.queryParams("email"));
+				if (user != null) {
+					rUser = userDao.recoveryFindByEmail(user.getEmail());
+					if (rUser != null) {
+						if (SecurePassword.getCheckPassword(req.queryParams("temp_password"), rUser.getTempPass())) {
+							user.setPassword(SecurePassword.getHashPassword(req.queryParams("new_password")));
+							userDao.updatePassword(user);
+							res.redirect(Application.LOGIN_PATH);
+
+						} else {
+							// incorrect temporary password
+							res.redirect(Application.NEWINFO_PATH);
+						}
+					} else {
+						// recovering user was not found
+						res.redirect(Application.NEWINFO_PATH);
+					}
+				} else {
+					// user was not found
+					res.redirect(Application.NEWINFO_PATH);
+				}
+			} else {
+				// new password and verify password do not match
+				res.redirect(Application.NEWINFO_PATH);
+			}
+		} else {
+			// all forms must be filled out
+			res.redirect(Application.NEWINFO_PATH);
+		}
+
+		return "";
+	}
+
+	/**
 	 * Finds user's account in database, calls method to send user a new
 	 * password, and redirects to new location.
 	 * 
@@ -62,7 +114,8 @@ public class AccountRecoveryController {
 		if (!req.queryParams("email").isEmpty()) {
 			user = userDao.findByEmail(req.queryParams("email"));
 			if (user != null) {
-				sendRecoveryEmail(user);
+				String tempPass = sendRecoveryEmail(user);
+				userDao.storeTempPassword(user, tempPass);
 				res.redirect(Application.NEWINFO_PATH);
 			} else {
 				res.redirect(Application.ACCOUNTRECOVERY_PATH);
@@ -80,9 +133,10 @@ public class AccountRecoveryController {
 	 * 
 	 * @param user
 	 */
-	private void sendRecoveryEmail(User user) {
+	private String sendRecoveryEmail(User user) {
 
 		String domain = "localhost:3000";
+		String tempPassword = createTempPass(user);
 
 		String subject = "Rate&Review Account Recovery";
 		String messageHeader = "Hello " + user.getFirst_name() + ",\n\n\n";
@@ -91,12 +145,12 @@ public class AccountRecoveryController {
 				+ " to recover your account. If you did not request an account recovery,"
 				+ " please change your password, as your account may have been compromised. "
 				+ "To proceed, use the provided temporary password at " + domain + "/newinfo\n\n";
-		String temporaryPassword = "Temporary password: " + createTempPass(user);
+		String temporaryPassword = "Temporary password: " + tempPassword;
 		String messageFooter = "\n\n\nSincerely,\n\nThe Rate&Review Team";
 		String message = messageHeader + messageBody + temporaryPassword + messageFooter;
 
 		Email.deliverEmail(user.getFirst_name(), user.getEmail(), subject, message);
-
+		return tempPassword;
 	}
 
 	/**
@@ -134,7 +188,6 @@ public class AccountRecoveryController {
 
 		}
 
-		// ENTER TEMP PASS INTO DB TABLE HERE
 		return tempPass;
 	}
 
