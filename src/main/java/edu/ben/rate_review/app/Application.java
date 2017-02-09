@@ -4,6 +4,7 @@ import static spark.Spark.*;
 import edu.ben.rate_review.controller.session.SessionsController;
 import edu.ben.rate_review.controller.home.AboutUsController;
 import edu.ben.rate_review.controller.home.ActivationController;
+import edu.ben.rate_review.controller.home.ChangePasswordController;
 import edu.ben.rate_review.controller.home.ConfirmationController;
 import edu.ben.rate_review.controller.home.ContactUsController;
 import edu.ben.rate_review.controller.home.DepartmentsController;
@@ -41,6 +42,7 @@ public class Application {
 	private static ActivationController activationController = new ActivationController();
 	private static ConfirmationController confirmationController = new ConfirmationController();
 	private static AccountRecoveryController accountrecoveryController = new AccountRecoveryController();
+	private static ChangePasswordController changePasswordController = new ChangePasswordController();
 
 	// match up paths
 	public static String HOME_PATH = "/";
@@ -58,6 +60,7 @@ public class Application {
 	public static String DEPARTMENTS_PATH = "/departments";
 	public static String TUTORS_PATH = "/tutors";
 	public static String ACTIVATION_PATH = "/activation";
+	public static String CHANGEPASSWORD_PATH = "/changepassword";
 	public static String CONFIRMATION_PATH = "/confirmation";
 	public static String DEACTIVATION_PATH = "/deactivation";
 	public static String ACCOUNTRECOVERY_PATH = "/accountrecovery";
@@ -111,6 +114,11 @@ public class Application {
 		get(TUTORS_PATH, (req, res) -> tutorsController.showTutorsPage(req, res), new HandlebarsTemplateEngine());
 		get(STUDENTDASHBOARD_PATH, (req, res) -> studentdashController.showStudentDashboardPage(req, res),
 				new HandlebarsTemplateEngine());
+
+		// Change password paths
+		get(CHANGEPASSWORD_PATH, (req, res) -> changePasswordController.showChangePasswordPage(req, res),
+				new HandlebarsTemplateEngine());
+		post(CHANGEPASSWORD_PATH, (req, res) -> changePasswordController.changePassword(req, res));
 
 		// Confirmation paths
 		get(CONFIRMATION_PATH, (req, res) -> confirmationController.showConfirmationPage(req, res),
