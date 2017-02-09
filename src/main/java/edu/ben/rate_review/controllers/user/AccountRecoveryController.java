@@ -64,18 +64,26 @@ public class AccountRecoveryController {
 
 		if (!req.queryParams("email").isEmpty() && !req.queryParams("temp_password").isEmpty()
 				&& !req.queryParams("new_password").isEmpty() && !req.queryParams("verify_password").isEmpty()) {
+			// enters if no fields are empty
 			if (req.queryParams("new_password").equals(req.queryParams("verify_password"))) {
+				// enters if new password matches verify password
 				user = userDao.findByEmail(req.queryParams("email"));
 				if (user != null) {
+					// enters if user is found
 					rUser = userDao.recoveryFindByEmail(user.getEmail());
 					if (rUser != null) {
+						// enters if recovering user is found
 						if (SecurePassword.getCheckPassword(req.queryParams("temp_password"), rUser.getTempPass())) {
+							// assigns new password to user
 							user.setPassword(SecurePassword.getHashPassword(req.queryParams("new_password")));
+							// updates user's password
 							userDao.updatePassword(user);
+							// removes requested temporary password
+							userDao.removeRecoveryRequest(user);
 							res.redirect(Application.LOGIN_PATH);
 
 						} else {
-							// incorrect temporary password
+							// incorrect temporary password or outdated
 							res.redirect(Application.NEWINFO_PATH);
 						}
 					} else {
@@ -110,17 +118,27 @@ public class AccountRecoveryController {
 
 		UserDao userDao = DaoManager.getInstance().getUserDao();
 		User user = new User();
+		RecoveringUser rUser = new RecoveringUser();
 
 		if (!req.queryParams("email").isEmpty()) {
 			user = userDao.findByEmail(req.queryParams("email"));
 			if (user != null) {
 				String tempPass = sendRecoveryEmail(user);
+				// checks to see if user already has request in table
+				rUser = userDao.recoveryFindByEmail(user.getEmail());
+				if (rUser != null){
+					// if previous request in table, deletes
+					userDao.removeRecoveryRequest(user);
+				}
+				// creates entry for user attempted to recover account
 				userDao.storeTempPassword(user, tempPass);
 				res.redirect(Application.NEWINFO_PATH);
 			} else {
+				// user not found
 				res.redirect(Application.ACCOUNTRECOVERY_PATH);
 			}
 		} else {
+			// one or more fields was empty
 			res.redirect(Application.ACCOUNTRECOVERY_PATH);
 		}
 
@@ -148,7 +166,7 @@ public class AccountRecoveryController {
 		String temporaryPassword = "Temporary password: " + tempPassword;
 		String messageFooter = "\n\n\nSincerely,\n\nThe Rate&Review Team";
 		String message = messageHeader + messageBody + temporaryPassword + messageFooter;
-
+		System.out.println(tempPassword);
 		Email.deliverEmail(user.getFirst_name(), user.getEmail(), subject, message);
 		return tempPassword;
 	}

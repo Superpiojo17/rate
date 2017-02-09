@@ -1,7 +1,5 @@
 package edu.ben.rate_review.models;
 
-import edu.ben.rate_review.encryption.SecurePassword;
-
 /**
  * Class to make RecoveringUser objects
  * 
@@ -13,22 +11,38 @@ public class RecoveringUser {
 	private String email;
 	private String temp_password;
 
+	/**
+	 * Getter for email
+	 * 
+	 * @return
+	 */
 	public String getEmail() {
 		return email;
 	}
 
+	/**
+	 * Setter for email
+	 * 
+	 * @param email
+	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
+	/**
+	 * Getter for temporary password
+	 * 
+	 * @return
+	 */
 	public String getTempPass() {
 		return temp_password;
 	}
-	
-	public void setEncryptedPassword(String temp_password) {
-		this.temp_password = SecurePassword.getHashPassword(temp_password);
-	}
 
+	/**
+	 * Setter for temporary password
+	 * 
+	 * @param temp_password
+	 */
 	public void setTempPass(String temp_password) {
 		this.temp_password = temp_password;
 	}

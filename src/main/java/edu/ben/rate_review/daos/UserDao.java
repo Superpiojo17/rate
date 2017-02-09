@@ -106,8 +106,7 @@ public class UserDao implements Dao<User> {
 			PreparedStatement q = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
 			q.setString(1, email);
-
-			// Run your shit
+			// runs the query
 			ResultSet rs = q.executeQuery();
 			if (rs.next()) {
 				return recoveryMapRow(rs);
@@ -176,8 +175,6 @@ public class UserDao implements Dao<User> {
 	 * @return
 	 */
 	public User activateAccount(User user) {
-		// previously: UPDATE rate.users SET active = NOT active WHERE email = ?
-		// LIMIT 1;
 		// Declare SQL template query
 		String sql = "UPDATE " + USER_TABLE
 				+ " SET active = CASE active WHEN 0 THEN 1 ELSE active END WHERE email = ? LIMIT 1";
@@ -304,6 +301,25 @@ public class UserDao implements Dao<User> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public User removeRecoveryRequest(User user) {
+		// DELETE FROM rate.account_recovery WHERE email = 'b2125695@ben.edu';
+		String sql = "DELETE FROM " + ACCOUNT_RECOVERY_TABLE + " WHERE email = ? LIMIT 1";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setString(1, user.getEmail());
+			// Runs query
+			ps.execute();
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
 	}
 
 	/**
