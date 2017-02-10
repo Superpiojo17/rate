@@ -166,6 +166,7 @@ public class AccountRecoveryController {
 		String temporaryPassword = "Temporary password: " + tempPassword;
 		String messageFooter = "\n\n\nSincerely,\n\nThe Rate&Review Team";
 		String message = messageHeader + messageBody + temporaryPassword + messageFooter;
+		System.out.println(tempPassword);
 		Email.deliverEmail(user.getFirst_name(), user.getEmail(), subject, message);
 		return tempPassword;
 	}

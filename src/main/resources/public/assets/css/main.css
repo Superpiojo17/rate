@@ -85,13 +85,6 @@
 	.container {
 		width: 80em;
 	}
-.temp123
-{
-margin: 0 auto;
-margin-left: auto;
-margin-right: auto;
-text-align:center;
-}
 
 	@media screen and (max-width: 1680px) {
 
@@ -3878,24 +3871,50 @@ text-align:center;
 			}
 
 		}
-		
-		/** custom **/
-		.hide{
-		display: none;
-		}
+	/* columns */
+.leftcol {
+	width: 190px;
+	height: auto;
+	float: left;
+	padding-left: 1em;
+}
+
+.centercol {
+	width: 800px;
+	height: auto;
+	float: left;
+	padding-left: 2.5em;
+}
+
+			/* Banner */
+#studentDash {
+	background-image: 
+		url("../../images/studentDash.jpg");
+	height: 250px;
+	background-size: 100%;
+}
+#adminDash {
+	background-image: 
+		url("../../images/adminDashboard.jpg");
+	height: 250px;
+	background-size: 100%;
+}
+
+#facultyDash {
+	background-image: 
+		url("../../images/facultyDashboard.jpg");
+	height: 250px;
+	background-size: 100%;
+}
+
+#tutorDash {
+	background-image: 
+		url("../../images/studentDash.jpg");
+	height: 250px;
+	background-size: 100%;
+}
 
 /* Banner */
-
-#studenttest {
-   background-image: url("images/overlay.png"), url("../../images/BUbanner.jpg");
-   height: 100px;
-   background-size: 100%;
-}
-#facultytest {
-   background-image: url("images/overlay.png"), url("../../images/pic10.jpg");
-   height: 100px;
-   background-size: 100%;
-}
 
 	#banner {
 		padding: 8em 0 6em 0;

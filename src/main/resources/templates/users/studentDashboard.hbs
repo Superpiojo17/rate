@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
 	</head>
 	
 	
@@ -25,11 +26,10 @@
 		<!-- Header -->
 			<header id="header">
 				<h1>Student Dashboard</h1>
-				<a href="#nav">Menu</a>
 			</header>
 
 			<!-- Nav -->
-			<nav id="nav">
+			<nav id="nav" class="visible">
 				<ul class="links">
 					<li><a href="/">Home</a></li>
 					<li><a href="/aboutus">Search</a></li>
@@ -46,23 +46,59 @@
 			</nav>
 			
 			<!-- Banner -->
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="studenttest">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="studentDash">
 </div>
-<br>
-<br>
- 
-		<!-- Main -->
-			<section id="main" class="wrapper">
-				<div class="container">
-<div class="container">
-  <h2>Welcome</h2>
+ <p> </p>
+
+   
   
-<p id="demo"></p>
-
-<script>
-document.getElementById("demo").innerHTML = Date();
-</script>
-
+<section id="main" class="wrapper">
+			<div class="leftcol"> 
+			
+			<!-- Button trigger modal -->
+ <br>
+			&nbsp;
+     <p><h4 id="date"></h4></p>
+     <p><h4 id="hour"></h4></p>
+      <a href="#announcement" class="btn btn-info" data-toggle="collapse">Announcements</a>
+  <div id="announcement" class="collapse">
+							<div class="table-wrapper">
+								<table class="alt">
+									<thead>
+										<tr>
+											<th>Date</th>
+											<th>Description</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>2/09/17</td>
+											<td>Website under maintenance</td>
+										</tr>
+										<tr>
+											<td>2/12/17</td>
+											<td>Chance wins grammy</td>
+										</tr>
+										<tr>
+											<td>5/17/17</td>
+											<td>Freedom</td>
+										</tr>
+									</tbody>
+									<tfoot>
+										<tr>
+											<td colspan="2"></td>
+										</tr>
+									</tfoot>
+								</table>
+								
+							</div>
+							
+							
+						</section>
+							<div class="centercol"> 
+							&ensp;
+							<h2> Welcome </h2>
+							
   <p>Click on the headings below to view your relevant information.</p>
   <div class="panel-group" id="accordion">
     <div class="panel panel-default">
@@ -97,17 +133,102 @@ document.getElementById("demo").innerHTML = Date();
     </div>
   </div> 
 </div>
-				</div>
-			</section>
-
 		
+			
+  </div>
+  
+    
+    
+    
+    
+		
+    
+    
+    
+  
+    
+    
+				<!-- CODE -->
 
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
+			<script>
+
+// d = new Date();
+
+
+</script>
+
+<script type="text/javascript">
+<!--
+
+var d_names = new Array("Sunday", "Monday", "Tuesday",
+"Wednesday", "Thursday", "Friday", "Saturday");
+
+var m_names = new Array("January", "February", "March", 
+"April", "May", "June", "July", "August", "September", 
+"October", "November", "December");
+
+var d = new Date();
+var curr_day = d.getDay();
+var curr_date = d.getDate();
+var sup = "";
+if (curr_date == 1 || curr_date == 21 || curr_date ==31)
+   {
+   sup = "st";
+   }
+else if (curr_date == 2 || curr_date == 22)
+   {
+   sup = "nd";
+   }
+else if (curr_date == 3 || curr_date == 23)
+   {
+   sup = "rd";
+   }
+else
+   {
+   sup = "th";
+   }
+var curr_month = d.getMonth();
+var curr_year = d.getFullYear();
+document.getElementById("date").innerHTML = d_names[curr_day] + " " + curr_date + "<SUP>"
++ sup + "</SUP> " + m_names[curr_month] + " " + curr_year;
+
+
+var a_p = "";
+var hour = new Date();
+
+var curr_hour = hour.getHours();
+var curr_min = hour.getMinutes();
+
+if (curr_hour < 12)
+   {
+   a_p = "AM";
+   }
+else
+   {
+   a_p = "PM";
+   }
+if (curr_hour == 0)
+   {
+   curr_hour = 12;
+   }
+if (curr_hour > 12)
+   {
+   curr_hour = curr_hour - 12;
+   }
+
+var curr_min = hour.getMinutes();
+
+document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " + a_p;
+
+
+
+</script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
+			<script src="assets/js/main2.js"></script>
 
 	</body>
 </html>

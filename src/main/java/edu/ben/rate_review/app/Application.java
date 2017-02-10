@@ -65,6 +65,7 @@ public class Application {
 	public static String DEACTIVATION_PATH = "/deactivation";
 	public static String ACCOUNTRECOVERY_PATH = "/accountrecovery";
 	public static String NEWINFO_PATH = "/newinfo";
+	public static String ALLUSERS_PATH = "/allusers";
 
 	public static void main(String[] args) throws Exception {
 
@@ -102,6 +103,9 @@ public class Application {
 		get(ADMINDASHBOARD_PATH, (req, res) -> admindashController.showAdminDashboardPage(req, res),
 				new HandlebarsTemplateEngine());
 
+		get(ALLUSERS_PATH, (req, res) -> admindashController.showAllUsersPage(req, res),
+				new HandlebarsTemplateEngine());
+		
 		get(TUTORDASHBOARD_PATH, (req, res) -> tutordashController.showTutorDashboardPage(req, res),
 				new HandlebarsTemplateEngine());
 
