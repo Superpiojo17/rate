@@ -61,6 +61,8 @@ public class AccountRecoveryController {
 		UserDao userDao = DaoManager.getInstance().getUserDao();
 		User user = new User();
 		RecoveringUser rUser = new RecoveringUser();
+		// checks account recovery for outdated requests and deletes them
+		userDao.removeOldRecoveryRequest();
 
 		if (!req.queryParams("email").isEmpty() && !req.queryParams("temp_password").isEmpty()
 				&& !req.queryParams("new_password").isEmpty() && !req.queryParams("verify_password").isEmpty()) {
@@ -119,7 +121,7 @@ public class AccountRecoveryController {
 		UserDao userDao = DaoManager.getInstance().getUserDao();
 		User user = new User();
 		RecoveringUser rUser = new RecoveringUser();
-
+		
 		if (!req.queryParams("email").isEmpty()) {
 			user = userDao.findByEmail(req.queryParams("email"));
 			if (user != null) {

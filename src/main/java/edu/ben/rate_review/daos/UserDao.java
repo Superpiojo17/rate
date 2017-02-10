@@ -302,9 +302,37 @@ public class UserDao implements Dao<User> {
 			e.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * Removes recovery requests that have expired
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public void removeOldRecoveryRequest() {
+
+		String sql = "DELETE FROM " + ACCOUNT_RECOVERY_TABLE + " WHERE datetime < DATE_SUB(NOW(), INTERVAL 24 hour)";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Runs query
+			ps.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Called when user has successfully recovered their account, or they
+	 * request a new temporary password before using their previously requested
+	 * password before it has expired.
+	 * 
+	 * @param user
+	 * @return
+	 */
 	public User removeRecoveryRequest(User user) {
-		// DELETE FROM rate.account_recovery WHERE email = 'b2125695@ben.edu';
+
 		String sql = "DELETE FROM " + ACCOUNT_RECOVERY_TABLE + " WHERE email = ? LIMIT 1";
 
 		try {
