@@ -24,7 +24,8 @@ public class Email {
 		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				// create email account and link here
-				return new PasswordAuthentication("ratereviewsite", "capstone");
+				//return new PasswordAuthentication("ratereviewsite", "capstone");
+				return new PasswordAuthentication("ratereviewtest", "capstone17");
 			}
 		});
 
@@ -33,6 +34,7 @@ public class Email {
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
 			message.setSubject(emailSubject);
 			message.setText(emailBody);
+			message.setContent("<h3>" + emailBody + "</h3>", "text/html");
 			Transport.send(message);
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);

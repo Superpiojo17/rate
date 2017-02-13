@@ -149,29 +149,28 @@ public class AccountRecoveryController {
 
 	/**
 	 * Sends recovery email to the user which contains a temporary password and
-	 * the link in which to enter it.
+	 * the link in which to enter it. Now used HTML
 	 * 
 	 * @param user
 	 */
 	private String sendRecoveryEmail(User user) {
 
-		String domain = "localhost:3000";
 		String tempPassword = createTempPass(user);
 
 		String subject = "Rate&Review Account Recovery";
-		String messageHeader = "Hello " + user.getFirst_name() + ",\n\n\n";
-
-		String messageBody = "This message is to confirm that you have requested"
+		String messageHeader = "<p>Hello " + user.getFirst_name() + ",</p><br />";
+		String messageBody = "<p>This message is to confirm that you have requested"
 				+ " to recover your account. If you did not request an account recovery,"
 				+ " please change your password, as your account may have been compromised. "
-				+ "To proceed, use the provided temporary password at " + domain + "/newinfo\n\n";
-		String temporaryPassword = "Temporary password: " + tempPassword;
-		String messageFooter = "\n\n\nSincerely,\n\nThe Rate&Review Team";
+				+ "To proceed, use the provided temporary password here: " + "<a href=\"http://" + Application.DOMAIN + "/newinfo" + "\">Rate & Review</a></p>";
+		String temporaryPassword = "<p>Temporary password: " + tempPassword + "</p>";
+		String messageFooter = "<br /><p>Sincerely,</p><p>The Rate&Review Team</p>";
 		String message = messageHeader + messageBody + temporaryPassword + messageFooter;
 		System.out.println(tempPassword);
 		Email.deliverEmail(user.getFirst_name(), user.getEmail(), subject, message);
 		return tempPassword;
 	}
+
 
 	/**
 	 * Generates a temporary password for the user

@@ -45,6 +45,7 @@ public class Application {
 	private static ChangePasswordController changePasswordController = new ChangePasswordController();
 
 	// match up paths
+	public static String DOMAIN = "localhost:3000";
 	public static String HOME_PATH = "/";
 	public static String USERS_PATH = "/users";
 	public static String USER_PATH = "/user";
