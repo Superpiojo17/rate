@@ -2,6 +2,7 @@ package edu.ben.rate_review.controller.home;
 
 import java.util.HashMap;
 
+import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.email.Email;
@@ -80,10 +81,10 @@ public class ChangePasswordController {
 	private static void sendConfirmChangePasswordEmail(User user) {
 
 		String subject = "Rate&Review Password Change";
-		String messageHeader = "Hello " + user.getFirst_name() + ",\n\n\n";
-		String messageBody = "This message is to confirm that you have successfully changed "
-				+ "your password! If this was not performed by you, please go to the account recovery page!";
-		String messageFooter = "\n\n\nSincerely,\n\nThe Rate&Review Team";
+		String messageHeader = "<p>Hello " + user.getFirst_name() + ",</p><br />";
+		String messageBody = "<p>This message is to confirm that you have successfully changed "
+				+ "your password! If this was not performed by you, please go to the " + "<a href=\"http://" + Application.DOMAIN + "/accountrecovery" + "\">account recovery page</a>!</p>";
+		String messageFooter = "<br /><p>Sincerely,</p><p>The Rate&Review Team</p>";
 		String message = messageHeader + messageBody + messageFooter;
 
 		Email.deliverEmail(user.getFirst_name(), user.getEmail(), subject, message);

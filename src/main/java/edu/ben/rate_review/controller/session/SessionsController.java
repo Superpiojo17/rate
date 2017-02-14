@@ -1,5 +1,7 @@
 package edu.ben.rate_review.controller.session;
 
+import edu.ben.rate_review.app.Application;
+
 //import static spark.Spark.redirect;
 
 import edu.ben.rate_review.daos.DaoManager;
@@ -197,8 +199,6 @@ public class SessionsController {
 	 */
 	private static void confirmRegistration(User user) {
 		
-		String domain = "localhost:3000";
-		
 		String accountType = "";
 
 		if (user.getRole() == 1) {
@@ -212,10 +212,10 @@ public class SessionsController {
 		}
 
 		String subject = "Rate&Review Registration";
-		String messageHeader = "Hello " + user.getFirst_name() + ",\n\n\n";
-		String messageBody = "This message is to confirm that you have successfully signed up for Rate&Review as a "
-				+ accountType + ". Please confirm your registration at " + domain + "/confirmation to get started!";
-		String messageFooter = "\n\n\nSincerely,\n\nThe Rate&Review Team";
+		String messageHeader = "<p>Hello " + user.getFirst_name() + ",</p><br />";
+		String messageBody = "<p>This message is to confirm that you have successfully signed up for Rate&Review as "
+				+ accountType + ". Please confirm your registration " + "<a href=\"http://" + Application.DOMAIN + "/confirmation" + "\">here</a> to get started!</p>";
+		String messageFooter = "<br /><p>Sincerely,</p><p>The Rate&Review Team</p>";
 		String message = messageHeader + messageBody + messageFooter;
 
 		Email.deliverEmail(user.getFirst_name(), user.getEmail(), subject, message);
