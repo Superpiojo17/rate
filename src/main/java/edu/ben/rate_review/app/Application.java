@@ -1,7 +1,17 @@
 package edu.ben.rate_review.app;
 
-import static spark.Spark.*;
-import edu.ben.rate_review.controller.session.SessionsController;
+import static spark.Spark.before;
+import static spark.Spark.delete;
+import static spark.Spark.exception;
+import static spark.Spark.get;
+import static spark.Spark.port;
+import static spark.Spark.post;
+import static spark.Spark.put;
+import static spark.Spark.staticFiles;
+
+import java.util.HashMap;
+
+import edu.ben.rate_review.authorization.AuthException;
 import edu.ben.rate_review.controller.home.AboutUsController;
 import edu.ben.rate_review.controller.home.ActivationController;
 import edu.ben.rate_review.controller.home.ChangePasswordController;
@@ -13,6 +23,7 @@ import edu.ben.rate_review.controller.home.LogInController;
 import edu.ben.rate_review.controller.home.RegisterController;
 import edu.ben.rate_review.controller.home.TeacherController;
 import edu.ben.rate_review.controller.home.TutorsController;
+import edu.ben.rate_review.controller.session.SessionsController;
 import edu.ben.rate_review.controllers.user.AccountRecoveryController;
 import edu.ben.rate_review.controllers.user.AdminDashboardController;
 import edu.ben.rate_review.controllers.user.FacultyDashboardController;
@@ -20,6 +31,13 @@ import edu.ben.rate_review.controllers.user.StudentDashboardController;
 import edu.ben.rate_review.controllers.user.TutorDashboardController;
 import edu.ben.rate_review.controllers.user.UsersController;
 import edu.ben.rate_review.daos.DaoManager;
+import edu.ben.rate_review.models.User;
+import edu.ben.rate_review.policy.AuthPolicyManager;
+import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
+import spark.Route;
+import spark.Session;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -45,7 +63,6 @@ public class Application {
 	private static ChangePasswordController changePasswordController = new ChangePasswordController();
 
 	// match up paths
-	public static String DOMAIN = "localhost:3000";
 	public static String HOME_PATH = "/";
 	public static String USERS_PATH = "/users";
 	public static String USER_PATH = "/user";
@@ -67,6 +84,7 @@ public class Application {
 	public static String ACCOUNTRECOVERY_PATH = "/accountrecovery";
 	public static String NEWINFO_PATH = "/newinfo";
 	public static String ALLUSERS_PATH = "/allusers";
+	public static String TEST_PATH = "/test";
 
 	public static void main(String[] args) throws Exception {
 
@@ -77,12 +95,7 @@ public class Application {
 		// available from the server endpoint
 		staticFiles.location("/public");
 		configRoutes();
-
-		Spark.exception(Exception.class, (exception, request, response) -> {
-			exception.printStackTrace();
-		});
-
-		DaoManager d = new DaoManager();
+		new DaoManager();
 	}
 
 	/**
@@ -90,6 +103,36 @@ public class Application {
 	 * and use this structure when you can
 	 */
 	private static void configRoutes() {
+
+		// Filter that checks things right away before every request
+		before("/*", (request, response) -> {
+			// create teh session and assign it to a variable
+			Session session = request.session(true);
+
+			// if the current user is null
+			if (session.attribute("current_user") != null) {
+				User u = null;
+				User currentUser = (User) session.attribute("current_user");
+				if (currentUser != null) {
+					u = DaoManager.getInstance().getUserDao().findByEmail(currentUser.getEmail());
+				}
+				AuthPolicyManager.currentUser(u);
+				session.attribute("current_user", u);
+			}
+		});
+
+		exception(AuthException.class, (exception, request, response) -> {
+			System.out.println(exception.getMessage());
+			HashMap<String, Object> model = new HashMap<>();
+			model.put("errors", exception.getMessage());
+			//
+			response.status(401);
+			response.body(exception.getMessage());
+		});
+
+		exception(Exception.class, (exception, request, response) -> {
+			exception.printStackTrace();
+		});
 
 		get(TEACHER_PATH, (req, res) -> teacherController.showTeacherPage(req, res), new HandlebarsTemplateEngine());
 
@@ -106,7 +149,7 @@ public class Application {
 
 		get(ALLUSERS_PATH, (req, res) -> admindashController.showAllUsersPage(req, res),
 				new HandlebarsTemplateEngine());
-		
+
 		get(TUTORDASHBOARD_PATH, (req, res) -> tutordashController.showTutorDashboardPage(req, res),
 				new HandlebarsTemplateEngine());
 
@@ -137,6 +180,8 @@ public class Application {
 				new HandlebarsTemplateEngine());
 		post(ACTIVATION_PATH, (req, res) -> activationController.activate(req, res));
 		post(DEACTIVATION_PATH, (req, res) -> activationController.deactivate(req, res));
+
+		post(ALLUSERS_PATH, (req, res) -> admindashController.massRegister(req, res));
 
 		// Account Recovery
 		// request recovery
