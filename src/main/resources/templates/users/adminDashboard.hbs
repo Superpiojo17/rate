@@ -59,6 +59,7 @@
      <p><h4 id="hour"></h4></p>
       <a href="#announcement" class="btn btn-info" data-toggle="collapse">Announcements</a>
   <div id="announcement" class="collapse">
+  &nbsp;
 							<div class="table-wrapper">
 								<table class="alt">
 									<thead>
@@ -218,8 +219,11 @@ if (curr_hour > 12)
    }
 
 var curr_min = hour.getMinutes();
-
+if (curr_min < 10){
+document.getElementById("hour").innerHTML = curr_hour + " : 0" + curr_min + " " + a_p;
+} else if (curr_min > 9){
 document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " + a_p;
+}
 
 
 

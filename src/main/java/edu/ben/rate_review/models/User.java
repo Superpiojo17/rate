@@ -1,21 +1,18 @@
 package edu.ben.rate_review.models;
 
+import edu.ben.rate_review.authorization.AuthorizationUser;
 import edu.ben.rate_review.encryption.SecurePassword;
 
-public class User {
+public class User implements AuthorizationUser {
 	private Long id;
 	private String first_name;
 	private String last_name;
 	private String email;
 	private String encryptedPassword;
+	private String role_string;
 	private int role;
 	private boolean confirmed;
 	private boolean active;
-
-	public static final int ADMIN = 1;
-	public static final int PROFESSOR = 2;
-	public static final int TUTOR = 3;
-	public static final int STUDENT = 4;
 
 	public Long getId() {
 		return id;
@@ -56,15 +53,17 @@ public class User {
 	public void setEncryptedPassword(String encryptedPassword) {
 		this.encryptedPassword = SecurePassword.getHashPassword(encryptedPassword);
 	}
-	
+
 	public void setPassword(String encryptedPassword) {
 		this.encryptedPassword = encryptedPassword;
 	}
 
+	@Override
 	public int getRole() {
 		return role;
 	}
 
+	@Override
 	public void setRole(int role) {
 		this.role = role;
 	}
@@ -83,6 +82,29 @@ public class User {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	@Override
+	public boolean hasRole(int role) {
+		return this.role == role;
+	}
+
+	public String getRole_string() {
+		return role_string;
+	}
+
+	public void setRole_string(String role_string) {
+		if (role == 1) {
+			role_string = "Admin";
+		} else if (role == 2) {
+			role_string = "Faculty";
+		} else if (role == 3) {
+			role_string = "Tutor";
+		} else if (role == 4) {
+			role_string = "Student";
+		}
+
+		this.role_string = role_string;
 	}
 
 }

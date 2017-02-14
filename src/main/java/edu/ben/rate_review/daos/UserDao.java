@@ -51,6 +51,7 @@ public class UserDao implements Dao<User> {
 		tmp.setActive(rs.getBoolean("active"));
 		tmp.setFirst_name(rs.getString("first_name"));
 		tmp.setLast_name(rs.getString("last_name"));
+		tmp.setRole_string(rs.getString("role_id"));
 		return tmp;
 	}
 
@@ -255,20 +256,6 @@ public class UserDao implements Dao<User> {
 	 * 
 	 * @return all users from the database.
 	 */
-	// public ArrayList<User> getAll() {
-	//
-	// List<User> users = new ArrayList<User>();
-	// String sql = "SELECT * FROM user";
-	//
-	// try {
-	// users = jdbcTemplate.query(sql, mapRows());
-	//
-	// return (ArrayList<User>) users;
-	// } catch (EmptyResultDataAccessException e) {
-	// e.printStackTrace();
-	// return null;
-	// }
-	// }
 
 	public List<User> all() {
 		final String SELECT = "SELECT * FROM " + USER_TABLE;

@@ -7,10 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.ben.rate_review.app.Application;
+import edu.ben.rate_review.authorization.AuthException;
 import edu.ben.rate_review.controllers.BaseController;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.models.User;
+import edu.ben.rate_review.policy.AuthPolicyManager;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -92,8 +94,10 @@ public class UsersController implements BaseController {
 	 *
 	 * @param req
 	 * @param res
+	 * @throws AuthException 
 	 */
-	public String update(Request req, Response res) {
+	public String update(Request req, Response res) throws AuthException {
+		AuthPolicyManager.getInstance().getUserPolicy().edit(new User());
 		res.redirect(Application.USERS_PATH);
 		return "";
 	}

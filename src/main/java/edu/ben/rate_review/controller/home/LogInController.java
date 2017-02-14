@@ -8,9 +8,11 @@ import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.encryption.SecurePassword;
 import edu.ben.rate_review.models.User;
+import edu.ben.rate_review.policy.AuthPolicyManager;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import spark.Session;
 
 /**
  * Login controller
@@ -50,6 +52,13 @@ public class LogInController {
 				// determines role of user
 				int role = getAccountType(req.queryParams("email"), req.queryParams("password"));
 				// directs user to correct dashboard
+				Session session = req.session();
+				UserDao user = DaoManager.getInstance().getUserDao();
+				User u = user.findByEmail(req.queryParams("email"));
+				
+				session.attribute("current_user", u);
+				System.out.println(u.getEmail());
+//				session.attribute()
 				if (role == 4) {
 					res.redirect("/studentdashboard");
 				} else if (role == 3) {
@@ -57,7 +66,9 @@ public class LogInController {
 				} else if (role == 2) {
 					res.redirect("/facultydashboard");
 				} else if (role == 1) {
+					
 					res.redirect("/admindashboard");
+					
 				}
 			} else {
 				// if email is not found in the system, outputs message
@@ -137,7 +148,7 @@ public class LogInController {
 		UserDao userDao = DaoManager.getInstance().getUserDao();
 		User u = new User();
 		u = userDao.findByEmail(email);
-
+		
 		return u.getRole();
 	}
 
