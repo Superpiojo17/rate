@@ -7,6 +7,7 @@ import edu.ben.rate_review.controller.home.ContactUsController;
 import edu.ben.rate_review.controller.home.DepartmentsController;
 import edu.ben.rate_review.controller.home.HomeController;
 import edu.ben.rate_review.controller.home.LogInController;
+import edu.ben.rate_review.controller.home.ProfessorController;
 import edu.ben.rate_review.controller.home.RegisterController;
 import edu.ben.rate_review.controller.home.TeacherController;
 import edu.ben.rate_review.controller.home.TutorsController;
@@ -31,10 +32,12 @@ public class Application {
 	private static StudentDashboardController studentdashController = new StudentDashboardController();
 	private static DepartmentsController departmentsController = new DepartmentsController();
 	private static TutorsController tutorsController = new TutorsController();
+	private static TutorsController tutorController = new TutorsController();
 	private static AdminDashboardController admindashController = new AdminDashboardController();
 	private static FacultyDashboardController facultydashController = new FacultyDashboardController();
 	private static TutorDashboardController tutordashController = new TutorDashboardController();
 	private static TeacherController teacherController = new TeacherController();
+	private static ProfessorController professorController = new ProfessorController();
 
 	// match up paths
 	public static String USERS_PATH = "/users";
@@ -50,6 +53,9 @@ public class Application {
 	public static String TEACHER_PATH = "/teacher";
 	public static String DEPARTMENTS_PATH = "/departments";
 	public static String TUTORS_PATH = "/tutors";
+	public static String TUTOR_PATH = "/tutor";
+	public static String PROFESSOR_PATH = "/professor";
+	public static String REVIEWPROFESSOR_PATH = "/reviewprofessor";
 
 
 	public static void main(String[] args) throws Exception {
@@ -109,7 +115,13 @@ public class Application {
 				new HandlebarsTemplateEngine());
 		get(TUTORS_PATH, (req, res) -> tutorsController.showTutorsPage(req, res),
 				new HandlebarsTemplateEngine());
+		get(TUTOR_PATH, (req, res) -> tutorController.showTutorPage(req, res),
+				new HandlebarsTemplateEngine());
 		get(STUDENTDASHBOARD_PATH, (req, res) -> studentdashController.showStudentDashboardPage(req, res),
+				new HandlebarsTemplateEngine());
+		get(PROFESSOR_PATH, (req, res) -> professorController.showProfessorPage(req, res),
+				new HandlebarsTemplateEngine());
+		get(REVIEWPROFESSOR_PATH, (req, res) -> professorController.showReviewProfessorPage(req, res),
 				new HandlebarsTemplateEngine());
 		// User Routes
 
