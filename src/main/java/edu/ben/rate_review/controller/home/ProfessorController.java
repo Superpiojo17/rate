@@ -6,18 +6,19 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
-public class TutorsController {
+public class ProfessorController {
 
-	public ModelAndView showTutorsPage(Request req, Response res) {
+	public ModelAndView showProfessorPage(Request req, Response res) {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 		// Tell the server to render the index page with the data in the model
-		return new ModelAndView(model, "home/tutors.hbs");
+		return new ModelAndView(model, "home/professor.hbs");
 	}
-	public ModelAndView showTutorPage(Request req, Response res) {
+	
+	public ModelAndView showReviewProfessorPage(Request req, Response res) {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 		// Tell the server to render the index page with the data in the model
-		return new ModelAndView(model, "home/tutor.hbs");
+		return new ModelAndView(model, "home/reviewprofessor.hbs");
 	}
 }
