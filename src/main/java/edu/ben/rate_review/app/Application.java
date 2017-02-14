@@ -3,6 +3,7 @@ package edu.ben.rate_review.app;
 import static spark.Spark.*;
 import edu.ben.rate_review.controller.session.SessionsController;
 import edu.ben.rate_review.controller.home.AboutUsController;
+import edu.ben.rate_review.controller.home.AdminController;
 import edu.ben.rate_review.controller.home.ContactUsController;
 import edu.ben.rate_review.controller.home.DepartmentsController;
 import edu.ben.rate_review.controller.home.HomeController;
@@ -38,6 +39,7 @@ public class Application {
 	private static TutorDashboardController tutordashController = new TutorDashboardController();
 	private static TeacherController teacherController = new TeacherController();
 	private static ProfessorController professorController = new ProfessorController();
+	private static AdminController adminController = new AdminController();
 
 	// match up paths
 	public static String USERS_PATH = "/users";
@@ -56,6 +58,8 @@ public class Application {
 	public static String TUTOR_PATH = "/tutor";
 	public static String PROFESSOR_PATH = "/professor";
 	public static String REVIEWPROFESSOR_PATH = "/reviewprofessor";
+	public static String ADDTUTOR_PATH = "/addtutor";
+	public static String ADDPROFESSOR_PATH = "/addprofessor";
 
 
 	public static void main(String[] args) throws Exception {
@@ -122,6 +126,10 @@ public class Application {
 		get(PROFESSOR_PATH, (req, res) -> professorController.showProfessorPage(req, res),
 				new HandlebarsTemplateEngine());
 		get(REVIEWPROFESSOR_PATH, (req, res) -> professorController.showReviewProfessorPage(req, res),
+				new HandlebarsTemplateEngine());
+		get(ADDTUTOR_PATH, (req, res) -> adminController.showAddTutorPage(req, res),
+				new HandlebarsTemplateEngine());
+		get(ADDPROFESSOR_PATH, (req, res) -> adminController.showAddProfessorPage(req, res),
 				new HandlebarsTemplateEngine());
 		// User Routes
 
