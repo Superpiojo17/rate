@@ -16,22 +16,20 @@ import edu.ben.rate_review.controller.home.AboutUsController;
 import edu.ben.rate_review.controller.home.ActivationController;
 import edu.ben.rate_review.controller.home.ChangePasswordController;
 import edu.ben.rate_review.controller.home.ConfirmationController;
-import edu.ben.rate_review.controller.home.AdminController;
 import edu.ben.rate_review.controller.home.ContactUsController;
 import edu.ben.rate_review.controller.home.DepartmentsController;
 import edu.ben.rate_review.controller.home.HomeController;
 import edu.ben.rate_review.controller.home.LogInController;
-import edu.ben.rate_review.controller.home.ProfessorController;
 import edu.ben.rate_review.controller.home.RegisterController;
 import edu.ben.rate_review.controller.home.TeacherController;
 import edu.ben.rate_review.controller.home.TutorsController;
 import edu.ben.rate_review.controller.session.SessionsController;
-import edu.ben.rate_review.controllers.user.AccountRecoveryController;
-import edu.ben.rate_review.controllers.user.AdminDashboardController;
-import edu.ben.rate_review.controllers.user.FacultyDashboardController;
-import edu.ben.rate_review.controllers.user.StudentDashboardController;
-import edu.ben.rate_review.controllers.user.TutorDashboardController;
-import edu.ben.rate_review.controllers.user.UsersController;
+import edu.ben.rate_review.controller.user.AccountRecoveryController;
+import edu.ben.rate_review.controller.user.AdminDashboardController;
+import edu.ben.rate_review.controller.user.FacultyDashboardController;
+import edu.ben.rate_review.controller.user.StudentDashboardController;
+import edu.ben.rate_review.controller.user.TutorDashboardController;
+import edu.ben.rate_review.controller.user.UsersController;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.models.User;
 import edu.ben.rate_review.policy.AuthPolicyManager;
@@ -55,7 +53,6 @@ public class Application {
 	private static StudentDashboardController studentdashController = new StudentDashboardController();
 	private static DepartmentsController departmentsController = new DepartmentsController();
 	private static TutorsController tutorsController = new TutorsController();
-	private static TutorsController tutorController = new TutorsController();
 	private static AdminDashboardController admindashController = new AdminDashboardController();
 	private static FacultyDashboardController facultydashController = new FacultyDashboardController();
 	private static TutorDashboardController tutordashController = new TutorDashboardController();
@@ -64,8 +61,6 @@ public class Application {
 	private static ConfirmationController confirmationController = new ConfirmationController();
 	private static AccountRecoveryController accountrecoveryController = new AccountRecoveryController();
 	private static ChangePasswordController changePasswordController = new ChangePasswordController();
-	private static ProfessorController professorController = new ProfessorController();
-	private static AdminController adminController = new AdminController();
 
 	// match up paths
 	public static String DOMAIN = "localhost:3000";
@@ -91,12 +86,6 @@ public class Application {
 	public static String NEWINFO_PATH = "/newinfo";
 	public static String ALLUSERS_PATH = "/allusers";
 	public static String TEST_PATH = "/test";
-	public static String TUTOR_PATH = "/tutor";
-	public static String PROFESSOR_PATH = "/professor";
-	public static String REVIEWPROFESSOR_PATH = "/reviewprofessor";
-	public static String ADDTUTOR_PATH = "/addtutor";
-	public static String ADDPROFESSOR_PATH = "/addprofessor";
-
 
 	public static void main(String[] args) throws Exception {
 
@@ -118,7 +107,7 @@ public class Application {
 
 		// Filter that checks things right away before every request
 		before("/*", (request, response) -> {
-			// create teh session and assign it to a variable
+			// create the session and assign it to a variable
 			Session session = request.session(true);
 
 			// if the current user is null
@@ -174,19 +163,6 @@ public class Application {
 		get(TUTORS_PATH, (req, res) -> tutorsController.showTutorsPage(req, res), new HandlebarsTemplateEngine());
 		get(STUDENTDASHBOARD_PATH, (req, res) -> studentdashController.showStudentDashboardPage(req, res),
 				new HandlebarsTemplateEngine());
-		get(TUTOR_PATH, (req, res) -> tutorController.showTutorPage(req, res),
-				new HandlebarsTemplateEngine());
-		get(STUDENTDASHBOARD_PATH, (req, res) -> studentdashController.showStudentDashboardPage(req, res),
-				new HandlebarsTemplateEngine());
-		get(PROFESSOR_PATH, (req, res) -> professorController.showProfessorPage(req, res),
-				new HandlebarsTemplateEngine());
-		get(REVIEWPROFESSOR_PATH, (req, res) -> professorController.showReviewProfessorPage(req, res),
-				new HandlebarsTemplateEngine());
-		get(ADDTUTOR_PATH, (req, res) -> adminController.showAddTutorPage(req, res),
-				new HandlebarsTemplateEngine());
-		get(ADDPROFESSOR_PATH, (req, res) -> adminController.showAddProfessorPage(req, res),
-				new HandlebarsTemplateEngine());
-		// User Routes
 
 		// Change password paths
 		get(CHANGEPASSWORD_PATH, (req, res) -> changePasswordController.showChangePasswordPage(req, res),
@@ -208,7 +184,7 @@ public class Application {
 
 		post(ALLUSERS_PATH, (req, res) -> admindashController.massRegister(req, res));
 
-		// Account Recovery
+		// Account Recoveryso
 		// request recovery
 		get(ACCOUNTRECOVERY_PATH, (req, res) -> accountrecoveryController.showAccountRecoveryEmailPage(req, res),
 				new HandlebarsTemplateEngine());
