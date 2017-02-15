@@ -12,6 +12,7 @@ import static spark.Spark.staticFiles;
 import java.util.HashMap;
 
 import edu.ben.rate_review.authorization.AuthException;
+import edu.ben.rate_review.controller.home.AdminController;
 import edu.ben.rate_review.controller.home.AboutUsController;
 import edu.ben.rate_review.controller.home.ActivationController;
 import edu.ben.rate_review.controller.home.ChangePasswordController;
@@ -32,6 +33,7 @@ import edu.ben.rate_review.controller.user.TutorDashboardController;
 import edu.ben.rate_review.controller.user.UsersController;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.models.User;
+import edu.ben.rate_review.controller.home.ProfessorController;
 import edu.ben.rate_review.policy.AuthPolicyManager;
 import spark.ModelAndView;
 import spark.Request;
@@ -61,6 +63,9 @@ public class Application {
 	private static ConfirmationController confirmationController = new ConfirmationController();
 	private static AccountRecoveryController accountrecoveryController = new AccountRecoveryController();
 	private static ChangePasswordController changePasswordController = new ChangePasswordController();
+	private static TutorsController tutorController = new TutorsController();
+	private static ProfessorController professorController = new ProfessorController();
+	private static AdminController adminController = new AdminController();
 
 	// match up paths
 	public static String DOMAIN = "localhost:3000";
@@ -86,6 +91,11 @@ public class Application {
 	public static String NEWINFO_PATH = "/newinfo";
 	public static String ALLUSERS_PATH = "/allusers";
 	public static String TEST_PATH = "/test";
+	public static String TUTOR_PATH = "/tutor";
+	public static String PROFESSOR_PATH = "/professor";
+	public static String REVIEWPROFESSOR_PATH = "/reviewprofessor";
+	public static String ADDTUTOR_PATH = "/addtutor";
+	public static String ADDPROFESSOR_PATH = "/addprofessor";
 
 	public static void main(String[] args) throws Exception {
 
@@ -135,6 +145,13 @@ public class Application {
 			exception.printStackTrace();
 		});
 
+		get(TUTOR_PATH, (req, res) -> tutorController.showTutorPage(req, res), new HandlebarsTemplateEngine());
+
+		get(PROFESSOR_PATH, (req, res) -> professorController.showProfessorPage(req, res),
+				new HandlebarsTemplateEngine());
+		get(REVIEWPROFESSOR_PATH, (req, res) -> professorController.showReviewProfessorPage(req, res),
+				new HandlebarsTemplateEngine());
+
 		get(TEACHER_PATH, (req, res) -> teacherController.showTeacherPage(req, res), new HandlebarsTemplateEngine());
 
 		get(DEPARTMENTS_PATH, (req, res) -> departmentsController.showDepartmentsPage(req, res),
@@ -149,6 +166,10 @@ public class Application {
 				new HandlebarsTemplateEngine());
 
 		get(ALLUSERS_PATH, (req, res) -> admindashController.showAllUsersPage(req, res),
+				new HandlebarsTemplateEngine());
+
+		get(ADDTUTOR_PATH, (req, res) -> adminController.showAddTutorPage(req, res), new HandlebarsTemplateEngine());
+		get(ADDPROFESSOR_PATH, (req, res) -> adminController.showAddProfessorPage(req, res),
 				new HandlebarsTemplateEngine());
 
 		get(TUTORDASHBOARD_PATH, (req, res) -> tutordashController.showTutorDashboardPage(req, res),
