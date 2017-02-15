@@ -83,7 +83,8 @@ public class ChangePasswordController {
 		String subject = "Rate&Review Password Change";
 		String messageHeader = "<p>Hello " + user.getFirst_name() + ",</p><br />";
 		String messageBody = "<p>This message is to confirm that you have successfully changed "
-				+ "your password! If this was not performed by you, please go to the " + "<a href=\"http://" + Application.DOMAIN + "/accountrecovery" + "\">account recovery page</a>!</p>";
+				+ "your password! If this was not performed by you, please go to the " + "<a href=\"http://"
+				+ Application.DOMAIN + "/accountrecovery" + "\">account recovery page</a>!</p>";
 		String messageFooter = "<br /><p>Sincerely,</p><p>The Rate&Review Team</p>";
 		String message = messageHeader + messageBody + messageFooter;
 
