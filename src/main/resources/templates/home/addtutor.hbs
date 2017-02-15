@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Register</title>
+		<title>Add a Tutor</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -14,11 +14,11 @@
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 	</head>
-	<body>
+	<body class="landing">
 
 		<!-- Header -->
-			<header id="header">
-				<h1><a href="/home">G.O.O.D.</a></h1>
+			<header id="header" class="skel-layers-fixed">
+				<h1><a href="/">G.O.O.D.</a></h1>
 				<a href="#nav">Menu</a>
 			</header>
 
@@ -37,35 +37,53 @@
 					
 				</ul>
 			</nav>
-
+			
 		<!-- Main -->
 			<section id="main" class="wrapper">
 				<div class="container">
-
 					<header class="major special">
-						<h2>Register PAGE</h2>
-						<form action="/changepassword" method="post">
-						<div class="container 75%">
-							<div class="row uniform 50%">
-								<div class="6u 12u$(xsmall)">
-									<input name="email" placeholder="email" type="email" />
-								</div>
-								<div class="6u 12u$(xsmall)">
-									<input name="password" placeholder="password" type="password" />
-								</div>
-								<div class="6u$ 12u$(xsmall)">
-									<input name="new_password" placeholder="new_password" type="password" />
-								</div>
-								<div class="6u 12u$(xsmall)">
-									<input name="verify_password" placeholder="verify_password" type="password" />
-								</div>			
-							</div>
-						</div>
-						<ul class="actions">
-							<li><input type="submit" class="special" value="Submit" /></li>
-							<li><input type="reset" class="alt" value="Reset" /></li>
-						</ul>
-					</form>
+						<h2>Add a Tutor</h2>
+					</header>
+
+					<!-- Text -->
+						<section>
+							<h3>Form to fill out for a new tutor</h3>
+						</section>
+						
+						First Name: <input type="text">
+						Last Name: <input type="text">
+						Email: <input type="email">
+						Phone: <input type="text">
+						Class types: <br>
+						<label class="inline"><input type="Checkbox">Math</label>
+						<label class="inline"><input type="Checkbox">English</label><br>
+						
+						<input type="submit" name="submit">
+						
+  				</div>
+			</section>
+  			
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+					<ul class="icons">
+						<li><a href="#" class="icon fa-facebook">
+							<span class="label">Facebook</span>
+						</a></li>
+						<li><a href="#" class="icon fa-twitter">
+							<span class="label">Twitter</span>
+						</a></li>
+						<li><a href="#" class="icon fa-instagram">
+							<span class="label">Instagram</span>
+						</a></li>
+						<li><a href="#" class="icon fa-linkedin">
+							<span class="label">LinkedIn</span>
+						</a></li>
+					</ul>
+				</div>
+			</footer>
+
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
