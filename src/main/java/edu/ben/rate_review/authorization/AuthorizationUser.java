@@ -19,9 +19,11 @@ public interface AuthorizationUser {
 	 */
 	public boolean hasRole(int role);
 	
+	
 	/**
-	 * Sets the user's role if applicable
+	 * 
 	 * @param role
 	 */
 	public void setRole(int role);
+	
 }

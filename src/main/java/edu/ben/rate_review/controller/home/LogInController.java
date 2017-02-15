@@ -55,20 +55,17 @@ public class LogInController {
 				Session session = req.session();
 				UserDao user = DaoManager.getInstance().getUserDao();
 				User u = user.findByEmail(req.queryParams("email"));
-				
 				session.attribute("current_user", u);
-				System.out.println(u.getEmail());
-//				session.attribute()
-				if (role == 4) {
+				
+				if (u.getRole() == 4) {
 					res.redirect("/studentdashboard");
-				} else if (role == 3) {
+				} else if (u.getRole() == 3) {
 					res.redirect("/tutordashboard");
-				} else if (role == 2) {
+				} else if (u.getRole() == 2) {
 					res.redirect("/facultydashboard");
-				} else if (role == 1) {
-					
+				} else if (u.getRole() == 1) {
 					res.redirect("/admindashboard");
-					
+
 				}
 			} else {
 				// if email is not found in the system, outputs message
@@ -148,7 +145,7 @@ public class LogInController {
 		UserDao userDao = DaoManager.getInstance().getUserDao();
 		User u = new User();
 		u = userDao.findByEmail(email);
-		
+
 		return u.getRole();
 	}
 
