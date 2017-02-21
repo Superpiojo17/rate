@@ -34,6 +34,7 @@ import edu.ben.rate_review.controller.user.UsersController;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.models.User;
 import edu.ben.rate_review.controller.home.ProfessorController;
+import edu.ben.rate_review.controller.home.ProfessorReviewController;
 import edu.ben.rate_review.policy.AuthPolicyManager;
 import spark.ModelAndView;
 import spark.Request;
@@ -66,6 +67,7 @@ public class Application {
 	private static TutorsController tutorController = new TutorsController();
 	private static ProfessorController professorController = new ProfessorController();
 	private static AdminController adminController = new AdminController();
+	private static ProfessorReviewController professorReviewController = new ProfessorReviewController();
 
 	// match up paths
 	public static String DOMAIN = "localhost:3000";
@@ -149,8 +151,10 @@ public class Application {
 
 		get(PROFESSOR_PATH, (req, res) -> professorController.showProfessorPage(req, res),
 				new HandlebarsTemplateEngine());
+
 		get(REVIEWPROFESSOR_PATH, (req, res) -> professorController.showReviewProfessorPage(req, res),
 				new HandlebarsTemplateEngine());
+		post(REVIEWPROFESSOR_PATH, (req, res) -> professorReviewController.reviewProfessor(req, res));
 
 		get(TEACHER_PATH, (req, res) -> teacherController.showTeacherPage(req, res), new HandlebarsTemplateEngine());
 

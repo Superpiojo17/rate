@@ -59,9 +59,11 @@ public class ProfessorReviewDao {
 	}
 
 	/**
-	 * Method which stores a new review in the database.
+	 * Method which stores a new review in the database
+	 * 
+	 * @param review
 	 */
-	public ProfessorReview save(ProfessorReview review) {
+	public void save(ProfessorReview review) {
 		final String sql = "INSERT INTO " + REVIEW_PROFESSOR_TABLE
 				+ " (professor_email, course, student_email, current_year, comment,"
 				+ " rate_objectives, rate_organized, rate_challenging, rate_outside_work,"
@@ -85,14 +87,11 @@ public class ProfessorReviewDao {
 			ps.setInt(14, review.getRate_accessibility());
 			ps.setInt(15, review.getRate_knowledge());
 			ps.setInt(16, review.getRate_career_development());
-
 			ps.executeUpdate();
-			return review;
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
-
 	}
 
 	/**
@@ -126,6 +125,34 @@ public class ProfessorReviewDao {
 		// If you don't find a model
 		return null;
 
+	}
+
+	/**
+	 * Allows for deletion of a specific review
+	 * 
+	 * @param review
+	 * @return
+	 */
+	public ProfessorReview removeProfessorReview(ProfessorReview review) {
+
+		String sql = "DELETE FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ? AND course = ? AND "
+				+ "student_email = ? AND current_year = ? LIMIT 1";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, review.getProfessor_email());
+			ps.setString(2, review.getCourse());
+			ps.setString(3, review.getStudent_email());
+			ps.setInt(4, review.getCurrent_year());
+			// Runs query
+			ps.execute();
+
+			return review;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**

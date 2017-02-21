@@ -72,7 +72,7 @@ public class ProfessorReview {
 	public void setProfessor_email(String professor_email) {
 		this.professor_email = professor_email;
 	}
-	
+
 	/**
 	 * Getter for course
 	 * 
@@ -90,7 +90,7 @@ public class ProfessorReview {
 	public void setCourse(String course) {
 		this.course = course;
 	}
-	
+
 	/**
 	 * Getter for course
 	 * 
