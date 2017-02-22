@@ -1,30 +1,28 @@
 package edu.ben.rate_review.daoTest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.junit.Test;
 
+import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.models.User;
 
 public class userDaoTest {
 
-	User user1 = new User();
-	
-	UserDao uDao = new UserDao(null);
-	
+	public userDaoTest() throws Exception {
+		// This "hack" runs the public constructor which is what does yoru DB setup and makes the instance().
+		new DaoManager();
+	}
 
 	@Test
 	public void testAddUser() throws SQLException {
-		user1.setEmail("chanceraps@gmail.com");
-		String email = user1.getEmail();
-		
-		String expected = "chanceraps@gmail.com";
-		User actual = uDao.findByEmail(email);
-		String actualEmail = actual.getEmail();
-		assertEquals(expected, actualEmail);
+		// Use normally
+		UserDao ud = DaoManager.getInstance().getUserDao();
+		ud.findById(6);
 	}
 
 }

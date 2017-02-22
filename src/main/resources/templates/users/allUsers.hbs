@@ -24,7 +24,7 @@
 	<body>
 
 		<!-- Header -->
-			<header id="header">
+			<header id="adminheader">
 				<h1>Administrator Dashboard</h1>
 			</header>
 
@@ -102,25 +102,33 @@
 							
 							
   <p>View all the registered users, as well as their information.</p>
+  &ensp;
 							<div class="table-wrapper">
 								<table class="alt">
 									<thead>
 										<tr>
-											<th>Name</th>
-											<th>Email</th>
-											<th>Role</th>
-											<th>Confirmation</th>
-											<th>Status</th>
+											<th><br>Name</th>
+											<th><br>Email</th>
+											<th><br>Role</th>
+											<th><br>Major</th>
+											<th><br>Year</th>
+											<th>Email <br> Confirmed</th>
+											<th>Account <br> Status</th>
+											<th></th>
 										</tr>
 									</thead>
 									<tbody>
 									{{#each users}}
 										<tr>
-											<td>{{first_name}} {{last_name}}</td>
-											<td>{{email}}</td>
+											<td>{{last_name}} , {{first_name}}</td>
+											<td><a href="https://mail.google.com/mail/u/0/#inbox"><span class="glyphicon glyphicon-envelope"></span><a> {{email}}</td>
 											<td>{{role_string}}</td>
-											<td>{{confirmed}}</td>
-											<td>{{active}}</td>
+											<td>{{major}}</td>
+											<td>{{year_string}}</td>
+											<td><span class="{{confirmed_icon}}"</span></td>
+											<td><span class="{{active_icon}}"</span></td>
+											<td><a href="/user/{{id}}/edit" class="btn btn-info">Edit User <span class="glyphicon glyphicon-pencil"></span></a></td>
+						
 										</tr>
 									{{/each}}
 									</tbody>
@@ -242,11 +250,10 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
 
 
 </script>
-<script>
-var curr_role = {{role}};
 
-document.getElementById("role").innerHTML = curr_role;
-</script>
+
+
+
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main2.js"></script>
 

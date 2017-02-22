@@ -27,9 +27,11 @@ import edu.ben.rate_review.controller.home.TutorsController;
 import edu.ben.rate_review.controller.session.SessionsController;
 import edu.ben.rate_review.controller.user.AccountRecoveryController;
 import edu.ben.rate_review.controller.user.AdminDashboardController;
+import edu.ben.rate_review.controller.user.EditUserController;
 import edu.ben.rate_review.controller.user.FacultyDashboardController;
 import edu.ben.rate_review.controller.user.StudentDashboardController;
 import edu.ben.rate_review.controller.user.TutorDashboardController;
+import edu.ben.rate_review.controller.user.UnauthorizedController;
 import edu.ben.rate_review.controller.user.UsersController;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.models.User;
@@ -68,6 +70,8 @@ public class Application {
 	private static ProfessorController professorController = new ProfessorController();
 	private static AdminController adminController = new AdminController();
 	private static ProfessorReviewController professorReviewController = new ProfessorReviewController();
+	private static EditUserController edituserController = new EditUserController();
+	private static UnauthorizedController unauthorizedController = new UnauthorizedController();
 
 	// match up paths
 	public static String DOMAIN = "localhost:3000";
@@ -98,6 +102,9 @@ public class Application {
 	public static String REVIEWPROFESSOR_PATH = "/reviewprofessor";
 	public static String ADDTUTOR_PATH = "/addtutor";
 	public static String ADDPROFESSOR_PATH = "/addprofessor";
+	public static String NOTLOGGEDIN_PATH = "/notloggedinerror";
+	public static String AUTHORIZATIONERROR_PATH = "/authorizationerror";
+	public static String EDITUSER_PATH = "/user/:id/edit";
 
 	public static void main(String[] args) throws Exception {
 
@@ -140,12 +147,22 @@ public class Application {
 			model.put("errors", exception.getMessage());
 			//
 			response.status(401);
-			response.body(exception.getMessage());
+			response.redirect(AUTHORIZATIONERROR_PATH);
 		});
 
 		exception(Exception.class, (exception, request, response) -> {
 			exception.printStackTrace();
 		});
+
+		get(AUTHORIZATIONERROR_PATH, (req, res) -> unauthorizedController.showNotAuthorizedc(req, res),
+				new HandlebarsTemplateEngine());
+
+		get(NOTLOGGEDIN_PATH, (req, res) -> unauthorizedController.showNotLoggedIn(req, res),
+				new HandlebarsTemplateEngine());
+
+		get(EDITUSER_PATH, (req, res) -> edituserController.showEditUserPage(req, res), new HandlebarsTemplateEngine());
+
+		post(EDITUSER_PATH, (req, res) -> edituserController.updateUser(req, res));
 
 		get(TUTOR_PATH, (req, res) -> tutorController.showTutorPage(req, res), new HandlebarsTemplateEngine());
 

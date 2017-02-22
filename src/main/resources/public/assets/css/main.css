@@ -3600,6 +3600,105 @@
 		width: 100%;
 		z-index: 10001;
 	}
+	
+	
+	#adminheader {
+		background: #CC0000;
+		color: rgba(255, 255, 255, 0.75);
+		cursor: default;
+		height: 3.25em;
+		left: 0;
+		line-height: 3.25em;
+		position: fixed;
+		text-align: right;
+		top: 0;
+		width: 100%;
+		z-index: 10001;
+	}
+		#adminheader > h1 {
+			color: #fff;
+			display: inline-block;
+			height: inherit;
+			left: 1.25em;
+			line-height: inherit;
+			margin: 0;
+			padding: 0;
+			position: absolute;
+			top: 0;
+		}
+		
+		#studentheader {
+		background: #CC0000;
+		color: rgba(255, 255, 255, 0.75);
+		cursor: default;
+		height: 3.25em;
+		left: 0;
+		line-height: 3.25em;
+		position: fixed;
+		text-align: right;
+		top: 0;
+		width: 100%;
+		z-index: 10001;
+	}
+		#studentheader > h1 {
+			color: #fff;
+			display: inline-block;
+			height: inherit;
+			left: 1.25em;
+			line-height: inherit;
+			margin: 0;
+			padding: 0;
+			position: absolute;
+			top: 0;
+		}	
+			#tutorheader {
+		background: #FFFFFF;
+		color: rgba(255, 255, 255, 0.75);
+		cursor: default;
+		height: 3.25em;
+		left: 0;
+		line-height: 3.25em;
+		position: fixed;
+		text-align: right;
+		top: 0;
+		width: 100%;
+		z-index: 10001;
+	}
+		#tutorheader > h1 {
+			color: #000000;
+			display: inline-block;
+			height: inherit;
+			left: 1.25em;
+			line-height: inherit;
+			margin: 0;
+			padding: 0;
+			position: absolute;
+			top: 0;
+		}
+			#facultyheader {
+		background: #CC0000;
+		color: rgba(255, 255, 255, 0.75);
+		cursor: default;
+		height: 3.25em;
+		left: 0;
+		line-height: 3.25em;
+		position: fixed;
+		text-align: right;
+		top: 0;
+		width: 100%;
+		z-index: 10001;
+	}
+		#facultyheader > h1 {
+			color: #fff;
+			display: inline-block;
+			height: inherit;
+			left: 1.25em;
+			line-height: inherit;
+			margin: 0;
+			padding: 0;
+			position: absolute;
+			top: 0;
+		}
 
 		#header > h1 {
 			color: #fff;
@@ -3840,7 +3939,7 @@
 	width: 22%;
 	height: auto;
 	float: left;
-	padding-left: 1em;
+	padding-left: 2.5em;
 }
 
 .centercol {
@@ -3848,6 +3947,29 @@
 	height: auto;
 	float: left;
 	padding-left: 2em;
+}
+
+.centercoledit {
+	width: 30%;
+	height: auto;
+	float: left;
+	padding-left: 2em;
+}
+
+aEdit {
+    color: white;
+}
+
+/* error backgrounds */
+
+#bgNotLogged {
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+	
+  /* Preserve aspet ratio */
+  min-width: 100%;
+  min-height: 100%;
 }
 
 			/* Banner */
