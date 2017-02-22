@@ -12,6 +12,7 @@ public class ProfessorReview {
 	private String professor_email;
 	private String course;
 	private int current_year;
+	private String semester;
 	private String comment;
 
 	// The course objectives were met:
@@ -98,6 +99,24 @@ public class ProfessorReview {
 	 */
 	public int getCurrent_year() {
 		return current_year;
+	}
+
+	/**
+	 * Getter for semester
+	 * 
+	 * @return
+	 */
+	public String getSemester() {
+		return semester;
+	}
+
+	/**
+	 * Setter for semester
+	 * 
+	 * @param semester
+	 */
+	public void setSemester(String semester) {
+		this.semester = semester;
 	}
 
 	/**

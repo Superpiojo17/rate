@@ -36,10 +36,13 @@ public class ProfessorReviewController {
 	 */
 	public String reviewProfessor(Request req, Response res) {
 		if (!req.queryParams("professor_email").isEmpty() && !req.queryParams("student_email").isEmpty()
-				&& !req.queryParams("course").isEmpty() && !req.queryParams("current_year").isEmpty()) {
+				&& !req.queryParams("course").isEmpty() && !req.queryParams("current_year").isEmpty()
+				&& !req.queryParams("semester").isEmpty()) {
+
 			createReview(req.queryParams("professor_email"), req.queryParams("course"),
 					req.queryParams("student_email"), Integer.parseInt(req.queryParams("current_year")),
-					req.queryParams("comment"), Integer.parseInt(req.queryParams("rate_objectives")),
+					req.queryParams("semester"), req.queryParams("comment"),
+					Integer.parseInt(req.queryParams("rate_objectives")),
 					Integer.parseInt(req.queryParams("rate_organized")),
 					Integer.parseInt(req.queryParams("rate_challenging")),
 					Integer.parseInt(req.queryParams("rate_outside_work")),
@@ -81,9 +84,9 @@ public class ProfessorReviewController {
 	 * @param rate_career_development
 	 */
 	private void createReview(String professor_email, String course, String student_email, int current_year,
-			String comment, int rate_objectives, int rate_organized, int rate_challenging, int rate_outside_work,
-			int rate_pace, int rate_assignments, int rate_grade_fairly, int rate_grade_time, int rate_accessibility,
-			int rate_knowledge, int rate_career_development) {
+			String semester, String comment, int rate_objectives, int rate_organized, int rate_challenging,
+			int rate_outside_work, int rate_pace, int rate_assignments, int rate_grade_fairly, int rate_grade_time,
+			int rate_accessibility, int rate_knowledge, int rate_career_development) {
 
 		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
 		ProfessorReview review = new ProfessorReview();
@@ -92,6 +95,7 @@ public class ProfessorReviewController {
 		review.setCourse(course);
 		review.setStudent_email(student_email);
 		review.setCurrent_year(current_year);
+		review.setSemester(semester);
 		review.setComment(comment);
 		review.setRate_objectives(rate_objectives);
 		review.setRate_organized(rate_organized);
