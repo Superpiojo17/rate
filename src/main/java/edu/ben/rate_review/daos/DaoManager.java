@@ -52,6 +52,20 @@ public class DaoManager {
 	}
 
 	/**
+	 * gets instance of professor review dao
+	 * 
+	 * @return
+	 */
+	public ProfessorReviewDao getProfessorReviewDao() {
+		try {
+			return new ProfessorReviewDao(this.src.getConnection());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
 	 * Used to return the singleton instance
 	 *
 	 * @return
