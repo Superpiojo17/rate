@@ -16,7 +16,7 @@
 	</head>
 	<body class="landing">
 
-		<!-- Header -->
+			<!-- Header -->
 			<header id="header" class="skel-layers-fixed">
 				<h1><a href="/">G.O.O.D.</a></h1>
 				<a href="#nav">Menu</a>
@@ -26,14 +26,13 @@
 			<nav id="nav">
 				<ul class="links">
 					<li><a href="/">Home</a></li>
-					<li><a href="/login">Log In</a></li>
-					<li><a href="/register">Register</a></li>
 					<li><a href="/departments">Departments</a></li>
 					<li><a href="/tutors">Tutors</a></li>
+					<li><a href="/login">Register</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
 					<li><a href="/aboutus">About Us</a></li>
 					<li><a href="/teacher">Teacher</a></li>
-					<li><a href="/accountrecovery">Forgot Password?</a></li>
+					
 				</ul>
 			</nav>
 			
@@ -46,32 +45,124 @@
 
 					<!-- Text -->
 						<section>
-							<h3>Review *Professor Name*</h3>
-							<p>This is <b>bold</b> and this is <strong>strong</strong>. This is <i>italic</i> and this is <em>emphasized</em>.
-							This is <sup>superscript</sup> text and this is <sub>subscript</sub> text.
-							This is <u>underlined</u> and this is code: <code>for (;;) { ... }</code>. Finally, <a href="#">this is a link</a>.</p>
-
+							<h3>Review <label id="Professor_Lastname">*Professor Name*</label></h3>
+							
+							<label id="currentRating">*Current Overall rating*</label>
+							
 											
 							</section>
 			<form>
 			
-				<h4>Rating:</h4>
-				<label class="radio inline"><input type="radio" name="rating" value="5" checked>5</label>
-				<label class="radio inline"><input type="radio" name="rating" value="4">4</label> 
-				<label class="radio inline"><input type="radio" name="rating" value="3">3</label> 
+				<h4>Course Code:</h4>
+				<input class="container 25%" style="margin-left:0px" type="text" id="coursecode">
+				<br>
+				
+				<h4>Semester:</h4>
+				<input class="container 25%" style="margin-left:0px" type="text" id="semester">
+				<br>
+				
+				<h4>Current Year:</h4>
+				<input class="container 25%" style="margin-left:0px" type="text" id="current_year">
+				<br>
+			
+				<h4>Were the course objectives met? (1-5):</h4>
+				<label class="radio inline"><input type="radio" name="rate_objectives" value="1" checked>1</label>
+				<label class="radio inline"><input type="radio" name="rate_objectives" value="2">2</label> 
+				<label class="radio inline"><input type="radio" name="rate_objectives" value="3">3</label> 
+				<label class="radio inline"><input type="radio" name="rate_objectives" value="4">4</label> 
+				<label class="radio inline"><input type="radio" name="rate_objectives" value="5">5</label>
+				
+				<h4>Was the course well planned and followed a schedule? (1-5):</h4>
+				<label class="radio inline"><input type="radio" name="rate_organized" value="1" checked>1</label>
+				<label class="radio inline"><input type="radio" name="rate_organized" value="2">2</label> 
+				<label class="radio inline"><input type="radio" name="rate_organized" value="3">3</label> 
+				<label class="radio inline"><input type="radio" name="rate_organized" value="4">4</label> 
+				<label class="radio inline"><input type="radio" name="rate_organized" value="5">5</label>
+				
+				<h4>Rate the courses difficulty (1-5):</h4>
+				<label class="radio inline"><input type="radio" name="rate_challenging" value="1" checked>1</label>
+				<label class="radio inline"><input type="radio" name="rate_challenging" value="2">2</label> 
+				<label class="radio inline"><input type="radio" name="rate_challenging" value="3">3</label> 
+				<label class="radio inline"><input type="radio" name="rate_challenging" value="4">4</label> 
+				<label class="radio inline"><input type="radio" name="rate_challenging" value="5">5</label>
+				
+				<h4>Amount of work I performed outside of scheduled class time (1-5):</h4>
+				<label class="radio inline"><input type="radio" name="rate_outside_work" value="1" checked>1</label>
+				<label class="radio inline"><input type="radio" name="rate_outside_work" value="2">2</label> 
+				<label class="radio inline"><input type="radio" name="rate_outside_work" value="3">3</label> 
+				<label class="radio inline"><input type="radio" name="rate_outside_work" value="4">4</label> 
+				<label class="radio inline"><input type="radio" name="rate_outside_work" value="5">5</label>
+				
+				<h4>Rate the pace of the presented course material (1-5):</h4>
+				<label class="radio inline"><input type="radio" name="rate_pace" value="1" checked>1</label>
+				<label class="radio inline"><input type="radio" name="rate_pace" value="2">2</label> 
+				<label class="radio inline"><input type="radio" name="rate_pace" value="3">3</label> 
+				<label class="radio inline"><input type="radio" name="rate_pace" value="4">4</label> 
+				<label class="radio inline"><input type="radio" name="rate_pace" value="5">5</label>
+				
+				<h4>Rate the learning experience efficiency of the assignments (1-5):</h4>
+				<label class="radio inline"><input type="radio" name="rate_assignments" value="1" checked>1</label>
+				<label class="radio inline"><input type="radio" name="rate_assignments" value="2">2</label> 
+				<label class="radio inline"><input type="radio" name="rate_assignments" value="3">3</label> 
+				<label class="radio inline"><input type="radio" name="rate_assignments" value="4">4</label> 
+				<label class="radio inline"><input type="radio" name="rate_assignments" value="5">5</label>
+				
+				<h4>Were homework and exams graded fairly (1-5):</h4>
+				<label class="radio inline"><input type="radio" name="rate_grade_fairly" value="1" checked>1</label>
+				<label class="radio inline"><input type="radio" name="rate_grade_fairly" value="2">2</label> 
+				<label class="radio inline"><input type="radio" name="rate_grade_fairly" value="3">3</label> 
+				<label class="radio inline"><input type="radio" name="rate_grade_fairly" value="4">4</label> 
+				<label class="radio inline"><input type="radio" name="rate_grade_fairly" value="5">5</label>
+				
+				<h4>Were homework and exams graded in reasonable time (1-5):</h4>
+				<label class="radio inline"><input type="radio" name="rate_grade_time" value="1" checked>1</label>
+				<label class="radio inline"><input type="radio" name="rate_grade_time" value="2">2</label> 
+				<label class="radio inline"><input type="radio" name="rate_grade_time" value="3">3</label> 
+				<label class="radio inline"><input type="radio" name="rate_grade_time" value="4">4</label> 
+				<label class="radio inline"><input type="radio" name="rate_grade_time" value="5">5</label>
+				
+				<h4>Accessibility of the instructor outside of scheduled class time (1-5):</h4>
+				<label class="radio inline"><input type="radio" name="rate_accessibility" value="1" checked>1</label>
+				<label class="radio inline"><input type="radio" name="rate_accessibility" value="2">2</label> 
+				<label class="radio inline"><input type="radio" name="rate_accessibility" value="3">3</label> 
+				<label class="radio inline"><input type="radio" name="rate_accessibility" value="4">4</label> 
+				<label class="radio inline"><input type="radio" name="rate_accessibility" value="5">5</label>
+				
+				<h4>The instructor's knowledge of the subject was relevant and up-to-date (1-5):</h4>
+				<label class="radio inline"><input type="radio" name="rate_knowledge" value="1" checked>1</label>
+				<label class="radio inline"><input type="radio" name="rate_knowledge" value="2">2</label> 
+				<label class="radio inline"><input type="radio" name="rate_knowledge" value="3">3</label> 
+				<label class="radio inline"><input type="radio" name="rate_knowledge" value="4">4</label> 
+				<label class="radio inline"><input type="radio" name="rate_knowledge" value="5">5</label>
+				
+				<h4>How valuable was this course for your career development (1-5):</h4>
+				<label class="radio inline"><input type="radio" name="rate_career_development" value="1" checked>1</label>
+				<label class="radio inline"><input type="radio" name="rate_career_development" value="2">2</label> 
+				<label class="radio inline"><input type="radio" name="rate_career_development" value="3">3</label> 
+				<label class="radio inline"><input type="radio" name="rate_career_development" value="4">4</label> 
+				<label class="radio inline"><input type="radio" name="rate_career_development" value="5">5</label>
+				
+				<h4>Rate (1-5):</h4>
+				<label class="radio inline"><input type="radio" name="rating" value="1" checked>1</label>
 				<label class="radio inline"><input type="radio" name="rating" value="2">2</label> 
-				<label class="radio inline"><input type="radio" name="rating" value="1">1</label>
+				<label class="radio inline"><input type="radio" name="rating" value="3">3</label> 
+				<label class="radio inline"><input type="radio" name="rating" value="4">4</label> 
+				<label class="radio inline"><input type="radio" name="rating" value="5">5</label>
 			
-			
-				<div class="container"> <br> 
+				<div class="container"> <br>
+				
+				 
 				<h4>Comment:</h4> <br>
 				<textarea></textarea> <br>
 				
-			</form>
 				<input type="submit">
+				</form>
 				</div>
 			</div>
 			</section>
+			<!-- <h4>Would you take this professor again?:</h4>
+				<input type="radio" name="retake" value="yes">Yes <br>
+				<input type="radio" name="retake" value="no">No <br><br> -->
   			
 			
 
