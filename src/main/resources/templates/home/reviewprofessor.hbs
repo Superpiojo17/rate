@@ -192,6 +192,30 @@
 			</footer>
 
 		<!-- Scripts -->
+		
+		<script>
+			window.onload = function (){
+				function ParseURLParameter(Parameter)
+				{
+					var FullURL = window.location.search.substring(1);
+					var ParametersArray = FullURL.split('&');
+					for (var i = 0; i < ParametersArray.length; i++)
+					{
+						var CurrentParameter = ParametersArray[i].split('=');
+						if(CurrentParameter[0] == Parameter)
+						{
+							return CurrentParameter[1];
+						}
+					}
+				}
+				
+				var lastname = ParseURLParameter('lastname');
+				if(typeof lastname !== 'undefined'){
+						document.getElementById("Professor_Lastname").innerHTML = lastname;
+				}
+				
+				}
+				</script>
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>

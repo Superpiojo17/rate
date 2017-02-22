@@ -14,7 +14,7 @@
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 	</head>
-	<body class="landing">
+	<body class="landing" onload="myFunction()">
 
 		<!-- Header -->
 			<header id="header" class="skel-layers-fixed">
@@ -80,7 +80,7 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td><a href="\professor">Turner, Chris</a></td>
+											<td><a href="\professor?lastname=Turner">Turner, Chris</a></td>
 											<td>Art 101, Art 200</td>
 											<td>5</td>
 										</tr>
@@ -300,6 +300,11 @@
 			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
+			
+			<script>
+function myFunction() {
+}
+</script>
 
 	</body>
 </html>
