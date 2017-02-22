@@ -6,14 +6,13 @@
 -->
 <html>
 	<head>
-		<title>Administrator Dashboard</title>
+		<title>Edit User</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-		  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -26,7 +25,6 @@
 		<!-- Header -->
 			<header id="adminheader">
 				<h1>Administrator Dashboard</h1>
-				
 			</header>
 
 			<!-- Nav -->
@@ -38,7 +36,6 @@
 					<li><a href="/aboutus">View Reviews</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
 					<li><a href="/allusers">Manage Users</a></li>
-					<li><a href="/deactivation">De-Activate</a></li>
 					<li><a href="/login">Log Out</a></li>
 					
 				</ul>
@@ -46,10 +43,10 @@
 			
 			<!-- Banner -->
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="adminDash">
-			
 </div>
  <p> </p>
 
+   
   
 <section id="main" class="wrapper">
 			<div class="leftcol"> 
@@ -62,6 +59,7 @@
       <a href="#announcement" class="btn btn-info" data-toggle="collapse">Announcements</a>
   <div id="announcement" class="collapse">
   &nbsp;
+  
 							<div class="table-wrapper">
 								<table class="alt">
 									<thead>
@@ -95,69 +93,85 @@
 							
 							
 						</section>
+						
 							<div class="centercol"> 
 							&ensp;
-							<h2> Welcome {{current_user.first_name}} </h2> 
-							<h6> You are logged in as an administrator</h6>
+							<h2> Edit your user </h2>
 							
 							
-							&ensp;
 							
-  <p>Click on the headings below to view your relevant information.</p>
-  <div class="panel-group" id="accordion">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">My Upcoming Appointments</a>
-        </h4>
-      </div>
-      <div id="collapse1" class="panel-collapse collapse in">
-        <div class="panel-body">You have no upcoming appiontments. Search for a tutor to set up a study session!</div>
-      </div>
-    </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">My Classes</a>
-        </h4>
-      </div>
-      <div id="collapse2" class="panel-collapse collapse">
-        <div class="panel-body">You have not added any classes to your profile. Click on My Classes on the side menu to add your courses!</div>
-      </div>
-    </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">My Recent Reviews</a>
-        </h4>
-      </div>
-      <div id="collapse3" class="panel-collapse collapse">
-        <div class="panel-body">You have not left any recent reviews. Search for a teacher to leave some quality feedback!.</div>
-      </div>
-    </div>
-  </div> 
-</div>
+  <p>Fill out the form and click save to edit a user.</p>
+  &ensp;
+  
+							<!-- Form -->
+						<section>
+							<form action="/user/{{user_form.id}}/edit" method="post">
+								<div class="row uniform 50%">
+									<div class="6u 12u$(xsmall)">
+										<input type="text" name="first_name" id="first_name" value="{{user_form.first_name}}" placeholder="First Name" />
+										&ensp;
+										<input type="text" name="email" id="email" value="{{user_form.email}}" placeholder="{{user_form.email}}" />
+										&ensp;
+										<div class="select-wrapper">
+											<select name="role" id="role">
+												<option value="1">Administrator</option>
+												<option value="2">Faculty</option>
+												<option value="3">Tutor</option>
+												<option value="4">Student</option>
+											</select>
+										</div>
+									</div>
+									
+									<div class="6u$ 12u$(xsmall)">
+										<input type="text" name="last_name" id="last_name" value="{{user_form.last_name}}" placeholder="Last Name" />
+										 &ensp;
+										<input type="text" name="major" id="major" value="{{user_form.major}}" placeholder="Major" />
+										&ensp;
+										<div class="select-wrapper">
+											<select name="year" id="year">
+												<option value="1">Freshman</option>
+												<option value="2">Sophomore</option>
+												<option value="3">Junior</option>
+												<option value="4">Senior</option>
+											</select>
+										</div>
+									</div>
+									
+									
+									
+									&ensp;
+									&ensp;
+									&ensp;
+									<div class="12u$">
+										<ul class="actions">
+											<button type="submit" class="btn btn-info"> Save 
+											<span class="glyphicon glyphicon-floppy-saved"
+										</ul>
+									</div>
+								</div>
+							</form>
+						</section>
+  
+  
+  
+  							</section>
+							</div>
+						
+				
+			 
+			 
+					
+				
 		
 			
   </div>
   
-    
-    
-    
-    
-		
-    
-    
-    
-  
-    
-    
-				<!-- CODE -->
+ 
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
+			<script src="/assets/js/jquery.min.js"></script>
+			<script src="/assets/js/skel.min.js"></script>
+			<script src="/assets/js/util.js"></script>
 			<script>
 
 // d = new Date();
@@ -232,10 +246,13 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
 }
 
 
-
 </script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main2.js"></script>
+
+
+
+
+			<!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="/assets/js/main2.js"></script>
 
 	</body>
 </html>

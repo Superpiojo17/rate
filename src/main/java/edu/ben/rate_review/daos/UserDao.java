@@ -10,6 +10,7 @@ import java.util.List;
 import edu.ben.rate_review.encryption.SecurePassword;
 import edu.ben.rate_review.models.RecoveringUser;
 import edu.ben.rate_review.models.User;
+import edu.ben.rate_review.models.UserForm;
 
 /**
  * UserDao is a dao that will connect and provide interaction to the database
@@ -52,6 +53,12 @@ public class UserDao implements Dao<User> {
 		tmp.setFirst_name(rs.getString("first_name"));
 		tmp.setLast_name(rs.getString("last_name"));
 		tmp.setRole_string(rs.getString("role_id"));
+		tmp.setActive_icon(rs.getString("active"));
+		tmp.setConfirmed_icon(rs.getString("confirmed"));
+		tmp.setSchool_year(rs.getInt("school_year"));
+		tmp.setMajor(rs.getString("major"));
+		tmp.setYear_string(rs.getString("school_year"));
+
 		return tmp;
 	}
 
@@ -252,6 +259,29 @@ public class UserDao implements Dao<User> {
 
 	}
 
+	public User findById(long id) {
+		// Declare SQL template query
+		String sql = "SELECT * FROM " + USER_TABLE + " WHERE user_id = ? LIMIT 1";
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement q = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			q.setLong(1, id);
+
+			// Run your shit
+			ResultSet rs = q.executeQuery();
+			if (rs.next()) {
+				return mapRow(rs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// If you don't find a model
+		return null;
+
+	}
+
 	/**
 	 * 
 	 * @return all users from the database.
@@ -352,6 +382,42 @@ public class UserDao implements Dao<User> {
 			// Fill in the ? with the parameters you want
 			ps.setString(1, user.getEncryptedPassword());
 			ps.setString(2, user.getEmail());
+			// Runs query
+			ps.execute();
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+	}
+
+	/**
+	 * Updates user's password to their new password
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public UserForm updateUser(UserForm user) {
+		String sql = "UPDATE " + USER_TABLE
+				+ " SET first_name = ?, last_name = ?, email = ?, role_id = ?, school_year = ?, major = ? WHERE user_id = ? LIMIT 1";
+
+		try {
+			System.out.println("HERE");
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setString(1, user.getFirst_name());
+			System.out.println(user.getFirst_name());
+			ps.setString(2, user.getLast_name());
+			ps.setString(3, user.getEmail());
+			ps.setInt(4, user.getRole());
+			ps.setInt(5, user.getSchool_year());
+			ps.setString(6, user.getMajor());
+
+			ps.setLong(7, user.getId());
+			System.out.println(user.getId());
+
 			// Runs query
 			ps.execute();
 			return user;

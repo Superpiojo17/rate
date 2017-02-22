@@ -10,6 +10,11 @@ public class User implements AuthorizationUser {
 	private String email;
 	private String encryptedPassword;
 	private String role_string;
+	private String confirmed_icon;
+	private String active_icon;
+	private String year_string;
+	private String major;
+	private int school_year;
 	private int role;
 	private boolean confirmed;
 	private boolean active;
@@ -105,6 +110,73 @@ public class User implements AuthorizationUser {
 		}
 
 		this.role_string = role_string;
+	}
+
+	public String getActive_icon() {
+		return active_icon;
+	}
+
+	public void setActive_icon(String active_icon) {
+		if (active) {
+			active_icon = " glyphicon glyphicon-ok";
+		} else if (!active) {
+			active_icon = " glyphicon glyphicon-remove";
+		}
+
+		this.active_icon = active_icon;
+	}
+
+	public String getConfirmed_icon() {
+		return confirmed_icon;
+	}
+
+	public void setConfirmed_icon(String confirmed_icon) {
+		if (confirmed) {
+			confirmed_icon = " glyphicon glyphicon-ok";
+		} else if (!confirmed) {
+			confirmed_icon = " glyphicon glyphicon-remove";
+		}
+
+		this.confirmed_icon = confirmed_icon;
+	}
+
+	public String getMajor() {
+		return major;
+	}
+
+	public void setMajor(String major) {
+
+		this.major = major;
+	}
+
+	public int getSchool_year() {
+		return school_year;
+	}
+
+	public void setSchool_year(int school_year) {
+		this.school_year = school_year;
+	}
+
+	public String getYear_string() {
+		return year_string;
+	}
+
+	public void setYear_string(String year_string) {
+		if (role >= 3) {
+			if (school_year == 1) {
+				year_string = "Freshman";
+			} else if (school_year == 2) {
+				year_string = "Sophomore";
+			} else if (school_year == 3) {
+				year_string = "Junior";
+			} else if (school_year >= 4) {
+				year_string = "Senior";
+			}
+		} else {
+			year_string = "N / A";
+		}
+
+		this.year_string = year_string;
 	}
 
 }
