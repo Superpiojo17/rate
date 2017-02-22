@@ -145,6 +145,7 @@ public class User implements AuthorizationUser {
 	}
 
 	public void setMajor(String major) {
+
 		this.major = major;
 	}
 
@@ -161,14 +162,18 @@ public class User implements AuthorizationUser {
 	}
 
 	public void setYear_string(String year_string) {
-		if (school_year == 1) {
-			year_string = "Freshman";
-		} else if (school_year == 2) {
-			year_string = "Sophomore";
-		} else if (school_year == 3) {
-			year_string = "Junior";
-		} else if (school_year >= 4) {
-			year_string = "Senior";
+		if (role >= 3) {
+			if (school_year == 1) {
+				year_string = "Freshman";
+			} else if (school_year == 2) {
+				year_string = "Sophomore";
+			} else if (school_year == 3) {
+				year_string = "Junior";
+			} else if (school_year >= 4) {
+				year_string = "Senior";
+			}
+		} else {
+			year_string = "N / A";
 		}
 
 		this.year_string = year_string;
