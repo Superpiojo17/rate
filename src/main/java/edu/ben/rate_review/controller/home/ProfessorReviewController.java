@@ -2,13 +2,10 @@ package edu.ben.rate_review.controller.home;
 
 import java.util.HashMap;
 
-import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.ProfessorReviewDao;
 import edu.ben.rate_review.models.CoursesToReview;
 import edu.ben.rate_review.models.ProfessorReview;
-import edu.ben.rate_review.models.User;
-import edu.ben.rate_review.models.UserForm;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -28,17 +25,14 @@ public class ProfessorReviewController {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 		
-		CoursesToReview courses = new CoursesToReview();
-		courses.setStudent_id(Long.parseLong(req.params("student_id")));
-		courses.setProfessor_first_name(req.params("professor_first_name"));
-		courses.setProfessor_last_name(req.params("professor_last_name"));
-		courses.setCourse_name(req.params("course_name"));
-		courses.setSemester(req.params("semester"));
-		courses.setYear(Integer.parseInt(req.params("year")));
+		//CoursesToReview courses = new CoursesToReview();
+		//courses.setStudent_id(Long.parseLong(req.params("student_id")));
+		//courses.setProfessor_first_name(req.params("professor_first_name"));
+		//courses.setProfessor_last_name(req.params("professor_last_name"));
+		//courses.setCourse_name(req.params("course_name"));
+		//courses.setSemester(req.params("semester"));
+		//courses.setYear(Integer.parseInt(req.params("year")));
 
-		// create the form object, put it into request
-		//model.put("courses", courses);
-		
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "home/reviewprofessor.hbs");
 	}
@@ -52,7 +46,7 @@ public class ProfessorReviewController {
 	 */
 	public String reviewProfessor(Request req, Response res) {
 
-		createReview(req, req.queryParams("comment"), Integer.parseInt(req.queryParams("rate_objectives")),
+		createReview(req.queryParams("comment"), Integer.parseInt(req.queryParams("rate_objectives")),
 				Integer.parseInt(req.queryParams("rate_organized")),
 				Integer.parseInt(req.queryParams("rate_challenging")),
 				Integer.parseInt(req.queryParams("rate_outside_work")), Integer.parseInt(req.queryParams("rate_pace")),
@@ -85,19 +79,26 @@ public class ProfessorReviewController {
 	 * @param rate_knowledge
 	 * @param rate_career_development
 	 */
-	private void createReview(Request req, String comment, int rate_objectives, int rate_organized, int rate_challenging,
+	private void createReview(String comment, int rate_objectives, int rate_organized, int rate_challenging,
 			int rate_outside_work, int rate_pace, int rate_assignments, int rate_grade_fairly, int rate_grade_time,
 			int rate_accessibility, int rate_knowledge, int rate_career_development) {
-
 		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
-
-		ProfessorReview review = new ProfessorReview(null);
-		review.setStudent_id(Long.parseLong(req.queryParams("student_id")));
-		review.setProfessor_first_name(req.queryParams("professor_first_name"));
-		review.setProfessor_last_name(req.queryParams("professor_last_name"));
-		review.setCourse(req.queryParams("course_name"));
-		review.setSemester(req.queryParams("semester"));
-		review.setYear(Integer.parseInt(req.queryParams("year")));
+		
+		ProfessorReview review = new ProfessorReview();
+		//review.setCourse_id(Long.parseLong(req.params("course_id")));
+		//review.setStudent_id(Long.parseLong(req.params("student_id")));
+		//review.setProfessor_first_name(req.params("professor_first_name"));
+		//review.setProfessor_last_name(req.params("professor_last_name"));
+		//review.setCourse(req.params("course_name"));
+		//review.setSemester(req.params("semester"));
+		//review.setYear(Integer.parseInt(req.params("year")));
+		review.setCourse_id(200);
+		review.setStudent_id(11);
+		review.setProfessor_first_name("Mike");
+		review.setProfessor_last_name("FakeProf");
+		review.setCourse("CMSC1000");
+		review.setSemester("Summer");
+		review.setYear(2018);
 		
 		review.setComment(comment);
 		review.setRate_objectives(rate_objectives);

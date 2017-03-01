@@ -20,6 +20,7 @@ public class ProfessorReview {
 	 */
 	public ProfessorReview(CoursesToReview course) {
 		super();
+		this.course_id = course.getCourse_id();
 		this.student_id = course.getStudent_id();
 		this.professor_first_name = course.getProfessor_first_name();
 		this.professor_last_name = course.getProfessor_last_name();
@@ -28,6 +29,7 @@ public class ProfessorReview {
 		this.year = course.getYear();
 	}
 
+	private long course_id;
 	private long student_id;
 	private String professor_first_name;
 	private String professor_last_name;
@@ -58,6 +60,16 @@ public class ProfessorReview {
 	private int rate_knowledge;
 	// I found this course was valuable for my career development:
 	private int rate_career_development;
+
+	
+	
+	public long getCourse_id() {
+		return course_id;
+	}
+
+	public void setCourse_id(long course_id) {
+		this.course_id = course_id;
+	}
 
 	/**
 	 * Getter for student

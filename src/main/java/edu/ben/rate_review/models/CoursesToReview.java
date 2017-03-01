@@ -8,6 +8,7 @@ package edu.ben.rate_review.models;
  */
 public class CoursesToReview {
 
+	private long course_id;
 	private long student_id;
 	private String course_name;
 	private String semester;
@@ -16,6 +17,14 @@ public class CoursesToReview {
 	private String professor_last_name;
 
 	
+
+	public long getCourse_id() {
+		return course_id;
+	}
+
+	public void setCourse_id(long course_id) {
+		this.course_id = course_id;
+	}
 
 	public String getProfessor_first_name() {
 		return professor_first_name;

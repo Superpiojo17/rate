@@ -69,6 +69,7 @@ public class ProfessorReviewDao {
 	private CoursesToReview courseMapRow(ResultSet rs) throws SQLException {
 		// create student course object
 		CoursesToReview tmp = new CoursesToReview();
+		tmp.setCourse_id(rs.getLong("course_id"));
 		tmp.setStudent_id(rs.getInt("users_user_id"));
 		tmp.setCourse_name(rs.getString("course_name"));
 		tmp.setSemester(rs.getString("semester"));
@@ -89,6 +90,7 @@ public class ProfessorReviewDao {
 	private ProfessorReview reviewMapRow(ResultSet rs) throws SQLException {
 		// Create professor review object
 		ProfessorReview tmp = new ProfessorReview();
+		tmp.setCourse_id(rs.getLong("course_id"));
 		tmp.setProfessor_first_name(rs.getString("professor_first_name"));
 		tmp.setProfessor_last_name(rs.getString("professor_last_name"));
 		tmp.setStudent_id(rs.getLong("student_id"));
@@ -118,13 +120,12 @@ public class ProfessorReviewDao {
 	 */
 	public void save(ProfessorReview review) {
 
-		if (findReview(review.getProfessor_first_name(), review.getProfessor_last_name(), review.getCourse(), review.getYear(), review.getSemester(),
-				review.getStudent_id()) == null) {
+		if (findReview(review.getCourse_id()) == null) {
 			final String sql = "INSERT INTO " + REVIEW_PROFESSOR_TABLE
 					+ " (professor_first_name, professor_last_name, course, student_id, year, semester, comment,"
 					+ " rate_objectives, rate_organized, rate_challenging, rate_outside_work,"
 					+ " rate_pace, rate_assignments, rate_grade_fairly, rate_grade_time, rate_accessibility,"
-					+ " rate_knowledge, rate_career_development) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+					+ " rate_knowledge, rate_career_development, course_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			try {
 				PreparedStatement ps = conn.prepareStatement(sql);
 				ps.setString(1, review.getProfessor_first_name());
@@ -145,6 +146,7 @@ public class ProfessorReviewDao {
 				ps.setInt(16, review.getRate_accessibility());
 				ps.setInt(17, review.getRate_knowledge());
 				ps.setInt(18, review.getRate_career_development());
+				ps.setLong(19, review.getCourse_id());
 				ps.executeUpdate();
 
 			} catch (SQLException e) {
@@ -159,21 +161,14 @@ public class ProfessorReviewDao {
 	 * @param email
 	 * @return
 	 */
-	public ProfessorReview findReview(String professor_first_name, String professor_last_name, String course, int year,
-			String semester, long student_id) {
+	public ProfessorReview findReview(long course_id) {
 		// Declare SQL template query
-		String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_first_name = ?"
-				+ " AND professor_last_name = ? AND course = ? AND year = ? AND semester = ? AND student_id = ?";
+		String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE course_id = ?";
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement q = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
-			q.setString(1, professor_first_name);
-			q.setString(2, professor_last_name);
-			q.setString(3, course);
-			q.setInt(4, year);
-			q.setString(5, semester);
-			q.setLong(6, student_id);
+			q.setLong(1, course_id);
 
 			// Runs query
 			ResultSet rs = q.executeQuery();
@@ -197,19 +192,14 @@ public class ProfessorReviewDao {
 	 */
 	public ProfessorReview removeProfessorReview(ProfessorReview review) {
 
-		String sql = "DELETE FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_first_name = ?"
-				+ " AND professor_last_name = ? AND course = ? AND "
-				+ "student_id = ? AND year = ? AND semester = ? LIMIT 1";
+		String sql = "DELETE FROM " + REVIEW_PROFESSOR_TABLE + " WHERE course_id = ? LIMIT 1";
 
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, review.getProfessor_first_name());
-			ps.setString(2, review.getProfessor_last_name());
-			ps.setString(3, review.getCourse());
-			ps.setLong(4, review.getStudent_id());
-			ps.setInt(5, review.getYear());
-			ps.setString(6, review.getSemester());
+
+			ps.setLong(1, review.getCourse_id());
+
 			// Runs query
 			ps.execute();
 
