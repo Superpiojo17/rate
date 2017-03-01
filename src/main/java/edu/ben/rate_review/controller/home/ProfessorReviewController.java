@@ -27,14 +27,6 @@ public class ProfessorReviewController {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 
-		// CoursesToReview courses = new CoursesToReview();
-		// courses.setStudent_id(Long.parseLong(req.params("student_id")));
-		// courses.setProfessor_first_name(req.params("professor_first_name"));
-		// courses.setProfessor_last_name(req.params("professor_last_name"));
-		// courses.setCourse_name(req.params("course_name"));
-		// courses.setSemester(req.params("semester"));
-		// courses.setYear(Integer.parseInt(req.params("year")));
-
 		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
 		Session session = req.session();
 		String idString = req.params("course_id");
@@ -55,7 +47,6 @@ public class ProfessorReviewController {
 	 * @return
 	 */
 	public String reviewProfessor(Request req, Response res) {
-		System.out.println(req.params("course_id"));
 		
 		if (req.queryParams("comment").length() <= 500){
 			createReview(Long.parseLong(req.params("course_id")), req.queryParams("comment"),
@@ -70,7 +61,7 @@ public class ProfessorReviewController {
 					Integer.parseInt(req.queryParams("rate_knowledge")),
 					Integer.parseInt(req.queryParams("rate_career_development")));
 
-			res.redirect(Application.PROFESSOR_PATH);
+			res.redirect("/professor/" + req.params("course_id") + "/overview");
 		} else {
 			//comment too long
 			res.redirect("/reviewprofessor/" + req.params("course_id") + "/review");

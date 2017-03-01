@@ -37,7 +37,7 @@ public class ProfessorReviewDao {
 	 * 
 	 * @return
 	 */
-	public List<CoursesToReview> allCourses(User user) {
+	public List<CoursesToReview> allStudentCourses(User user) {
 		final String SELECT = "SELECT * FROM " + COURSES_TABLE + " WHERE users_user_id = " + user.getId()
 				+ " AND semester = 'Spring' AND year = 2017";
 		List<CoursesToReview> courses = null;
@@ -183,7 +183,46 @@ public class ProfessorReviewDao {
 		return null;
 
 	}
-	
+
+	/**
+	 * Finds professor course reviews by single course_id
+	 * 
+	 * @param course_id
+	 * @return
+	 */
+	public List<ProfessorReview> professorByCourseId(long course_id) {
+
+		CoursesToReview course = findByCourseId(course_id);
+		List<ProfessorReview> reviews = listCoursesByProfessorName(course);
+		return reviews;
+
+	}
+
+	public List<ProfessorReview> listCoursesByProfessorName(CoursesToReview courses) {
+
+		final String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_first_name = ?"
+				+ " AND professor_last_name = ?";
+		List<ProfessorReview> reviews = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, courses.getProfessor_first_name());
+			ps.setString(2, courses.getProfessor_last_name());
+			reviews = new ArrayList<ProfessorReview>();
+			try {
+				ResultSet rs = ps.executeQuery();
+				while (rs.next()) {
+					reviews.add(reviewMapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return reviews;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return reviews;
+	}
+
 	/**
 	 * Finds and returns a specific ProfessorReview
 	 * 

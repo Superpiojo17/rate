@@ -31,8 +31,7 @@ public class StudentDashboardController {
 		
 		DaoManager dao = DaoManager.getInstance();
 		ProfessorReviewDao reviewDao = dao.getProfessorReviewDao();
-		List<CoursesToReview> courses = reviewDao.allCourses(u);
-		//model.put("users", courses);
+		List<CoursesToReview> courses = reviewDao.allStudentCourses(u);
 
 		model.put("courses", courses);
 		// Tell the server to render the index page with the data in the model

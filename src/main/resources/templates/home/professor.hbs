@@ -10,7 +10,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 	</head>
@@ -47,96 +47,65 @@
 
 					<!-- Text -->
 						<section>
-							<h3>Overall Rating 5</h3>
-							<p>Teaches in the *Blank* department</p>
+							<h3>{{course.professor_first_name}} {{course.professor_last_name}}</h3>
+							<p>Overall rating:</p>
 
 							<hr />
 							</section>
-					<input type="button" onclick="passvars()" value="Rate This Professor"></a>
-					
 					
 			<div id="class_list">
 			
 			<br>
 			
-			<ul> Type of rating
-  				<li>Strong</li> 
-  				<li>Average</li>
-  				<li>Low</li>
-			</ul>
+			<ul> Were course objectives met?: </ul>
 			
-			<ul> Type of rating
-  				<li>Strong</li>
-  				<li>Average</li>
-  				<li>Low</li>
-			</ul>
+			<ul> Were courses well planned and scheduled?: </ul>
 			
-			<ul> Type of rating
-  				<li>Strong</li>
-  				<li>Average</li>
-  				<li>Low</li>
-			</ul>
+			<ul> Difficulty of courses: </ul>
 			
-			<ul> Type of rating
-  				<li>Strong</li>
-  				<li>Average</li>
-  				<li>Low</li>
-			</ul>
+			<ul> Amount of work required outside of class: </ul>
 			
-			<ul> Type of rating
-  				<li>Strong</li>
-  				<li>Average</li>
-  				<li>Low</li>
-			</ul>
+			<ul> Pace of presented course material: </ul>
+			
+			<ul> Do assignments provide a good learning experience?: </ul>
+			
+			<ul> How fairly assignments and exams are graded?: </ul>
+			
+			<ul> How timely is the grading of assignments?: </ul>
+			
+			<ul> How accessible is the instructor outside of class?: </ul>
+			
+			<ul> How relevant and up-to-date is the instructor's knowledge?: </ul>
+			
+			<ul> How value are the instructor's courses for career development?: </ul>
 			
 			<!-- Table -->
 						<section>
 						<br>
-							<h3>Classes Taught</h3>
+							<h3>Comments:</h3>
 							<div class="table-wrapper">
 								<table class="alt">
 									<thead>
 										<tr>
-											<th>Date of Review</th>
-											<th>Review Rating</th>
-											<th>Class section</th>
-											<th>Comment</th>
+											<th><br>Course</th>
+											<th><br>Semester</th>
+											<th><br>Comment</th>
+											<th></th>
 										</tr>
 									</thead>
 									<tbody>
+									{{#each courses}}
 										<tr>
-											<td>2/13/2017</td>
-											<td>5</td>
-											<td>CMSC 310</td>
-											<td>Comment</td>
+											<td>{{course}}</td>
+											<td>{{semester}} {{year}}</td>
+											<td>{{comment}}</td>
 										</tr>
-										<tr>
-											<td>XX/XX/XXXX</td>
-											<td>Rating</td>
-											<td>Class #</td>
-											<td>Comment</td>
-										</tr>
-										<tr>
-											<td>XX/XX/XXXX</td>
-											<td>Rating</td>
-											<td>Class #</td>
-											<td>Comment</td>
-										</tr>
-										<tr>
-											<td>XX/XX/XXXX</td>
-											<td>Rating</td>
-											<td>Class #</td>
-											<td>Comment</td>
-										</tr>
-										<tr>
-											<td>XX/XX/XXXX</td>
-											<td>Rating</td>
-											<td>Class #</td>
-											<td>Comment</td>
-										</tr>
+									{{/each}}
 									</tbody>
+									<tfoot>
+									</tfoot>
 								</table>
-							</div>
+							</div> 
 							
 				
 			

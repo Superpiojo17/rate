@@ -98,7 +98,7 @@ public class Application {
 	public static String ALLUSERS_PATH = "/allusers";
 	public static String TEST_PATH = "/test";
 	public static String TUTOR_PATH = "/tutor";
-	public static String PROFESSOR_PATH = "/professor";
+	public static String PROFESSOR_PATH = "/professor/:course_id/overview";
 	public static String REVIEWPROFESSOR_PATH = "/reviewprofessor/:course_id/review";
 	public static String ADDTUTOR_PATH = "/addtutor";
 	public static String ADDPROFESSOR_PATH = "/addprofessor";
@@ -168,6 +168,8 @@ public class Application {
 
 		get(PROFESSOR_PATH, (req, res) -> professorController.showProfessorPage(req, res),
 				new HandlebarsTemplateEngine());
+		
+		put(PROFESSOR_PATH, (req, res) -> professorController.display(req, res));
 
 		get(REVIEWPROFESSOR_PATH, (req, res) -> professorReviewController.showReviewProfessorPage(req, res),
 				new HandlebarsTemplateEngine());
