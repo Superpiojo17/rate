@@ -2,6 +2,7 @@ package edu.ben.rate_review.controller.home;
 
 import java.util.HashMap;
 
+import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.ProfessorReviewDao;
 import edu.ben.rate_review.models.CoursesToReview;
@@ -55,19 +56,26 @@ public class ProfessorReviewController {
 	 */
 	public String reviewProfessor(Request req, Response res) {
 		System.out.println(req.params("course_id"));
-		createReview(Long.parseLong(req.params("course_id")), req.queryParams("comment"),
-				Integer.parseInt(req.queryParams("rate_objectives")),
-				Integer.parseInt(req.queryParams("rate_organized")),
-				Integer.parseInt(req.queryParams("rate_challenging")),
-				Integer.parseInt(req.queryParams("rate_outside_work")), Integer.parseInt(req.queryParams("rate_pace")),
-				Integer.parseInt(req.queryParams("rate_assignments")),
-				Integer.parseInt(req.queryParams("rate_grade_fairly")),
-				Integer.parseInt(req.queryParams("rate_grade_time")),
-				Integer.parseInt(req.queryParams("rate_accessibility")),
-				Integer.parseInt(req.queryParams("rate_knowledge")),
-				Integer.parseInt(req.queryParams("rate_career_development")));
+		
+		if (req.queryParams("comment").length() <= 500){
+			createReview(Long.parseLong(req.params("course_id")), req.queryParams("comment"),
+					Integer.parseInt(req.queryParams("rate_objectives")),
+					Integer.parseInt(req.queryParams("rate_organized")),
+					Integer.parseInt(req.queryParams("rate_challenging")),
+					Integer.parseInt(req.queryParams("rate_outside_work")), Integer.parseInt(req.queryParams("rate_pace")),
+					Integer.parseInt(req.queryParams("rate_assignments")),
+					Integer.parseInt(req.queryParams("rate_grade_fairly")),
+					Integer.parseInt(req.queryParams("rate_grade_time")),
+					Integer.parseInt(req.queryParams("rate_accessibility")),
+					Integer.parseInt(req.queryParams("rate_knowledge")),
+					Integer.parseInt(req.queryParams("rate_career_development")));
 
-		res.redirect("/professor");
+			res.redirect(Application.PROFESSOR_PATH);
+		} else {
+			//comment too long
+			res.redirect("/reviewprofessor/" + req.params("course_id") + "/review");
+		}
+		
 
 		return "";
 	}
