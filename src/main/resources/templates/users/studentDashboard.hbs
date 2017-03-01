@@ -122,6 +122,7 @@
         <div class="panel-body">You have not added any classes to your profile. Click on My Classes on the side menu to add your courses!</div>
       </div>
     </div>
+    
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -132,6 +133,42 @@
         <div class="panel-body">You have not left any recent reviews. Search for a teacher to leave some quality feedback!.</div>
       </div>
     </div>
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Courses To Review</a>
+        </h4>
+      </div>
+      <div id="collapse4" class="panel-collapse collapse"> 	
+      	<div class="table-wrapper">
+								<table class="alt">
+									<thead>
+										<tr>
+											<th><br>Professor Name</th>
+											<th><br>Course</th>
+											<th><br>Semester</th>
+											<th><br>Year</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+									{{#each courses}}
+										<tr>
+											<td>{{professor_first_name}} {{professor_last_name}}</td>
+											<td><a href="/reviewprofessor/{{student_id}}/{{professor_first_name}}/{{professor_last_name}}/{{course_name}}/{{semester}}/{{year}}/review">{{course_name}}</a></td>
+											<td>{{semester}}</td>
+											<td>{{year}}</td>
+										</tr>
+									{{/each}}
+									</tbody>
+									<tfoot>
+									</tfoot>
+								</table>
+							</div> 
+      </div>
+    </div>
+    
   </div> 
 </div>
 		

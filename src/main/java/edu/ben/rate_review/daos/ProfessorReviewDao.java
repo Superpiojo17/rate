@@ -4,8 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import edu.ben.rate_review.models.CoursesToReview;
 import edu.ben.rate_review.models.ProfessorReview;
+import edu.ben.rate_review.models.User;
 
 /**
  * Dao for the review of a professor
@@ -16,6 +20,7 @@ import edu.ben.rate_review.models.ProfessorReview;
 public class ProfessorReviewDao {
 
 	String REVIEW_PROFESSOR_TABLE = "professor_review";
+	String COURSES_TABLE = "student_courses";
 	Connection conn = null;
 
 	/**
@@ -28,6 +33,53 @@ public class ProfessorReviewDao {
 	}
 
 	/**
+	 * Returns all courses to review for current semester
+	 * 
+	 * @return
+	 */
+	public List<CoursesToReview> allCourses(User user) {
+		final String SELECT = "SELECT * FROM " + COURSES_TABLE + " WHERE users_user_id = " + user.getId()
+				+ " AND semester = 'Spring' AND year = 2017";
+		List<CoursesToReview> courses = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			courses = new ArrayList<CoursesToReview>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					courses.add(courseMapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return courses;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return courses;
+	}
+
+	/**
+	 * Creates a courses object
+	 * 
+	 * @param rs
+	 * @return
+	 * @throws SQLException
+	 */
+	private CoursesToReview courseMapRow(ResultSet rs) throws SQLException {
+		// create student course object
+		CoursesToReview tmp = new CoursesToReview();
+		tmp.setStudent_id(rs.getInt("users_user_id"));
+		tmp.setCourse_name(rs.getString("course_name"));
+		tmp.setSemester(rs.getString("semester"));
+		tmp.setYear(rs.getInt("year"));
+		tmp.setProfessor_first_name(rs.getString("professor_first_name"));
+		tmp.setProfessor_last_name(rs.getString("professor_last_name"));
+
+		return tmp;
+	}
+
+	/**
 	 * Creates a professor review object
 	 * 
 	 * @param rs
@@ -37,10 +89,11 @@ public class ProfessorReviewDao {
 	private ProfessorReview reviewMapRow(ResultSet rs) throws SQLException {
 		// Create professor review object
 		ProfessorReview tmp = new ProfessorReview();
-		tmp.setProfessor_email(rs.getString("professor_email"));
-		tmp.setStudent_email(rs.getString("student_email"));
+		tmp.setProfessor_first_name(rs.getString("professor_first_name"));
+		tmp.setProfessor_last_name(rs.getString("professor_last_name"));
+		tmp.setStudent_id(rs.getLong("student_id"));
 		tmp.setCourse(rs.getString("course"));
-		tmp.setCurrent_year(rs.getInt("current_year"));
+		tmp.setYear(rs.getInt("year"));
 		tmp.setSemester(rs.getString("semester"));
 		tmp.setComment(rs.getString("comment"));
 		tmp.setRate_objectives(rs.getInt("rate_objectives"));
@@ -65,32 +118,33 @@ public class ProfessorReviewDao {
 	 */
 	public void save(ProfessorReview review) {
 
-		if (findReview(review.getProfessor_email(), review.getCourse(), review.getCurrent_year(), review.getSemester(),
-				review.getStudent_email()) == null) {
+		if (findReview(review.getProfessor_first_name(), review.getProfessor_last_name(), review.getCourse(), review.getYear(), review.getSemester(),
+				review.getStudent_id()) == null) {
 			final String sql = "INSERT INTO " + REVIEW_PROFESSOR_TABLE
-					+ " (professor_email, course, student_email, current_year, semester, comment,"
+					+ " (professor_first_name, professor_last_name, course, student_id, year, semester, comment,"
 					+ " rate_objectives, rate_organized, rate_challenging, rate_outside_work,"
 					+ " rate_pace, rate_assignments, rate_grade_fairly, rate_grade_time, rate_accessibility,"
-					+ " rate_knowledge, rate_career_development) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+					+ " rate_knowledge, rate_career_development) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			try {
 				PreparedStatement ps = conn.prepareStatement(sql);
-				ps.setString(1, review.getProfessor_email());
-				ps.setString(2, review.getCourse());
-				ps.setString(3, review.getStudent_email());
-				ps.setInt(4, review.getCurrent_year());
-				ps.setString(5, review.getSemester());
-				ps.setString(6, review.getComment());
-				ps.setInt(7, review.getRate_objectives());
-				ps.setInt(8, review.getRate_organized());
-				ps.setInt(9, review.getRate_challenging());
-				ps.setInt(10, review.getRate_outside_work());
-				ps.setInt(11, review.getRate_pace());
-				ps.setInt(12, review.getRate_assignments());
-				ps.setInt(13, review.getRate_grade_fairly());
-				ps.setInt(14, review.getRate_grade_time());
-				ps.setInt(15, review.getRate_accessibility());
-				ps.setInt(16, review.getRate_knowledge());
-				ps.setInt(17, review.getRate_career_development());
+				ps.setString(1, review.getProfessor_first_name());
+				ps.setString(2, review.getProfessor_last_name());
+				ps.setString(3, review.getCourse());
+				ps.setLong(4, review.getStudent_id());
+				ps.setInt(5, review.getYear());
+				ps.setString(6, review.getSemester());
+				ps.setString(7, review.getComment());
+				ps.setInt(8, review.getRate_objectives());
+				ps.setInt(9, review.getRate_organized());
+				ps.setInt(10, review.getRate_challenging());
+				ps.setInt(11, review.getRate_outside_work());
+				ps.setInt(12, review.getRate_pace());
+				ps.setInt(13, review.getRate_assignments());
+				ps.setInt(14, review.getRate_grade_fairly());
+				ps.setInt(15, review.getRate_grade_time());
+				ps.setInt(16, review.getRate_accessibility());
+				ps.setInt(17, review.getRate_knowledge());
+				ps.setInt(18, review.getRate_career_development());
 				ps.executeUpdate();
 
 			} catch (SQLException e) {
@@ -105,20 +159,21 @@ public class ProfessorReviewDao {
 	 * @param email
 	 * @return
 	 */
-	public ProfessorReview findReview(String professor_email, String course, int current_year, String semester,
-			String student_email) {
+	public ProfessorReview findReview(String professor_first_name, String professor_last_name, String course, int year,
+			String semester, long student_id) {
 		// Declare SQL template query
-		String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ?"
-				+ " AND course = ? AND current_year = ? AND semester = ? AND student_email = ?";
+		String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_first_name = ?"
+				+ " AND professor_last_name = ? AND course = ? AND year = ? AND semester = ? AND student_id = ?";
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement q = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
-			q.setString(1, professor_email);
-			q.setString(2, course);
-			q.setInt(3, current_year);
-			q.setString(4, semester);
-			q.setString(5, student_email);
+			q.setString(1, professor_first_name);
+			q.setString(2, professor_last_name);
+			q.setString(3, course);
+			q.setInt(4, year);
+			q.setString(5, semester);
+			q.setLong(6, student_id);
 
 			// Runs query
 			ResultSet rs = q.executeQuery();
@@ -142,17 +197,19 @@ public class ProfessorReviewDao {
 	 */
 	public ProfessorReview removeProfessorReview(ProfessorReview review) {
 
-		String sql = "DELETE FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ? AND course = ? AND "
-				+ "student_email = ? AND current_year = ? AND semester = ? LIMIT 1";
+		String sql = "DELETE FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_first_name = ?"
+				+ " AND professor_last_name = ? AND course = ? AND "
+				+ "student_id = ? AND year = ? AND semester = ? LIMIT 1";
 
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, review.getProfessor_email());
-			ps.setString(2, review.getCourse());
-			ps.setString(3, review.getStudent_email());
-			ps.setInt(4, review.getCurrent_year());
-			ps.setString(5, review.getSemester());
+			ps.setString(1, review.getProfessor_first_name());
+			ps.setString(2, review.getProfessor_last_name());
+			ps.setString(3, review.getCourse());
+			ps.setLong(4, review.getStudent_id());
+			ps.setInt(5, review.getYear());
+			ps.setString(6, review.getSemester());
 			// Runs query
 			ps.execute();
 

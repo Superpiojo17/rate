@@ -8,10 +8,31 @@ package edu.ben.rate_review.models;
  */
 
 public class ProfessorReview {
-	private String student_email;
-	private String professor_email;
+
+	public ProfessorReview() {
+
+	}
+
+	/**
+	 * Constructor
+	 * 
+	 * @param course
+	 */
+	public ProfessorReview(CoursesToReview course) {
+		super();
+		this.student_id = course.getStudent_id();
+		this.professor_first_name = course.getProfessor_first_name();
+		this.professor_last_name = course.getProfessor_last_name();
+		this.course = course.getCourse_name();
+		this.semester = course.getSemester();
+		this.year = course.getYear();
+	}
+
+	private long student_id;
+	private String professor_first_name;
+	private String professor_last_name;
 	private String course;
-	private int current_year;
+	private int year;
 	private String semester;
 	private String comment;
 
@@ -43,8 +64,8 @@ public class ProfessorReview {
 	 * 
 	 * @return
 	 */
-	public String getStudent_email() {
-		return student_email;
+	public long getStudent_id() {
+		return student_id;
 	}
 
 	/**
@@ -52,26 +73,24 @@ public class ProfessorReview {
 	 * 
 	 * @param student
 	 */
-	public void setStudent_email(String student_email) {
-		this.student_email = student_email;
+	public void setStudent_id(long student_id) {
+		this.student_id = student_id;
+	}
+	
+	public String getProfessor_first_name() {
+		return professor_first_name;
 	}
 
-	/**
-	 * Getter for professor
-	 * 
-	 * @return
-	 */
-	public String getProfessor_email() {
-		return professor_email;
+	public void setProfessor_first_name(String professor_first_name) {
+		this.professor_first_name = professor_first_name;
 	}
 
-	/**
-	 * Setter for professor
-	 * 
-	 * @param professor
-	 */
-	public void setProfessor_email(String professor_email) {
-		this.professor_email = professor_email;
+	public String getProfessor_last_name() {
+		return professor_last_name;
+	}
+
+	public void setProfessor_last_name(String professor_last_name) {
+		this.professor_last_name = professor_last_name;
 	}
 
 	/**
@@ -97,8 +116,8 @@ public class ProfessorReview {
 	 * 
 	 * @return
 	 */
-	public int getCurrent_year() {
-		return current_year;
+	public int getYear() {
+		return year;
 	}
 
 	/**
@@ -124,8 +143,8 @@ public class ProfessorReview {
 	 * 
 	 * @param comment
 	 */
-	public void setCurrent_year(int current_year) {
-		this.current_year = current_year;
+	public void setYear(int year) {
+		this.year = year;
 	}
 
 	/**

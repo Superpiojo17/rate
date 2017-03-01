@@ -48,30 +48,10 @@
 							<h3>Review <label id="Professor_Lastname">*Professor Name*</label></h3>
 							
 							<label id="currentRating">*Current Overall rating*</label>
-							
-											
+									
 							</section>
-			<form action="/reviewprofessor" method="post">
+			<form action="/reviewprofessor/{{courses.student_id}}/{{courses.professor_first_name}}/{{courses.professor_last_name}}/{{courses.course_name}}/{{courses.semester}}/{{courses.year}}/review" method="post">
 			
-				<h4>Professor Email:</h4>
-				<input class="container 25%" style="margin-left:0px" type="text" id="professor_email" name="professor_email">
-				<br>
-				
-				<h4>Student Email:</h4>
-				<input class="container 25%" style="margin-left:0px" type="text" id="student_email" name="student_email">
-				<br>
-			
-				<h4>Course:</h4>
-				<input class="container 25%" style="margin-left:0px" type="text" id="course" name="course">
-				<br>
-				
-				<h4>Semester:</h4>
-				<input class="container 25%" style="margin-left:0px" type="text" id="semester" name="semester">
-				<br>
-				
-				<h4>Current Year:</h4>
-				<input class="container 25%" style="margin-left:0px" type="text" id="current_year" name="current_year">
-				<br>
 			
 				<h4>Were the course objectives met? (1-5):</h4>
 				<label class="radio inline"><input type="radio" name="rate_objectives" value="1" checked>1</label>
@@ -193,34 +173,8 @@
 
 		<!-- Scripts -->
 		
-		<script>
-			window.onload = function (){
-				function ParseURLParameter(Parameter)
-				{
-					var FullURL = window.location.search.substring(1);
-					var ParametersArray = FullURL.split('&');
-					for (var i = 0; i < ParametersArray.length; i++)
-					{
-						var CurrentParameter = ParametersArray[i].split('=');
-						if(CurrentParameter[0] == Parameter)
-						{
-							return CurrentParameter[1];
-						}
-					}
-				}
-				
-				var lastname = ParseURLParameter('lastname');
-				if(typeof lastname !== 'undefined'){
-						document.getElementById("Professor_Lastname").innerHTML = lastname;
-				}
-				
-				}
-				</script>
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
-
+		<!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="/assets/js/main2.js"></script>
+		
 	</body>
 </html>
