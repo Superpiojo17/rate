@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import edu.ben.rate_review.models.ProfessorReview;
-import edu.ben.rate_review.models.User;
 
 /**
  * Dao for the review of a professor
