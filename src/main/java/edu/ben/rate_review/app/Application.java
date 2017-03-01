@@ -99,8 +99,7 @@ public class Application {
 	public static String TEST_PATH = "/test";
 	public static String TUTOR_PATH = "/tutor";
 	public static String PROFESSOR_PATH = "/professor";
-	public static String REVIEWPROFESSOR_PATH = "/reviewprofessor";
-	//public static String REVIEWPROFESSOR_PATH = "/reviewprofessor";
+	public static String REVIEWPROFESSOR_PATH = "/reviewprofessor/:course_id/review";
 	public static String ADDTUTOR_PATH = "/addtutor";
 	public static String ADDPROFESSOR_PATH = "/addprofessor";
 	public static String NOTLOGGEDIN_PATH = "/notloggedinerror";
@@ -170,9 +169,11 @@ public class Application {
 		get(PROFESSOR_PATH, (req, res) -> professorController.showProfessorPage(req, res),
 				new HandlebarsTemplateEngine());
 
-		get(REVIEWPROFESSOR_PATH, (req, res) -> professorController.showReviewProfessorPage(req, res),
+		get(REVIEWPROFESSOR_PATH, (req, res) -> professorReviewController.showReviewProfessorPage(req, res),
 				new HandlebarsTemplateEngine());
 		post(REVIEWPROFESSOR_PATH, (req, res) -> professorReviewController.reviewProfessor(req, res));
+		
+		put(REVIEWPROFESSOR_PATH, (req, res) -> professorReviewController.passCourse(req, res));
 
 		get(TEACHER_PATH, (req, res) -> teacherController.showTeacherPage(req, res), new HandlebarsTemplateEngine());
 

@@ -183,6 +183,35 @@ public class ProfessorReviewDao {
 		return null;
 
 	}
+	
+	/**
+	 * Finds and returns a specific ProfessorReview
+	 * 
+	 * @param email
+	 * @return
+	 */
+	public CoursesToReview findByCourseId(long course_id) {
+		// Declare SQL template query
+		String sql = "SELECT * FROM " + COURSES_TABLE + " WHERE course_id = ? LIMIT 1";
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement q = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			q.setLong(1, course_id);
+
+			// Runs query
+			ResultSet rs = q.executeQuery();
+			if (rs.next()) {
+				return courseMapRow(rs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// If you don't find a model
+		return null;
+
+	}
 
 	/**
 	 * Allows for deletion of a specific review

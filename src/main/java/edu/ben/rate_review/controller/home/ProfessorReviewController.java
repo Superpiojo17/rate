@@ -9,6 +9,7 @@ import edu.ben.rate_review.models.ProfessorReview;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import spark.Session;
 
 /**
  * Controller for the review of a professor
@@ -24,14 +25,22 @@ public class ProfessorReviewController {
 	public ModelAndView showReviewProfessorPage(Request req, Response res) {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
-		
-		//CoursesToReview courses = new CoursesToReview();
-		//courses.setStudent_id(Long.parseLong(req.params("student_id")));
-		//courses.setProfessor_first_name(req.params("professor_first_name"));
-		//courses.setProfessor_last_name(req.params("professor_last_name"));
-		//courses.setCourse_name(req.params("course_name"));
-		//courses.setSemester(req.params("semester"));
-		//courses.setYear(Integer.parseInt(req.params("year")));
+
+		// CoursesToReview courses = new CoursesToReview();
+		// courses.setStudent_id(Long.parseLong(req.params("student_id")));
+		// courses.setProfessor_first_name(req.params("professor_first_name"));
+		// courses.setProfessor_last_name(req.params("professor_last_name"));
+		// courses.setCourse_name(req.params("course_name"));
+		// courses.setSemester(req.params("semester"));
+		// courses.setYear(Integer.parseInt(req.params("year")));
+
+		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
+		Session session = req.session();
+		String idString = req.params("course_id");
+		long id = Long.parseLong(idString);
+		CoursesToReview course = reviewDao.findByCourseId(id);
+		// create the form object, put it into request
+		model.put("course", course);
 
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "home/reviewprofessor.hbs");
@@ -45,8 +54,9 @@ public class ProfessorReviewController {
 	 * @return
 	 */
 	public String reviewProfessor(Request req, Response res) {
-
-		createReview(req.queryParams("comment"), Integer.parseInt(req.queryParams("rate_objectives")),
+		System.out.println(req.params("course_id"));
+		createReview(Long.parseLong(req.params("course_id")), req.queryParams("comment"),
+				Integer.parseInt(req.queryParams("rate_objectives")),
 				Integer.parseInt(req.queryParams("rate_organized")),
 				Integer.parseInt(req.queryParams("rate_challenging")),
 				Integer.parseInt(req.queryParams("rate_outside_work")), Integer.parseInt(req.queryParams("rate_pace")),
@@ -66,6 +76,7 @@ public class ProfessorReviewController {
 	 * Packages information into ProfessorReview object and sends it to the Dao
 	 * to store in the database
 	 * 
+	 * @param course_id
 	 * @param comment
 	 * @param rate_objectives
 	 * @param rate_organized
@@ -79,27 +90,23 @@ public class ProfessorReviewController {
 	 * @param rate_knowledge
 	 * @param rate_career_development
 	 */
-	private void createReview(String comment, int rate_objectives, int rate_organized, int rate_challenging,
-			int rate_outside_work, int rate_pace, int rate_assignments, int rate_grade_fairly, int rate_grade_time,
-			int rate_accessibility, int rate_knowledge, int rate_career_development) {
+	private void createReview(Long course_id, String comment, int rate_objectives, int rate_organized,
+			int rate_challenging, int rate_outside_work, int rate_pace, int rate_assignments, int rate_grade_fairly,
+			int rate_grade_time, int rate_accessibility, int rate_knowledge, int rate_career_development) {
 		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
-		
+
 		ProfessorReview review = new ProfessorReview();
-		//review.setCourse_id(Long.parseLong(req.params("course_id")));
-		//review.setStudent_id(Long.parseLong(req.params("student_id")));
-		//review.setProfessor_first_name(req.params("professor_first_name"));
-		//review.setProfessor_last_name(req.params("professor_last_name"));
-		//review.setCourse(req.params("course_name"));
-		//review.setSemester(req.params("semester"));
-		//review.setYear(Integer.parseInt(req.params("year")));
-		review.setCourse_id(200);
-		review.setStudent_id(11);
-		review.setProfessor_first_name("Mike");
-		review.setProfessor_last_name("FakeProf");
-		review.setCourse("CMSC1000");
-		review.setSemester("Summer");
-		review.setYear(2018);
+		CoursesToReview course = new CoursesToReview();
 		
+		course = reviewDao.findByCourseId(course_id);
+		
+		review.setCourse_id(course.getCourse_id());
+		review.setStudent_id(course.getStudent_id());
+		review.setProfessor_first_name(course.getProfessor_first_name());
+		review.setProfessor_last_name(course.getProfessor_last_name());
+		review.setCourse(course.getCourse_name());
+		review.setSemester(course.getSemester());
+		review.setYear(course.getYear());
 		review.setComment(comment);
 		review.setRate_objectives(rate_objectives);
 		review.setRate_organized(rate_organized);
@@ -114,6 +121,14 @@ public class ProfessorReviewController {
 		review.setRate_career_development(rate_career_development);
 
 		reviewDao.save(review);
+	}
+
+	public ModelAndView passCourse(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+
+		model.put("course_id", req.params("course_id"));
+
+		return new ModelAndView(model, "/professor.hbs");
 	}
 
 }
