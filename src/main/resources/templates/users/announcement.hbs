@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Edit User</title>
+		<title>Announcements</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -69,18 +69,12 @@
 										</tr>
 									</thead>
 									<tbody>
+									{{#each announcements}}
 										<tr>
-											<td>2/09/17</td>
-											<td>Website under maintenance</td>
+											<td>{{date}}</td>
+											<td>{{announcement_content}}</td>
 										</tr>
-										<tr>
-											<td>2/12/17</td>
-											<td>Chance wins grammy</td>
-										</tr>
-										<tr>
-											<td>5/17/17</td>
-											<td>Freedom</td>
-										</tr>
+										{{/each}}
 									</tbody>
 									<tfoot>
 										<tr>
@@ -96,52 +90,21 @@
 						
 							<div class="centercol"> 
 							&ensp;
-							<h2> Edit your user </h2>
+							<h2> Edit your anouncements </h2>
 							
 							
 							
-  <p>Fill out the form and click save to edit a user.</p>
+  <p>Fill out the form and click save to add an announcement.</p>
   &ensp;
   
 							<!-- Form -->
 						<section>
-							<form action="/user/{{user_form.id}}/edit" method="post">
+							<form action="/announcement" method="post">
 								<div class="row uniform 50%">
 									<div class="6u 12u$(xsmall)">
-										<input type="text" name="first_name" id="first_name" value="{{user_form.first_name}}" placeholder="First Name" />
-										&ensp;
-										<input type="text" name="email" id="email" value="{{user_form.email}}" placeholder="{{user_form.email}}" />
-										&ensp;
-										<div class="select-wrapper">
-											<select name="role" id="role">
-												<option value="1">Administrator</option>
-												<option value="2">Faculty</option>
-												<option value="3">Tutor</option>
-												<option value="4">Student</option>
-											</select>
-										</div>
-									</div>
-									
-									<div class="6u$ 12u$(xsmall)">
-										<input type="text" name="last_name" id="last_name" value="{{user_form.last_name}}" placeholder="Last Name" />
-										 &ensp;
-										<input type="text" name="major" id="major" value="{{user_form.major}}" placeholder="Major" />
-										&ensp;
-										<div class="select-wrapper">
-											<select name="year" id="year">
-												<option value="1">Freshman</option>
-												<option value="2">Sophomore</option>
-												<option value="3">Junior</option>
-												<option value="4">Senior</option>
-											</select>
-										</div>
 									</div>
 									
 									
-									
-									&ensp;
-									&ensp;
-									&ensp;
 									<div class="12u$">
 										<ul class="actions">
 											<button type="submit" class="btn btn-info"> Save 
@@ -153,43 +116,6 @@
 							</form>
 						</section>
 						
-						
-											<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#myModal" > Delete User
-											<span class="glyphicon glyphicon-remove"> </button>
-											
-											
-											<!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Are you sure?</h4>
-        </div>
-        <div class="modal-body">
-          <p>Are you sure you would like to delete {{user_form.first_name}} {{user_form.last_name}}'s account? You cannot recover this information.</p>
-        </div>
-        	<form action="/deleteuser/{{user_form.id}}" method="post">
-        <div class="modal-footer">
-        <ul class="actions">
-          <button type="submit" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-          
-											<button type="submit" class="btn btn-danger"> Delete 
-											<span class="glyphicon glyphicon-remove"></button>
-											&emsp;&emsp;
-										</ul>
-          
-        </div>
-      </div>
-      
-    </div>
-  </div>
-										</ul>
-									</div>
-									</form>
-  
   
   
   							</section>

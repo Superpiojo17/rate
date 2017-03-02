@@ -25,19 +25,20 @@ public class EditUserController {
 		// Get the :id from the url
 		String idString = req.params("id");
 
-		// Convert to Long (be careful because what if I put a string in?
+		// Convert to Long 
 		// /user/uh-oh/edit for example
 		long id = Long.parseLong(idString);
+		
 		// Get user if ID is valid
 		User u = user.findById(id);
 
-		// Authorize that I can edit the user selected
+		// Authorize that the user can edit the user selected
 		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
 
 		// create the form object, put it into request
 		model.put("user_form", new UserForm(u));
 
-		// Render the page and let the form do it's work!
+		// Render the page 
 		return new ModelAndView(model, "users/edituser.hbs");
 	}
 
@@ -58,6 +59,19 @@ public class EditUserController {
 		userDao.updateUser(user);
 
 		System.out.println(user.getEmail());
+
+		res.redirect(Application.ALLUSERS_PATH);
+		return " ";
+
+	}
+	
+	public String deleteUser(Request req, Response res) {
+		String idString = req.params("id");
+		long id = Long.parseLong(idString);
+		System.out.println(id);
+		UserDao userDao = DaoManager.getInstance().getUserDao();
+		userDao.deletUser(id);
+		
 
 		res.redirect(Application.ALLUSERS_PATH);
 		return " ";

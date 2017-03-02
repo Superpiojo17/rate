@@ -339,6 +339,27 @@ public class UserDao implements Dao<User> {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Removes recovery requests that have expired
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public void deletUser(long id) {
+
+		String sql = "DELETE FROM " + USER_TABLE + " WHERE user_id = ? LIMIT 1";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setLong(1, id);
+			// Runs query
+			ps.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Called when user has successfully recovered their account, or they

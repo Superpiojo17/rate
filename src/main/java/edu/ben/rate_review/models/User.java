@@ -118,9 +118,9 @@ public class User implements AuthorizationUser {
 
 	public void setActive_icon(String active_icon) {
 		if (active) {
-			active_icon = " glyphicon glyphicon-ok";
+			active_icon = " glyphicon glyphicon-ok icon-success";
 		} else if (!active) {
-			active_icon = " glyphicon glyphicon-remove";
+			active_icon = " glyphicon glyphicon-remove icon-failure";
 		}
 
 		this.active_icon = active_icon;
@@ -132,9 +132,9 @@ public class User implements AuthorizationUser {
 
 	public void setConfirmed_icon(String confirmed_icon) {
 		if (confirmed) {
-			confirmed_icon = " glyphicon glyphicon-ok";
+			confirmed_icon = " glyphicon glyphicon-ok green icon-success";
 		} else if (!confirmed) {
-			confirmed_icon = " glyphicon glyphicon-remove";
+			confirmed_icon = " glyphicon glyphicon-remove icon-failure";
 		}
 
 		this.confirmed_icon = confirmed_icon;

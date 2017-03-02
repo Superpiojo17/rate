@@ -3934,30 +3934,53 @@
 			}
 
 		}
+		
+		
 	/* columns */
 .leftcol {
-	width: 22%;
+	width: 15%;
 	height: auto;
 	float: left;
 	padding-left: 2.5em;
 }
 
 .centercol {
-	width: 60%;
+	width: 68%;
 	height: auto;
 	float: left;
-	padding-left: 2em;
+	padding-left: 1.5em;
 }
 
 .centercoledit {
 	width: 30%;
 	height: auto;
 	float: left;
-	padding-left: 2em;
+	padding-left: 1em;
+}
+
+.modal {
+   position: relative;
+   top: 500px;
+   right: 500px;
+   bottom: 500;
+   left: 80;
+   z-index: 10040;
+   overflow: auto;
+   overflow-y: auto;
+}
+
+td.shrink {
+  white-space: nowrap;
+  width: 1px;
 }
 
 aEdit {
     color: white;
+}
+
+buttontest{
+    height:20px;
+    width:50px;
 }
 
 /* error backgrounds */
@@ -3972,6 +3995,16 @@ aEdit {
   min-height: 100%;
 }
 
+.icon-success {
+    color: #5CB85C;
+}
+
+.icon-failure {
+    color: #FF0000;
+}
+.icon-color{
+    color: #FFFFFF;
+}
 			/* Banner */
 #studentDash {
 	background-image: 
