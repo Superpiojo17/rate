@@ -26,6 +26,31 @@ public class ProfessorController {
 		List<ProfessorReview> reviews = reviewDao.professorByCourseId(id);
 		CoursesToReview course = reviewDao.findByCourseId(id);
 		// create the form object, put it into request
+		double objectives = reviewDao.avgRateObjectives(course);
+		double organized = reviewDao.avgRateOrganized(course);
+		double challenging = reviewDao.avgRateChallenging(course);
+		double outside  = reviewDao.avgRateOutsideWork(course);
+		double pace  = reviewDao.avgRatePace(course);
+		double assignments = reviewDao.avgRateAssignments(course);
+		double grade_fairly = reviewDao.avgRateGradeFairly(course);
+		double grade_time = reviewDao.avgRateGradeTime(course);
+		double accessibility = reviewDao.avgRateAccessibility(course);
+		double knowledge = reviewDao.avgRateKnowledge(course);
+		double career = reviewDao.avgRateCareerDevelopment(course);
+		
+		model.put("rate_objective", objectives);
+		model.put("rate_organized", organized);
+		model.put("rate_challenging", challenging);
+		model.put("rate_outside_work", outside);
+		model.put("rate_pace", pace);
+		model.put("rate_assignments", assignments);
+		model.put("rate_grade_fairly", grade_fairly);
+		model.put("rate_grade_time", grade_time);
+		model.put("rate_accessibility", accessibility);
+		model.put("rate_knowledge", knowledge);
+		model.put("rate_career_development", career);
+		
+		
 		model.put("courses", reviews);
 		model.put("course", course);
 		
