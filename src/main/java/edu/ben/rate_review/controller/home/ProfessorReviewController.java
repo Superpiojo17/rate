@@ -5,8 +5,10 @@ import java.util.HashMap;
 import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.ProfessorReviewDao;
+import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.models.CoursesToReview;
 import edu.ben.rate_review.models.ProfessorReview;
+import edu.ben.rate_review.models.User;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -49,7 +51,7 @@ public class ProfessorReviewController {
 	public String reviewProfessor(Request req, Response res) {
 		
 		if (req.queryParams("comment").length() <= 500){
-			createReview(Long.parseLong(req.params("course_id")), req.queryParams("comment"),
+			Long professorID = createReview(Long.parseLong(req.params("course_id")), req.queryParams("comment"),
 					Integer.parseInt(req.queryParams("rate_objectives")),
 					Integer.parseInt(req.queryParams("rate_organized")),
 					Integer.parseInt(req.queryParams("rate_challenging")),
@@ -60,8 +62,8 @@ public class ProfessorReviewController {
 					Integer.parseInt(req.queryParams("rate_accessibility")),
 					Integer.parseInt(req.queryParams("rate_knowledge")),
 					Integer.parseInt(req.queryParams("rate_career_development")));
-
-			res.redirect("/professor/" + req.params("course_id") + "/overview");
+			
+			res.redirect("/professor/" + professorID + "/overview");
 		} else {
 			//comment too long
 			res.redirect("/reviewprofessor/" + req.params("course_id") + "/review");
@@ -89,7 +91,7 @@ public class ProfessorReviewController {
 	 * @param rate_knowledge
 	 * @param rate_career_development
 	 */
-	private void createReview(Long course_id, String comment, int rate_objectives, int rate_organized,
+	private Long createReview(Long course_id, String comment, int rate_objectives, int rate_organized,
 			int rate_challenging, int rate_outside_work, int rate_pace, int rate_assignments, int rate_grade_fairly,
 			int rate_grade_time, int rate_accessibility, int rate_knowledge, int rate_career_development) {
 		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
@@ -118,14 +120,19 @@ public class ProfessorReviewController {
 		review.setRate_accessibility(rate_accessibility);
 		review.setRate_knowledge(rate_knowledge);
 		review.setRate_career_development(rate_career_development);
+		review.setProfessor_email(course.getProfessor_email());
 
 		reviewDao.save(review);
+		
+		UserDao uDao = DaoManager.getInstance().getUserDao();
+		User u = uDao.findByEmail(course.getProfessor_email());
+		return u.getId();
 	}
 
 	public ModelAndView passCourse(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
 
-		model.put("course_id", req.params("course_id"));
+		model.put("professor_id", req.params("professor_id"));
 
 		return new ModelAndView(model, "/professor.hbs");
 	}

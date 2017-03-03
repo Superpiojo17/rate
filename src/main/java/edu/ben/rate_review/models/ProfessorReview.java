@@ -27,6 +27,7 @@ public class ProfessorReview {
 		this.course = course.getCourse_name();
 		this.semester = course.getSemester();
 		this.year = course.getYear();
+		this.professor_email = course.getProfessor_email();
 	}
 
 	private long course_id;
@@ -37,6 +38,15 @@ public class ProfessorReview {
 	private int year;
 	private String semester;
 	private String comment;
+	private String professor_email;
+
+	public String getProfessor_email() {
+		return professor_email;
+	}
+
+	public void setProfessor_email(String professor_email) {
+		this.professor_email = professor_email;
+	}
 
 	// The course objectives were met:
 	private int rate_objectives;

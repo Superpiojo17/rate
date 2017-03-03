@@ -6,9 +6,11 @@ import java.util.List;
 
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.ProfessorReviewDao;
+import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.email.Email;
 import edu.ben.rate_review.models.CoursesToReview;
 import edu.ben.rate_review.models.ProfessorReview;
+import edu.ben.rate_review.models.User;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -22,23 +24,27 @@ public class ProfessorController {
 
 		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
 		Session session = req.session();
-		String idString = req.params("course_id");
+		String idString = req.params("professor_id");
 		long id = Long.parseLong(idString);
-		List<ProfessorReview> reviews = reviewDao.professorByCourseId(id);
-		CoursesToReview course = reviewDao.findByCourseId(id);
+		
+		UserDao uDao = DaoManager.getInstance().getUserDao();
+		User prof = uDao.findById(id);
+		
+		List<ProfessorReview> reviews = reviewDao.listCoursesByProfessorEmail(prof);
+		//CoursesToReview course = reviewDao.findByCourseId(course_id);
 		// create the form object, put it into request
 		
-		double objectives = reviewDao.avgRateObjectives(course);
-		double organized = reviewDao.avgRateOrganized(course);
-		double challenging = reviewDao.avgRateChallenging(course);
-		double outside = reviewDao.avgRateOutsideWork(course);
-		double pace = reviewDao.avgRatePace(course);
-		double assignments = reviewDao.avgRateAssignments(course);
-		double grade_fairly = reviewDao.avgRateGradeFairly(course);
-		double grade_time = reviewDao.avgRateGradeTime(course);
-		double accessibility = reviewDao.avgRateAccessibility(course);
-		double knowledge = reviewDao.avgRateKnowledge(course);
-		double career = reviewDao.avgRateCareerDevelopment(course);
+		double objectives = reviewDao.avgRateObjectives(prof);
+		double organized = reviewDao.avgRateOrganized(prof);
+		double challenging = reviewDao.avgRateChallenging(prof);
+		double outside = reviewDao.avgRateOutsideWork(prof);
+		double pace = reviewDao.avgRatePace(prof);
+		double assignments = reviewDao.avgRateAssignments(prof);
+		double grade_fairly = reviewDao.avgRateGradeFairly(prof);
+		double grade_time = reviewDao.avgRateGradeTime(prof);
+		double accessibility = reviewDao.avgRateAccessibility(prof);
+		double knowledge = reviewDao.avgRateKnowledge(prof);
+		double career = reviewDao.avgRateCareerDevelopment(prof);
 		double overall = ((objectives + organized + challenging + outside + pace + assignments + grade_fairly
 				+ grade_time + accessibility + knowledge + career)/11);
 
@@ -58,7 +64,9 @@ public class ProfessorController {
 		model.put("overall", df.format(overall));
 
 		model.put("courses", reviews);
-		model.put("course", course);
+		model.put("prof_first_name", prof.getFirst_name());
+		model.put("prof_last_name", prof.getLast_name());
+		//model.put("course", course);
 
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "home/professor.hbs");

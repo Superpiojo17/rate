@@ -15,8 +15,17 @@ public class CoursesToReview {
 	private int year;
 	private String professor_first_name;
 	private String professor_last_name;
+	private String professor_email;
 
 	
+
+	public String getProfessor_email() {
+		return professor_email;
+	}
+
+	public void setProfessor_email(String professor_email) {
+		this.professor_email = professor_email;
+	}
 
 	public long getCourse_id() {
 		return course_id;

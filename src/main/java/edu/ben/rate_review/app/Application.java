@@ -99,7 +99,7 @@ public class Application {
 	public static String ALLUSERS_PATH = "/allusers";
 	public static String TEST_PATH = "/test";
 	public static String TUTOR_PATH = "/tutor";
-	public static String PROFESSOR_PATH = "/professor/:course_id/overview";
+	public static String PROFESSOR_PATH = "/professor/:professor_id/overview";
 	public static String REVIEWPROFESSOR_PATH = "/reviewprofessor/:course_id/review";
 	public static String ADDTUTOR_PATH = "/addtutor";
 	public static String ADDPROFESSOR_PATH = "/addprofessor";

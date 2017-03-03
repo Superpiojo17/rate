@@ -76,6 +76,7 @@ public class ProfessorReviewDao {
 		tmp.setYear(rs.getInt("year"));
 		tmp.setProfessor_first_name(rs.getString("professor_first_name"));
 		tmp.setProfessor_last_name(rs.getString("professor_last_name"));
+		tmp.setProfessor_email(rs.getString("professor_email"));
 
 		return tmp;
 	}
@@ -109,6 +110,7 @@ public class ProfessorReviewDao {
 		tmp.setRate_accessibility(rs.getInt("rate_accessibility"));
 		tmp.setRate_knowledge(rs.getInt("rate_knowledge"));
 		tmp.setRate_career_development(rs.getInt("rate_career_development"));
+		tmp.setProfessor_email(rs.getString("professor_email"));
 
 		return tmp;
 	}
@@ -125,7 +127,7 @@ public class ProfessorReviewDao {
 					+ " (professor_first_name, professor_last_name, course, student_id, year, semester, comment,"
 					+ " rate_objectives, rate_organized, rate_challenging, rate_outside_work,"
 					+ " rate_pace, rate_assignments, rate_grade_fairly, rate_grade_time, rate_accessibility,"
-					+ " rate_knowledge, rate_career_development, course_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+					+ " rate_knowledge, rate_career_development, course_id, professor_email) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			try {
 				PreparedStatement ps = conn.prepareStatement(sql);
 				ps.setString(1, review.getProfessor_first_name());
@@ -147,6 +149,8 @@ public class ProfessorReviewDao {
 				ps.setInt(17, review.getRate_knowledge());
 				ps.setInt(18, review.getRate_career_development());
 				ps.setLong(19, review.getCourse_id());
+				ps.setString(20, review.getProfessor_email());
+				System.out.println(review.getProfessor_email());
 				ps.executeUpdate();
 
 			} catch (SQLException e) {
@@ -184,29 +188,27 @@ public class ProfessorReviewDao {
 
 	}
 
-	/**
-	 * Finds professor course reviews by single course_id
-	 * 
-	 * @param course_id
-	 * @return
-	 */
-	public List<ProfessorReview> professorByCourseId(long course_id) {
+//	/**
+//	 * Finds professor course reviews by single course_id
+//	 * 
+//	 * @param course_id
+//	 * @return
+//	 */
+//	public List<ProfessorReview> professorByCourseId(long course_id) {
+//
+//		CoursesToReview course = findByCourseId(course_id);
+//		List<ProfessorReview> reviews = listCoursesByProfessorEmail(course.getProfessor_email());
+//		return reviews;
+//
+//	}
 
-		CoursesToReview course = findByCourseId(course_id);
-		List<ProfessorReview> reviews = listCoursesByProfessorName(course);
-		return reviews;
+	public List<ProfessorReview> listCoursesByProfessorEmail(User prof) {
 
-	}
-
-	public List<ProfessorReview> listCoursesByProfessorName(CoursesToReview courses) {
-
-		final String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_first_name = ?"
-				+ " AND professor_last_name = ?";
+		final String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ?";
 		List<ProfessorReview> reviews = null;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, courses.getProfessor_first_name());
-			ps.setString(2, courses.getProfessor_last_name());
+			ps.setString(1, prof.getEmail());
 			reviews = new ArrayList<ProfessorReview>();
 			try {
 				ResultSet rs = ps.executeQuery();
@@ -278,19 +280,16 @@ public class ProfessorReviewDao {
 		return null;
 	}
 
-	
-	public double avgRateObjectives(CoursesToReview course) {
-		String sql = "SELECT AVG(rate_objectives) FROM " + REVIEW_PROFESSOR_TABLE
-				+ " WHERE professor_first_name = ? AND professor_last_name = ?";	
+	public double avgRateObjectives(User prof) {
+		String sql = "SELECT AVG(rate_objectives) FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ?";
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
-			ps.setString(1, course.getProfessor_first_name());
-			ps.setString(2, course.getProfessor_last_name());
+			ps.setString(1, prof.getEmail());
 			// Runs query
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()){
+			if (rs.next()) {
 				return rs.getDouble(1);
 			}
 		} catch (Exception e) {
@@ -298,19 +297,17 @@ public class ProfessorReviewDao {
 		}
 		return 0;
 	}
-	
-	public double avgRateOrganized(CoursesToReview course) {
-		String sql = "SELECT AVG(rate_organized) FROM " + REVIEW_PROFESSOR_TABLE
-				+ " WHERE professor_first_name = ? AND professor_last_name = ?";	
+
+	public double avgRateOrganized(User prof) {
+		String sql = "SELECT AVG(rate_organized) FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ?";
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
-			ps.setString(1, course.getProfessor_first_name());
-			ps.setString(2, course.getProfessor_last_name());
+			ps.setString(1, prof.getEmail());
 			// Runs query
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()){
+			if (rs.next()) {
 				return rs.getDouble(1);
 			}
 		} catch (Exception e) {
@@ -318,19 +315,17 @@ public class ProfessorReviewDao {
 		}
 		return 0;
 	}
-	
-	public double avgRateChallenging(CoursesToReview course) {
-		String sql = "SELECT AVG(rate_challenging) FROM " + REVIEW_PROFESSOR_TABLE
-				+ " WHERE professor_first_name = ? AND professor_last_name = ?";	
+
+	public double avgRateChallenging(User prof) {
+		String sql = "SELECT AVG(rate_challenging) FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ?";
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
-			ps.setString(1, course.getProfessor_first_name());
-			ps.setString(2, course.getProfessor_last_name());
+			ps.setString(1, prof.getEmail());
 			// Runs query
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()){
+			if (rs.next()) {
 				return rs.getDouble(1);
 			}
 		} catch (Exception e) {
@@ -338,19 +333,17 @@ public class ProfessorReviewDao {
 		}
 		return 0;
 	}
-	
-	public double avgRateOutsideWork(CoursesToReview course) {
-		String sql = "SELECT AVG(rate_outside_work) FROM " + REVIEW_PROFESSOR_TABLE
-				+ " WHERE professor_first_name = ? AND professor_last_name = ?";	
+
+	public double avgRateOutsideWork(User prof) {
+		String sql = "SELECT AVG(rate_outside_work) FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ?";
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
-			ps.setString(1, course.getProfessor_first_name());
-			ps.setString(2, course.getProfessor_last_name());
+			ps.setString(1, prof.getEmail());
 			// Runs query
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()){
+			if (rs.next()) {
 				return rs.getDouble(1);
 			}
 		} catch (Exception e) {
@@ -358,19 +351,17 @@ public class ProfessorReviewDao {
 		}
 		return 0;
 	}
-	
-	public double avgRatePace(CoursesToReview course) {
-		String sql = "SELECT AVG(rate_pace) FROM " + REVIEW_PROFESSOR_TABLE
-				+ " WHERE professor_first_name = ? AND professor_last_name = ?";	
+
+	public double avgRatePace(User prof) {
+		String sql = "SELECT AVG(rate_pace) FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ?";
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
-			ps.setString(1, course.getProfessor_first_name());
-			ps.setString(2, course.getProfessor_last_name());
+			ps.setString(1, prof.getEmail());
 			// Runs query
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()){
+			if (rs.next()) {
 				return rs.getDouble(1);
 			}
 		} catch (Exception e) {
@@ -378,19 +369,17 @@ public class ProfessorReviewDao {
 		}
 		return 0;
 	}
-	
-	public double avgRateAssignments(CoursesToReview course) {
-		String sql = "SELECT AVG(rate_assignments) FROM " + REVIEW_PROFESSOR_TABLE
-				+ " WHERE professor_first_name = ? AND professor_last_name = ?";	
+
+	public double avgRateAssignments(User prof) {
+		String sql = "SELECT AVG(rate_assignments) FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ?";
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
-			ps.setString(1, course.getProfessor_first_name());
-			ps.setString(2, course.getProfessor_last_name());
+			ps.setString(1, prof.getEmail());
 			// Runs query
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()){
+			if (rs.next()) {
 				return rs.getDouble(1);
 			}
 		} catch (Exception e) {
@@ -398,19 +387,17 @@ public class ProfessorReviewDao {
 		}
 		return 0;
 	}
-	
-	public double avgRateGradeFairly(CoursesToReview course) {
-		String sql = "SELECT AVG(rate_grade_fairly) FROM " + REVIEW_PROFESSOR_TABLE
-				+ " WHERE professor_first_name = ? AND professor_last_name = ?";	
+
+	public double avgRateGradeFairly(User prof) {
+		String sql = "SELECT AVG(rate_grade_fairly) FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ?";
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
-			ps.setString(1, course.getProfessor_first_name());
-			ps.setString(2, course.getProfessor_last_name());
+			ps.setString(1, prof.getEmail());
 			// Runs query
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()){
+			if (rs.next()) {
 				return rs.getDouble(1);
 			}
 		} catch (Exception e) {
@@ -418,19 +405,17 @@ public class ProfessorReviewDao {
 		}
 		return 0;
 	}
-	
-	public double avgRateGradeTime(CoursesToReview course) {
-		String sql = "SELECT AVG(rate_grade_time) FROM " + REVIEW_PROFESSOR_TABLE
-				+ " WHERE professor_first_name = ? AND professor_last_name = ?";	
+
+	public double avgRateGradeTime(User prof) {
+		String sql = "SELECT AVG(rate_grade_time) FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ?";
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
-			ps.setString(1, course.getProfessor_first_name());
-			ps.setString(2, course.getProfessor_last_name());
+			ps.setString(1, prof.getEmail());
 			// Runs query
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()){
+			if (rs.next()) {
 				return rs.getDouble(1);
 			}
 		} catch (Exception e) {
@@ -438,19 +423,17 @@ public class ProfessorReviewDao {
 		}
 		return 0;
 	}
-	
-	public double avgRateAccessibility(CoursesToReview course) {
-		String sql = "SELECT AVG(rate_accessibility) FROM " + REVIEW_PROFESSOR_TABLE
-				+ " WHERE professor_first_name = ? AND professor_last_name = ?";	
+
+	public double avgRateAccessibility(User prof) {
+		String sql = "SELECT AVG(rate_accessibility) FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ?";
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
-			ps.setString(1, course.getProfessor_first_name());
-			ps.setString(2, course.getProfessor_last_name());
+			ps.setString(1, prof.getEmail());
 			// Runs query
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()){
+			if (rs.next()) {
 				return rs.getDouble(1);
 			}
 		} catch (Exception e) {
@@ -458,19 +441,17 @@ public class ProfessorReviewDao {
 		}
 		return 0;
 	}
-	
-	public double avgRateKnowledge(CoursesToReview course) {
-		String sql = "SELECT AVG(rate_knowledge) FROM " + REVIEW_PROFESSOR_TABLE
-				+ " WHERE professor_first_name = ? AND professor_last_name = ?";	
+
+	public double avgRateKnowledge(User prof) {
+		String sql = "SELECT AVG(rate_knowledge) FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ?";
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
-			ps.setString(1, course.getProfessor_first_name());
-			ps.setString(2, course.getProfessor_last_name());
+			ps.setString(1, prof.getEmail());
 			// Runs query
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()){
+			if (rs.next()) {
 				return rs.getDouble(1);
 			}
 		} catch (Exception e) {
@@ -478,19 +459,18 @@ public class ProfessorReviewDao {
 		}
 		return 0;
 	}
-	
-	public double avgRateCareerDevelopment(CoursesToReview course) {
+
+	public double avgRateCareerDevelopment(User prof) {
 		String sql = "SELECT AVG(rate_career_development) FROM " + REVIEW_PROFESSOR_TABLE
-				+ " WHERE professor_first_name = ? AND professor_last_name = ?";	
+				+ " WHERE professor_email = ?";
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
-			ps.setString(1, course.getProfessor_first_name());
-			ps.setString(2, course.getProfessor_last_name());
+			ps.setString(1, prof.getEmail());
 			// Runs query
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()){
+			if (rs.next()) {
 				return rs.getDouble(1);
 			}
 		} catch (Exception e) {
