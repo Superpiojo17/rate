@@ -3944,6 +3944,21 @@
 	padding-left: 2.5em;
 }
 
+.rightcol {
+	width: 15%;
+	height: auto;
+	float: right;
+	padding-right: 5em;
+}
+
+
+.leftcolannounce {
+	width: 2%;
+	height: auto;
+	float: left;
+	padding-left: 1em;
+}
+
 .centercol {
 	width: 68%;
 	height: auto;

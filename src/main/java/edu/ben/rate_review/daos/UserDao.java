@@ -288,7 +288,8 @@ public class UserDao implements Dao<User> {
 	 */
 
 	public List<User> all() {
-		final String SELECT = "SELECT * FROM " + USER_TABLE;
+		final String SELECT = "SELECT * FROM " + USER_TABLE + " ORDER BY last_name";
+	
 		List<User> users = null;
 		try {
 			PreparedStatement ps = conn.prepareStatement(SELECT);
@@ -346,7 +347,7 @@ public class UserDao implements Dao<User> {
 	 * @param user
 	 * @return
 	 */
-	public void deletUser(long id) {
+	public String deletUser(long id) {
 
 		String sql = "DELETE FROM " + USER_TABLE + " WHERE user_id = ? LIMIT 1";
 
@@ -359,6 +360,22 @@ public class UserDao implements Dao<User> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return " ";
+	}
+	
+	public String sortByLastName() {
+
+		String sql = "SELECT * FROM users ORDER BY last_name";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Runs query
+			ps.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return " ";
 	}
 
 	/**

@@ -21,13 +21,13 @@ public class AdminDashboardController {
 	public ModelAndView showAdminDashboardPage(Request req, Response res) throws AuthException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
-		
+
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 		AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
 
 		model.put("current_user", u);
-		
+
 		System.out.println(u.getFirst_name());
 
 		// Tell the server to render the index page with the data in the model
@@ -37,10 +37,10 @@ public class AdminDashboardController {
 	public ModelAndView showAllUsersPage(Request req, Response res) throws AuthException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
-		
+
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
-//		AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
 
 		DaoManager dao = DaoManager.getInstance();
 		UserDao ud = dao.getUserDao();
@@ -50,13 +50,14 @@ public class AdminDashboardController {
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/allusers.hbs");
 	}
+
 	public ModelAndView showEditAnnouncements(Request req, Response res) throws AuthException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
-		
+
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
-//		AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
 
 		DaoManager dao = DaoManager.getInstance();
 		AnnouncementDao ad = dao.getAnnouncementDao();
@@ -75,6 +76,33 @@ public class AdminDashboardController {
 		res.redirect("/allusers");
 		// Tell the server to render the index page with the data in the model
 		return "";
+	}
+
+	public String addAnnouncement(Request req, Response res) {
+
+		AnnouncementDao announceDao = DaoManager.getInstance().getAnnouncementDao();
+		Announcement announcement = new Announcement();
+
+		announcement.setDate(req.queryParams("date"));
+		announcement.setAnnouncement_content(req.queryParams("message"));
+
+		announceDao.save(announcement);
+
+		res.redirect("/announcement");
+		return "";
+
+	}
+
+	public String sortByLastName(Request req, Response res) {
+
+		DaoManager dao = DaoManager.getInstance();
+		UserDao ud = dao.getUserDao();
+		ud.sortByLastName();
+		System.out.println("sorted bruh");
+
+		res.redirect("/allusers");
+		return "";
+
 	}
 
 }

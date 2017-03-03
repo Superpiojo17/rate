@@ -72,6 +72,7 @@ public class Application {
 	private static ProfessorReviewController professorReviewController = new ProfessorReviewController();
 	private static EditUserController edituserController = new EditUserController();
 	private static UnauthorizedController unauthorizedController = new UnauthorizedController();
+	
 
 	// match up paths
 	public static String DOMAIN = "localhost:3000";
@@ -107,7 +108,8 @@ public class Application {
 	public static String EDITUSER_PATH = "/user/:id/edit";
 	public static String DELETEUSER_PATH = "/deleteuser/:id";
 	public static String ANNOUNCEMENTS_PATH = "/announcement";
-
+	public static String SORTBYLASTNAME_PATH = "/sortbylastname";
+	
 	public static void main(String[] args) throws Exception {
 
 		// Set what port you want to run on
@@ -188,6 +190,9 @@ public class Application {
 		get(TUTORS_PATH, (req, res) -> tutorsController.showTutorsPage(req, res), new HandlebarsTemplateEngine());
 
 		get(ANNOUNCEMENTS_PATH, (req, res) -> admindashController.showEditAnnouncements(req, res), new HandlebarsTemplateEngine());
+		post(ANNOUNCEMENTS_PATH, (req, res) -> admindashController.addAnnouncement(req, res));
+		
+		post(SORTBYLASTNAME_PATH,	(req, res) -> admindashController.sortByLastName(req, res));
 		
 		get(HOME_PATH, (req, res) -> homeController.showHomePage(req, res), new HandlebarsTemplateEngine());
 
