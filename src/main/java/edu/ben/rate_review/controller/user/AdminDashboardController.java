@@ -1,6 +1,8 @@
 package edu.ben.rate_review.controller.user;
 
 import java.io.FileNotFoundException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -44,7 +46,7 @@ public class AdminDashboardController {
 
 		DaoManager dao = DaoManager.getInstance();
 		UserDao ud = dao.getUserDao();
-		List<User> users = ud.all();
+		List<User> users = ud.sortbyRole();
 		model.put("users", users);
 
 		// Tell the server to render the index page with the data in the model
@@ -83,7 +85,17 @@ public class AdminDashboardController {
 		AnnouncementDao announceDao = DaoManager.getInstance().getAnnouncementDao();
 		Announcement announcement = new Announcement();
 
-		announcement.setDate(req.queryParams("date"));
+		SimpleDateFormat fromUser = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat myFormat = new SimpleDateFormat("MM/dd/yy");
+
+		try {
+			String formatteddate = myFormat.format(fromUser.parse(req.queryParams("date")));
+			announcement.setDate(formatteddate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		announcement.setAnnouncement_content(req.queryParams("message"));
 
 		announceDao.save(announcement);

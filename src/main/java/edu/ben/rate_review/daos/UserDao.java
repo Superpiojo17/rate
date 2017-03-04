@@ -363,6 +363,33 @@ public class UserDao implements Dao<User> {
 		return " ";
 	}
 	
+	/**
+	 * 
+	 * @return all users from the database.
+	 */
+
+	public List<User> sortbyRole() {
+		final String SELECT = "SELECT * FROM " + USER_TABLE + " ORDER BY role_id";
+	
+		List<User> users = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			users = new ArrayList<User>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					users.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return users;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+	
 	public String sortByLastName() {
 
 		String sql = "SELECT * FROM users ORDER BY last_name";

@@ -27,6 +27,7 @@ import edu.ben.rate_review.controller.home.TutorsController;
 import edu.ben.rate_review.controller.session.SessionsController;
 import edu.ben.rate_review.controller.user.AccountRecoveryController;
 import edu.ben.rate_review.controller.user.AdminDashboardController;
+import edu.ben.rate_review.controller.user.EditAnnouncementController;
 import edu.ben.rate_review.controller.user.EditUserController;
 import edu.ben.rate_review.controller.user.FacultyDashboardController;
 import edu.ben.rate_review.controller.user.StudentDashboardController;
@@ -72,7 +73,7 @@ public class Application {
 	private static ProfessorReviewController professorReviewController = new ProfessorReviewController();
 	private static EditUserController edituserController = new EditUserController();
 	private static UnauthorizedController unauthorizedController = new UnauthorizedController();
-	
+	private static EditAnnouncementController editannouncementController = new EditAnnouncementController();
 
 	// match up paths
 	public static String DOMAIN = "localhost:3000";
@@ -107,9 +108,11 @@ public class Application {
 	public static String AUTHORIZATIONERROR_PATH = "/authorizationerror";
 	public static String EDITUSER_PATH = "/user/:id/edit";
 	public static String DELETEUSER_PATH = "/deleteuser/:id";
+	public static String EDITANNOUNCEMENT_PATH = "/announcement/:id/edit";
+	public static String DELETEANNOUNCEMENT_PATH = "/deleteannouncement/:id";
 	public static String ANNOUNCEMENTS_PATH = "/announcement";
 	public static String SORTBYLASTNAME_PATH = "/sortbylastname";
-	
+
 	public static void main(String[] args) throws Exception {
 
 		// Set what port you want to run on
@@ -166,21 +169,28 @@ public class Application {
 
 		get(EDITUSER_PATH, (req, res) -> edituserController.showEditUserPage(req, res), new HandlebarsTemplateEngine());
 
+		get(EDITANNOUNCEMENT_PATH, (req, res) -> editannouncementController.showEditAnnouncementPage(req, res),
+				new HandlebarsTemplateEngine());
+
+		post(EDITANNOUNCEMENT_PATH, (req, res) -> editannouncementController.updateAnnouncement(req, res));
+
 		post(EDITUSER_PATH, (req, res) -> edituserController.updateUser(req, res));
 
 		get(TUTOR_PATH, (req, res) -> tutorController.showTutorPage(req, res), new HandlebarsTemplateEngine());
 
 		get(PROFESSOR_PATH, (req, res) -> professorController.showProfessorPage(req, res),
 				new HandlebarsTemplateEngine());
-		
+
 		put(PROFESSOR_PATH, (req, res) -> professorController.display(req, res));
-		
+
 		post(DELETEUSER_PATH, (req, res) -> edituserController.deleteUser(req, res));
+
+		post(DELETEANNOUNCEMENT_PATH, (req, res) -> editannouncementController.deleteAnnouncement(req, res));
 
 		get(REVIEWPROFESSOR_PATH, (req, res) -> professorReviewController.showReviewProfessorPage(req, res),
 				new HandlebarsTemplateEngine());
 		post(REVIEWPROFESSOR_PATH, (req, res) -> professorReviewController.reviewProfessor(req, res));
-		
+
 		put(REVIEWPROFESSOR_PATH, (req, res) -> professorReviewController.passCourse(req, res));
 
 		get(TEACHER_PATH, (req, res) -> teacherController.showTeacherPage(req, res), new HandlebarsTemplateEngine());
@@ -189,11 +199,12 @@ public class Application {
 				new HandlebarsTemplateEngine());
 		get(TUTORS_PATH, (req, res) -> tutorsController.showTutorsPage(req, res), new HandlebarsTemplateEngine());
 
-		get(ANNOUNCEMENTS_PATH, (req, res) -> admindashController.showEditAnnouncements(req, res), new HandlebarsTemplateEngine());
+		get(ANNOUNCEMENTS_PATH, (req, res) -> admindashController.showEditAnnouncements(req, res),
+				new HandlebarsTemplateEngine());
 		post(ANNOUNCEMENTS_PATH, (req, res) -> admindashController.addAnnouncement(req, res));
-		
-		post(SORTBYLASTNAME_PATH,	(req, res) -> admindashController.sortByLastName(req, res));
-		
+
+		post(SORTBYLASTNAME_PATH, (req, res) -> admindashController.sortByLastName(req, res));
+
 		get(HOME_PATH, (req, res) -> homeController.showHomePage(req, res), new HandlebarsTemplateEngine());
 
 		get(FACULTYDASHBOARD_PATH, (req, res) -> facultydashController.showFacultyDashboardPage(req, res),

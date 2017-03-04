@@ -45,7 +45,16 @@
 	return( aval == bval ? 0 : (aval > bval ? 1 : -1) );
 	} // function CompareRowOfText()
 	
+	function CompareRowOfRole(a,b){
+		var aval = a.value;
+		var bval = b.value;
+		
+	return
+		
+	}
 
+	
+	
 	function CompareRowOfNumbers(a,b) {
 	var aval = /\d/.test(a.value) ? parseFloat(a.value) : 0;
 	var bval = /\d/.test(b.value) ? parseFloat(b.value) : 0;

@@ -132,7 +132,7 @@ public class User implements AuthorizationUser {
 
 	public void setConfirmed_icon(String confirmed_icon) {
 		if (confirmed) {
-			confirmed_icon = " glyphicon glyphicon-ok green icon-success";
+			confirmed_icon = "glyphicon glyphicon-ok green icon-success";
 		} else if (!confirmed) {
 			confirmed_icon = " glyphicon glyphicon-remove icon-failure";
 		}
