@@ -105,31 +105,21 @@
   <p>View all the registered users, as well as their information.</p>
   &ensp;
  
-  <div class="dropdown">
-    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"> Sort By
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-    <ul class="actions">
-      <button type="submit" class="btn btn-primary" > Last Name</button>
-      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"> Role </button>
-      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"> Year </button>
-      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"> Account Status </button>
-    </ul>
-  </div>
-  
 							<div class="table-wrapper">
 							
-								<table class="alt">
+								<table id = "indextable" class=indextable alt">
 									<thead>
 										<tr>
 											<th></th>
-											<th><br>Name</th>
-											<th><br>Email</th>
-											<th><br>Role</th>
-											<th><br>Major</th>
-											<th><br>Year</th>
-											<th>Email <br> Confirmed</th>
-											<th>Account <br> Status</th>
+											
+											
+											<th class="text-center"><a href="javascript:SortTable(1,'T');">Name </a></th>
+										<th class="text-center"><a href="javascript:SortTable(2,'T');">Email </a></th>
+<th class="text-center"><a href="javascript:SortTable(3,'Ts');">Role </a></th>
+<th class="text-center"><a href="javascript:SortTable(4,'T');">Major </a></th>
+<th class="text-center"><a href="javascript:SortTable(5,'N');">Year </a></th>
+<th class="text-center"><a href="javascript:SortTable(6,'T');">Email Confirmed </a></th>
+<th class="text-center"><a href="javascript:SortTable(7,'T');">Account Status </a></th>
 											
 										</tr>
 									</thead>
@@ -199,6 +189,7 @@
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
+			<script type="text/javascript" src="assets/js/sortColumns.js"  ></script>
 			<script>
 
 // d = new Date();
