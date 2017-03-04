@@ -188,21 +188,12 @@ public class ProfessorReviewDao {
 
 	}
 
-	// /**
-	// * Finds professor course reviews by single course_id
-	// *
-	// * @param course_id
-	// * @return
-	// */
-	// public List<ProfessorReview> professorByCourseId(long course_id) {
-	//
-	// CoursesToReview course = findByCourseId(course_id);
-	// List<ProfessorReview> reviews =
-	// listCoursesByProfessorEmail(course.getProfessor_email());
-	// return reviews;
-	//
-	// }
-
+	/**
+	 * Finds all reviews for a specific professor
+	 * 
+	 * @param prof
+	 * @return
+	 */
 	public List<ProfessorReview> listCoursesByProfessorEmail(User prof) {
 
 		final String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ?";
@@ -281,8 +272,15 @@ public class ProfessorReviewDao {
 		return null;
 	}
 
-	public double avgRate(User prof, String table) {
-		String sql = "SELECT AVG(" + table + ") FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ?";
+	/**
+	 * Returns average rating from a specific category
+	 * 
+	 * @param prof
+	 * @param table
+	 * @return
+	 */
+	public double avgRate(User prof, String column) {
+		String sql = "SELECT AVG(" + column + ") FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ?";
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -299,6 +297,14 @@ public class ProfessorReviewDao {
 		return 0;
 	}
 
+	/**
+	 * Returns counts of a specific rating from a specific category
+	 * 
+	 * @param prof
+	 * @param column
+	 * @param ratingScore
+	 * @return
+	 */
 	public int allRatings(User prof, String column, int ratingScore) {
 
 		String sql = "SELECT COUNT(" + column + ") FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ? AND "
