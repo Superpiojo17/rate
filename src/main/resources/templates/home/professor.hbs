@@ -295,6 +295,7 @@
 	
 	</head>
 	<body class="landing">
+	
 
 		<!-- Header -->
 			<header id="header" class="skel-layers-fixed">
@@ -327,10 +328,14 @@
 
 					<!-- Text -->
 						<section>
+						
+						
 							<h3>{{prof_first_name}} {{prof_last_name}}</h3>
-							<p><h4>Overall rating: {{overall}}</h4></p>
-
+							<p><h4>Overall rating: <span class="stars">{{overall}}</span></h4></p>
+							
+							
 							<hr />
+							
 							</section>
 					
 			<div id="class_list">
@@ -417,7 +422,8 @@
 
 		<!-- Scripts -->
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
-
+			<script src="/assets/js/main.js"></script>
+ 			<script src="/assets/js/jquery.min.js"></script>
+ 			<script src="/assets/js/ratingjquery.js"></script>
 	</body>
 </html>
