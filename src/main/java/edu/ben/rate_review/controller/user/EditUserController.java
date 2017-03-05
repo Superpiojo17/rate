@@ -6,6 +6,7 @@ import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.authorization.AuthException;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.UserDao;
+import edu.ben.rate_review.models.MassEditForm;
 import edu.ben.rate_review.models.RecoveringUser;
 import edu.ben.rate_review.models.User;
 import edu.ben.rate_review.models.UserForm;
@@ -25,10 +26,10 @@ public class EditUserController {
 		// Get the :id from the url
 		String idString = req.params("id");
 
-		// Convert to Long 
+		// Convert to Long
 		// /user/uh-oh/edit for example
 		long id = Long.parseLong(idString);
-		
+
 		// Get user if ID is valid
 		User u = user.findById(id);
 
@@ -38,8 +39,24 @@ public class EditUserController {
 		// create the form object, put it into request
 		model.put("user_form", new UserForm(u));
 
-		// Render the page 
+		// Render the page
 		return new ModelAndView(model, "users/edituser.hbs");
+	}
+
+	public String massEditConfirmed(Request req, Response res) {
+		UserDao userDao = DaoManager.getInstance().getUserDao();
+
+		MassEditForm massedit = new MassEditForm();
+		massedit.setBefore(Integer.parseInt(req.queryParams("confirmedbefore")));
+		massedit.setAfter(Integer.parseInt(req.queryParams("confirmedafter")));
+		System.out.println(req.queryParams("confirmedbefore"));
+		System.out.println(req.queryParams("confirmedafter"));
+		userDao.massEditConfirmed(massedit);
+
+		System.out.println("EDIT");
+		res.redirect(Application.ALLUSERS_PATH);
+		return " ";
+
 	}
 
 	public String updateUser(Request req, Response res) {
@@ -54,7 +71,6 @@ public class EditUserController {
 		user.setMajor(req.queryParams("major"));
 		user.setSchool_year(Integer.parseInt(req.queryParams("year")));
 		user.setId(id);
-		
 
 		userDao.updateUser(user);
 
@@ -64,14 +80,13 @@ public class EditUserController {
 		return " ";
 
 	}
-	
+
 	public String deleteUser(Request req, Response res) {
 		String idString = req.params("id");
 		long id = Long.parseLong(idString);
 		System.out.println(id);
 		UserDao userDao = DaoManager.getInstance().getUserDao();
 		userDao.deletUser(id);
-		
 
 		res.redirect(Application.ALLUSERS_PATH);
 		return " ";

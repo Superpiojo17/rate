@@ -112,6 +112,7 @@ public class Application {
 	public static String DELETEANNOUNCEMENT_PATH = "/deleteannouncement/:id";
 	public static String ANNOUNCEMENTS_PATH = "/announcement";
 	public static String SORTBYLASTNAME_PATH = "/sortbylastname";
+	public static String MASSEDITCONFIRMED_PATH = "/masseditconfirmed";
 
 	public static void main(String[] args) throws Exception {
 
@@ -183,6 +184,7 @@ public class Application {
 
 		put(PROFESSOR_PATH, (req, res) -> professorController.display(req, res));
 
+		post(MASSEDITCONFIRMED_PATH, (req, res) -> edituserController.massEditConfirmed(req, res));
 		post(DELETEUSER_PATH, (req, res) -> edituserController.deleteUser(req, res));
 
 		post(DELETEANNOUNCEMENT_PATH, (req, res) -> editannouncementController.deleteAnnouncement(req, res));

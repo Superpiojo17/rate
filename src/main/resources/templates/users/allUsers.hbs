@@ -120,6 +120,7 @@
 									</thead>
 									<tbody>
 										<tr>
+										<form action="contactus" method="get">
 											<td align="center" ><h4>Change users that are</h4></td>
 											<td align="center" ><div class="select-wrapper">
 											<select name="year" id="year">
@@ -128,27 +129,30 @@
 												<option value="3">Junior</option>
 												<option value="4">Senior</option>
 											</select>
+											
 										</div></td>
 											<td align="center"><h4>to</h4></td>
 											<td align="center"><div class="select-wrapper">
 											<select name="year" id="year">
-												<option value="1">Freshman</option>
 												<option value="2">Sophomore</option>
 												<option value="3">Junior</option>
 												<option value="4">Senior</option>
+												<option value="1">Freshman</option>
 											</select>
 										</div></td>
 											<td align="center">
-												<button class="btn btn-info btn-sm" >Change </button>
+												<button type="submit" class="btn btn-info btn-sm" >Change </button>
+												</form>
 											</td>
 										</tr>
 										<tr>
+										<form action="aboutus" method="get">
 										<td><h4>Change users that are</h4></td>
 											<td><div class="select-wrapper">
 											<select name="role" id="role">
-												<option value="1">Faculty</option>
-												<option value="2">Tutor</option>
-												<option value="3">Student</option>
+												<option value="2">Faculty</option>
+												<option value="3">Tutor</option>
+												<option value="4">Student</option>
 											</select>
 										</div></td>
 											<td><h4>to</h4></td>
@@ -161,10 +165,12 @@
 											</select>
 										</div></td>
 											<td>
-												<button class="btn btn-info btn-sm" >Change </button>
+												<button type="submit" class="btn btn-info btn-sm" >Change </button>
+												</form>
 											</td>
 										</tr>
 										<tr>
+										<form action="login" method="get">
 											<td><h4>Change users that are</h4></td>
 											<td><div class="select-wrapper">
 											<select name="active" id="active">
@@ -175,31 +181,34 @@
 											<td><h4>to</h4></td>
 											<td><div class="select-wrapper">
 											<select name="year" id="year">
-												<option value="1">Unactive</option>
-												<option value="2">Active</option>
+												<option value="2">Unactive</option>
+												<option value="1">Active</option>
 											</select>
 										</div></td>
 											<td>
-												<button class="btn btn-info btn-sm" >Change </button>
+												<button type="submit" class="btn btn-info btn-sm" >Change </button>
+												</form>
 											</td>
 										</tr>
 										<tr>
+										<form action="masseditconfirmed" method="post">
 											<td class = "shrink"><h4>Change emails that are</h4></td>
 											<td><div class="select-wrapper">
-											<select name="confirmed" id="confirmed">
+											<select name="confirmedbefore" id="confirmedbefore">
 												<option value="1">Confirmed</option>
-												<option value="2">Awaiting</option>
+												<option value="0">Awaiting</option>
 											</select>
 										</div></td>
 											<td class = "shrink"><h4>to</h4></td>
 											<td><div class="select-wrapper">
-											<select name="year" id="year">
-												<option value="1">Awaiting</option>
-												<option value="2">Confirmed</option>
+											<select name="confirmedafter" id="confirmedafter">
+												<option value="0">Awaiting</option>
+												<option value="1">Confirmed</option>
 											</select>
 										</div></td>
 											<td class = "shrink">
-												<button class="btn btn-info btn-sm" >Change </button>
+												<button type="submit" class="btn btn-info btn-sm" >Change </button>
+												</form>
 											</td>
 										</tr>
 									</tbody>

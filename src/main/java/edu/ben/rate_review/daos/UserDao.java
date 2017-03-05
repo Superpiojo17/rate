@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.ben.rate_review.encryption.SecurePassword;
+import edu.ben.rate_review.models.MassEditForm;
 import edu.ben.rate_review.models.RecoveringUser;
 import edu.ben.rate_review.models.User;
 import edu.ben.rate_review.models.UserForm;
@@ -289,7 +290,7 @@ public class UserDao implements Dao<User> {
 
 	public List<User> all() {
 		final String SELECT = "SELECT * FROM " + USER_TABLE + " ORDER BY last_name";
-	
+
 		List<User> users = null;
 		try {
 			PreparedStatement ps = conn.prepareStatement(SELECT);
@@ -340,7 +341,7 @@ public class UserDao implements Dao<User> {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Removes recovery requests that have expired
 	 * 
@@ -362,7 +363,7 @@ public class UserDao implements Dao<User> {
 		}
 		return " ";
 	}
-	
+
 	/**
 	 * 
 	 * @return all users from the database.
@@ -370,7 +371,7 @@ public class UserDao implements Dao<User> {
 
 	public List<User> sortbyRole() {
 		final String SELECT = "SELECT * FROM " + USER_TABLE + " ORDER BY role_id";
-	
+
 		List<User> users = null;
 		try {
 			PreparedStatement ps = conn.prepareStatement(SELECT);
@@ -389,7 +390,7 @@ public class UserDao implements Dao<User> {
 		}
 		return users;
 	}
-	
+
 	public String sortByLastName() {
 
 		String sql = "SELECT * FROM users ORDER BY last_name";
@@ -450,6 +451,31 @@ public class UserDao implements Dao<User> {
 			// Runs query
 			ps.execute();
 			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+	}
+
+	/**
+	 * Updates user's password to their new password
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public MassEditForm massEditConfirmed(MassEditForm massedit) {
+		String sql = "UPDATE " + USER_TABLE + " SET confirmed = ? WHERE confirmed = ?";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setInt(1, massedit.getAfter());
+			ps.setInt(2, massedit.getBefore());
+			// Runs query
+			ps.execute();
+			return massedit;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
