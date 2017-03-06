@@ -1,8 +1,12 @@
 package edu.ben.rate_review.controller.user;
 
 import java.util.HashMap;
+import java.util.List;
 
 import edu.ben.rate_review.authorization.AuthException;
+import edu.ben.rate_review.daos.AnnouncementDao;
+import edu.ben.rate_review.daos.DaoManager;
+import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.User;
 import edu.ben.rate_review.policy.AuthPolicyManager;
 import spark.ModelAndView;
@@ -21,6 +25,11 @@ public class TutorDashboardController {
 		AuthPolicyManager.getInstance().getUserPolicy().showTutorDashboardPage();
 
 		model.put("current_user", u);
+		
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
 
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/tutorDashboard.hbs");
