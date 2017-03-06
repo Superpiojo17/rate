@@ -3,6 +3,7 @@ package edu.ben.rate_review.controller.user;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.List;
 
 import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.authorization.AuthException;
@@ -43,6 +44,11 @@ public class EditAnnouncementController {
 
 		// create the form object, put it into request
 		model.put("announcement_form", new AnnouncementForm(a));
+		
+		DaoManager dao = DaoManager.getInstance();
+		AnnouncementDao ad = dao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
 
 		// Render the page
 		return new ModelAndView(model, "users/editannouncement.hbs");

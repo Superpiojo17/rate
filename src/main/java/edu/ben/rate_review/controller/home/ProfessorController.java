@@ -4,10 +4,12 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.ben.rate_review.daos.AnnouncementDao;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.ProfessorReviewDao;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.models.AllRatingsModel;
+import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.ProfessorReview;
 import edu.ben.rate_review.models.User;
 import spark.ModelAndView;
@@ -151,6 +153,11 @@ public class ProfessorController {
 		model.put("prof_first_name", prof.getFirst_name());
 		model.put("prof_last_name", prof.getLast_name());
 		// model.put("course", course);
+		
+		DaoManager dao = DaoManager.getInstance();
+		AnnouncementDao ad = dao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
 
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "home/professor.hbs");

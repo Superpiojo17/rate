@@ -30,8 +30,12 @@ public class AdminDashboardController {
 
 		model.put("current_user", u);
 
-		System.out.println(u.getFirst_name());
 
+		DaoManager dao = DaoManager.getInstance();
+		AnnouncementDao ad = dao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+		
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/admindashboard.hbs");
 	}
@@ -48,6 +52,11 @@ public class AdminDashboardController {
 		UserDao ud = dao.getUserDao();
 		List<User> users = ud.sortbyRole();
 		model.put("users", users);
+		
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
 
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/allusers.hbs");

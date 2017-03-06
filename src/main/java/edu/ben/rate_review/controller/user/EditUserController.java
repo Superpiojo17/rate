@@ -1,11 +1,14 @@
 package edu.ben.rate_review.controller.user;
 
 import java.util.HashMap;
+import java.util.List;
 
 import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.authorization.AuthException;
+import edu.ben.rate_review.daos.AnnouncementDao;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.UserDao;
+import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.MassEditForm;
 import edu.ben.rate_review.models.RecoveringUser;
 import edu.ben.rate_review.models.User;
@@ -38,6 +41,12 @@ public class EditUserController {
 
 		// create the form object, put it into request
 		model.put("user_form", new UserForm(u));
+		
+
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
 
 		// Render the page
 		return new ModelAndView(model, "users/edituser.hbs");

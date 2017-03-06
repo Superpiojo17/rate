@@ -69,18 +69,12 @@
 										</tr>
 									</thead>
 									<tbody>
+									{{#each announcements}}
 										<tr>
-											<td>2/09/17</td>
-											<td>Website under maintenance</td>
+											<td>{{date}}</td>
+											<td>{{announcement_content}}</td>
 										</tr>
-										<tr>
-											<td>2/12/17</td>
-											<td>Chance wins grammy</td>
-										</tr>
-										<tr>
-											<td>5/17/17</td>
-											<td>Freedom</td>
-										</tr>
+										{{/each}}
 									</tbody>
 									<tfoot>
 										<tr>

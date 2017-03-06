@@ -3972,9 +3972,16 @@ span.stars span {
 
 .centercol {
 	width: 68%;
-	height: auto;
+	height: 100%;
 	float: left;
 	padding-left: 1.5em;
+}
+
+.centercolrate1 {
+	width: 75%;
+	height: auto;
+	float: left;
+	padding-left: 5em;
 }
 
 .centercoledit {
@@ -4037,6 +4044,13 @@ buttontest{
 	background-image: 
 		url("../../images/studentDashboard.jpg");
 	height: 250px;
+	background-size: 100%;
+}
+
+#reviewprof{
+	background-image: 
+		url("../../images/rateprof.jpg");
+	height: 175px;
 	background-size: 100%;
 }
 #adminDash {
