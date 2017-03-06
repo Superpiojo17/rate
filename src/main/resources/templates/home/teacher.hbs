@@ -13,6 +13,9 @@
 <link rel="stylesheet" href="assets/css/main.css" />
 <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+<!-- Glyphacons reference sheet-->
+<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+
 </head>
 <style>
 input[type=text2] {
@@ -38,18 +41,80 @@ input, textarea {
 input[type=text2]:focus {
 	width: 30%;
 }
+
+#banner {
+	padding: 3em 0 1em 0;
+	background-color: #1E2832;
+	color: rgba(255, 255, 255, 0.75);
+	background-attachment: fixed;
+	background-image: url(images/innovation.jpg),
+		url(../../images/innovation.jpg);
+	background-size: cover;
+	text-align: center;
+	color: #07090c;
+}
+
+
+input[type="submit"], input[type="reset"], input[type="button"], button, .button {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    border-radius: 0em;
+    border: 0;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 200;
+    height: 2em;
+    width: 1em;
+    line-height: normal;
+    line-width: normal;
+    min-width: 1em;
+    padding: 0 1.5em;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+
+.wrapper.style1 input[type="submit"].alt, .wrapper.style1 input[type="reset"].alt, .wrapper.style1 input[type="button"].alt, .wrapper.style1 button.alt, .wrapper.style1 .button.alt {
+    background-color: transparent;
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2);
+    color: #51BAA4 !important;
+}
 </style>
 <body>
 	<!-- Header -->
 	<header id="header" class="skel-layers-fixed">
 		<h1>
-			<a href="/">G.O.O.D</a>
+			<a href="/">Rate & Review</a>
 		</h1>
 		<a href="#nav">Menu</a>
 		<form>
 			<input type="text2" name="search" placeholder="Search..">
 		</form>
 	</header>
+
+<!-- Banner -->
+	<section id="banner">
+
+		<h2>
+			<i class="fa fa-book fa-2x" aria-hidden="true"></i>
+
+		</h2>
+
+		<!-- <i class="icon fa-diamond"></i> -->
+		<h2>Browse Teachers</h2>
+	<!--	<p>Here to answer the questions you might have</p>
+		<ul class="actions">
+			<li><a href="#" class="button big special">Learn More Below</a></li>
+		</ul> -->
+	</section>
 
 	<!-- Nav -->
 			<nav id="nav">
@@ -68,9 +133,50 @@ input[type=text2]:focus {
 			</nav>
 
 
+
+
+
 	<!-- One -->
 	<section id="one" class="wrapper style1">
 		<div class="inner">
+		
+		<div class="container">
+  <div class="btn-toolbar">
+    <div class="btn-group btn-group-sm">
+      <button class="btn btn-default">A</button>
+      <button class="btn btn-default">B</button>
+      <button class="btn btn-default">C</button>
+      <button class="btn btn-default">D</button>
+      <button class="btn btn-default">E</button>
+      <button class="btn btn-default">F</button>
+      <button class="btn btn-default">G</button>
+      <button class="btn btn-default">H</button>
+      <button class="btn btn-default">I</button>
+      <button class="btn btn-default">J</button>
+      <button class="btn btn-default">K</button>
+      <button class="btn btn-default">L</button>
+      <button class="btn btn-default">M</button>
+      <button class="btn btn-default">N</button>
+      <button class="btn btn-default">O</button>
+      <button class="btn btn-default">P</button>
+      <button class="btn btn-default">Q</button>
+      <button class="btn btn-default">R</button>
+      <button class="btn btn-default">S</button>
+      <button class="btn btn-default">T</button>
+      <button class="btn btn-default">U</button>
+      <button class="btn btn-default">V</button>
+      <button class="btn btn-default">W</button>
+      <button class="btn btn-default">X</button>
+      <button class="btn btn-default">Y</button>
+      <button class="btn btn-default">Z</button>
+    </div>
+  </div>
+</div>
+		<br/>
+	
+	
+	<div class="alphabet">Search: <span class="clear active">None</span><span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span><span>H</span><span>I</span><span>J</span><span>K</span><span>L</span><span>M</span><span>N</span><span>O</span><span>P</span><span>Q</span><span>R</span><span>S</span><span>T</span><span>U</span><span>V</span><span>W</span><span>X</span><span>Y</span><span>Z</span></div>
+		
 			<article class="feature left">
 				<span class="image"><img src="images/pollack.jpg" alt="" /></span>
 				<div class="content">
@@ -89,6 +195,33 @@ input[type=text2]:focus {
 				<span class="image"><img src="images/mirsky.jpg" alt="" /></span>
 				<div class="content">
 					<h2>Grace Mirsky</h2>
+					<div class="rw-ui-container"></div>
+					<p>Sed egestas, ante et vulputate volutpat, eros pede semper
+						est, vitae luctus metus libero eu augue. Morbi purus libero,
+						faucibus adipiscing, commodo quis, gravida id, est.</p>
+					<ul class="actions">
+						<li><a href="#" class="button alt">More</a></li>
+					</ul>
+				</div>
+			</article>
+			<article class="feature left">
+				<span class="image"><img src="images/nadolski.jpg" alt="" /></span>
+				<div class="content">
+					<h2>Jeremy Nadolski</h2>
+					<div class="rw-ui-container"></div>
+					<p>Sed egestas, ante et vulputate volutpat, eros pede semper
+						est, vitae luctus metus libero eu augue. Morbi purus libero,
+						faucibus adipiscing, commodo quis, gravida id, est.</p>
+
+					<ul class="actions">
+						<li><a href="#" class="button alt">More</a></li>
+					</ul>
+				</div>
+			</article>
+			<article class="feature right">
+				<span class="image"><img src="images/wangler.jpg" alt="" /></span>
+				<div class="content">
+					<h2>Thomas Wangler</h2>
 					<div class="rw-ui-container"></div>
 					<p>Sed egestas, ante et vulputate volutpat, eros pede semper
 						est, vitae luctus metus libero eu augue. Morbi purus libero,

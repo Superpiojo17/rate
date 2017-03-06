@@ -19,10 +19,12 @@ import edu.ben.rate_review.controller.home.ChangePasswordController;
 import edu.ben.rate_review.controller.home.ConfirmationController;
 import edu.ben.rate_review.controller.home.ContactUsController;
 import edu.ben.rate_review.controller.home.DepartmentsController;
+import edu.ben.rate_review.controller.home.FaqController;
 import edu.ben.rate_review.controller.home.HomeController;
 import edu.ben.rate_review.controller.home.LogInController;
 import edu.ben.rate_review.controller.home.RegisterController;
 import edu.ben.rate_review.controller.home.TeacherController;
+import edu.ben.rate_review.controller.home.TutorAppointmentController;
 import edu.ben.rate_review.controller.home.TutorsController;
 import edu.ben.rate_review.controller.session.SessionsController;
 import edu.ben.rate_review.controller.user.AccountRecoveryController;
@@ -66,6 +68,8 @@ public class Application {
 	private static TutorsController tutorController = new TutorsController();
 	private static ProfessorController professorController = new ProfessorController();
 	private static AdminController adminController = new AdminController();
+	private static FaqController faqController = new FaqController();
+	private static TutorAppointmentController tutorAppointmentController = new TutorAppointmentController();
 
 	// match up paths
 	public static String DOMAIN = "localhost:3000";
@@ -96,6 +100,8 @@ public class Application {
 	public static String REVIEWPROFESSOR_PATH = "/reviewprofessor";
 	public static String ADDTUTOR_PATH = "/addtutor";
 	public static String ADDPROFESSOR_PATH = "/addprofessor";
+	public static String FAQ_PATH = "/faq";
+	public static String TUTORAPPOINTMENT_PATH = "/tutorappointment";
 
 	public static void main(String[] args) throws Exception {
 
@@ -144,6 +150,10 @@ public class Application {
 		exception(Exception.class, (exception, request, response) -> {
 			exception.printStackTrace();
 		});
+		
+		get(TUTORAPPOINTMENT_PATH, (req, res) -> tutorAppointmentController.showTutorAppointmentPage(req, res), new HandlebarsTemplateEngine());
+		
+		get(FAQ_PATH, (req, res) -> faqController.showFaqPage(req, res), new HandlebarsTemplateEngine());
 
 		get(TUTOR_PATH, (req, res) -> tutorController.showTutorPage(req, res), new HandlebarsTemplateEngine());
 
