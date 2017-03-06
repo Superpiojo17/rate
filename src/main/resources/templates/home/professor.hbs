@@ -62,7 +62,7 @@
           ['5 out of 5', {{arr_objectives5}}]
         ]);
 
-        var options = {
+        var options = {'title':'Course objectives were met: {{rate_objective}}/5',
                        'width':480,
                        'height':300,
                        colors: ['#3B3EAC']};
@@ -86,7 +86,7 @@
           ['5 out of 5', {{arr_organized5}}]
         ]);
 
-        var options = {
+        var options = {'title':'Courses are well planned and scheduled: {{rate_organized}}/5',
                        'width':480,
                        'height':300,
                        colors: ['#22AA99']};
@@ -110,7 +110,7 @@
           ['5 out of 5', {{arr_challenging5}}]
         ]);
 
-        var options = {
+        var options = {'title':'Difficulty of courses: {{rate_challenging}}/5',
                        'width':480,
                        'height':300,
                        colors: ['#3B3EAC']};
@@ -134,7 +134,7 @@
           ['5 out of 5', {{arr_outside_work5}}]
         ]);
 
-        var options = {
+        var options = {'title':'Amount of work required outside of class: {{rate_outside_work}}/5',
                        'width':480,
                        'height':300,
                        colors: ['#22AA99']};
@@ -158,7 +158,7 @@
           ['5 out of 5', {{arr_pace5}}]
         ]);
 
-        var options = {
+        var options = {'title':'Pace of presented course material: {{rate_pace}}/5',
                        'width':480,
                        'height':300,
                        colors: ['#3B3EAC']};
@@ -182,7 +182,7 @@
           ['5 out of 5', {{arr_assignments5}}]
         ]);
 
-        var options = {
+        var options = {'title':'Assignments - good learning experience: {{rate_assignments}}/5',
                        'width':480,
                        'height':300,
                        colors: ['#22AA99']};
@@ -206,7 +206,7 @@
           ['5 out of 5', {{arr_grade_fairly5}}]
         ]);
 
-        var options = {
+        var options = {'title':'Assignments and exams are graded fairly: {{rate_grade_fairly}}/5',
                        'width':480,
                        'height':300,
                        colors: ['#3B3EAC']};
@@ -230,7 +230,7 @@
           ['5 out of 5', {{arr_grade_time5}}]
         ]);
 
-        var options = {
+        var options = {'title':'Assignments are graded in a timely fashion: {{rate_grade_time}}/5',
                        'width':480,
                        'height':300,
                        colors: ['#22AA99']};
@@ -254,7 +254,7 @@
           ['5 out of 5', {{arr_accessibility5}}]
         ]);
 
-        var options = {
+        var options = {'title':'The instructor is accessible outside of class: {{rate_accessibility}}/5',
                        'width':480,
                        'height':300,
                        colors: ['#3B3EAC']};
@@ -278,7 +278,7 @@
           ['5 out of 5', {{arr_knowledge5}}]
         ]);
 
-        var options = {
+        var options = {'title':'Knowledge is relevant and up-to-date: {{rate_knowledge}}/5',
                        'width':480,
                        'height':300,
                        colors: ['#22AA99']};
@@ -302,7 +302,7 @@
           ['5 out of 5', {{arr_career_development5}}]
         ]);
 
-        var options = {
+        var options = {'title':'Courses are valuable for career development: {{rate_career_development}}/5',
                        'width':480,
                        'height':300,
                        colors: ['#3B3EAC']};
@@ -399,42 +399,30 @@
 			
 			<br>
 			<div class="reviewcolumns">
+		
+			<ul> <div id="chart_objective" ></div> </ul>
 			
+			<ul> <div id="chart_organized"></div> </ul>
 			
-			<ul><b> Course objectives were met: {{rate_objective}}/5 </b>
-			 <div id="chart_objective" ></div>
-			 </ul>
-			<ul><b> Courses are well planned and scheduled: {{rate_organized}}/5</b>
-			<div id="chart_organized"></div>
-			</ul>
-			<ul><b> Difficulty of courses: {{rate_challenging}}/5</b>
-			<div id="chart_challenging"></div>
-			</ul>
-			<ul><b> Amount of work required outside of class: {{rate_outside_work}}/5</b>
-			<div id="chart_outside_work"></div>
-			</ul>
-			<ul><b> Pace of presented course material: {{rate_pace}}/5</b>
-			<div id="chart_pace"></div>
-			</ul>
-			<ul><b> Assignments provide a good learning experience: {{rate_assignments}}/5</b>
-			<div id="chart_assignments"></div>
-			</ul>
-			<ul><b> Assignments and exams are graded fairly: {{rate_grade_fairly}}/5</b>
-			<div id="chart_grade_fairly"></div>
-			</ul>
-			<ul><b> Assignments are graded in a timely fashion: {{rate_grade_time}}/5</b>
-			<div id="chart_grade_time"></div>
-			</ul>
-			<ul><b> The instructor is accessible outside of class: {{rate_accessibility}}/5</b>
-			<div id="chart_accessibility"></div>
-			</ul>
-			<ul><b> The instructor's knowledge is relevant and up-to-date: {{rate_knowledge}}/5</b>
-			<div id="chart_knowledge"></div>
-			</ul>
+			<ul> <div id="chart_challenging"></div> </ul>
+			
+			<ul> <div id="chart_outside_work"></div> </ul>
+			
+			<ul> <div id="chart_pace"></div> </ul>
+			
+			<ul> <div id="chart_assignments"></div> </ul>
+			
+			<ul> <div id="chart_grade_fairly"></div> </ul>
+			
+			<ul> <div id="chart_grade_time"></div> </ul>
+			
+			<ul> <div id="chart_accessibility"></div> </ul>
+			
+			<ul> <div id="chart_knowledge"></div> </ul>	
 			
 			</div> <!-- THIS IS THE COLUMN DIV -->
 			<div align="center">
-			<ul><b> The instructor's courses are valuable for career development: {{rate_career_development}}/5</b>
+			<!-- <ul><b> The instructor's courses are valuable for career development: {{rate_career_development}}/5</b> -->
 			<div id="chart_career_development"></div>
 			</ul>
 			</div>
