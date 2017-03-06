@@ -70,7 +70,7 @@ public class ProfessorController {
 		int[] arr_knowledge = ratingModel.getKnowledge(prof);
 		int[] arr_career_development = ratingModel.getCareer_development(prof);
 
-		DecimalFormat df = new DecimalFormat("0.0");
+		DecimalFormat df = new DecimalFormat("0.#");
 		model.put("rate_objective", df.format(objectives));
 		model.put("arr_objectives1", arr_objectives[0]);
 		model.put("arr_objectives2", arr_objectives[1]);
