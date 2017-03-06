@@ -49,11 +49,47 @@ public class EditUserController {
 		MassEditForm massedit = new MassEditForm();
 		massedit.setBefore(Integer.parseInt(req.queryParams("confirmedbefore")));
 		massedit.setAfter(Integer.parseInt(req.queryParams("confirmedafter")));
-		System.out.println(req.queryParams("confirmedbefore"));
-		System.out.println(req.queryParams("confirmedafter"));
 		userDao.massEditConfirmed(massedit);
 
 		System.out.println("EDIT");
+		res.redirect(Application.ALLUSERS_PATH);
+		return " ";
+
+	}
+
+	public String massEditYear(Request req, Response res) {
+		UserDao userDao = DaoManager.getInstance().getUserDao();
+
+		MassEditForm massedit = new MassEditForm();
+		massedit.setBefore(Integer.parseInt(req.queryParams("yearbefore")));
+		massedit.setAfter(Integer.parseInt(req.queryParams("yearafter")));
+		userDao.massEditYear(massedit);
+
+		res.redirect(Application.ALLUSERS_PATH);
+		return " ";
+
+	}
+
+	public String massEditRole(Request req, Response res) {
+		UserDao userDao = DaoManager.getInstance().getUserDao();
+
+		MassEditForm massedit = new MassEditForm();
+		massedit.setBefore(Integer.parseInt(req.queryParams("rolebefore")));
+		massedit.setAfter(Integer.parseInt(req.queryParams("roleafter")));
+		userDao.massEditRole(massedit);
+
+		res.redirect(Application.ALLUSERS_PATH);
+		return " ";
+
+	}
+
+	public String massEditActive(Request req, Response res) {
+		UserDao userDao = DaoManager.getInstance().getUserDao();
+
+		MassEditForm massedit = new MassEditForm();
+		massedit.setBefore(Integer.parseInt(req.queryParams("activebefore")));
+		massedit.setAfter(Integer.parseInt(req.queryParams("activeafter")));
+		userDao.massEditActive(massedit);
 		res.redirect(Application.ALLUSERS_PATH);
 		return " ";
 

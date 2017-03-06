@@ -120,10 +120,10 @@
 									</thead>
 									<tbody>
 										<tr>
-										<form action="contactus" method="get">
+										<form action="massedityear" method="post">
 											<td align="center" ><h4>Change users that are</h4></td>
 											<td align="center" ><div class="select-wrapper">
-											<select name="year" id="year">
+											<select name="yearbefore" id="yearbefore">
 												<option value="1">Freshman</option>
 												<option value="2">Sophomore</option>
 												<option value="3">Junior</option>
@@ -133,7 +133,7 @@
 										</div></td>
 											<td align="center"><h4>to</h4></td>
 											<td align="center"><div class="select-wrapper">
-											<select name="year" id="year">
+											<select name="yearafter" id="yearafter">
 												<option value="2">Sophomore</option>
 												<option value="3">Junior</option>
 												<option value="4">Senior</option>
@@ -146,10 +146,10 @@
 											</td>
 										</tr>
 										<tr>
-										<form action="aboutus" method="get">
+										<form action="masseditrole" method="post">
 										<td><h4>Change users that are</h4></td>
 											<td><div class="select-wrapper">
-											<select name="role" id="role">
+											<select name="rolebefore" id="rolebefore">
 												<option value="2">Faculty</option>
 												<option value="3">Tutor</option>
 												<option value="4">Student</option>
@@ -157,7 +157,7 @@
 										</div></td>
 											<td><h4>to</h4></td>
 											<td><div class="select-wrapper">
-											<select name="year" id="year">
+											<select name="roleafter" id="roleafter">
 												<option value="1">Admin</option>
 												<option value="2">Faculty</option>
 												<option value="3">Tutor</option>
@@ -170,18 +170,18 @@
 											</td>
 										</tr>
 										<tr>
-										<form action="login" method="get">
+										<form action="masseditactive" method="post">
 											<td><h4>Change users that are</h4></td>
 											<td><div class="select-wrapper">
-											<select name="active" id="active">
+											<select name="activebefore" id="activebefore">
 												<option value="1">Active</option>
-												<option value="2">Unactive</option>
+												<option value="0">Unactive</option>
 											</select>
 										</div></td>
 											<td><h4>to</h4></td>
 											<td><div class="select-wrapper">
-											<select name="year" id="year">
-												<option value="2">Unactive</option>
+											<select name="activeafter" id="activeafter">
+												<option value="0">Unactive</option>
 												<option value="1">Active</option>
 											</select>
 										</div></td>

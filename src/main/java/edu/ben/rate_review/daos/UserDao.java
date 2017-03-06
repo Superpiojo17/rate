@@ -482,6 +482,72 @@ public class UserDao implements Dao<User> {
 		// If you don't find a model
 		return null;
 	}
+	
+	/**
+	 * Updates user's password to their new password
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public MassEditForm massEditRole(MassEditForm massedit) {
+		String sql = "UPDATE " + USER_TABLE + " SET role_id = ? WHERE role_id = ?";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setInt(1, massedit.getAfter());
+			ps.setInt(2, massedit.getBefore());
+			// Runs query
+			ps.execute();
+			return massedit;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+	}
+	
+	
+	public MassEditForm massEditYear(MassEditForm massedit) {
+		String sql = "UPDATE " + USER_TABLE + " SET school_year = ? WHERE school_year = ?";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setInt(1, massedit.getAfter());
+			ps.setInt(2, massedit.getBefore());
+			// Runs query
+			ps.execute();
+			return massedit;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+	}
+	
+
+	public MassEditForm massEditActive(MassEditForm massedit) {
+		String sql = "UPDATE " + USER_TABLE + " SET active = ? WHERE active = ?";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setInt(1, massedit.getAfter());
+			ps.setInt(2, massedit.getBefore());
+			// Runs query
+			ps.execute();
+			return massedit;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+	}
+
 
 	/**
 	 * Updates user's password to their new password
