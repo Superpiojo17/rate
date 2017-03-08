@@ -41,105 +41,175 @@
 				<div class="container">
 					<header class="major special">
 						<h2>{{course.professor_first_name}} {{course.professor_last_name}}</h2>
+						<h3>{{course.course_name}} <label id="semester_year"> {{course.semester}} {{course.year}}</label></h3>
 					</header>
 
 					<!-- Text -->
-					
-						<section>
-							<h3>{{course.course_name}} <label id="semester_year"> {{course.semester}} {{course.year}}</label></h3>
-									
-							</section>
-			<form action="/reviewprofessor/{{course.course_id}}/review" method="post">
+
+			<form action="/reviewprofessor/{{course.course_id}}/review" method="post">		
 			
+			<div class="table-wrapper">
+				<table class="alt">
+					<thead>
+						<tr></tr>
+					</thead>
+						<tbody>
+							<tr>
+								<td>
+								<h4>Were the course objectives met?:</h4>
+								<p><i>1 = No objectives were met. &nbsp; 5 = All objectives were met.</i></p>
+								<sup>lowest</sup>
+				<label class="radio inline"><input type="radio" name="rate_objectives" value="1"{{#if objectives_1}}checked{{/if}}>1</label>
+				<label class="radio inline"><input type="radio" name="rate_objectives" value="2"{{#if objectives_2}}checked{{/if}}>2</label> 
+				<label class="radio inline"><input type="radio" name="rate_objectives" value="3"{{#if objectives_3}}checked{{/if}}>3</label> 
+				<label class="radio inline"><input type="radio" name="rate_objectives" value="4"{{#if objectives_4}}checked{{/if}}>4</label> 
+				<label class="radio inline"><input type="radio" name="rate_objectives" value="5"{{#if objectives_5}}checked{{/if}}>5</label>
+								<sup>highest</sup>	
+								</td>
+							</tr>
+							<tr>
+								<td>
+								<h4>Was the course well planned and scheduled?:</h4>
+								<p><i>1 = The course had no structure. &nbsp; 5 = The course was well planned and work was scheduled appropriately.</i></p>
+								<sup>lowest</sup>
+				<label class="radio inline"><input type="radio" name="rate_organized" value="1"{{#if organized_1}}checked{{/if}}>1</label>
+				<label class="radio inline"><input type="radio" name="rate_organized" value="2"{{#if organized_2}}checked{{/if}}>2</label> 
+				<label class="radio inline"><input type="radio" name="rate_organized" value="3"{{#if organized_3}}checked{{/if}}>3</label> 
+				<label class="radio inline"><input type="radio" name="rate_organized" value="4"{{#if organized_4}}checked{{/if}}>4</label> 
+				<label class="radio inline"><input type="radio" name="rate_organized" value="5"{{#if organized_5}}checked{{/if}}>5</label>
+								<sup>highest</sup>
+								</td>
+							</tr>
+							<tr>
+								<td>
+								<h4>Rate the difficulty of this course:</h4>
+								<p><i>1 = The course was too easy or too difficult. &nbsp; 5 = The course was challenging, but appropriate.</i></p>
+								<sup>lowest</sup>
+				<label class="radio inline"><input type="radio" name="rate_challenging" value="1"{{#if challenging_1}}checked{{/if}}>1</label>
+				<label class="radio inline"><input type="radio" name="rate_challenging" value="2"{{#if challenging_2}}checked{{/if}}>2</label> 
+				<label class="radio inline"><input type="radio" name="rate_challenging" value="3"{{#if challenging_3}}checked{{/if}}>3</label> 
+				<label class="radio inline"><input type="radio" name="rate_challenging" value="4"{{#if challenging_4}}checked{{/if}}>4</label> 
+				<label class="radio inline"><input type="radio" name="rate_challenging" value="5"{{#if challenging_5}}checked{{/if}}>5</label>
+								<sup>highest</sup>
+								</td>
+							</tr>
+							<tr>
+								<td>
+								<h4>Amount of work required outside of scheduled class time:</h4>
+								<p><i>1 = There was little work outside of class. &nbsp; 5 = There was too much work outside of class.</i></p>
+								<sup>lowest</sup>
+				<label class="radio inline"><input type="radio" name="rate_outside_work" value="1"{{#if outside_work_1}}checked{{/if}}>1</label>
+				<label class="radio inline"><input type="radio" name="rate_outside_work" value="2"{{#if outside_work_2}}checked{{/if}}>2</label> 
+				<label class="radio inline"><input type="radio" name="rate_outside_work" value="3"{{#if outside_work_3}}checked{{/if}}>3</label> 
+				<label class="radio inline"><input type="radio" name="rate_outside_work" value="4"{{#if outside_work_4}}checked{{/if}}>4</label> 
+				<label class="radio inline"><input type="radio" name="rate_outside_work" value="5"{{#if outside_work_5}}checked{{/if}}>5</label>
+								<sup>highest</sup>
+								</td>
+							</tr>
+							<tr>
+								<td>
+								<h4>Rate the pace of the presented course material:</h4>
+								<p><i>1 = The course moved along too quickly or too slowly.. &nbsp; 5 = The course moved along at an ideal pace.</i></p>
+								<sup>lowest</sup>
+				<label class="radio inline"><input type="radio" name="rate_pace" value="1"{{#if pace_1}}checked{{/if}}>1</label>
+				<label class="radio inline"><input type="radio" name="rate_pace" value="2"{{#if pace_2}}checked{{/if}}>2</label> 
+				<label class="radio inline"><input type="radio" name="rate_pace" value="3"{{#if pace_3}}checked{{/if}}>3</label> 
+				<label class="radio inline"><input type="radio" name="rate_pace" value="4"{{#if pace_4}}checked{{/if}}>4</label> 
+				<label class="radio inline"><input type="radio" name="rate_pace" value="5"{{#if pace_5}}checked{{/if}}>5</label>
+								<sup>highest</sup>
+								</td>
+							</tr>
+							<tr>
+								<td>
+								<h4>Did the assignments provide a good learning experience?:</h4>
+								<p><i>1 = The assignments did not improve my knowledge of the material. &nbsp; 5 = The assignments help greatly increase my knowledge.</i></p>
+								<sup>lowest</sup>
+				<label class="radio inline"><input type="radio" name="rate_assignments" value="1"{{#if assignments_1}}checked{{/if}}>1</label>
+				<label class="radio inline"><input type="radio" name="rate_assignments" value="2"{{#if assignments_2}}checked{{/if}}>2</label> 
+				<label class="radio inline"><input type="radio" name="rate_assignments" value="3"{{#if assignments_3}}checked{{/if}}>3</label> 
+				<label class="radio inline"><input type="radio" name="rate_assignments" value="4"{{#if assignments_4}}checked{{/if}}>4</label> 
+				<label class="radio inline"><input type="radio" name="rate_assignments" value="5"{{#if assignments_5}}checked{{/if}}>5</label>
+								<sup>highest</sup>
+								</td>
+							</tr>
+							<tr>
+								<td>
+								<h4>How fairly were homework assignments and exams graded?:</h4>
+								<p><i>1 = Grading did not reflect the quality of my work. &nbsp; 5 = All assignments and exams were graded fairly..</i></p>
+								<sup>lowest</sup>
+				<label class="radio inline"><input type="radio" name="rate_grade_fairly" value="1"{{#if grade_fairly_1}}checked{{/if}}>1</label>
+				<label class="radio inline"><input type="radio" name="rate_grade_fairly" value="2"{{#if grade_fairly_2}}checked{{/if}}>2</label> 
+				<label class="radio inline"><input type="radio" name="rate_grade_fairly" value="3"{{#if grade_fairly_3}}checked{{/if}}>3</label> 
+				<label class="radio inline"><input type="radio" name="rate_grade_fairly" value="4"{{#if grade_fairly_4}}checked{{/if}}>4</label> 
+				<label class="radio inline"><input type="radio" name="rate_grade_fairly" value="5"{{#if grade_fairly_5}}checked{{/if}}>5</label>
+								<sup>highest</sup>
+								</td>
+							</tr>
+							<tr>
+								<td>
+								<h4>Were homework and exams graded in a timely manner?:</h4>
+								<p><i>1 = Grades were returned unusually long after submission. &nbsp; 5 = I received my graded in an appropriate amount of time.</i></p>
+								<sup>lowest</sup>
+				<label class="radio inline"><input type="radio" name="rate_grade_time" value="1"{{#if grade_time_1}}checked{{/if}}>1</label>
+				<label class="radio inline"><input type="radio" name="rate_grade_time" value="2"{{#if grade_time_2}}checked{{/if}}>2</label> 
+				<label class="radio inline"><input type="radio" name="rate_grade_time" value="3"{{#if grade_time_3}}checked{{/if}}>3</label> 
+				<label class="radio inline"><input type="radio" name="rate_grade_time" value="4"{{#if grade_time_4}}checked{{/if}}>4</label> 
+				<label class="radio inline"><input type="radio" name="rate_grade_time" value="5"{{#if grade_time_5}}checked{{/if}}>5</label>
+								<sup>highest</sup>
+								</td>
+							</tr>
+							<tr>
+								<td>
+								<h4>How accessible was the instructor outside of scheduled class time?:</h4>
+								<p><i>1 = I could not reach the instructor outside of class. &nbsp; 5 = The instructor was appropriately available.</i></p>
+								<sup>lowest</sup>
+				<label class="radio inline"><input type="radio" name="rate_accessibility" value="1"{{#if accessibility_1}}checked{{/if}}>1</label>
+				<label class="radio inline"><input type="radio" name="rate_accessibility" value="2"{{#if accessibility_2}}checked{{/if}}>2</label> 
+				<label class="radio inline"><input type="radio" name="rate_accessibility" value="3"{{#if accessibility_3}}checked{{/if}}>3</label> 
+				<label class="radio inline"><input type="radio" name="rate_accessibility" value="4"{{#if accessibility_4}}checked{{/if}}>4</label> 
+				<label class="radio inline"><input type="radio" name="rate_accessibility" value="5"{{#if accessibility_5}}checked{{/if}}>5</label>
+								<sup>highest</sup>
+								</td>
+							</tr>
+							<tr>
+								<td>
+								<h4>The instructor's knowledge of the subject was relevant and up-to-date:</h4>
+								<p><i>1 = The instructor had little background knowledge of the subject. &nbsp; 5 = The instructor was an expect on the subject.</i></p>
+								<sup>lowest</sup>
+				<label class="radio inline"><input type="radio" name="rate_knowledge" value="1"{{#if knowledge_1}}checked{{/if}}>1</label>
+				<label class="radio inline"><input type="radio" name="rate_knowledge" value="2"{{#if knowledge_2}}checked{{/if}}>2</label> 
+				<label class="radio inline"><input type="radio" name="rate_knowledge" value="3"{{#if knowledge_3}}checked{{/if}}>3</label> 
+				<label class="radio inline"><input type="radio" name="rate_knowledge" value="4"{{#if knowledge_4}}checked{{/if}}>4</label> 
+				<label class="radio inline"><input type="radio" name="rate_knowledge" value="5"{{#if knowledge_5}}checked{{/if}}>5</label>
+								<sup>highest</sup>
+								</td>
+							</tr>
+							<tr>
+								<td>
+								<h4>How valuable was this course for your career development?:</h4>
+								<p><i>1 = This course did not contribute to my career development. &nbsp; 5 = This course greatly improved my career development.</i></p>
+								<sup>lowest</sup>
+				<label class="radio inline"><input type="radio" name="rate_career_development" value="1"{{#if career_development_1}}checked{{/if}}>1</label>
+				<label class="radio inline"><input type="radio" name="rate_career_development" value="2"{{#if career_development_2}}checked{{/if}}>2</label> 
+				<label class="radio inline"><input type="radio" name="rate_career_development" value="3"{{#if career_development_3}}checked{{/if}}>3</label> 
+				<label class="radio inline"><input type="radio" name="rate_career_development" value="4"{{#if career_development_4}}checked{{/if}}>4</label> 
+				<label class="radio inline"><input type="radio" name="rate_career_development" value="5"{{#if career_development_5}}checked{{/if}}>5</label>
+								<sup>highest</sup>
+								</td>
+							</tr>
+						</tbody>
+						<tfoot></tfoot>
+				</table>
+			</div> 
 			
-				<h4>Were the course objectives met?:</h4>
-				<label class="radio inline"><input type="radio" name="rate_objectives" value="1" checked>1</label>
-				<label class="radio inline"><input type="radio" name="rate_objectives" value="2">2</label> 
-				<label class="radio inline"><input type="radio" name="rate_objectives" value="3">3</label> 
-				<label class="radio inline"><input type="radio" name="rate_objectives" value="4">4</label> 
-				<label class="radio inline"><input type="radio" name="rate_objectives" value="5">5</label>
-				
-				<h4>Was the course well planned and scheduled?:</h4>
-				<label class="radio inline"><input type="radio" name="rate_organized" value="1" checked>1</label>
-				<label class="radio inline"><input type="radio" name="rate_organized" value="2">2</label> 
-				<label class="radio inline"><input type="radio" name="rate_organized" value="3">3</label> 
-				<label class="radio inline"><input type="radio" name="rate_organized" value="4">4</label> 
-				<label class="radio inline"><input type="radio" name="rate_organized" value="5">5</label>
-				
-				<h4>Rate the difficulty of this course:</h4>
-				<label class="radio inline"><input type="radio" name="rate_challenging" value="1" checked>1</label>
-				<label class="radio inline"><input type="radio" name="rate_challenging" value="2">2</label> 
-				<label class="radio inline"><input type="radio" name="rate_challenging" value="3">3</label> 
-				<label class="radio inline"><input type="radio" name="rate_challenging" value="4">4</label> 
-				<label class="radio inline"><input type="radio" name="rate_challenging" value="5">5</label>
-				
-				<h4>Amount of work required outside of scheduled class time:</h4>
-				<label class="radio inline"><input type="radio" name="rate_outside_work" value="1" checked>1</label>
-				<label class="radio inline"><input type="radio" name="rate_outside_work" value="2">2</label> 
-				<label class="radio inline"><input type="radio" name="rate_outside_work" value="3">3</label> 
-				<label class="radio inline"><input type="radio" name="rate_outside_work" value="4">4</label> 
-				<label class="radio inline"><input type="radio" name="rate_outside_work" value="5">5</label>
-				
-				<h4>Rate the pace of the presented course material:</h4>
-				<label class="radio inline"><input type="radio" name="rate_pace" value="1" checked>1</label>
-				<label class="radio inline"><input type="radio" name="rate_pace" value="2">2</label> 
-				<label class="radio inline"><input type="radio" name="rate_pace" value="3">3</label> 
-				<label class="radio inline"><input type="radio" name="rate_pace" value="4">4</label> 
-				<label class="radio inline"><input type="radio" name="rate_pace" value="5">5</label>
-				
-				<h4>Did the assignments provide a good learning experience?:</h4>
-				<label class="radio inline"><input type="radio" name="rate_assignments" value="1" checked>1</label>
-				<label class="radio inline"><input type="radio" name="rate_assignments" value="2">2</label> 
-				<label class="radio inline"><input type="radio" name="rate_assignments" value="3">3</label> 
-				<label class="radio inline"><input type="radio" name="rate_assignments" value="4">4</label> 
-				<label class="radio inline"><input type="radio" name="rate_assignments" value="5">5</label>
-				
-				<h4>How fairly were homework assignments and exams graded?:</h4>
-				<label class="radio inline"><input type="radio" name="rate_grade_fairly" value="1" checked>1</label>
-				<label class="radio inline"><input type="radio" name="rate_grade_fairly" value="2">2</label> 
-				<label class="radio inline"><input type="radio" name="rate_grade_fairly" value="3">3</label> 
-				<label class="radio inline"><input type="radio" name="rate_grade_fairly" value="4">4</label> 
-				<label class="radio inline"><input type="radio" name="rate_grade_fairly" value="5">5</label>
-				
-				<h4>Were homework and exams graded in a timely manner?:</h4>
-				<label class="radio inline"><input type="radio" name="rate_grade_time" value="1" checked>1</label>
-				<label class="radio inline"><input type="radio" name="rate_grade_time" value="2">2</label> 
-				<label class="radio inline"><input type="radio" name="rate_grade_time" value="3">3</label> 
-				<label class="radio inline"><input type="radio" name="rate_grade_time" value="4">4</label> 
-				<label class="radio inline"><input type="radio" name="rate_grade_time" value="5">5</label>
-				
-				<h4>How accessible was the instructor outside of scheduled class time?:</h4>
-				<label class="radio inline"><input type="radio" name="rate_accessibility" value="1" checked>1</label>
-				<label class="radio inline"><input type="radio" name="rate_accessibility" value="2">2</label> 
-				<label class="radio inline"><input type="radio" name="rate_accessibility" value="3">3</label> 
-				<label class="radio inline"><input type="radio" name="rate_accessibility" value="4">4</label> 
-				<label class="radio inline"><input type="radio" name="rate_accessibility" value="5">5</label>
-				
-				<h4>The instructor's knowledge of the subject was relevant and up-to-date:</h4>
-				<label class="radio inline"><input type="radio" name="rate_knowledge" value="1" checked>1</label>
-				<label class="radio inline"><input type="radio" name="rate_knowledge" value="2">2</label> 
-				<label class="radio inline"><input type="radio" name="rate_knowledge" value="3">3</label> 
-				<label class="radio inline"><input type="radio" name="rate_knowledge" value="4">4</label> 
-				<label class="radio inline"><input type="radio" name="rate_knowledge" value="5">5</label>
-				
-				<h4>How valuable was this course for your career development?:</h4>
-				<label class="radio inline"><input type="radio" name="rate_career_development" value="1" checked>1</label>
-				<label class="radio inline"><input type="radio" name="rate_career_development" value="2">2</label> 
-				<label class="radio inline"><input type="radio" name="rate_career_development" value="3">3</label> 
-				<label class="radio inline"><input type="radio" name="rate_career_development" value="4">4</label> 
-				<label class="radio inline"><input type="radio" name="rate_career_development" value="5">5</label>
-			
-				<div class="container"> <br>
-				
-				 
+			<div class="container"> <br> 
 				<h4>Comment (500 character limit):</h4> <br>
-				<textarea name="comment"></textarea> <br>
-				
+				<textarea name="comment"">{{review.comment}}</textarea> <br>
 				<input type="submit" value="Submit">
-				</form>
-				</div>
+			</form>
 			</div>
-			</section>
+			</div>
+		</section>
   			
 			
 
