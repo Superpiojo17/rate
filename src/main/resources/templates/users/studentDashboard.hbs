@@ -124,7 +124,31 @@
         </h4>
       </div>
       <div id="collapse3" class="panel-collapse collapse">
-        <div class="panel-body">You have not left any recent reviews. Search for a teacher to leave some quality feedback!.</div>
+        <div class="table-wrapper">
+								<table class="alt">
+									<thead>
+										<tr>
+											<th><br>Professor Name</th>
+											<th><br>Course</th>
+											<th><br>Semester</th>
+											<th><br>Year</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+									{{#each courses_reviewed}}
+										<tr>
+											<td>{{professor_first_name}} {{professor_last_name}}</td>
+											<td>{{course_name}}</td>
+											<td>{{semester}}</td>
+											<td>{{year}}</td>
+										</tr>
+									{{/each}}
+									</tbody>
+									<tfoot>
+									</tfoot>
+								</table>
+							</div> 
       </div>
     </div>
     
@@ -147,7 +171,7 @@
 										</tr>
 									</thead>
 									<tbody>
-									{{#each courses}}
+									{{#each courses_not_reviewed}}
 										<tr>
 											<td>{{professor_first_name}} {{professor_last_name}}</td>
 											<td><a href="/reviewprofessor/{{course_id}}/review">{{course_name}}</a></td>

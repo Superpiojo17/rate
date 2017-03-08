@@ -131,7 +131,7 @@ public class EditUserController {
 		long id = Long.parseLong(idString);
 		System.out.println(id);
 		UserDao userDao = DaoManager.getInstance().getUserDao();
-		userDao.deletUser(id);
+		userDao.deleteUser(id);
 
 		res.redirect(Application.ALLUSERS_PATH);
 		return " ";

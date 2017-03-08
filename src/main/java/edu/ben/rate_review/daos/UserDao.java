@@ -348,7 +348,7 @@ public class UserDao implements Dao<User> {
 	 * @param user
 	 * @return
 	 */
-	public String deletUser(long id) {
+	public String deleteUser(long id) {
 
 		String sql = "DELETE FROM " + USER_TABLE + " WHERE user_id = ? LIMIT 1";
 

@@ -39,7 +39,7 @@ public class ProfessorReviewController {
 		CoursesToReview course = reviewDao.findByCourseId(id);
 		// create the form object, put it into request
 		model.put("course", course);
-		
+
 		DaoManager dao = DaoManager.getInstance();
 		AnnouncementDao ad = dao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
@@ -57,26 +57,26 @@ public class ProfessorReviewController {
 	 * @return
 	 */
 	public String reviewProfessor(Request req, Response res) {
-		
-		if (req.queryParams("comment").length() <= 500){
+
+		if (req.queryParams("comment").length() <= 500) {
 			Long professorID = createReview(Long.parseLong(req.params("course_id")), req.queryParams("comment"),
 					Integer.parseInt(req.queryParams("rate_objectives")),
 					Integer.parseInt(req.queryParams("rate_organized")),
 					Integer.parseInt(req.queryParams("rate_challenging")),
-					Integer.parseInt(req.queryParams("rate_outside_work")), Integer.parseInt(req.queryParams("rate_pace")),
+					Integer.parseInt(req.queryParams("rate_outside_work")),
+					Integer.parseInt(req.queryParams("rate_pace")),
 					Integer.parseInt(req.queryParams("rate_assignments")),
 					Integer.parseInt(req.queryParams("rate_grade_fairly")),
 					Integer.parseInt(req.queryParams("rate_grade_time")),
 					Integer.parseInt(req.queryParams("rate_accessibility")),
 					Integer.parseInt(req.queryParams("rate_knowledge")),
 					Integer.parseInt(req.queryParams("rate_career_development")));
-			
+
 			res.redirect("/professor/" + professorID + "/overview");
 		} else {
-			//comment too long
+			// comment too long
 			res.redirect("/reviewprofessor/" + req.params("course_id") + "/review");
 		}
-		
 
 		return "";
 	}
@@ -106,9 +106,9 @@ public class ProfessorReviewController {
 
 		ProfessorReview review = new ProfessorReview();
 		CoursesToReview course = new CoursesToReview();
-		
+
 		course = reviewDao.findByCourseId(course_id);
-		
+
 		review.setCourse_id(course.getCourse_id());
 		review.setStudent_id(course.getStudent_id());
 		review.setProfessor_first_name(course.getProfessor_first_name());
@@ -130,8 +130,14 @@ public class ProfessorReviewController {
 		review.setRate_career_development(rate_career_development);
 		review.setProfessor_email(course.getProfessor_email());
 
+		// if review already exists, this will remove previous review
+		if (reviewDao.findReview(course.getCourse_id()) != null) {
+			reviewDao.removeProfessorReview(review);
+		}
+
 		reviewDao.save(review);
-		
+		reviewDao.setCourseReviewed(review);
+
 		UserDao uDao = DaoManager.getInstance().getUserDao();
 		User u = uDao.findByEmail(course.getProfessor_email());
 		return u.getId();

@@ -35,14 +35,16 @@ public class StudentDashboardController {
 		
 		DaoManager dao = DaoManager.getInstance();
 		ProfessorReviewDao reviewDao = dao.getProfessorReviewDao();
-		List<CoursesToReview> courses = reviewDao.allStudentCourses(u);
+		List<CoursesToReview> coursesNotReviewed = reviewDao.allStudentCoursesNotReviewed(u);
+		List<CoursesToReview> coursesReviewed = reviewDao.allStudentCoursesReviewed(u);
 
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
 		
-		model.put("courses", courses);
+		model.put("courses_not_reviewed", coursesNotReviewed);
+		model.put("courses_reviewed", coursesReviewed);
 		
 		model.put("current_user", u);
 		
