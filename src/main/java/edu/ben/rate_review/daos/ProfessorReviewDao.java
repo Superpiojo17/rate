@@ -341,6 +341,26 @@ public class ProfessorReviewDao {
 	}
 
 	/**
+	 * Flags a potentially offensive comment for admin to see
+	 * 
+	 * @param review
+	 */
+	public void setCommentFlagged(ProfessorReview review) {
+		// Declare SQL template query
+		String sql = "UPDATE " + REVIEW_PROFESSOR_TABLE + " SET comment_flagged = 1 WHERE course_id = ? LIMIT 1";
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setLong(1, review.getCourse_id());
+			// Runs query
+			ps.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
 	 * Returns average rating from a specific category
 	 * 
 	 * @param prof
