@@ -16,7 +16,8 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
+<script src="http://cloud.tinymce.com/stable/tinymce.min.js?apiKey=zl6181bkggva2jqusg6ld34d0tgdaknhr0i92bzzkk8k27tq"></script>
+  <script>tinymce.init({ selector:'textarea' });</script>
 	</head>
 	
 	
@@ -74,7 +75,7 @@
 									{{#each announcements}}
 										<tr>
 											<td>{{date}}</td>
-											<td>{{announcement_content}}</td>
+											<td>{{{announcement_content}}}</td>
 										</tr>
 										{{/each}}
 									</tbody>
@@ -109,7 +110,7 @@
 									</div>
 									<div class="centercol">
 									<div class="12u$">
-										<textarea rows="7" cols="15" name="message" id="message" placeholder="Announcement content (limit 40 characters)" maxlength = "40">{{announcement_form.announcement_content}}</textarea>
+										<textarea name ="message" id="message" >{{announcement_form.announcement_content}}</textarea>
 										&ensp;
 										</div>
 										</div>
@@ -182,6 +183,7 @@
 			<script src="/assets/js/jquery.min.js"></script>
 			<script src="/assets/js/skel.min.js"></script>
 			<script src="/assets/js/util.js"></script>
+			<script src="/assets/tinymce/tinymce.min.js"></script>
 			<script>
 
 // d = new Date();

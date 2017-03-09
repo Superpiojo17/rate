@@ -74,7 +74,7 @@
 									{{#each announcements}}
 										<tr>
 											<td>{{date}}</td>
-											<td>{{announcement_content}}</td>
+											<td>{{{announcement_content}}}</td>
 										</tr>
 										{{/each}}
 									</tbody>
@@ -118,7 +118,7 @@
 											
 											<td  class="shrink"><a href="/announcement/{{id}}/edit"  class="btn btn-info">Edit<span class="glyphicon glyphicon-pencil"></span></a></td>
 											<td class="shrink">{{date}}</td>
-											<td>{{announcement_content}}</td>
+											<td> {{{announcement_content}}} </td>
 										</tr>
 										{{/each}}
 									</tbody>
