@@ -307,17 +307,37 @@ public class ProfessorReviewDao {
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
-
 			ps.setLong(1, review.getCourse_id());
-
 			// Runs query
 			ps.execute();
+			// marks course not reviewed
+			setCourseNotReviewed(review);
 
 			return review;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	/**
+	 * Upon deleting a review, the course is marked as "not reviewed"
+	 * 
+	 * @param review
+	 */
+	public void setCourseNotReviewed(ProfessorReview review) {
+		// Declare SQL template query
+		String sql = "UPDATE " + COURSES_TABLE + " SET course_reviewed = 0 WHERE course_id = ? LIMIT 1";
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setLong(1, review.getCourse_id());
+			// Runs query
+			ps.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
