@@ -152,6 +152,7 @@ public class ProfessorController {
 		model.put("courses", reviews);
 		model.put("prof_first_name", prof.getFirst_name());
 		model.put("prof_last_name", prof.getLast_name());
+		model.put("prof_id", prof.getId());
 		// model.put("course", course);
 		
 		DaoManager dao = DaoManager.getInstance();
@@ -169,5 +170,12 @@ public class ProfessorController {
 		model.put("course_id", req.params("course_id"));
 
 		return new ModelAndView(model, "/professor.hbs");
+	}
+
+	public String flag(Request req, Response res) {
+		System.out.println(req.queryParams("course_test"));
+		
+		res.redirect("/professor/" + req.params("professor_id") + "/overview");
+		return "";
 	}
 }

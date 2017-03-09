@@ -184,6 +184,7 @@ public class Application {
 
 		get(PROFESSOR_PATH, (req, res) -> professorController.showProfessorPage(req, res),
 				new HandlebarsTemplateEngine());
+		post(PROFESSOR_PATH, (req, res) -> professorController.flag(req, res));
 
 		put(PROFESSOR_PATH, (req, res) -> professorController.display(req, res));
 

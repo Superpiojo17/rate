@@ -39,6 +39,24 @@ public class ProfessorReview {
 	private String semester;
 	private String comment;
 	private String professor_email;
+	private boolean comment_flagged;
+	private boolean comment_removed;
+
+	public boolean getComment_flagged() {
+		return comment_flagged;
+	}
+
+	public void setComment_flagged(boolean comment_flagged) {
+		this.comment_flagged = comment_flagged;
+	}
+
+	public boolean getComment_removed() {
+		return comment_removed;
+	}
+
+	public void setComment_removed(boolean comment_removed) {
+		this.comment_removed = comment_removed;
+	}
 
 	public String getProfessor_email() {
 		return professor_email;

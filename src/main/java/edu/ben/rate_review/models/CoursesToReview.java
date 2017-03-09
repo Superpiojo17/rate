@@ -16,8 +16,26 @@ public class CoursesToReview {
 	private String professor_first_name;
 	private String professor_last_name;
 	private String professor_email;
+	private boolean course_reviewed;
+	private boolean disable_edit;
 
 	
+
+	public boolean getDisable_edit() {
+		return disable_edit;
+	}
+
+	public void setDisable_edit(boolean disable_edit) {
+		this.disable_edit = disable_edit;
+	}
+
+	public boolean getCourse_reviewed() {
+		return course_reviewed;
+	}
+
+	public void setCourse_reviewed(boolean course_reviewed) {
+		this.course_reviewed = course_reviewed;
+	}
 
 	public String getProfessor_email() {
 		return professor_email;

@@ -67,7 +67,7 @@ public class ProfessorReviewDao {
 	 */
 	public List<CoursesToReview> allStudentCoursesReviewed(User user) {
 		final String SELECT = "SELECT * FROM " + COURSES_TABLE + " WHERE users_user_id = " + user.getId()
-				+ " AND course_reviewed = 1 AND semester = 'Spring' AND year = 2017";
+				+ " AND course_reviewed = 1 AND semester = 'Spring' AND year = 2017 AND disable_edit = 0";
 		List<CoursesToReview> courses = null;
 		try {
 			PreparedStatement ps = conn.prepareStatement(SELECT);
