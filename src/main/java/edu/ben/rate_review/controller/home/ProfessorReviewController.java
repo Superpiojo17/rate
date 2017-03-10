@@ -16,6 +16,7 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 //import spark.Session;
+import spark.Session;
 
 /**
  * Controller for the review of a professor
@@ -32,104 +33,124 @@ public class ProfessorReviewController {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 
-		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
-		//Session session = req.session();
-		String idString = req.params("course_id");
-		long id = Long.parseLong(idString);
-		CoursesToReview course = reviewDao.findByCourseId(id);
-		// create the form object, put it into request
-		model.put("course", course);
+		// gets user from session
+		Session session = req.session();
+		User user = (User) session.attribute("current_user");
+		long user_id = -1;
 
-		ProfessorReview review = reviewDao.findReview(id);
-
-		// if user wants to edit a review, this will pre-populate old ratings
-		if (review != null) {
-			model.put("review", review);
-
-			PrePopulatedReviewButtons objectives = new PrePopulatedReviewButtons();
-			objectives.setRating(review.getRate_objectives());
-			model.put("objectives_1", objectives.getRate_1());
-			model.put("objectives_2", objectives.getRate_2());
-			model.put("objectives_3", objectives.getRate_3());
-			model.put("objectives_4", objectives.getRate_4());
-			model.put("objectives_5", objectives.getRate_5());
-			PrePopulatedReviewButtons organized = new PrePopulatedReviewButtons();
-			organized.setRating(review.getRate_organized());
-			model.put("organized_1", organized.getRate_1());
-			model.put("organized_2", organized.getRate_2());
-			model.put("organized_3", organized.getRate_3());
-			model.put("organized_4", organized.getRate_4());
-			model.put("organized_5", organized.getRate_5());
-			PrePopulatedReviewButtons challenging = new PrePopulatedReviewButtons();
-			challenging.setRating(review.getRate_challenging());
-			model.put("challenging_1", challenging.getRate_1());
-			model.put("challenging_2", challenging.getRate_2());
-			model.put("challenging_3", challenging.getRate_3());
-			model.put("challenging_4", challenging.getRate_4());
-			model.put("challenging_5", challenging.getRate_5());
-			PrePopulatedReviewButtons outside_work = new PrePopulatedReviewButtons();
-			outside_work.setRating(review.getRate_outside_work());
-			model.put("outside_work_1", outside_work.getRate_1());
-			model.put("outside_work_2", outside_work.getRate_2());
-			model.put("outside_work_3", outside_work.getRate_3());
-			model.put("outside_work_4", outside_work.getRate_4());
-			model.put("outside_work_5", outside_work.getRate_5());
-			PrePopulatedReviewButtons pace = new PrePopulatedReviewButtons();
-			pace.setRating(review.getRate_pace());
-			model.put("pace_1", pace.getRate_1());
-			model.put("pace_2", pace.getRate_2());
-			model.put("pace_3", pace.getRate_3());
-			model.put("pace_4", pace.getRate_4());
-			model.put("pace_5", pace.getRate_5());
-			PrePopulatedReviewButtons assignments = new PrePopulatedReviewButtons();
-			assignments.setRating(review.getRate_assignments());
-			model.put("assignments_1", assignments.getRate_1());
-			model.put("assignments_2", assignments.getRate_2());
-			model.put("assignments_3", assignments.getRate_3());
-			model.put("assignments_4", assignments.getRate_4());
-			model.put("assignments_5", assignments.getRate_5());
-			PrePopulatedReviewButtons grade_fairly = new PrePopulatedReviewButtons();
-			grade_fairly.setRating(review.getRate_grade_fairly());
-			model.put("grade_fairly_1", grade_fairly.getRate_1());
-			model.put("grade_fairly_2", grade_fairly.getRate_2());
-			model.put("grade_fairly_3", grade_fairly.getRate_3());
-			model.put("grade_fairly_4", grade_fairly.getRate_4());
-			model.put("grade_fairly_5", grade_fairly.getRate_5());
-			PrePopulatedReviewButtons grade_time = new PrePopulatedReviewButtons();
-			grade_time.setRating(review.getRate_grade_time());
-			model.put("grade_time_1", grade_time.getRate_1());
-			model.put("grade_time_2", grade_time.getRate_2());
-			model.put("grade_time_3", grade_time.getRate_3());
-			model.put("grade_time_4", grade_time.getRate_4());
-			model.put("grade_time_5", grade_time.getRate_5());
-			PrePopulatedReviewButtons accessibility = new PrePopulatedReviewButtons();
-			accessibility.setRating(review.getRate_accessibility());
-			model.put("accessibility_1", accessibility.getRate_1());
-			model.put("accessibility_2", accessibility.getRate_2());
-			model.put("accessibility_3", accessibility.getRate_3());
-			model.put("accessibility_4", accessibility.getRate_4());
-			model.put("accessibility_5", accessibility.getRate_5());
-			PrePopulatedReviewButtons knowledge = new PrePopulatedReviewButtons();
-			knowledge.setRating(review.getRate_knowledge());
-			model.put("knowledge_1", knowledge.getRate_1());
-			model.put("knowledge_2", knowledge.getRate_2());
-			model.put("knowledge_3", knowledge.getRate_3());
-			model.put("knowledge_4", knowledge.getRate_4());
-			model.put("knowledge_5", knowledge.getRate_5());
-			PrePopulatedReviewButtons career_development = new PrePopulatedReviewButtons();
-			career_development.setRating(review.getRate_career_development());
-			model.put("career_development_1", career_development.getRate_1());
-			model.put("career_development_2", career_development.getRate_2());
-			model.put("career_development_3", career_development.getRate_3());
-			model.put("career_development_4", career_development.getRate_4());
-			model.put("career_development_5", career_development.getRate_5());
+		// if user is not logged in, will store -1 as user_id
+		if (user != null){
+			user_id = user.getId();
 		}
 
-		DaoManager dao = DaoManager.getInstance();
-		AnnouncementDao ad = dao.getAnnouncementDao();
-		List<Announcement> announcements = ad.all();
-		model.put("announcements", announcements);
+		// gets course_id from the URL
+		String idString = req.params("course_id");
+		long course_id = Long.parseLong(idString);
 
+		// gets the course object from the course_id
+		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
+		CoursesToReview course = reviewDao.findByCourseId(course_id);
+
+		// checks that the person accessing the page has access
+		if (user_id != -1 && user_id == course.getStudent_id()) {
+
+			// create the form object, put it into request
+			model.put("course", course);
+
+			ProfessorReview review = reviewDao.findReview(course_id);
+
+			// if user wants to edit a review, this will pre-populate old
+			// ratings
+			if (review != null) {
+				model.put("review", review);
+
+				PrePopulatedReviewButtons objectives = new PrePopulatedReviewButtons();
+				objectives.setRating(review.getRate_objectives());
+				model.put("objectives_1", objectives.getRate_1());
+				model.put("objectives_2", objectives.getRate_2());
+				model.put("objectives_3", objectives.getRate_3());
+				model.put("objectives_4", objectives.getRate_4());
+				model.put("objectives_5", objectives.getRate_5());
+				PrePopulatedReviewButtons organized = new PrePopulatedReviewButtons();
+				organized.setRating(review.getRate_organized());
+				model.put("organized_1", organized.getRate_1());
+				model.put("organized_2", organized.getRate_2());
+				model.put("organized_3", organized.getRate_3());
+				model.put("organized_4", organized.getRate_4());
+				model.put("organized_5", organized.getRate_5());
+				PrePopulatedReviewButtons challenging = new PrePopulatedReviewButtons();
+				challenging.setRating(review.getRate_challenging());
+				model.put("challenging_1", challenging.getRate_1());
+				model.put("challenging_2", challenging.getRate_2());
+				model.put("challenging_3", challenging.getRate_3());
+				model.put("challenging_4", challenging.getRate_4());
+				model.put("challenging_5", challenging.getRate_5());
+				PrePopulatedReviewButtons outside_work = new PrePopulatedReviewButtons();
+				outside_work.setRating(review.getRate_outside_work());
+				model.put("outside_work_1", outside_work.getRate_1());
+				model.put("outside_work_2", outside_work.getRate_2());
+				model.put("outside_work_3", outside_work.getRate_3());
+				model.put("outside_work_4", outside_work.getRate_4());
+				model.put("outside_work_5", outside_work.getRate_5());
+				PrePopulatedReviewButtons pace = new PrePopulatedReviewButtons();
+				pace.setRating(review.getRate_pace());
+				model.put("pace_1", pace.getRate_1());
+				model.put("pace_2", pace.getRate_2());
+				model.put("pace_3", pace.getRate_3());
+				model.put("pace_4", pace.getRate_4());
+				model.put("pace_5", pace.getRate_5());
+				PrePopulatedReviewButtons assignments = new PrePopulatedReviewButtons();
+				assignments.setRating(review.getRate_assignments());
+				model.put("assignments_1", assignments.getRate_1());
+				model.put("assignments_2", assignments.getRate_2());
+				model.put("assignments_3", assignments.getRate_3());
+				model.put("assignments_4", assignments.getRate_4());
+				model.put("assignments_5", assignments.getRate_5());
+				PrePopulatedReviewButtons grade_fairly = new PrePopulatedReviewButtons();
+				grade_fairly.setRating(review.getRate_grade_fairly());
+				model.put("grade_fairly_1", grade_fairly.getRate_1());
+				model.put("grade_fairly_2", grade_fairly.getRate_2());
+				model.put("grade_fairly_3", grade_fairly.getRate_3());
+				model.put("grade_fairly_4", grade_fairly.getRate_4());
+				model.put("grade_fairly_5", grade_fairly.getRate_5());
+				PrePopulatedReviewButtons grade_time = new PrePopulatedReviewButtons();
+				grade_time.setRating(review.getRate_grade_time());
+				model.put("grade_time_1", grade_time.getRate_1());
+				model.put("grade_time_2", grade_time.getRate_2());
+				model.put("grade_time_3", grade_time.getRate_3());
+				model.put("grade_time_4", grade_time.getRate_4());
+				model.put("grade_time_5", grade_time.getRate_5());
+				PrePopulatedReviewButtons accessibility = new PrePopulatedReviewButtons();
+				accessibility.setRating(review.getRate_accessibility());
+				model.put("accessibility_1", accessibility.getRate_1());
+				model.put("accessibility_2", accessibility.getRate_2());
+				model.put("accessibility_3", accessibility.getRate_3());
+				model.put("accessibility_4", accessibility.getRate_4());
+				model.put("accessibility_5", accessibility.getRate_5());
+				PrePopulatedReviewButtons knowledge = new PrePopulatedReviewButtons();
+				knowledge.setRating(review.getRate_knowledge());
+				model.put("knowledge_1", knowledge.getRate_1());
+				model.put("knowledge_2", knowledge.getRate_2());
+				model.put("knowledge_3", knowledge.getRate_3());
+				model.put("knowledge_4", knowledge.getRate_4());
+				model.put("knowledge_5", knowledge.getRate_5());
+				PrePopulatedReviewButtons career_development = new PrePopulatedReviewButtons();
+				career_development.setRating(review.getRate_career_development());
+				model.put("career_development_1", career_development.getRate_1());
+				model.put("career_development_2", career_development.getRate_2());
+				model.put("career_development_3", career_development.getRate_3());
+				model.put("career_development_4", career_development.getRate_4());
+				model.put("career_development_5", career_development.getRate_5());
+			}
+
+			DaoManager dao = DaoManager.getInstance();
+			AnnouncementDao ad = dao.getAnnouncementDao();
+			List<Announcement> announcements = ad.all();
+			model.put("announcements", announcements);
+		
+		} else {
+			res.redirect("/authorizationerror");
+		}
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "home/reviewprofessor.hbs");
 	}
