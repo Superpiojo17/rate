@@ -447,16 +447,18 @@
 									</thead>
 									<tbody>
 									{{#each courses}}
+									{{#if comment}}
 										<tr>
-											<td>{{course}}</td>
-											<td>{{semester}} {{year}}</td>
+											<td class = "shrink">{{course}}</td>
+											<td class = "shrink">{{semester}} {{year}}</td>
 											<td>{{comment}}</td>
-											<td>
+											<td class = "shrink">
 											<form action="/professor/{{prof_id}}/overview" method="post">
 											<button class="btn btn-danger" type="submit" name="course_flagged" value="{{course_id}}"><span class="glyphicon glyphicon-flag"></span></button>
 											</form>
 											</td>
 										</tr>
+									{{/if}}
 									{{/each}}
 									</tbody>
 									<tfoot>

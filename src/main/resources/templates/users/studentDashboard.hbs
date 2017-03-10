@@ -124,6 +124,8 @@
         </h4>
       </div>
       <div id="collapse3" class="panel-collapse collapse">
+    {{#if no_courses_reviewed}}You do not have any recent reviews.{{/if}}
+	{{#unless no_courses_reviewed}}
         <div class="table-wrapper">
 								<table class="alt">
 									<thead>
@@ -156,6 +158,7 @@
 									</tfoot>
 								</table>
 							</div> 
+							{{/unless}}
       </div>
     </div>
     
@@ -165,7 +168,9 @@
           <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Courses To Review</a>
         </h4>
       </div>
-      <div id="collapse4" class="panel-collapse collapse"> 	
+      <div id="collapse4" class="panel-collapse collapse"> 
+      	{{#if no_courses_to_review}}You have no more courses to review.{{/if}}
+		{{#unless no_courses_to_review}}	
       	<div class="table-wrapper">
 								<table class="alt">
 									<thead>
@@ -191,6 +196,7 @@
 									</tfoot>
 								</table>
 							</div> 
+							{{/unless}}
       </div>
     </div>
     

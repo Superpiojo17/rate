@@ -198,7 +198,7 @@ public class ProfessorReviewDao {
 				ps.setInt(18, review.getRate_career_development());
 				ps.setLong(19, review.getCourse_id());
 				ps.setString(20, review.getProfessor_email());
-				System.out.println(review.getProfessor_email());
+
 				ps.executeUpdate();
 
 			} catch (SQLException e) {

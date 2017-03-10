@@ -37,6 +37,22 @@ public class StudentDashboardController {
 		ProfessorReviewDao reviewDao = dao.getProfessorReviewDao();
 		List<CoursesToReview> coursesNotReviewed = reviewDao.allStudentCoursesNotReviewed(u);
 		List<CoursesToReview> coursesReviewed = reviewDao.allStudentCoursesReviewed(u);
+		
+		// no classes listed in courses to review
+		boolean noCoursesToReview = false;
+		// no classes listed in recent reviews
+		boolean noCoursesReviewed = false;
+		
+		// checks if either lists are empty
+		if (coursesNotReviewed.isEmpty()){
+			noCoursesToReview = true;
+		}
+		if (coursesReviewed.isEmpty()){
+			noCoursesReviewed = true;
+		}
+		
+		model.put("no_courses_to_review", noCoursesToReview);
+		model.put("no_courses_reviewed", noCoursesReviewed);
 
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
