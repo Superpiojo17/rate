@@ -101,9 +101,32 @@
         <h4 class="panel-title">
           <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">My Tutors</a>
         </h4>
+     
       </div>
       <div id="collapse1" class="panel-collapse collapse in">
-        <div class="panel-body">You have no upcoming appiontments. Search for a tutor to set up a study session!</div>
+        <div class="panel-body">
+        	<div class="table-wrapper">
+								<table class="alt">
+									<thead>
+										<tr>
+											<th><br>Tutor </th>
+											<th><br>Email</th>
+											<th><br>Course</th>
+										</tr>
+									</thead>
+									<tbody>
+									{{#each tutors}}
+										<tr>
+											<td>{{student_id}} </td>
+											<td>{{professor_id}} </td>
+											<td>{{course_name}}</td>
+										</tr>
+									{{/each}}
+									</tbody>
+									<tfoot>
+									</tfoot>
+								</table>
+        </div>
       </div>
     </div>
     <div class="panel panel-default">

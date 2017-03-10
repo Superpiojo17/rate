@@ -6,7 +6,9 @@ import java.util.List;
 import edu.ben.rate_review.authorization.AuthException;
 import edu.ben.rate_review.daos.AnnouncementDao;
 import edu.ben.rate_review.daos.DaoManager;
+import edu.ben.rate_review.daos.TutorDao;
 import edu.ben.rate_review.models.Announcement;
+import edu.ben.rate_review.models.Tutor;
 import edu.ben.rate_review.models.User;
 import edu.ben.rate_review.policy.AuthPolicyManager;
 import spark.ModelAndView;
@@ -30,11 +32,21 @@ public class FacultyDashboardController {
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
+		
+		DaoManager tdao = DaoManager.getInstance();
+		TutorDao td = tdao.getTutorDao();
+		List<Tutor> tutors = td.all(u.getId());
+		
+		model.put("tutors", tutors);
+		
+		
 
 		model.put("current_user", u);
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/facultyDashboard.hbs");
 	}
+	
+	
 	
 	
 

@@ -59,6 +59,15 @@ public class DaoManager {
 		}
 		return null;
 	}
+	
+	public TutorDao getTutorDao() {
+		try {
+			return new TutorDao(this.src.getConnection());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	/**
 	 * gets instance of professor review dao
