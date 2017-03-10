@@ -116,6 +116,7 @@ public class Application {
 	public static String MASSEDITACTIVE_PATH = "/masseditactive";
 	public static String MASSEDITYEAR_PATH = "/massedityear";
 	public static String MASSEDITROLE_PATH = "/masseditrole";
+	public static String ADDANNOUNCEMENT_PATH = "/addannouncement";
 
 	public static void main(String[] args) throws Exception {
 
@@ -171,7 +172,13 @@ public class Application {
 		get(NOTLOGGEDIN_PATH, (req, res) -> unauthorizedController.showNotLoggedIn(req, res),
 				new HandlebarsTemplateEngine());
 
+		
 		get(EDITUSER_PATH, (req, res) -> edituserController.showEditUserPage(req, res), new HandlebarsTemplateEngine());
+
+		post(ADDANNOUNCEMENT_PATH, (req, res) -> editannouncementController.addAnnouncement(req, res));
+		
+		get(ADDANNOUNCEMENT_PATH, (req, res) -> editannouncementController.showAddAnnouncementPage(req, res),
+				new HandlebarsTemplateEngine());
 
 		get(EDITANNOUNCEMENT_PATH, (req, res) -> editannouncementController.showEditAnnouncementPage(req, res),
 				new HandlebarsTemplateEngine());

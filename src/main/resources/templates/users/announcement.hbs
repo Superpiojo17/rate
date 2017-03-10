@@ -58,6 +58,7 @@
 			&nbsp;
      <p><h4 id="date"></h4></p>
      <p><h4 id="hour"></h4></p>
+      <p><h4 id="dateFormat"></h4></p>
       <a href="#announcement" class="btn btn-info" data-toggle="collapse">Announcements</a>
   <div id="announcement" class="collapse">
   &nbsp;
@@ -92,11 +93,11 @@
 						
 							<div class="centercol"> 
 							&ensp;
-							<h2> Edit your anouncements </h2>
+							<h2> Manage your announcements </h2>
 							
 							
 							
-  <p>Fill out the form and click save to add an announcement.</p>
+  <p>Fill out the form on the right to quick add, or click add event.</p>
   &ensp;
   
   <div class="centercol"> 
@@ -128,6 +129,10 @@
 										</tr>
 									</tfoot>
 								</table>
+											<a href = "/addannouncement" button type="submit" class="btn btn-info"> Add Event
+											<span class="glyphicon glyphicon-floppy-saved"></a></button>
+											&emsp;&emsp;
+								
 								
 							</div>
 							</div>
@@ -136,6 +141,7 @@
   
 							<!-- Form -->
 						<section>
+						 <h4>Quick Add</h4>
 							<form action="/announcement" method="post">
 								<div class="row uniform 50%">
 									<div class="6u 12u$(xsmall)">
@@ -144,7 +150,15 @@
 							<form action="/announcement" method="post" >
 								<div class="row uniform 50%">
 									<div class="6u 12u$(xsmall)">
-										<input type="date" name="date" id="date" value="" placeholder="Date" />
+										<input type="date" name="date" id="date" value = "dateFormat" placeholder="Date" />
+									
+									
+									
+									
+									
+									
+									
+									
 									</div>
 									</div>
 									&ensp;
@@ -154,7 +168,7 @@
 									</div>
 									<div class="12u$">
 										<ul class="actions">
-											<button type="submit" class="btn btn-info"> Add Event
+											<button type="submit" class="btn btn-info"> Quick Add
 											<span class="glyphicon glyphicon-floppy-saved"></button>
 											&emsp;&emsp;
 										</ul>
@@ -184,12 +198,26 @@
 			<script src="/assets/js/jquery.min.js"></script>
 			<script src="/assets/js/skel.min.js"></script>
 			<script src="/assets/js/util.js"></script>
-			<script>
+			
+<script type="text/javascript">
 
-// d = new Date();
+var d = new Date();
+
+var curr_date = d.getDate();
+
+var curr_month = d.getMonth() + 1;
+
+var curr_year = d.getFullYear();
+
+document.getElementById("dateFormat").value = curr_year + "-0" + curr_month + "-0" +curr_date;
 
 
 </script>
+			
+			
+
+
+ 
 
 <script type="text/javascript">
 <!--

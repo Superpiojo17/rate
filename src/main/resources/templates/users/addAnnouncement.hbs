@@ -93,7 +93,7 @@
 						
 							<div class="centercol"> 
 							&ensp;
-							<h2> Edit your announcements</h2>
+							<h2> Add announcements</h2>
 							
 							
 							
@@ -104,22 +104,22 @@
 							
 						<section>
 						
-							<form action="/announcement/{{announcement_form.id}}/edit" method="post">
+							<form action="/addannouncement" method="post">
 								<div class="row uniform 50%">
 									<div class="6u 12u$(xsmall)">
-									<input type="date" name="date" id="date" value="{{announcement_form.formatdate}}" placeholder="Date" />
+									<input type="date" name="date" id="date" value="" placeholder="Date" />
 										&ensp;
 									</div>
 									<div class="centercol">
 									<div class="12u$">
-										<textarea name ="message" id="message" >{{announcement_form.announcement_content}}</textarea>
+										<textarea name ="message" id="message" ></textarea>
 										&ensp;
 										</div>
 										</div>
 									
 									<div class="12u$">
 										<ul class="actions">
-											<button type="submit" class="btn btn-info"> Save 
+											<button type="submit" class="btn btn-info"> Add
 											<span class="glyphicon glyphicon-floppy-saved"></button>
 											&emsp;&emsp;
 										</ul>
@@ -128,10 +128,6 @@
 							</form>
 						</section>
 						
-						
-											<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#myModal" > Delete Event
-											<span class="glyphicon glyphicon-remove"> </button>
-											
 											
 											<!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
