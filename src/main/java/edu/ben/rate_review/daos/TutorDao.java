@@ -7,7 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.ben.rate_review.models.Announcement;
+import edu.ben.rate_review.models.AnnouncementForm;
 import edu.ben.rate_review.models.Tutor;
+import edu.ben.rate_review.models.TutorForm;
 import edu.ben.rate_review.models.User;
 
 public class TutorDao implements Dao<Tutor> {
@@ -83,6 +86,51 @@ public class TutorDao implements Dao<Tutor> {
 			e.printStackTrace();
 		}
 		return tutors;
+	}
+	
+	public Tutor findById(long id) {
+		// Declare SQL template query
+		String sql = "SELECT * FROM " + TUTOR_TABLE + " WHERE tutor_relationship_id = ? LIMIT 1";
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement q = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			q.setLong(1, id);
+
+			// Run your shit
+			ResultSet rs = q.executeQuery();
+			if (rs.next()) {
+				return mapRow(rs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// If you don't find a model
+		return null;
+
+	}
+	
+	public TutorForm updateTutor(TutorForm tutor) {
+		String sql = "UPDATE " + TUTOR_TABLE
+				+ " SET course_name = ? WHERE tutor_relationship_id = ? LIMIT 1";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setString(1, tutor.getCourse());
+			ps.setLong(2, tutor.getId());
+
+
+			// Runs query
+			ps.execute();
+			return tutor;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
 	}
 
 	@Override

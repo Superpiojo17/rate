@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Edit User</title>
+		<title>Edit Tutor</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -27,12 +27,12 @@
 				<h1>Faculty Dashboard</h1>
 			</header>
 
-			<!-- Nav -->
+				<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
 					<li><a href="/facultydashboard">Home</a></li>
 					<li><a href="/register">My Account</a></li>
-					<li><a href="/managetutors">Manage Tutors</a></li>
+					<li><a href="/alltutors/{{current_user.id}}">Manage Tutors</a></li>
 					<li><a href="/aboutus">View Apointments</a></li>
 					<li><a href="/aboutus">View Reviews</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
@@ -100,13 +100,41 @@
   
 							<!-- Form -->
 						<section>
-							<form action="/user/{{user_form.id}}/edit" method="post">
+							<form action="/tutor/{{tutor_form.id}}/edit" method="post">
+							
+							<div class="table-wrapper">
+								<table class="alt">
+									<thead>
+										<tr>
+											<th><br>Tutor</th>
+											<th><br>Email</th>
+											<th><br>Course</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>{{tutor_form.tutor_first_name}} {{tutor_form.tutor_last_name}} </td>
+											<td>{{tutor_form.tutor_email}} </td>
+											<td><input type="text" name="course" id="course" value="{{tutor_form.course}}" placeholder="Course" /></td>
+										</tr>
+									</tbody>
+									<tfoot>
+									</tfoot>
+								</table>
+        </div>
+        <div class="12u$">
+										<ul class="actions">
+											<button type="submit" class="btn btn-info"> Save 
+											<span class="glyphicon glyphicon-floppy-saved"></button>
+											&emsp;&emsp;
+										</ul>
+									</div>
 							
 							</form>
 						</section>
 						
 						
-											<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#myModal" > Delete User
+											<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#myModal" > Delete Tutor
 											<span class="glyphicon glyphicon-remove"> </button>
 											
 											
@@ -121,9 +149,9 @@
           <h4 class="modal-title">Are you sure?</h4>
         </div>
         <div class="modal-body">
-          <p>Are you sure you would like to delete {{user_form.first_name}} {{user_form.last_name}}'s account? You cannot recover this information.</p>
+          <p>Are you sure you would like to delete {{tutor_form.tutor_first_name}} {{tutor_form.tutor_last_name}} from your tutor list? You cannot recover this information.</p>
         </div>
-        	<form action="/deleteuser/{{user_form.id}}" method="post">
+        	<form action="/deletetutor/{{tutor_form.id}}" method="post">
         <div class="modal-footer">
         <ul class="actions">
           <button type="submit" class="btn btn-primary" data-dismiss="modal">Cancel</button>

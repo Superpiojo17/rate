@@ -122,7 +122,7 @@ public class Application {
 	public static String MASSEDITYEAR_PATH = "/massedityear";
 	public static String MASSEDITROLE_PATH = "/masseditrole";
 	public static String ADDANNOUNCEMENT_PATH = "/addannouncement";
-	public static String ALLTUTORS_PATH = "/alltutors";
+	public static String ALLTUTORS_PATH = "/alltutors/:id";
 	public static String EDITTUTORS_PATH = "/tutor/:id/edit";
 
 	public static void main(String[] args) throws Exception {
@@ -175,8 +175,10 @@ public class Application {
 		
 	
 
-		get(EDITTUTORS_PATH, (req, res) -> edittutorController.showEditUserPage(req, res),
+		get(EDITTUTORS_PATH, (req, res) -> edittutorController.showEditTutorPage(req, res),
 				new HandlebarsTemplateEngine());
+		
+		post(EDITTUTORS_PATH, (req, res) -> edittutorController.updateTutor(req, res));
 		
 		
 		get(ALLTUTORS_PATH, (req, res) -> facultydashController.showAllTutorsPage(req, res),
