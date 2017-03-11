@@ -56,7 +56,8 @@ public class StudentDashboardController {
 
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
-		""
+		List<Announcement> announcements = ad.all();
+	
 		model.put("announcements", announcements);
 		
 		model.put("courses_not_reviewed", coursesNotReviewed);

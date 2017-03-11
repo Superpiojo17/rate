@@ -33,9 +33,12 @@ public class FacultyDashboardController {
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
 		
+		
 		DaoManager tdao = DaoManager.getInstance();
 		TutorDao td = tdao.getTutorDao();
 		List<Tutor> tutors = td.all(u.getId());
+		
+		
 		
 		model.put("tutors", tutors);
 		
@@ -44,6 +47,33 @@ public class FacultyDashboardController {
 		model.put("current_user", u);
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/facultyDashboard.hbs");
+	}
+	public ModelAndView showAllTutorsPage(Request req, Response res) throws AuthException {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
+//		AuthPolicyManager.getInstance().getUserPolicy().showFacultyDashboardPage();
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+		
+		
+		DaoManager tdao = DaoManager.getInstance();
+		TutorDao td = tdao.getTutorDao();
+		List<Tutor> tutors = td.all(u.getId());
+		
+		
+		
+		model.put("tutors", tutors);
+		
+		
+
+		model.put("current_user", u);
+		// Tell the server to render the index page with the data in the model
+		return new ModelAndView(model, "users/alltutors.hbs");
 	}
 	
 	

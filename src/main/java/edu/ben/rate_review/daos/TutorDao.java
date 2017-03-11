@@ -25,12 +25,19 @@ public class TutorDao implements Dao<Tutor> {
 	}
 
 	private Tutor mapRow(ResultSet rs) throws SQLException {
+		UserDao udao = new UserDao(conn);
+		
+		
 		Tutor tmp = new Tutor();
 
 		tmp.setId(rs.getLong("tutor_relationship_id"));
 		tmp.setStudent_id(rs.getLong("user_id_student"));
 		tmp.setProfessor_id(rs.getLong("user_id_professor"));
 		tmp.setCourse_name(rs.getString("course_name"));
+		
+		tmp.setTutor_email(udao.findById(rs.getLong("user_id_student")).getEmail());
+		tmp.setTutor_first_name(udao.findById(rs.getLong("user_id_student")).getFirst_name());
+		tmp.setTutor_last_name(udao.findById(rs.getLong("user_id_student")).getLast_name());
 
 		return tmp;
 	}

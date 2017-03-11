@@ -117,6 +117,7 @@ public class Application {
 	public static String MASSEDITYEAR_PATH = "/massedityear";
 	public static String MASSEDITROLE_PATH = "/masseditrole";
 	public static String ADDANNOUNCEMENT_PATH = "/addannouncement";
+	public static String ALLTUTORS_PATH = "/alltutors";
 
 	public static void main(String[] args) throws Exception {
 
@@ -166,6 +167,12 @@ public class Application {
 			exception.printStackTrace();
 		});
 
+		
+		get(ALLTUTORS_PATH, (req, res) -> facultydashController.showAllTutorsPage(req, res),
+				new HandlebarsTemplateEngine());
+		
+		
+		
 		get(AUTHORIZATIONERROR_PATH, (req, res) -> unauthorizedController.showNotAuthorizedc(req, res),
 				new HandlebarsTemplateEngine());
 
