@@ -28,6 +28,7 @@ import edu.ben.rate_review.controller.session.SessionsController;
 import edu.ben.rate_review.controller.user.AccountRecoveryController;
 import edu.ben.rate_review.controller.user.AdminDashboardController;
 import edu.ben.rate_review.controller.user.EditAnnouncementController;
+import edu.ben.rate_review.controller.user.EditTutorController;
 import edu.ben.rate_review.controller.user.EditUserController;
 import edu.ben.rate_review.controller.user.FacultyDashboardController;
 import edu.ben.rate_review.controller.user.StudentDashboardController;
@@ -74,7 +75,11 @@ public class Application {
 	private static EditUserController edituserController = new EditUserController();
 	private static UnauthorizedController unauthorizedController = new UnauthorizedController();
 	private static EditAnnouncementController editannouncementController = new EditAnnouncementController();
-
+	private static EditTutorController edittutorController = new EditTutorController();
+	
+	
+	
+	
 	// match up paths
 	public static String DOMAIN = "localhost:3000";
 	public static String HOME_PATH = "/";
@@ -118,6 +123,7 @@ public class Application {
 	public static String MASSEDITROLE_PATH = "/masseditrole";
 	public static String ADDANNOUNCEMENT_PATH = "/addannouncement";
 	public static String ALLTUTORS_PATH = "/alltutors";
+	public static String EDITTUTORS_PATH = "/tutor/:id/edit";
 
 	public static void main(String[] args) throws Exception {
 
@@ -166,7 +172,12 @@ public class Application {
 		exception(Exception.class, (exception, request, response) -> {
 			exception.printStackTrace();
 		});
+		
+	
 
+		get(EDITTUTORS_PATH, (req, res) -> edittutorController.showEditUserPage(req, res),
+				new HandlebarsTemplateEngine());
+		
 		
 		get(ALLTUTORS_PATH, (req, res) -> facultydashController.showAllTutorsPage(req, res),
 				new HandlebarsTemplateEngine());
