@@ -309,6 +309,33 @@ public class UserDao implements Dao<User> {
 		}
 		return users;
 	}
+	
+	/**
+	 * 
+	 * @return all users from the database.
+	 */
+
+	public List<User> allTutorsByMajor(String Major) {
+		final String SELECT = "SELECT * FROM " + USER_TABLE + " WHERE major = '" + Major + "' AND role_id = 3";
+
+		List<User> users = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			users = new ArrayList<User>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					users.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return users;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
 
 	public User find(Long id) {
 		return null;

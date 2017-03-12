@@ -93,12 +93,13 @@
 						
 							<div class="centercol"> 
 							&ensp;
-							<h2> Manage your users </h2>
+							<h2> Department Tutors </h2>
 							
 							
 							
-  <p>View all of your tutors.</p>
-  &ensp;
+  <p>These are the tutors available for your department.</p>
+  <p>Don't see a student you are looking for?</p> <a href = ""> Click here to view other students.</a>
+  
   
   
   
@@ -119,7 +120,7 @@
 										<th class=" shrink text-left"><a href="javascript:SortTable(2,'T');" class="btn btn-default" >Email</button></a></th>
 										
 										
-<th class=" shrink text-left"><a href="javascript:SortTable(3,'T');" class="btn btn-default" >Course</button></a></th>
+<th class=" shrink text-left"><a href="javascript:SortTable(3,'T');" class="btn btn-default" >Major</button></a></th>
 											
 										</tr>
 									</thead>
@@ -128,13 +129,13 @@
 										<tr>
 											
 											
-											<td class="shrink" align="center"><a href="/tutor/{{id}}/edit"  class="btn btn-info">Edit<span class="glyphicon glyphicon-pencil"></span></a></td>											
+											<td class="shrink" align="center"><a href="/tutor/{{id}}/edit"  class="btn btn-info">Select</a></td>											
 										
-											<td class=" shrink">{{tutor_last_name}} , {{tutor_first_name}}</td>
+											<td class=" shrink">{{last_name}} , {{first_name}}</td>
 											
-											<td class=" shrink"><a href= "mailto:{{tutor_email}}?Subject=Rate%20and %20Review"><span class="glyphicon glyphicon-envelope"></span> {{tutor_email}}</a></td>
+											<td class=" shrink"><a href= "mailto:{{email}}?Subject=Rate%20and %20Review"><span class="glyphicon glyphicon-envelope"></span> {{email}}</a></td>
 											
-											<td class=" shrink">{{course_name}}</td>
+											<td class=" shrink">{{major}}</td>
 											
 											
 											
@@ -151,13 +152,8 @@
 								
 							</div>
 							
+							<form action="addtutor" method="get">
 							
-							<ul class="actions">
-											<a href="/addtutors"  class="btn btn-info"> Add Tutor
-											</a>
-											&emsp;&emsp;
-											
-											</ul>
 							 </form>
 						</section>
 						

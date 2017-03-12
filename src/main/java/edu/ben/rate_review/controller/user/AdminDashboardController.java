@@ -119,7 +119,6 @@ public class AdminDashboardController {
 		DaoManager dao = DaoManager.getInstance();
 		UserDao ud = dao.getUserDao();
 		ud.sortByLastName();
-		System.out.println("sorted bruh");
 
 		res.redirect("/allusers");
 		return "";
