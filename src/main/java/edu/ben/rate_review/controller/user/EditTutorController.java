@@ -78,4 +78,26 @@ public class EditTutorController {
 		return " ";
 
 	}
+	
+	public String deleteTutor(Request req, Response res) {
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
+		String idString = req.params("id");
+		long id = Long.parseLong(idString);
+		TutorDao tutorDao = DaoManager.getInstance().getTutorDao();
+		Long studentID = tutorDao.getStudentId(id);
+		tutorDao.deleteTutor(id);
+		
+		if(tutorDao.findByStudentId(studentID) == null){
+			tutorDao.changeTutorRole(studentID);
+			
+		}
+		res.redirect(Application.ALLTUTORS_PATH + u.getId());
+		return " ";
+
+	}
+	
+	
+	
+	
 }

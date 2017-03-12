@@ -11,6 +11,10 @@ public class Tutor {
 	private String tutor_last_name;
 	private String tutor_email;
 
+	public Tutor() {
+		super();
+	}
+	
 	public Long getId() {
 		return id;
 	}

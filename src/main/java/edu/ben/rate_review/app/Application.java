@@ -124,6 +124,7 @@ public class Application {
 	public static String ADDANNOUNCEMENT_PATH = "/addannouncement";
 	public static String ALLTUTORS_PATH = "/alltutors/:id";
 	public static String EDITTUTORS_PATH = "/tutor/:id/edit";
+	public static String DELETETUTOR_PATH = "/deletetutor/:id";
 
 	public static void main(String[] args) throws Exception {
 
@@ -180,6 +181,8 @@ public class Application {
 		
 		post(EDITTUTORS_PATH, (req, res) -> edittutorController.updateTutor(req, res));
 		
+		post(DELETETUTOR_PATH, (req, res) -> edittutorController.deleteTutor(req, res));
+		
 		
 		get(ALLTUTORS_PATH, (req, res) -> facultydashController.showAllTutorsPage(req, res),
 				new HandlebarsTemplateEngine());
@@ -223,6 +226,7 @@ public class Application {
 		post(DELETEUSER_PATH, (req, res) -> edituserController.deleteUser(req, res));
 
 		post(DELETEANNOUNCEMENT_PATH, (req, res) -> editannouncementController.deleteAnnouncement(req, res));
+		
 
 		get(REVIEWPROFESSOR_PATH, (req, res) -> professorReviewController.showReviewProfessorPage(req, res),
 				new HandlebarsTemplateEngine());
