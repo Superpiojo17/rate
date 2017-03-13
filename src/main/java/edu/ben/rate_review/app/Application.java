@@ -12,9 +12,9 @@ import static spark.Spark.staticFiles;
 import java.util.HashMap;
 
 import edu.ben.rate_review.authorization.AuthException;
-import edu.ben.rate_review.controller.home.AdminController;
 import edu.ben.rate_review.controller.home.AboutUsController;
 import edu.ben.rate_review.controller.home.ActivationController;
+import edu.ben.rate_review.controller.home.AdminController;
 import edu.ben.rate_review.controller.home.ChangePasswordController;
 import edu.ben.rate_review.controller.home.ConfirmationController;
 import edu.ben.rate_review.controller.home.ContactUsController;
@@ -22,28 +22,27 @@ import edu.ben.rate_review.controller.home.DepartmentsController;
 import edu.ben.rate_review.controller.home.FaqController;
 import edu.ben.rate_review.controller.home.HomeController;
 import edu.ben.rate_review.controller.home.LogInController;
+import edu.ben.rate_review.controller.home.ProfessorController;
+import edu.ben.rate_review.controller.home.ProfessorReviewController;
 import edu.ben.rate_review.controller.home.RegisterController;
+import edu.ben.rate_review.controller.home.TeacherAddTutorController;
 import edu.ben.rate_review.controller.home.TeacherController;
 import edu.ben.rate_review.controller.home.TutorAppointmentController;
 import edu.ben.rate_review.controller.home.TutorsController;
-import edu.ben.rate_review.controller.home.TeacherAddTutorController;
 import edu.ben.rate_review.controller.session.SessionsController;
 import edu.ben.rate_review.controller.user.AccountRecoveryController;
 import edu.ben.rate_review.controller.user.AdminDashboardController;
+import edu.ben.rate_review.controller.user.EditAnnouncementController;
+import edu.ben.rate_review.controller.user.EditUserController;
 import edu.ben.rate_review.controller.user.FacultyDashboardController;
 import edu.ben.rate_review.controller.user.StudentDashboardController;
 import edu.ben.rate_review.controller.user.TutorDashboardController;
+import edu.ben.rate_review.controller.user.UnauthorizedController;
 import edu.ben.rate_review.controller.user.UsersController;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.models.User;
-import edu.ben.rate_review.controller.home.ProfessorController;
 import edu.ben.rate_review.policy.AuthPolicyManager;
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
 import spark.Session;
-import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class Application {
@@ -69,9 +68,16 @@ public class Application {
 	private static TutorsController tutorController = new TutorsController();
 	private static ProfessorController professorController = new ProfessorController();
 	private static AdminController adminController = new AdminController();
+
 	private static FaqController faqController = new FaqController();
 	private static TutorAppointmentController tutorAppointmentController = new TutorAppointmentController();
 	private static TeacherAddTutorController teacherAddTutorController = new TeacherAddTutorController();
+
+	private static ProfessorReviewController professorReviewController = new ProfessorReviewController();
+	private static EditUserController edituserController = new EditUserController();
+	private static UnauthorizedController unauthorizedController = new UnauthorizedController();
+	private static EditAnnouncementController editannouncementController = new EditAnnouncementController();
+
 
 	// match up paths
 	public static String DOMAIN = "localhost:3000";
@@ -98,13 +104,28 @@ public class Application {
 	public static String ALLUSERS_PATH = "/allusers";
 	public static String TEST_PATH = "/test";
 	public static String TUTOR_PATH = "/tutor";
-	public static String PROFESSOR_PATH = "/professor";
-	public static String REVIEWPROFESSOR_PATH = "/reviewprofessor";
+	public static String PROFESSOR_PATH = "/professor/:professor_id/overview";
+	public static String REVIEWPROFESSOR_PATH = "/reviewprofessor/:course_id/review";
 	public static String ADDTUTOR_PATH = "/addtutor";
 	public static String ADDPROFESSOR_PATH = "/addprofessor";
+
 	public static String FAQ_PATH = "/faq";
 	public static String TUTORAPPOINTMENT_PATH = "/tutorappointment";
 	public static String TEACHERADDTUTOR_PATH = "/teacheraddtutor";
+
+	public static String NOTLOGGEDIN_PATH = "/notloggedinerror";
+	public static String AUTHORIZATIONERROR_PATH = "/authorizationerror";
+	public static String EDITUSER_PATH = "/user/:id/edit";
+	public static String DELETEUSER_PATH = "/deleteuser/:id";
+	public static String EDITANNOUNCEMENT_PATH = "/announcement/:id/edit";
+	public static String DELETEANNOUNCEMENT_PATH = "/deleteannouncement/:id";
+	public static String ANNOUNCEMENTS_PATH = "/announcement";
+	public static String SORTBYLASTNAME_PATH = "/sortbylastname";
+	public static String MASSEDITCONFIRMED_PATH = "/masseditconfirmed";
+	public static String MASSEDITACTIVE_PATH = "/masseditactive";
+	public static String MASSEDITYEAR_PATH = "/massedityear";
+	public static String MASSEDITROLE_PATH = "/masseditrole";
+
 
 	public static void main(String[] args) throws Exception {
 
@@ -147,7 +168,7 @@ public class Application {
 			model.put("errors", exception.getMessage());
 			//
 			response.status(401);
-			response.body(exception.getMessage());
+			response.redirect(AUTHORIZATIONERROR_PATH);
 		});
 
 		exception(Exception.class, (exception, request, response) -> {
@@ -159,18 +180,54 @@ public class Application {
 		
 		get(FAQ_PATH, (req, res) -> faqController.showFaqPage(req, res), new HandlebarsTemplateEngine());
 
+		get(AUTHORIZATIONERROR_PATH, (req, res) -> unauthorizedController.showNotAuthorizedc(req, res),
+				new HandlebarsTemplateEngine());
+
+		get(NOTLOGGEDIN_PATH, (req, res) -> unauthorizedController.showNotLoggedIn(req, res),
+				new HandlebarsTemplateEngine());
+
+		get(EDITUSER_PATH, (req, res) -> edituserController.showEditUserPage(req, res), new HandlebarsTemplateEngine());
+
+		get(EDITANNOUNCEMENT_PATH, (req, res) -> editannouncementController.showEditAnnouncementPage(req, res),
+				new HandlebarsTemplateEngine());
+
+		post(EDITANNOUNCEMENT_PATH, (req, res) -> editannouncementController.updateAnnouncement(req, res));
+
+		post(EDITUSER_PATH, (req, res) -> edituserController.updateUser(req, res));
+
 		get(TUTOR_PATH, (req, res) -> tutorController.showTutorPage(req, res), new HandlebarsTemplateEngine());
 
 		get(PROFESSOR_PATH, (req, res) -> professorController.showProfessorPage(req, res),
 				new HandlebarsTemplateEngine());
-		get(REVIEWPROFESSOR_PATH, (req, res) -> professorController.showReviewProfessorPage(req, res),
+
+		put(PROFESSOR_PATH, (req, res) -> professorController.display(req, res));
+
+		post(MASSEDITCONFIRMED_PATH, (req, res) -> edituserController.massEditConfirmed(req, res));
+		post(MASSEDITACTIVE_PATH, (req, res) -> edituserController.massEditActive(req, res));
+		post(MASSEDITYEAR_PATH, (req, res) -> edituserController.massEditYear(req, res));
+		post(MASSEDITROLE_PATH, (req, res) -> edituserController.massEditRole(req, res));
+
+		post(DELETEUSER_PATH, (req, res) -> edituserController.deleteUser(req, res));
+
+		post(DELETEANNOUNCEMENT_PATH, (req, res) -> editannouncementController.deleteAnnouncement(req, res));
+
+		get(REVIEWPROFESSOR_PATH, (req, res) -> professorReviewController.showReviewProfessorPage(req, res),
 				new HandlebarsTemplateEngine());
+		post(REVIEWPROFESSOR_PATH, (req, res) -> professorReviewController.reviewProfessor(req, res));
+
+		put(REVIEWPROFESSOR_PATH, (req, res) -> professorReviewController.passCourse(req, res));
 
 		get(TEACHER_PATH, (req, res) -> teacherController.showTeacherPage(req, res), new HandlebarsTemplateEngine());
 
 		get(DEPARTMENTS_PATH, (req, res) -> departmentsController.showDepartmentsPage(req, res),
 				new HandlebarsTemplateEngine());
 		get(TUTORS_PATH, (req, res) -> tutorsController.showTutorsPage(req, res), new HandlebarsTemplateEngine());
+
+		get(ANNOUNCEMENTS_PATH, (req, res) -> admindashController.showEditAnnouncements(req, res),
+				new HandlebarsTemplateEngine());
+		post(ANNOUNCEMENTS_PATH, (req, res) -> admindashController.addAnnouncement(req, res));
+
+		post(SORTBYLASTNAME_PATH, (req, res) -> admindashController.sortByLastName(req, res));
 
 		get(HOME_PATH, (req, res) -> homeController.showHomePage(req, res), new HandlebarsTemplateEngine());
 

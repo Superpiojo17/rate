@@ -31,12 +31,12 @@
 			<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
-					<li><a href="/">Home</a></li>
+					<li><a href="/studentdashboard">Home</a></li>
 					<li><a href="/register">My Account</a></li>
-					<li><a href="/aboutus">View Apointments</a></li>
-					<li><a href="/aboutus">View Reviews</a></li>
+					<li><a href="/studentdashboard">View Apointments</a></li>
+					<li><a href="/studentdashboard">View Reviews</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
-					<li><a href="/allusers">Manage Users</a></li>
+					<li><a href="/deactivation">De-Activate</a></li>
 					<li><a href="/login">Log Out</a></li>
 					
 				</ul>
@@ -69,18 +69,12 @@
 										</tr>
 									</thead>
 									<tbody>
+									{{#each announcements}}
 										<tr>
-											<td>2/09/17</td>
-											<td>Website under maintenance</td>
+											<td>{{date}}</td>
+											<td>{{announcement_content}}</td>
 										</tr>
-										<tr>
-											<td>2/12/17</td>
-											<td>Chance wins grammy</td>
-										</tr>
-										<tr>
-											<td>5/17/17</td>
-											<td>Freedom</td>
-										</tr>
+										{{/each}}
 									</tbody>
 									<tfoot>
 										<tr>
@@ -95,7 +89,10 @@
 						</section>
 							<div class="centercol"> 
 							&ensp;
-							<h2> Welcome {{current_user.first_name}} </h2>
+							<h2> Welcome {{current_user.first_name}}</h2> 
+							  <h6> You are logged in as a student</h6>
+							
+							&ensp;
 							
   <p>Click on the headings below to view your relevant information.</p>
   <div class="panel-group" id="accordion">
@@ -119,6 +116,7 @@
         <div class="panel-body">You have not added any classes to your profile. Click on My Classes on the side menu to add your courses!</div>
       </div>
     </div>
+    
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -129,6 +127,42 @@
         <div class="panel-body">You have not left any recent reviews. Search for a teacher to leave some quality feedback!.</div>
       </div>
     </div>
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Courses To Review</a>
+        </h4>
+      </div>
+      <div id="collapse4" class="panel-collapse collapse"> 	
+      	<div class="table-wrapper">
+								<table class="alt">
+									<thead>
+										<tr>
+											<th><br>Professor Name</th>
+											<th><br>Course</th>
+											<th><br>Semester</th>
+											<th><br>Year</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+									{{#each courses}}
+										<tr>
+											<td>{{professor_first_name}} {{professor_last_name}}</td>
+											<td><a href="/reviewprofessor/{{course_id}}/review">{{course_name}}</a></td>
+											<td>{{semester}}</td>
+											<td>{{year}}</td>
+										</tr>
+									{{/each}}
+									</tbody>
+									<tfoot>
+									</tfoot>
+								</table>
+							</div> 
+      </div>
+    </div>
+    
   </div> 
 </div>
 		

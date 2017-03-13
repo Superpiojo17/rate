@@ -24,19 +24,20 @@
 	<body>
 
 		<!-- Header -->
-			<header id="header">
+			<header id="facultyheader">
 				<h1>Faculty Dashboard</h1>
 			</header>
 
 			<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
-					<li><a href="/">Home</a></li>
+					<li><a href="/facultydashboard">Home</a></li>
 					<li><a href="/register">My Account</a></li>
 					<li><a href="/aboutus">View Apointments</a></li>
 					<li><a href="/aboutus">View Reviews</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
 					<li><a href="/allusers">Manage Users</a></li>
+					<li><a href="/deactivation">De-Activate</a></li>
 					<li><a href="/login">Log Out</a></li>
 					
 				</ul>
@@ -69,18 +70,12 @@
 										</tr>
 									</thead>
 									<tbody>
+									{{#each announcements}}
 										<tr>
-											<td>2/09/17</td>
-											<td>Website under maintenance</td>
+											<td>{{date}}</td>
+											<td>{{announcement_content}}</td>
 										</tr>
-										<tr>
-											<td>2/12/17</td>
-											<td>Chance wins grammy</td>
-										</tr>
-										<tr>
-											<td>5/17/17</td>
-											<td>Freedom</td>
-										</tr>
+										{{/each}}
 									</tbody>
 									<tfoot>
 										<tr>
@@ -95,7 +90,9 @@
 						</section>
 							<div class="centercol"> 
 							&ensp;
-							<h2> Welcome {{current_user.first_name}}</h2>
+							<h2> Welcome {{current_user.first_name}}</h2> 
+							<h6> You are logged in as a Faculty member</h6>
+							&ensp;
 							
   <p>Click on the headings below to view your relevant information.</p>
   <div class="panel-group" id="accordion">

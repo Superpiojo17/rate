@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.ben.rate_review.encryption.SecurePassword;
+import edu.ben.rate_review.models.MassEditForm;
 import edu.ben.rate_review.models.RecoveringUser;
 import edu.ben.rate_review.models.User;
+import edu.ben.rate_review.models.UserForm;
 
 /**
  * UserDao is a dao that will connect and provide interaction to the database
@@ -52,6 +54,12 @@ public class UserDao implements Dao<User> {
 		tmp.setFirst_name(rs.getString("first_name"));
 		tmp.setLast_name(rs.getString("last_name"));
 		tmp.setRole_string(rs.getString("role_id"));
+		tmp.setActive_icon(rs.getString("active"));
+		tmp.setConfirmed_icon(rs.getString("confirmed"));
+		tmp.setSchool_year(rs.getInt("school_year"));
+		tmp.setMajor(rs.getString("major"));
+		tmp.setYear_string(rs.getString("school_year"));
+
 		return tmp;
 	}
 
@@ -252,13 +260,37 @@ public class UserDao implements Dao<User> {
 
 	}
 
+	public User findById(long id) {
+		// Declare SQL template query
+		String sql = "SELECT * FROM " + USER_TABLE + " WHERE user_id = ? LIMIT 1";
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement q = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			q.setLong(1, id);
+
+			// Run your shit
+			ResultSet rs = q.executeQuery();
+			if (rs.next()) {
+				return mapRow(rs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// If you don't find a model
+		return null;
+
+	}
+
 	/**
 	 * 
 	 * @return all users from the database.
 	 */
 
 	public List<User> all() {
-		final String SELECT = "SELECT * FROM " + USER_TABLE;
+		final String SELECT = "SELECT * FROM " + USER_TABLE + " ORDER BY last_name";
+
 		List<User> users = null;
 		try {
 			PreparedStatement ps = conn.prepareStatement(SELECT);
@@ -311,6 +343,70 @@ public class UserDao implements Dao<User> {
 	}
 
 	/**
+	 * Removes recovery requests that have expired
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public String deletUser(long id) {
+
+		String sql = "DELETE FROM " + USER_TABLE + " WHERE user_id = ? LIMIT 1";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setLong(1, id);
+			// Runs query
+			ps.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return " ";
+	}
+
+	/**
+	 * 
+	 * @return all users from the database.
+	 */
+
+	public List<User> sortbyRole() {
+		final String SELECT = "SELECT * FROM " + USER_TABLE + " ORDER BY role_id";
+
+		List<User> users = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			users = new ArrayList<User>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					users.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return users;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+
+	public String sortByLastName() {
+
+		String sql = "SELECT * FROM users ORDER BY last_name";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Runs query
+			ps.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return " ";
+	}
+
+	/**
 	 * Called when user has successfully recovered their account, or they
 	 * request a new temporary password before using their previously requested
 	 * password before it has expired.
@@ -352,6 +448,133 @@ public class UserDao implements Dao<User> {
 			// Fill in the ? with the parameters you want
 			ps.setString(1, user.getEncryptedPassword());
 			ps.setString(2, user.getEmail());
+			// Runs query
+			ps.execute();
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+	}
+
+	/**
+	 * Updates user's password to their new password
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public MassEditForm massEditConfirmed(MassEditForm massedit) {
+		String sql = "UPDATE " + USER_TABLE + " SET confirmed = ? WHERE confirmed = ?";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setInt(1, massedit.getAfter());
+			ps.setInt(2, massedit.getBefore());
+			// Runs query
+			ps.execute();
+			return massedit;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+	}
+	
+	/**
+	 * Updates user's password to their new password
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public MassEditForm massEditRole(MassEditForm massedit) {
+		String sql = "UPDATE " + USER_TABLE + " SET role_id = ? WHERE role_id = ?";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setInt(1, massedit.getAfter());
+			ps.setInt(2, massedit.getBefore());
+			// Runs query
+			ps.execute();
+			return massedit;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+	}
+	
+	
+	public MassEditForm massEditYear(MassEditForm massedit) {
+		String sql = "UPDATE " + USER_TABLE + " SET school_year = ? WHERE school_year = ?";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setInt(1, massedit.getAfter());
+			ps.setInt(2, massedit.getBefore());
+			// Runs query
+			ps.execute();
+			return massedit;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+	}
+	
+
+	public MassEditForm massEditActive(MassEditForm massedit) {
+		String sql = "UPDATE " + USER_TABLE + " SET active = ? WHERE active = ?";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setInt(1, massedit.getAfter());
+			ps.setInt(2, massedit.getBefore());
+			// Runs query
+			ps.execute();
+			return massedit;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+	}
+
+
+	/**
+	 * Updates user's password to their new password
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public UserForm updateUser(UserForm user) {
+		String sql = "UPDATE " + USER_TABLE
+				+ " SET first_name = ?, last_name = ?, email = ?, role_id = ?, school_year = ?, major = ? WHERE user_id = ? LIMIT 1";
+
+		try {
+			System.out.println("HERE");
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setString(1, user.getFirst_name());
+			System.out.println(user.getFirst_name());
+			ps.setString(2, user.getLast_name());
+			ps.setString(3, user.getEmail());
+			ps.setInt(4, user.getRole());
+			ps.setInt(5, user.getSchool_year());
+			ps.setString(6, user.getMajor());
+
+			ps.setLong(7, user.getId());
+			System.out.println(user.getId());
+
 			// Runs query
 			ps.execute();
 			return user;

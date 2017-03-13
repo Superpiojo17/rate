@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>*Tutor's name*</title>
+		<title></title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -23,26 +23,22 @@
 			</header>
 
 			<!-- Nav -->
-			<nav id="nav">
+			<nav id="nav" class="visible">
 				<ul class="links">
-					<li><a href="/">Home</a></li>
+				<li><a href="/">Home</a></li>
 					<li><a href="/login">Log In</a></li>
 					<li><a href="/register">Register</a></li>
-					<li><a href="/departments">Departments</a></li>
-					<li><a href="/tutors">Tutors</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
 					<li><a href="/aboutus">About Us</a></li>
-					<li><a href="/teacher">Teacher</a></li>
 					<li><a href="/accountrecovery">Forgot Password?</a></li>
 					
 				</ul>
 			</nav>
-			
 		<!-- Main -->
 			<section id="main" class="wrapper">
 				<div class="container">
 					<header class="major special">
-						<h2>Tutor's Name</h2>
+						<h2 id="lastname"></h2>
 					</header>
 
 					<!-- Text -->
@@ -51,13 +47,13 @@
 							<p>Tutors in the the following classes</p>
 							<ul>
 								<li>
-									1.
+									<p id="class"></p>
 								</li>
 								<li>
-									2.
+									<p id="class2"></p>
 								</li>
 								<li>
-									3.
+									<p id="class3"></p>
 								</li>
 							</ul>
 
@@ -161,6 +157,31 @@
 			</footer>
 
 		<!-- Scripts -->
+			<script>
+			window.onload = function (){
+				function ParseURLParameter(Parameter)
+				{
+					var FullURL = window.location.search.substring(1);
+					var ParametersArray = FullURL.split('&');
+					for (var i = 0; i < ParametersArray.length; i++)
+					{
+						var CurrentParameter = ParametersArray[i].split('=');
+						if(CurrentParameter[0] == Parameter)
+						{
+							return CurrentParameter[1];
+						}
+					}
+				}
+				
+				var lastname = ParseURLParameter('lastname');
+				var classname = ParseURLParameter('class');
+				
+				
+				document.getElementById("lastname").innerHTML = lastname;
+				document.getElementById("class").innerHTML = classname;
+				
+				}
+		</script>
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>

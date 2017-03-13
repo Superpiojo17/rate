@@ -24,19 +24,21 @@
 	<body>
 
 		<!-- Header -->
-			<header id="header">
+			<header id="adminheader">
 				<h1>Administrator Dashboard</h1>
 			</header>
 
 			<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
-					<li><a href="/">Home</a></li>
+					<li><a href="/admindashboard">Home</a></li>
 					<li><a href="/register">My Account</a></li>
 					<li><a href="/aboutus">View Apointments</a></li>
 					<li><a href="/aboutus">View Reviews</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
 					<li><a href="/allusers">Manage Users</a></li>
+					<li><a href="/announcement">Announcements</a></li>
+					<li><a href="/deactivation">De-Activate</a></li>
 					<li><a href="/login">Log Out</a></li>
 					
 				</ul>
@@ -47,7 +49,7 @@
 </div>
  <p> </p>
 
-   
+
   
 <section id="main" class="wrapper">
 			<div class="leftcol"> 
@@ -61,6 +63,7 @@
   <div id="announcement" class="collapse">
   &nbsp;
   
+  
 							<div class="table-wrapper">
 								<table class="alt">
 									<thead>
@@ -70,18 +73,12 @@
 										</tr>
 									</thead>
 									<tbody>
+									{{#each announcements}}
 										<tr>
-											<td>2/09/17</td>
-											<td>Website under maintenance</td>
+											<td>{{date}}</td>
+											<td>{{announcement_content}}</td>
 										</tr>
-										<tr>
-											<td>2/12/17</td>
-											<td>Chance wins grammy</td>
-										</tr>
-										<tr>
-											<td>5/17/17</td>
-											<td>Freedom</td>
-										</tr>
+										{{/each}}
 									</tbody>
 									<tfoot>
 										<tr>
@@ -102,39 +99,178 @@
 							
 							
   <p>View all the registered users, as well as their information.</p>
-							<div class="table-wrapper">
-								<table class="alt">
+  &ensp;
+  
+  <a href="#massEdit" class="btn btn-info" data-toggle="collapse">Edit Multiple Users</a> 
+  &nbsp;&nbsp;
+  <div id="massEdit" class="collapse">
+  
+								<table class="table table-borderless">
 									<thead>
 										<tr>
-											<th>Name</th>
-											<th>Email</th>
-											<th>Role</th>
-											<th>Confirmation</th>
-											<th>Status</th>
+											<th></th>
+											<th></th>
+											<th></th>
+											<th></th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+										<form action="massedityear" method="post">
+											<td align="center" ><h4>Change users that are</h4></td>
+											<td align="center" ><div class="select-wrapper">
+											<select name="yearbefore" id="yearbefore">
+												<option value="1">Freshman</option>
+												<option value="2">Sophomore</option>
+												<option value="3">Junior</option>
+												<option value="4">Senior</option>
+											</select>
+											
+										</div></td>
+											<td align="center"><h4>to</h4></td>
+											<td align="center"><div class="select-wrapper">
+											<select name="yearafter" id="yearafter">
+												<option value="2">Sophomore</option>
+												<option value="3">Junior</option>
+												<option value="4">Senior</option>
+												<option value="1">Freshman</option>
+											</select>
+										</div></td>
+											<td align="center">
+												<button type="submit" class="btn btn-info btn-sm" >Change </button>
+												</form>
+											</td>
+										</tr>
+										<tr>
+										<form action="masseditrole" method="post">
+										<td><h4>Change users that are</h4></td>
+											<td><div class="select-wrapper">
+											<select name="rolebefore" id="rolebefore">
+												<option value="2">Faculty</option>
+												<option value="3">Tutor</option>
+												<option value="4">Student</option>
+											</select>
+										</div></td>
+											<td><h4>to</h4></td>
+											<td><div class="select-wrapper">
+											<select name="roleafter" id="roleafter">
+												<option value="1">Admin</option>
+												<option value="2">Faculty</option>
+												<option value="3">Tutor</option>
+												<option value="4">Student</option>
+											</select>
+										</div></td>
+											<td>
+												<button type="submit" class="btn btn-info btn-sm" >Change </button>
+												</form>
+											</td>
+										</tr>
+										<tr>
+										<form action="masseditactive" method="post">
+											<td><h4>Change users that are</h4></td>
+											<td><div class="select-wrapper">
+											<select name="activebefore" id="activebefore">
+												<option value="1">Active</option>
+												<option value="0">Unactive</option>
+											</select>
+										</div></td>
+											<td><h4>to</h4></td>
+											<td><div class="select-wrapper">
+											<select name="activeafter" id="activeafter">
+												<option value="0">Unactive</option>
+												<option value="1">Active</option>
+											</select>
+										</div></td>
+											<td>
+												<button type="submit" class="btn btn-info btn-sm" >Change </button>
+												</form>
+											</td>
+										</tr>
+										<tr>
+										<form action="masseditconfirmed" method="post">
+											<td class = "shrink"><h4>Change emails that are</h4></td>
+											<td><div class="select-wrapper">
+											<select name="confirmedbefore" id="confirmedbefore">
+												<option value="1">Confirmed</option>
+												<option value="0">Awaiting</option>
+											</select>
+										</div></td>
+											<td class = "shrink"><h4>to</h4></td>
+											<td><div class="select-wrapper">
+											<select name="confirmedafter" id="confirmedafter">
+												<option value="0">Awaiting</option>
+												<option value="1">Confirmed</option>
+											</select>
+										</div></td>
+											<td class = "shrink">
+												<button type="submit" class="btn btn-info btn-sm" >Change </button>
+												</form>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+  
+			
+		
+			
+  </div>
+  
+  
+  
+ 
+							<div class="table-wrapper">
+							&nbsp;&nbsp;
+								<table id = "indextable" class="indextable alt">
+									<thead>
+										<tr>
+											<th></th>
+											
+											
+											<th class=" shrink text-left"><a href="javascript:SortTable(1,'T');" class="btn btn-info btn-sm" >Name</button></a></th>
+										<th class="shrink text-left"><a href="javascript:SortTable(2,'T');" class="btn btn-info btn-sm" >Email</button></a></th>
+<th class="shrink text-left"><a href="javascript:SortTable(3,'T');" class="btn btn-info btn-sm" >Role</button></a></th>
+<th class="text-left"><a href="javascript:SortTable(4,'T');" class="btn btn-info btn-sm" >Major</button></a></th>
+<th class="text-left"><a href="javascript:SortTable(5,'T');" class="btn btn-info btn-sm" >Year</button></a></th>
+<th class="text-left"><a  class="btn btn-info btn-sm" >Email <br> Confirmed</button></a></th>
+<th class="text-left"><a class="btn btn-info btn-sm" >Account<br>Status</button></a></th>
+											
 										</tr>
 									</thead>
 									<tbody>
 									{{#each users}}
 										<tr>
-											<td>{{first_name}} {{last_name}}</td>
-											<td>{{email}}</td>
-											<td>{{role_string}}</td>
-											<td>{{confirmed}}</td>
-											<td>{{active}}</td>
+											
+											
+											<td class="shrink" align="center"><a href="/user/{{id}}/edit"  class="btn btn-info">Edit<span class="glyphicon glyphicon-pencil"></span></a></td>
+											<td class="shrink">{{last_name}} , {{first_name}}</td>
+											<td class="shrink"><a href= "mailto:{{email}}?Subject=Rate%20and %20Review"><span class="glyphicon glyphicon-envelope"></span> {{email}}</a></td>
+											<td class="shrink">{{role_string}}</td>
+											<td class="shrink">{{major}}</td>
+											<td class="shrink">{{year_string}}</td>
+											<td class="shrink" align="center"><span class="{{confirmed_icon}}"</span></td>
+											<td class="shrink" align="center"><span class="{{active_icon}}"</span></td>
+											
+																			
+										
+											
 										</tr>
 									{{/each}}
 									</tbody>
 									<tfoot>
 									</tfoot>
 								</table>
+								
 							</div>
+							 
 						</section>
+						
 						
 						<h6> Register multiple users at a time </h6>
 						<a href="#massRegistration" class="btn btn-info" data-toggle="collapse">Mass Registration</a> 
   <div id="massRegistration" class="collapse">
   &nbsp;
-  
+  &ensp;
 			<p> Upload a .csv file to register all the users </p>				
 			<a href="#" class="button icon fa-download">Upload File</a>
 			<br></br>
@@ -167,13 +303,15 @@
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
+			<script type="text/javascript" src="assets/js/sortColumns.js"  ></script>
 			<script>
 
 // d = new Date();
 
 
-</script>
 
+
+</script>
 <script type="text/javascript">
 <!--
 
@@ -242,11 +380,10 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
 
 
 </script>
-<script>
-var curr_role = {{role}};
 
-document.getElementById("role").innerHTML = curr_role;
-</script>
+
+
+
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main2.js"></script>
 
