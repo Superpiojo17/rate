@@ -124,7 +124,41 @@
         </h4>
       </div>
       <div id="collapse3" class="panel-collapse collapse">
-        <div class="panel-body">You have not left any recent reviews. Search for a teacher to leave some quality feedback!.</div>
+    {{#if no_courses_reviewed}}You do not have any recent reviews.{{/if}}
+	{{#unless no_courses_reviewed}}
+        <div class="table-wrapper">
+								<table class="alt">
+									<thead>
+										<tr>
+											<th></th>
+											<th><br>Professor Name</th>
+											<th><br>Course</th>
+											<th><br>Semester</th>
+											<th><br>Year</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+									{{#each courses_reviewed}}
+										<tr>
+											<td class="shrink" align="center">
+											
+											<!-- <a href="/reviewprofessor/{{course_id}}/review" class="btn btn-danger"><span class="glyphicon glyphicon-remove"> </button></a> -->
+											<a href="/reviewprofessor/{{course_id}}/review" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span></a>
+												
+											</td>
+											<td>{{professor_first_name}} {{professor_last_name}}</td>
+											<td>{{course_name}}</td>
+											<td>{{semester}}</td>
+											<td>{{year}}</td>
+										</tr>
+									{{/each}}
+									</tbody>
+									<tfoot>
+									</tfoot>
+								</table>
+							</div> 
+							{{/unless}}
       </div>
     </div>
     
@@ -134,7 +168,9 @@
           <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Courses To Review</a>
         </h4>
       </div>
-      <div id="collapse4" class="panel-collapse collapse"> 	
+      <div id="collapse4" class="panel-collapse collapse"> 
+      	{{#if no_courses_to_review}}You have no more courses to review.{{/if}}
+		{{#unless no_courses_to_review}}	
       	<div class="table-wrapper">
 								<table class="alt">
 									<thead>
@@ -147,7 +183,7 @@
 										</tr>
 									</thead>
 									<tbody>
-									{{#each courses}}
+									{{#each courses_not_reviewed}}
 										<tr>
 											<td>{{professor_first_name}} {{professor_last_name}}</td>
 											<td><a href="/reviewprofessor/{{course_id}}/review">{{course_name}}</a></td>
@@ -160,6 +196,7 @@
 									</tfoot>
 								</table>
 							</div> 
+							{{/unless}}
       </div>
     </div>
     

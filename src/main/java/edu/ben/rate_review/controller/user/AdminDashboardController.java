@@ -26,7 +26,7 @@ public class AdminDashboardController {
 
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
-		AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+//		AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
 
 		model.put("current_user", u);
 
@@ -119,7 +119,6 @@ public class AdminDashboardController {
 		DaoManager dao = DaoManager.getInstance();
 		UserDao ud = dao.getUserDao();
 		ud.sortByLastName();
-		System.out.println("sorted bruh");
 
 		res.redirect("/allusers");
 		return "";

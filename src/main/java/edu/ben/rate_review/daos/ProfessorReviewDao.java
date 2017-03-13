@@ -37,9 +37,9 @@ public class ProfessorReviewDao {
 	 * 
 	 * @return
 	 */
-	public List<CoursesToReview> allStudentCourses(User user) {
+	public List<CoursesToReview> allStudentCoursesNotReviewed(User user) {
 		final String SELECT = "SELECT * FROM " + COURSES_TABLE + " WHERE users_user_id = " + user.getId()
-				+ " AND semester = 'Spring' AND year = 2017";
+				+ " AND course_reviewed = 0 AND semester = 'Spring' AND year = 2017";
 		List<CoursesToReview> courses = null;
 		try {
 			PreparedStatement ps = conn.prepareStatement(SELECT);
@@ -57,6 +57,54 @@ public class ProfessorReviewDao {
 			e.printStackTrace();
 		}
 		return courses;
+	}
+
+	/**
+	 * Lists all courses the student has reviewed for current semester
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public List<CoursesToReview> allStudentCoursesReviewed(User user) {
+		final String SELECT = "SELECT * FROM " + COURSES_TABLE + " WHERE users_user_id = " + user.getId()
+				+ " AND course_reviewed = 1 AND semester = 'Spring' AND year = 2017 AND disable_edit = 0";
+		List<CoursesToReview> courses = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			courses = new ArrayList<CoursesToReview>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					courses.add(courseMapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return courses;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return courses;
+	}
+
+	/**
+	 * Once a review is made, the course is marked reviewed
+	 * 
+	 * @param review
+	 */
+	public void setCourseReviewed(ProfessorReview review) {
+		// Declare SQL template query
+		String sql = "UPDATE " + COURSES_TABLE + " SET course_reviewed = 1 WHERE course_id = ? LIMIT 1";
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setLong(1, review.getCourse_id());
+			// Runs query
+			ps.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -150,7 +198,7 @@ public class ProfessorReviewDao {
 				ps.setInt(18, review.getRate_career_development());
 				ps.setLong(19, review.getCourse_id());
 				ps.setString(20, review.getProfessor_email());
-				System.out.println(review.getProfessor_email());
+
 				ps.executeUpdate();
 
 			} catch (SQLException e) {
@@ -259,17 +307,57 @@ public class ProfessorReviewDao {
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
-
 			ps.setLong(1, review.getCourse_id());
-
 			// Runs query
 			ps.execute();
+			// marks course not reviewed
+			setCourseNotReviewed(review);
 
 			return review;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	/**
+	 * Upon deleting a review, the course is marked as "not reviewed"
+	 * 
+	 * @param review
+	 */
+	public void setCourseNotReviewed(ProfessorReview review) {
+		// Declare SQL template query
+		String sql = "UPDATE " + COURSES_TABLE + " SET course_reviewed = 0 WHERE course_id = ? LIMIT 1";
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setLong(1, review.getCourse_id());
+			// Runs query
+			ps.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Flags a potentially offensive comment for admin to see
+	 * 
+	 * @param review
+	 */
+	public void setCommentFlagged(ProfessorReview review) {
+		// Declare SQL template query
+		String sql = "UPDATE " + REVIEW_PROFESSOR_TABLE + " SET comment_flagged = 1 WHERE course_id = ? LIMIT 1";
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setLong(1, review.getCourse_id());
+			// Runs query
+			ps.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

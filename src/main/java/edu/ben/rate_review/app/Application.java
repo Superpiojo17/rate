@@ -33,6 +33,7 @@ import edu.ben.rate_review.controller.session.SessionsController;
 import edu.ben.rate_review.controller.user.AccountRecoveryController;
 import edu.ben.rate_review.controller.user.AdminDashboardController;
 import edu.ben.rate_review.controller.user.EditAnnouncementController;
+import edu.ben.rate_review.controller.user.EditTutorController;
 import edu.ben.rate_review.controller.user.EditUserController;
 import edu.ben.rate_review.controller.user.FacultyDashboardController;
 import edu.ben.rate_review.controller.user.StudentDashboardController;
@@ -77,6 +78,7 @@ public class Application {
 	private static EditUserController edituserController = new EditUserController();
 	private static UnauthorizedController unauthorizedController = new UnauthorizedController();
 	private static EditAnnouncementController editannouncementController = new EditAnnouncementController();
+	private static EditTutorController edittutorController = new EditTutorController();
 
 
 	// match up paths
@@ -106,7 +108,7 @@ public class Application {
 	public static String TUTOR_PATH = "/tutor";
 	public static String PROFESSOR_PATH = "/professor/:professor_id/overview";
 	public static String REVIEWPROFESSOR_PATH = "/reviewprofessor/:course_id/review";
-	public static String ADDTUTOR_PATH = "/addtutor";
+	public static String SELECTTUTOR_PATH = "/selecttutors";
 	public static String ADDPROFESSOR_PATH = "/addprofessor";
 
 	public static String FAQ_PATH = "/faq";
@@ -125,6 +127,12 @@ public class Application {
 	public static String MASSEDITACTIVE_PATH = "/masseditactive";
 	public static String MASSEDITYEAR_PATH = "/massedityear";
 	public static String MASSEDITROLE_PATH = "/masseditrole";
+	public static String ADDANNOUNCEMENT_PATH = "/addannouncement";
+	public static String ALLTUTORS_PATH = "/alltutors/:id";
+	public static String EDITTUTORS_PATH = "/tutor/:id/edit";
+	public static String DELETETUTOR_PATH = "/deletetutor/:id";
+	public static String ADDTUTOR_PATH	 = "/tutor/:id/add";
+	public static String ALLSTUDENTS_PATH = "/selectstudents";
 
 
 	public static void main(String[] args) throws Exception {
@@ -174,11 +182,31 @@ public class Application {
 		exception(Exception.class, (exception, request, response) -> {
 			exception.printStackTrace();
 		});
-		
+
 //		get(TEACHERADDTUTOR_PATH, (req, res) -> teacherAddTutorController.showTeacherAddTutorPage(req, res), new HandlebarsTemplateEngine());
 //		get(TUTORAPPOINTMENT_PATH, (req, res) -> tutorAppointmentController.showTutorAppointmentPage(req, res), new HandlebarsTemplateEngine());
 //		
 		get(FAQ_PATH, (req, res) -> faqController.showFaqPage(req, res), new HandlebarsTemplateEngine());
+
+		get(ALLSTUDENTS_PATH, (req, res) -> facultydashController.showSelectStudentsPage(req, res),
+				new HandlebarsTemplateEngine());
+		
+		get(ADDTUTOR_PATH, (req, res) -> facultydashController.showAddTutorPage(req, res),
+				new HandlebarsTemplateEngine());
+		
+		
+		post(ADDTUTOR_PATH, (req,res) -> facultydashController.addTutor(req, res));
+
+		get(EDITTUTORS_PATH, (req, res) -> edittutorController.showEditTutorPage(req, res),
+				new HandlebarsTemplateEngine());
+
+		post(EDITTUTORS_PATH, (req, res) -> edittutorController.updateTutor(req, res));
+
+		post(DELETETUTOR_PATH, (req, res) -> edittutorController.deleteTutor(req, res));
+
+		get(ALLTUTORS_PATH, (req, res) -> facultydashController.showAllTutorsPage(req, res),
+				new HandlebarsTemplateEngine());
+
 
 		get(AUTHORIZATIONERROR_PATH, (req, res) -> unauthorizedController.showNotAuthorizedc(req, res),
 				new HandlebarsTemplateEngine());
@@ -187,6 +215,11 @@ public class Application {
 				new HandlebarsTemplateEngine());
 
 		get(EDITUSER_PATH, (req, res) -> edituserController.showEditUserPage(req, res), new HandlebarsTemplateEngine());
+
+		post(ADDANNOUNCEMENT_PATH, (req, res) -> editannouncementController.addAnnouncement(req, res));
+
+		get(ADDANNOUNCEMENT_PATH, (req, res) -> editannouncementController.showAddAnnouncementPage(req, res),
+				new HandlebarsTemplateEngine());
 
 		get(EDITANNOUNCEMENT_PATH, (req, res) -> editannouncementController.showEditAnnouncementPage(req, res),
 				new HandlebarsTemplateEngine());
@@ -199,6 +232,7 @@ public class Application {
 
 		get(PROFESSOR_PATH, (req, res) -> professorController.showProfessorPage(req, res),
 				new HandlebarsTemplateEngine());
+		post(PROFESSOR_PATH, (req, res) -> professorController.flag(req, res));
 
 		put(PROFESSOR_PATH, (req, res) -> professorController.display(req, res));
 
@@ -239,7 +273,9 @@ public class Application {
 		get(ALLUSERS_PATH, (req, res) -> admindashController.showAllUsersPage(req, res),
 				new HandlebarsTemplateEngine());
 
-		get(ADDTUTOR_PATH, (req, res) -> adminController.showAddTutorPage(req, res), new HandlebarsTemplateEngine());
+		get(SELECTTUTOR_PATH, (req, res) -> facultydashController.showSelectTutorsPage(req, res),
+				new HandlebarsTemplateEngine());
+
 		get(ADDPROFESSOR_PATH, (req, res) -> adminController.showAddProfessorPage(req, res),
 				new HandlebarsTemplateEngine());
 

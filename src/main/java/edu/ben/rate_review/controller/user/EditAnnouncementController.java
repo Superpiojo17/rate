@@ -44,7 +44,7 @@ public class EditAnnouncementController {
 
 		// create the form object, put it into request
 		model.put("announcement_form", new AnnouncementForm(a));
-		
+
 		DaoManager dao = DaoManager.getInstance();
 		AnnouncementDao ad = dao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
@@ -52,6 +52,25 @@ public class EditAnnouncementController {
 
 		// Render the page
 		return new ModelAndView(model, "users/editannouncement.hbs");
+	}
+
+	public ModelAndView showAddAnnouncementPage(Request req, Response res) throws AuthException {
+		HashMap<String, Object> model = new HashMap<>();
+		AnnouncementDao announcement = DaoManager.getInstance().getAnnouncementDao();
+		Session session = req.session();
+
+
+		// Authorize that the user can edit the user selected
+		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+
+
+		DaoManager dao = DaoManager.getInstance();
+		AnnouncementDao ad = dao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+
+		return new ModelAndView(model, "users/addannouncement.hbs");
+
 	}
 
 	public String updateAnnouncement(Request req, Response res) {
@@ -69,7 +88,6 @@ public class EditAnnouncementController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 
 		announcement.setAnnouncement_content(req.queryParams("message"));
 		announcement.setId(id);
@@ -80,6 +98,31 @@ public class EditAnnouncementController {
 
 		res.redirect(Application.ANNOUNCEMENTS_PATH);
 		return " ";
+
+	}
+	
+	public String addAnnouncement(Request req, Response res) {
+
+		AnnouncementDao announceDao = DaoManager.getInstance().getAnnouncementDao();
+		Announcement announcement = new Announcement();
+
+		SimpleDateFormat fromUser = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat myFormat = new SimpleDateFormat("MM/dd/yy");
+
+		try {
+			String formatteddate = myFormat.format(fromUser.parse(req.queryParams("date")));
+			announcement.setDate(formatteddate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		announcement.setAnnouncement_content(req.queryParams("message"));
+
+		announceDao.save(announcement);
+
+		res.redirect("/announcement");
+		return "";
 
 	}
 
@@ -94,5 +137,6 @@ public class EditAnnouncementController {
 		return " ";
 
 	}
+	
 
 }

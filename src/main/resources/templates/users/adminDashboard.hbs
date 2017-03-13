@@ -11,9 +11,13 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="assets/css/main.css" />
+		
+		
+		
+		
+		
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-		  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -37,7 +41,7 @@
 					<li><a href="/aboutus">View Apointments</a></li>
 					<li><a href="/aboutus">View Reviews</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
-					<li><a href="/allusers">Manage Users</a></li>
+					<li><a href="/allusers/">Manage Users</a></li>
 					<li><a href="/announcement">Announcements</a></li>
 					<li><a href="/deactivation">De-Activate</a></li>
 					<li><a href="/login">Log Out</a></li>
@@ -53,7 +57,7 @@
 
   
 <section id="main" class="wrapper">
-			<div class="leftcol"> 
+			<div class="leftcol leftcol-xs-12 leftcol-md-12"> 
 			
 			<!-- Button trigger modal -->
  <br>
@@ -75,7 +79,7 @@
 									{{#each announcements}}
 										<tr>
 											<td>{{date}}</td>
-											<td>{{announcement_content}}</td>
+											<td>{{{announcement_content}}}</td>
 										</tr>
 										{{/each}}
 									</tbody>

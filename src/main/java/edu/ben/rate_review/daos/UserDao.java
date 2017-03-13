@@ -309,6 +309,60 @@ public class UserDao implements Dao<User> {
 		}
 		return users;
 	}
+	
+	/**
+	 * 
+	 * @return all users from the database.
+	 */
+
+	public List<User> allTutorsByMajor(String Major) {
+		final String SELECT = "SELECT * FROM " + USER_TABLE + " WHERE major = '" + Major + "' AND role_id = 3";
+
+		List<User> users = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			users = new ArrayList<User>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					users.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return users;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+	
+	/**
+	 * 
+	 * @return all users from the database.
+	 */
+
+	public List<User> allStudentsByMajor(String Major) {
+		final String SELECT = "SELECT * FROM " + USER_TABLE + " WHERE major = '" + Major + "' AND role_id = 4";
+
+		List<User> users = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			users = new ArrayList<User>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					users.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return users;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
 
 	public User find(Long id) {
 		return null;
@@ -348,7 +402,7 @@ public class UserDao implements Dao<User> {
 	 * @param user
 	 * @return
 	 */
-	public String deletUser(long id) {
+	public String deleteUser(long id) {
 
 		String sql = "DELETE FROM " + USER_TABLE + " WHERE user_id = ? LIMIT 1";
 
@@ -448,6 +502,31 @@ public class UserDao implements Dao<User> {
 			// Fill in the ? with the parameters you want
 			ps.setString(1, user.getEncryptedPassword());
 			ps.setString(2, user.getEmail());
+			// Runs query
+			ps.execute();
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+	}
+	
+	/**
+	 * Updates user's password to their new password
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public User updateRole(User user, int role) {
+		String sql = "UPDATE " + USER_TABLE + " SET role_id = ? WHERE user_id = ? LIMIT 1";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setInt(1, role);
+			ps.setLong(2, user.getId());
 			// Runs query
 			ps.execute();
 			return user;

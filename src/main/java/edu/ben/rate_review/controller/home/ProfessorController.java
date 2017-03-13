@@ -38,11 +38,11 @@ public class ProfessorController {
 		AllRatingsModel ratingModel = new AllRatingsModel();
 
 		List<ProfessorReview> reviews = reviewDao.listCoursesByProfessorEmail(prof);
-		
+
 		// Testing new dao enhancements
-		//ProfessorReviewDaoTests.listCoursesByProfessorEmailTest();
-		//ProfessorReviewDaoTests.avgRateTest();
-		//ProfessorReviewDaoTests.allRatingsTest();
+		// ProfessorReviewDaoTests.listCoursesByProfessorEmailTest();
+		// ProfessorReviewDaoTests.avgRateTest();
+		// ProfessorReviewDaoTests.allRatingsTest();
 
 		double objectives = reviewDao.avgRate(prof, "rate_objectives");
 		double organized = reviewDao.avgRate(prof, "rate_organized");
@@ -152,8 +152,9 @@ public class ProfessorController {
 		model.put("courses", reviews);
 		model.put("prof_first_name", prof.getFirst_name());
 		model.put("prof_last_name", prof.getLast_name());
+		model.put("prof_id", prof.getId());
 		// model.put("course", course);
-		
+
 		DaoManager dao = DaoManager.getInstance();
 		AnnouncementDao ad = dao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
@@ -163,11 +164,41 @@ public class ProfessorController {
 		return new ModelAndView(model, "home/professor.hbs");
 	}
 
+	/**
+	 * Put route method
+	 * 
+	 * @param req
+	 * @param res
+	 * @return
+	 */
 	public ModelAndView display(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
 
 		model.put("course_id", req.params("course_id"));
 
 		return new ModelAndView(model, "/professor.hbs");
+	}
+
+	/**
+	 * Flags potentially offensive comment
+	 * 
+	 * @param req
+	 * @param res
+	 * @return
+	 */
+	public String flag(Request req, Response res) {
+		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
+
+		// grabs course id from review comment
+		String idString = req.queryParams("course_flagged");
+		long id = Long.parseLong(idString);
+
+		// sets the comment flagged in the database
+		ProfessorReview review = reviewDao.findReview(id);
+		reviewDao.setCommentFlagged(review);
+
+		// redirects back to same professor page
+		res.redirect("/professor/" + req.params("professor_id") + "/overview");
+		return "";
 	}
 }
