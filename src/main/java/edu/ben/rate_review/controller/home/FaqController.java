@@ -10,7 +10,7 @@ import spark.Session;
 
 public class FaqController {
 
-	public ModelAndView showHomePage(Request req, Response res) throws Exception {
+	public ModelAndView showFaqPage(Request req, Response res) throws Exception {
 		//System.out.println("HELLO");
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
