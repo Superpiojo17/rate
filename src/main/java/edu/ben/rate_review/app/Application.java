@@ -19,15 +19,15 @@ import edu.ben.rate_review.controller.home.ChangePasswordController;
 import edu.ben.rate_review.controller.home.ConfirmationController;
 import edu.ben.rate_review.controller.home.ContactUsController;
 import edu.ben.rate_review.controller.home.DepartmentsController;
-import edu.ben.rate_review.controller.home.FaqController;
+//import edu.ben.rate_review.controller.home.FaqController;
 import edu.ben.rate_review.controller.home.HomeController;
 import edu.ben.rate_review.controller.home.LogInController;
 import edu.ben.rate_review.controller.home.ProfessorController;
 import edu.ben.rate_review.controller.home.ProfessorReviewController;
 import edu.ben.rate_review.controller.home.RegisterController;
-import edu.ben.rate_review.controller.home.TeacherAddTutorController;
+//import edu.ben.rate_review.controller.home.TeacherAddTutorController;
 import edu.ben.rate_review.controller.home.TeacherController;
-import edu.ben.rate_review.controller.home.TutorAppointmentController;
+//import edu.ben.rate_review.controller.home.TutorAppointmentController;
 import edu.ben.rate_review.controller.home.TutorsController;
 import edu.ben.rate_review.controller.session.SessionsController;
 import edu.ben.rate_review.controller.user.AccountRecoveryController;
@@ -69,9 +69,9 @@ public class Application {
 	private static ProfessorController professorController = new ProfessorController();
 	private static AdminController adminController = new AdminController();
 
-	private static FaqController faqController = new FaqController();
-	private static TutorAppointmentController tutorAppointmentController = new TutorAppointmentController();
-	private static TeacherAddTutorController teacherAddTutorController = new TeacherAddTutorController();
+//	private static FaqController faqController = new FaqController();
+//	private static TutorAppointmentController tutorAppointmentController = new TutorAppointmentController();
+//	private static TeacherAddTutorController teacherAddTutorController = new TeacherAddTutorController();
 
 	private static ProfessorReviewController professorReviewController = new ProfessorReviewController();
 	private static EditUserController edituserController = new EditUserController();
@@ -175,10 +175,10 @@ public class Application {
 			exception.printStackTrace();
 		});
 		
-		get(TEACHERADDTUTOR_PATH, (req, res) -> teacherAddTutorController.showTeacherAddTutorPage(req, res), new HandlebarsTemplateEngine());
-		get(TUTORAPPOINTMENT_PATH, (req, res) -> tutorAppointmentController.showTutorAppointmentPage(req, res), new HandlebarsTemplateEngine());
-		
-		get(FAQ_PATH, (req, res) -> faqController.showFaqPage(req, res), new HandlebarsTemplateEngine());
+//		get(TEACHERADDTUTOR_PATH, (req, res) -> teacherAddTutorController.showTeacherAddTutorPage(req, res), new HandlebarsTemplateEngine());
+//		get(TUTORAPPOINTMENT_PATH, (req, res) -> tutorAppointmentController.showTutorAppointmentPage(req, res), new HandlebarsTemplateEngine());
+//		
+//		get(FAQ_PATH, (req, res) -> faqController.showFaqPage(req, res), new HandlebarsTemplateEngine());
 
 		get(AUTHORIZATIONERROR_PATH, (req, res) -> unauthorizedController.showNotAuthorizedc(req, res),
 				new HandlebarsTemplateEngine());
