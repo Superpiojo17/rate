@@ -104,7 +104,7 @@ public class Application {
 	public static String TUTOR_PATH = "/tutor";
 	public static String PROFESSOR_PATH = "/professor/:professor_id/overview";
 	public static String REVIEWPROFESSOR_PATH = "/reviewprofessor/:course_id/review";
-	public static String ADDTUTORS_PATH = "/addtutors";
+	public static String SELECTTUTOR_PATH = "/selecttutors";
 	public static String ADDPROFESSOR_PATH = "/addprofessor";
 	public static String NOTLOGGEDIN_PATH = "/notloggedinerror";
 	public static String AUTHORIZATIONERROR_PATH = "/authorizationerror";
@@ -122,6 +122,7 @@ public class Application {
 	public static String ALLTUTORS_PATH = "/alltutors/:id";
 	public static String EDITTUTORS_PATH = "/tutor/:id/edit";
 	public static String DELETETUTOR_PATH = "/deletetutor/:id";
+	public static String ADDTUTOR_PATH	 = "/tutor/:id/add";
 
 	public static void main(String[] args) throws Exception {
 
@@ -170,6 +171,10 @@ public class Application {
 		exception(Exception.class, (exception, request, response) -> {
 			exception.printStackTrace();
 		});
+		
+		get(ADDTUTOR_PATH, (req, res) -> facultydashController.showAddTutorPage(req, res),
+				new HandlebarsTemplateEngine());
+		post(ADDTUTOR_PATH, (req,res) -> facultydashController.addTutor(req, res));
 
 		get(EDITTUTORS_PATH, (req, res) -> edittutorController.showEditTutorPage(req, res),
 				new HandlebarsTemplateEngine());
@@ -246,7 +251,7 @@ public class Application {
 		get(ALLUSERS_PATH, (req, res) -> admindashController.showAllUsersPage(req, res),
 				new HandlebarsTemplateEngine());
 
-		get(ADDTUTORS_PATH, (req, res) -> facultydashController.showAddTutorsPage(req, res),
+		get(SELECTTUTOR_PATH, (req, res) -> facultydashController.showSelectTutorsPage(req, res),
 				new HandlebarsTemplateEngine());
 
 		get(ADDPROFESSOR_PATH, (req, res) -> adminController.showAddProfessorPage(req, res),
