@@ -123,6 +123,7 @@ public class Application {
 	public static String EDITTUTORS_PATH = "/tutor/:id/edit";
 	public static String DELETETUTOR_PATH = "/deletetutor/:id";
 	public static String ADDTUTOR_PATH	 = "/tutor/:id/add";
+	public static String ALLSTUDENTS_PATH = "/selectstudents";
 
 	public static void main(String[] args) throws Exception {
 
@@ -172,8 +173,13 @@ public class Application {
 			exception.printStackTrace();
 		});
 		
+		get(ALLSTUDENTS_PATH, (req, res) -> facultydashController.showSelectStudentsPage(req, res),
+				new HandlebarsTemplateEngine());
+		
 		get(ADDTUTOR_PATH, (req, res) -> facultydashController.showAddTutorPage(req, res),
 				new HandlebarsTemplateEngine());
+		
+		
 		post(ADDTUTOR_PATH, (req,res) -> facultydashController.addTutor(req, res));
 
 		get(EDITTUTORS_PATH, (req, res) -> edittutorController.showEditTutorPage(req, res),

@@ -112,6 +112,38 @@ public class FacultyDashboardController {
 		return new ModelAndView(model, "users/departmenttutors.hbs");
 	}
 	
+	public ModelAndView showSelectStudentsPage(Request req, Response res) throws AuthException {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
+//		AuthPolicyManager.getInstance().getUserPolicy().showFacultyDashboardPage();
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+		
+		DaoManager udao = DaoManager.getInstance();
+		DaoManager tdao = DaoManager.getInstance();
+		TutorDao td = tdao.getTutorDao();
+		UserDao ud = udao.getUserDao();
+		
+		
+		
+		List<User> tutors = ud.allStudentsByMajor(u.getMajor());
+		
+		
+		
+		model.put("tutors", tutors);
+		
+		
+
+		model.put("current_user", u);
+		// Tell the server to render the index page with the data in the model
+		return new ModelAndView(model, "users/departmentstudents.hbs");
+	}
+	
 	public ModelAndView showAddTutorPage(Request req, Response res) throws AuthException {
 		// Just a hash to pass data from the servlet to the page
 				HashMap<String, Object> model = new HashMap<>();
@@ -152,6 +184,32 @@ public class FacultyDashboardController {
 	}
 	
 	public String addTutor(Request req, Response res) {
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
+
+		String idString = req.params("id");
+		long id = Long.parseLong(idString);
+		TutorDao tDao = DaoManager.getInstance().getTutorDao();
+		UserDao uDao = DaoManager.getInstance().getUserDao();
+		if(uDao.findById(id).getRole() == 4){
+			uDao.updateRole(uDao.findById(id), 3);
+		}
+		
+		Tutor tutor = new Tutor();
+
+		tutor.setCourse_name(req.queryParams("course"));
+		
+		tutor.setProfessor_id(u.getId());
+		tutor.setStudent_id(id);
+		
+		tDao.save(tutor);
+
+		res.redirect(Application.ALLTUTORS_PATH + u.getId());
+		return " ";
+
+	}
+	
+	public String addStudentAsTutor(Request req, Response res) {
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 

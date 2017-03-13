@@ -54,11 +54,8 @@ public class TutorDao implements Dao<Tutor> {
 			System.out.println("ADDED");
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setLong(1, tutor.getStudent_id());
-			System.out.println(tutor.getStudent_id());
 			ps.setLong(2, tutor.getProfessor_id());
-			System.out.println(tutor.getProfessor_id());
 			ps.setString(3, tutor.getCourse_name());
-			System.out.println(tutor.getCourse_name());
 			ps.executeUpdate();
 			return tutor;
 		} catch (SQLException e) {
