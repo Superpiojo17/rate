@@ -118,6 +118,9 @@ public class Application {
 	public static String MASSEDITROLE_PATH = "/masseditrole";
 	public static String ADDANNOUNCEMENT_PATH = "/addannouncement";
 	public static String ALLTUTORS_PATH = "/alltutors";
+	public static String APPOINTMENT_PATH = "/appointment";
+	public static String MESSAGE_PATH = "/instantmessage";
+	public static String CALENDAR_PATH = "/calendar";
 
 	public static void main(String[] args) throws Exception {
 
@@ -255,6 +258,10 @@ public class Application {
 		get(TUTORS_PATH, (req, res) -> tutorsController.showTutorsPage(req, res), new HandlebarsTemplateEngine());
 		get(STUDENTDASHBOARD_PATH, (req, res) -> studentdashController.showStudentDashboardPage(req, res),
 				new HandlebarsTemplateEngine());
+		get(APPOINTMENT_PATH, (req, res) -> tutorsController.showAppointmentPage(req, res), new HandlebarsTemplateEngine());
+		get(MESSAGE_PATH, (req, res) -> tutorsController.showMessagePage(req, res), new HandlebarsTemplateEngine());
+		get(CALENDAR_PATH, (req, res) -> tutorsController.showCalendarPage(req, res), new HandlebarsTemplateEngine());
+		
 
 		// Change password paths
 		get(CHANGEPASSWORD_PATH, (req, res) -> changePasswordController.showChangePasswordPage(req, res),

@@ -20,4 +20,23 @@ public class TutorsController {
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "home/tutor.hbs");
 	}
+	public ModelAndView showAppointmentPage(Request req, Response res) {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+		// Tell the server to render the index page with the data in the model
+		return new ModelAndView(model, "home/appointment.hbs");
+	}
+	public ModelAndView showMessagePage(Request req, Response res) {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+		// Tell the server to render the index page with the data in the model
+		return new ModelAndView(model, "home/instantmessage.hbs");
+	}
+	
+	public ModelAndView showCalendarPage(Request req, Response res) {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+		// Tell the server to render the index page with the data in the model
+		return new ModelAndView(model, "home/calendar.hbs");
+	}
 }

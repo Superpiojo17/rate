@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<!--
+	Retrospect by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="assets/js/sinch.min.js"></script>
+<title>Instant Message</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+<link rel="stylesheet" href="assets/css/main.css" />
+<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+</head>
+<body>
+
+	<!-- Header -->
+			<header id="header" class="skel-layers-fixed">
+				<h1><a href="/">G.O.O.D.</a></h1>
+				<a href="#nav">Menu</a>
+			</header>
+
+	<!-- Nav -->
+			<nav id="nav">
+				<ul class="links">
+					<li><a href="/">Home</a></li>
+					<li><a href="/login">Log In</a></li>
+					<li><a href="/register">Register</a></li>
+					<li><a href="/departments">Departments</a></li>
+					<li><a href="/tutors">Tutors</a></li>
+					<li><a href="/contactus">Contact Us</a></li>
+					<li><a href="/aboutus">About Us</a></li>
+					<li><a href="/teacher">Teacher</a></li>
+					<li><a href="/accountrecovery">Forgot Password?</a></li>
+					
+				</ul>
+			</nav>
+
+	<!-- Main -->
+	<section id="main" class="wrapper">
+		<div class="container">
+			<h3>Chat</h3>
+			 <div id="auth">
+        <form>
+            <input id="username" placeholder="username">
+            <input id="password" placeholder="password">
+            <button id="loginUser">Login</button>
+            <button id="createUser">Sign Up</button>
+        </form> 
+    </div>
+
+    <form id="pickRecipient" style="display:none;">
+        <input id="recipient" placeholder="recipient">
+        <button id="pickRecipient">Chat</button>
+    </form>
+
+    <div id="chat" style="display:none;">
+        <div id="userInfo">
+            Logged in as: <span id="username"></span><br>
+            Chatting with: <span id="recipient"></span>
+        </div>
+
+        <form id="newMessage">
+            <input id="message" placeholder="message">
+            <button id="sendMsg">Send</button>
+        </form>
+
+        <div id="chatArea"></div>
+    </div>
+
+    <div class="error"></div>
+    	</div>
+	</section>
+
+	<!-- Footer -->
+	<footer id="footer">
+		<div class="inner">
+			<ul class="icons">
+				<li><a href="#" class="icon fa-facebook"> <span
+						class="label">Facebook</span>
+				</a></li>
+				<li><a href="#" class="icon fa-twitter"> <span
+						class="label">Twitter</span>
+				</a></li>
+				<li><a href="#" class="icon fa-instagram"> <span
+						class="label">Instagram</span>
+				</a></li>
+				<li><a href="#" class="icon fa-linkedin"> <span
+						class="label">LinkedIn</span>
+				</a></li>
+			</ul>
+			<ul class="copyright">
+				<li>&copy; Untitled.</li>
+				<li>Images: <a href="http://unsplash.com">Unsplash</a>.
+				</li>
+				<li>Design: <a href="http://templated.co">TEMPLATED</a>.
+				</li>
+			</ul>
+		</div>
+	</footer>
+	</body>
+
+	<!-- Scripts -->
+	<script src="assets/js/demo.js"></script>
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/skel.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+	<script src="assets/js/main.js"></script>
+
+</html>
