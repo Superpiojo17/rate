@@ -269,8 +269,10 @@ public class Application {
 
 		get(FACULTYDASHBOARD_PATH, (req, res) -> facultydashController.showFacultyDashboardPage(req, res),
 				new HandlebarsTemplateEngine());
+		
 		get(ADMINDASHBOARD_PATH, (req, res) -> admindashController.showAdminDashboardPage(req, res),
 				new HandlebarsTemplateEngine());
+		post(ADMINDASHBOARD_PATH, (req, res) -> admindashController.handleFlaggedComment(req, res));
 
 		get(ALLUSERS_PATH, (req, res) -> admindashController.showAllUsersPage(req, res),
 				new HandlebarsTemplateEngine());

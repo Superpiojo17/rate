@@ -41,6 +41,15 @@ public class ProfessorReview {
 	private String professor_email;
 	private boolean comment_flagged;
 	private boolean comment_removed;
+	private boolean comment_approved;
+	
+	public boolean getComment_approved() {
+		return comment_approved;
+	}
+
+	public void setComment_approved(boolean comment_approved) {
+		this.comment_approved = comment_approved;
+	}
 
 	public boolean getComment_flagged() {
 		return comment_flagged;

@@ -67,7 +67,7 @@ public class ProfessorReviewDao {
 	 */
 	public List<CoursesToReview> allStudentCoursesReviewed(User user) {
 		final String SELECT = "SELECT * FROM " + COURSES_TABLE + " WHERE users_user_id = " + user.getId()
-				+ " AND course_reviewed = 1 AND semester = 'Spring' AND year = 2017 AND disable_edit = 0";
+				+ " AND course_reviewed = 1 AND semester = 'Spring' AND year = 2017";
 		List<CoursesToReview> courses = null;
 		try {
 			PreparedStatement ps = conn.prepareStatement(SELECT);
@@ -125,6 +125,7 @@ public class ProfessorReviewDao {
 		tmp.setProfessor_first_name(rs.getString("professor_first_name"));
 		tmp.setProfessor_last_name(rs.getString("professor_last_name"));
 		tmp.setProfessor_email(rs.getString("professor_email"));
+		tmp.setDisable_edit(rs.getBoolean("disable_edit"));
 
 		return tmp;
 	}
@@ -159,6 +160,9 @@ public class ProfessorReviewDao {
 		tmp.setRate_knowledge(rs.getInt("rate_knowledge"));
 		tmp.setRate_career_development(rs.getInt("rate_career_development"));
 		tmp.setProfessor_email(rs.getString("professor_email"));
+		tmp.setComment_flagged(rs.getBoolean("comment_flagged"));
+		tmp.setComment_removed(rs.getBoolean("comment_removed"));
+		tmp.setComment_approved(rs.getBoolean("comment_approved"));
 
 		return tmp;
 	}
@@ -353,6 +357,118 @@ public class ProfessorReviewDao {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
 			ps.setLong(1, review.getCourse_id());
+			// Runs query
+			ps.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Lists all reviews with comments that have been flagged
+	 * 
+	 * @return
+	 */
+	public List<ProfessorReview> listAllFlaggedComments() {
+
+		final String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE comment_flagged = 1";
+		List<ProfessorReview> reviews = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			reviews = new ArrayList<ProfessorReview>();
+			try {
+				ResultSet rs = ps.executeQuery();
+				while (rs.next()) {
+					reviews.add(reviewMapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return reviews;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return reviews;
+	}
+
+	/**
+	 * Sets comment removed
+	 * 
+	 * @param review
+	 */
+	public void setCommentRemoved(ProfessorReview review) {
+		// Declare SQL template query
+
+		String sql = "UPDATE " + REVIEW_PROFESSOR_TABLE + " SET comment_removed = 1 WHERE course_id = ? LIMIT 1";
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setLong(1, review.getCourse_id());
+			// Runs query
+			ps.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * After admin deletes a comment, it is no longer marked as flagged
+	 * 
+	 * @param review
+	 */
+	public void setCommentNotFlagged(ProfessorReview review) {
+		// Declare SQL template query
+
+		String sql = "UPDATE " + REVIEW_PROFESSOR_TABLE + " SET comment_flagged = 0 WHERE course_id = ? LIMIT 1";
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setLong(1, review.getCourse_id());
+			// Runs query
+			ps.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Once an admin approves a flagged comment, it can no longer be flagged
+	 * 
+	 * @param review
+	 */
+	public void setCommentApproved(ProfessorReview review) {
+		// Declare SQL template query
+
+		String sql = "UPDATE " + REVIEW_PROFESSOR_TABLE + " SET comment_approved = 1 WHERE course_id = ? LIMIT 1";
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setLong(1, review.getCourse_id());
+			// Runs query
+			ps.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * If a student has their comment deleted, they are not allowed to edit
+	 * their review.
+	 * 
+	 * @param course
+	 */
+	public void disableEditReview(CoursesToReview course) {
+		// Declare SQL template query
+
+		String sql = "UPDATE " + COURSES_TABLE + " SET disable_edit = 1 WHERE course_id = ? LIMIT 1";
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setLong(1, course.getCourse_id());
 			// Runs query
 			ps.execute();
 		} catch (Exception e) {

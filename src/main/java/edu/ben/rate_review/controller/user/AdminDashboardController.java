@@ -6,12 +6,16 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.authorization.AuthException;
 import edu.ben.rate_review.daos.AnnouncementDao;
 import edu.ben.rate_review.daos.DaoManager;
+import edu.ben.rate_review.daos.ProfessorReviewDao;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.massRegistration.MassRegistration;
 import edu.ben.rate_review.models.Announcement;
+import edu.ben.rate_review.models.CoursesToReview;
+import edu.ben.rate_review.models.ProfessorReview;
 import edu.ben.rate_review.models.User;
 import edu.ben.rate_review.policy.AuthPolicyManager;
 import spark.ModelAndView;
@@ -26,16 +30,19 @@ public class AdminDashboardController {
 
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
-//		AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
 
 		model.put("current_user", u);
-
 
 		DaoManager dao = DaoManager.getInstance();
 		AnnouncementDao ad = dao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
-		
+
+		ProfessorReviewDao reviewDao = dao.getProfessorReviewDao();
+		List<ProfessorReview> flagged = reviewDao.listAllFlaggedComments();
+		model.put("flagged", flagged);
+
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/admindashboard.hbs");
 	}
@@ -52,7 +59,7 @@ public class AdminDashboardController {
 		UserDao ud = dao.getUserDao();
 		List<User> users = ud.sortbyRole();
 		model.put("users", users);
-		
+
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
@@ -123,6 +130,38 @@ public class AdminDashboardController {
 		res.redirect("/allusers");
 		return "";
 
+	}
+
+	/**
+	 * Deletes a flagged comment that the admin deems offensive
+	 * 
+	 * @param req
+	 * @param res
+	 * @return
+	 */
+	public String handleFlaggedComment(Request req, Response res) {
+		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
+
+		// grabs course id from review comment
+		String courseToRemoveString = req.queryParams("flagged_comment");
+		long courseID = Long.parseLong(courseToRemoveString);
+		if (courseID > 0){
+			// finds and removes the review
+			ProfessorReview review = reviewDao.findReview(courseID);
+			reviewDao.setCommentRemoved(review);
+			reviewDao.setCommentNotFlagged(review);
+			CoursesToReview course = reviewDao.findByCourseId(courseID);
+			reviewDao.disableEditReview(course);
+		} else {
+			courseID *= -1;
+			ProfessorReview review = reviewDao.findReview(courseID);
+			reviewDao.setCommentNotFlagged(review);
+			reviewDao.setCommentApproved(review);
+		}
+		
+		// redirects back to dashboard
+		res.redirect(Application.ADMINDASHBOARD_PATH);
+		return "";
 	}
 
 }

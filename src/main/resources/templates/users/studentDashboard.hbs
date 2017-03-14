@@ -142,10 +142,9 @@
 									{{#each courses_reviewed}}
 										<tr>
 											<td class="shrink" align="center">
-											
-											<!-- <a href="/reviewprofessor/{{course_id}}/review" class="btn btn-danger"><span class="glyphicon glyphicon-remove"> </button></a> -->
+											{{#unless disable_edit}}
 											<a href="/reviewprofessor/{{course_id}}/review" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span></a>
-												
+											{{/unless}}
 											</td>
 											<td>{{professor_first_name}} {{professor_last_name}}</td>
 											<td>{{course_name}}</td>

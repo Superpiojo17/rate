@@ -41,7 +41,7 @@
 					<li><a href="/aboutus">View Apointments</a></li>
 					<li><a href="/aboutus">View Reviews</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
-					<li><a href="/allusers/">Manage Users</a></li>
+					<li><a href="/allusers">Manage Users</a></li>
 					<li><a href="/announcement">Announcements</a></li>
 					<li><a href="/deactivation">De-Activate</a></li>
 					<li><a href="/login">Log Out</a></li>
@@ -127,11 +127,40 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">My Recent Reviews</a>
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Flagged comments</a>
         </h4>
       </div>
       <div id="collapse3" class="panel-collapse collapse">
-        <div class="panel-body">You have not left any recent reviews. Search for a teacher to leave some quality feedback!.</div>
+        {{#if flagged}}
+        <div class="table-wrapper">
+			<table class="alt">
+				<thead>
+					<tr>
+					<th><br>Professor</th>
+					<th><br>Comment</th>
+					<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each flagged}}
+						<tr>
+							<td class="shrink">{{professor_first_name}} {{professor_last_name}}</td>
+							<td>{{comment}}</td>
+							<td class = "shrink">
+								<form action="/admindashboard" method="post">
+									<button class="btn btn-primary" type="submit" name="flagged_comment" value="-{{course_id}}"><span class="glyphicon glyphicon-ok-sign"></span></button>
+									<button class="btn btn-danger" type="submit" name="flagged_comment" value="{{course_id}}"><span class="glyphicon glyphicon-remove-sign"></span></button>
+								</form>
+							</td>
+						</tr>
+					{{/each}}
+				</tbody>
+				<tfoot>
+				</tfoot>
+			</table>
+		</div> 
+        {{/if}}
+        {{#unless flagged}}No comments are currently flagged.{{/unless}}
       </div>
     </div>
   </div> 

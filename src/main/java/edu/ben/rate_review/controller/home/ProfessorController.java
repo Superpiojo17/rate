@@ -32,9 +32,12 @@ public class ProfessorController {
 		// Session session = req.session();
 		String idString = req.params("professor_id");
 		long id = Long.parseLong(idString);
-
 		UserDao uDao = DaoManager.getInstance().getUserDao();
 		User prof = uDao.findById(id);
+
+		if (prof.getRole() != 2) {
+			res.redirect("/authorizationerror");
+		}
 		AllRatingsModel ratingModel = new AllRatingsModel();
 
 		List<ProfessorReview> reviews = reviewDao.listCoursesByProfessorEmail(prof);

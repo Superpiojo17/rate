@@ -448,16 +448,21 @@
 									<tbody>
 									{{#each courses}}
 									{{#if comment}}
+									{{#unless comment_removed}}
 										<tr>
 											<td class = "shrink">{{course}}</td>
 											<td class = "shrink">{{semester}} {{year}}</td>
-											<td>{{comment}}</td>
+											{{#if comment_flagged}}<td><i>This comment is under review.</i></td>{{/if}}
+											{{#unless comment_flagged}}<td>{{comment}}</td>{{/unless}}
 											<td class = "shrink">
+											{{#unless comment_approved}}
 											<form action="/professor/{{prof_id}}/overview" method="post">
 											<button class="btn btn-danger" type="submit" name="course_flagged" value="{{course_id}}"><span class="glyphicon glyphicon-flag"></span></button>
 											</form>
+											{{/unless}}
 											</td>
 										</tr>
+									{{/unless}}
 									{{/if}}
 									{{/each}}
 									</tbody>
