@@ -293,6 +293,7 @@ public class Application {
 		get(DEPARTMENTS_PATH, (req, res) -> departmentsController.showDepartmentsPage(req, res),
 				new HandlebarsTemplateEngine());
 		get(TUTORS_PATH, (req, res) -> tutorsController.showTutorsPage(req, res), new HandlebarsTemplateEngine());
+		post(TUTORDASHBOARD_PATH, (req, res) -> tutordashController.replyToRequest(req, res));
 		get(STUDENTDASHBOARD_PATH, (req, res) -> studentdashController.showStudentDashboardPage(req, res),
 				new HandlebarsTemplateEngine());
 		post(STUDENTDASHBOARD_PATH, (req, res) -> studentdashController.requestAppointment(req, res));

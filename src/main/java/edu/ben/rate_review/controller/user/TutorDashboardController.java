@@ -3,10 +3,13 @@ package edu.ben.rate_review.controller.user;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.authorization.AuthException;
 import edu.ben.rate_review.daos.AnnouncementDao;
 import edu.ben.rate_review.daos.DaoManager;
+import edu.ben.rate_review.daos.TutorDao;
 import edu.ben.rate_review.models.Announcement;
+import edu.ben.rate_review.models.TutorAppointment;
 import edu.ben.rate_review.models.User;
 import edu.ben.rate_review.policy.AuthPolicyManager;
 import spark.ModelAndView;
@@ -30,9 +33,20 @@ public class TutorDashboardController {
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
+		
+		TutorDao tDao = adao.getTutorDao();
+		List<TutorAppointment> appointments = tDao.listAllTutorAppointments(u.getId());
+		
+		model.put("appointments", appointments);
 
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/tutorDashboard.hbs");
+	}
+	
+	public String replyToRequest(Request req, Response res) {
+
+		res.redirect(Application.TUTORDASHBOARD_PATH);
+		return "";
 	}
 
 }
