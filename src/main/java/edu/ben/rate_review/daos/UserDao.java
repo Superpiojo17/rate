@@ -59,7 +59,6 @@ public class UserDao implements Dao<User> {
 		tmp.setSchool_year(rs.getInt("school_year"));
 		tmp.setMajor(rs.getString("major"));
 		tmp.setYear_string(rs.getString("school_year"));
-
 		return tmp;
 	}
 
@@ -309,7 +308,7 @@ public class UserDao implements Dao<User> {
 		}
 		return users;
 	}
-	
+
 	/**
 	 * 
 	 * @return all users from the database.
@@ -336,7 +335,7 @@ public class UserDao implements Dao<User> {
 		}
 		return users;
 	}
-	
+
 	/**
 	 * 
 	 * @return all users from the database.
@@ -445,6 +444,33 @@ public class UserDao implements Dao<User> {
 		return users;
 	}
 
+	/**
+	 * Returns all tutors in the database
+	 * 
+	 * @return
+	 */
+	public List<User> listAllTutors() {
+		final String SELECT = "SELECT * FROM " + USER_TABLE + " WHERE role_id = 3";
+
+		List<User> users = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			users = new ArrayList<User>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					users.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return users;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+
 	public String sortByLastName() {
 
 		String sql = "SELECT * FROM users ORDER BY last_name";
@@ -511,7 +537,7 @@ public class UserDao implements Dao<User> {
 		// If you don't find a model
 		return null;
 	}
-	
+
 	/**
 	 * Updates user's password to their new password
 	 * 
@@ -561,7 +587,7 @@ public class UserDao implements Dao<User> {
 		// If you don't find a model
 		return null;
 	}
-	
+
 	/**
 	 * Updates user's password to their new password
 	 * 
@@ -586,8 +612,7 @@ public class UserDao implements Dao<User> {
 		// If you don't find a model
 		return null;
 	}
-	
-	
+
 	public MassEditForm massEditYear(MassEditForm massedit) {
 		String sql = "UPDATE " + USER_TABLE + " SET school_year = ? WHERE school_year = ?";
 
@@ -606,7 +631,6 @@ public class UserDao implements Dao<User> {
 		// If you don't find a model
 		return null;
 	}
-	
 
 	public MassEditForm massEditActive(MassEditForm massedit) {
 		String sql = "UPDATE " + USER_TABLE + " SET active = ? WHERE active = ?";
@@ -626,7 +650,6 @@ public class UserDao implements Dao<User> {
 		// If you don't find a model
 		return null;
 	}
-
 
 	/**
 	 * Updates user's password to their new password

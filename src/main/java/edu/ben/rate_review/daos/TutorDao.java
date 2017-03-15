@@ -30,15 +30,14 @@ public class TutorDao implements Dao<Tutor> {
 
 	private Tutor mapRow(ResultSet rs) throws SQLException {
 		UserDao udao = new UserDao(conn);
-		
-		
+
 		Tutor tmp = new Tutor();
 
 		tmp.setId(rs.getLong("tutor_relationship_id"));
 		tmp.setStudent_id(rs.getLong("user_id_student"));
 		tmp.setProfessor_id(rs.getLong("user_id_professor"));
 		tmp.setCourse_name(rs.getString("course_name"));
-		
+
 		tmp.setTutor_email(udao.findById(rs.getLong("user_id_student")).getEmail());
 		tmp.setTutor_first_name(udao.findById(rs.getLong("user_id_student")).getFirst_name());
 		tmp.setTutor_last_name(udao.findById(rs.getLong("user_id_student")).getLast_name());
@@ -64,7 +63,7 @@ public class TutorDao implements Dao<Tutor> {
 		return null;
 
 	}
-	
+
 	/**
 	 * 
 	 * @return all users from the database.
@@ -91,11 +90,35 @@ public class TutorDao implements Dao<Tutor> {
 		}
 		return tutors;
 	}
-	
 
-	
+	/**
+	 * Selects all tutors from the table
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public List<Tutor> listAllTutors() {
+		final String SELECT = "SELECT * FROM " + TUTOR_TABLE;
 
-	
+		List<Tutor> tutors = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			tutors = new ArrayList<Tutor>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					tutors.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return tutors;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return tutors;
+	}
+
 	public Tutor findById(long id) {
 		// Declare SQL template query
 		String sql = "SELECT * FROM " + TUTOR_TABLE + " WHERE tutor_relationship_id = ? LIMIT 1";
@@ -118,7 +141,7 @@ public class TutorDao implements Dao<Tutor> {
 		return null;
 
 	}
-	
+
 	public Tutor findByStudentId(long id) {
 		// Declare SQL template query
 		String sql = "SELECT * FROM " + TUTOR_TABLE + " WHERE user_id_student = ? LIMIT 1";
@@ -141,7 +164,7 @@ public class TutorDao implements Dao<Tutor> {
 		return null;
 
 	}
-	
+
 	public Long getStudentId(long id) {
 		// Declare SQL template query
 		String sql = "SELECT USER_ID_STUDENT FROM " + TUTOR_TABLE + " WHERE tutor_relationship_id = ? LIMIT 1";
@@ -164,12 +187,7 @@ public class TutorDao implements Dao<Tutor> {
 		return (long) -1;
 
 	}
-	
-	
-	
 
-	
-	
 	public String deleteTutor(long id) {
 
 		String sql = "DELETE FROM " + TUTOR_TABLE + " WHERE tutor_relationship_id = ? LIMIT 1";
@@ -185,10 +203,9 @@ public class TutorDao implements Dao<Tutor> {
 		}
 		return " ";
 	}
-	
+
 	public void changeTutorRole(Long id) {
-		String sql = "UPDATE " + USER_TABLE
-				+ " SET role_id = ? WHERE user_id = ? LIMIT 1";
+		String sql = "UPDATE " + USER_TABLE + " SET role_id = ? WHERE user_id = ? LIMIT 1";
 
 		try {
 			// Create Prepared Statement from query
@@ -197,7 +214,6 @@ public class TutorDao implements Dao<Tutor> {
 			ps.setInt(1, 4);
 			ps.setLong(2, id);
 
-
 			// Runs query
 			ps.execute();
 		} catch (Exception e) {
@@ -205,10 +221,9 @@ public class TutorDao implements Dao<Tutor> {
 		}
 		// If you don't find a model
 	}
-	
+
 	public TutorForm updateTutor(TutorForm tutor) {
-		String sql = "UPDATE " + TUTOR_TABLE
-				+ " SET course_name = ? WHERE tutor_relationship_id = ? LIMIT 1";
+		String sql = "UPDATE " + TUTOR_TABLE + " SET course_name = ? WHERE tutor_relationship_id = ? LIMIT 1";
 
 		try {
 			// Create Prepared Statement from query
@@ -216,7 +231,6 @@ public class TutorDao implements Dao<Tutor> {
 			// Fill in the ? with the parameters you want
 			ps.setString(1, tutor.getCourse());
 			ps.setLong(2, tutor.getId());
-
 
 			// Runs query
 			ps.execute();
@@ -239,6 +253,5 @@ public class TutorDao implements Dao<Tutor> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 }

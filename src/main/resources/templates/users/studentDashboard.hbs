@@ -103,19 +103,54 @@
         </h4>
       </div>
       <div id="collapse1" class="panel-collapse collapse in">
-        <div class="panel-body">You have no upcoming appiontments. Search for a tutor to set up a study session!</div>
+        <div class="panel-body">You have no upcoming appointments. Search for a tutor to set up a study session!</div>
       </div>
     </div>
+    
+    
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">My Classes</a>
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Request Tutor Appointment</a>
         </h4>
       </div>
-      <div id="collapse2" class="panel-collapse collapse">
-        <div class="panel-body">You have not added any classes to your profile. Click on My Classes on the side menu to add your courses!</div>
-      </div>
-    </div>
+		<div id="collapse2" class="panel-collapse collapse">
+      	 <div class="table-wrapper">
+			<table class="alt">
+				<thead>
+					<tr>
+					<th><br>Tutor</th>
+					<th><br>Class</th>
+					<th><br>Date</th>
+					<th><br>Message</th>
+					<th></th>
+					</tr>
+				</thead>
+				<tbody>
+						{{#each tutors}}
+						
+							<tr>
+							<form action="/studentdashboard" method="post">
+							<td class="shrink">{{tutor_first_name}} {{tutor_last_name}}</td>
+							<td class="shrink">{{course_name}}</td>
+							<td class="shrink"><input type="date" name="date" id="date" value="" placeholder="Date" /></td>
+							<td><input type="text" name="student_message" id="student_message" placeholder="Leave a message here." /></td>
+							<td class = "shrink">
+								<button class="btn btn-primary" type="submit" name="send_appointment_request" value="{{student_id}}"><span class="glyphicon glyphicon-arrow-right"></span></button>
+							</td>
+							</form>
+							</tr>
+						
+						{{/each}}
+				</tbody>
+					<tfoot>
+					</tfoot>
+				</table>
+			</div> 
+		</div>
+	</div>
+    
+    
     
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -206,14 +241,6 @@
   </div>
   
     
-    
-    
-    
-		
-    
-    
-    
-  
     
     
 				<!-- CODE -->

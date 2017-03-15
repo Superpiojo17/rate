@@ -295,6 +295,7 @@ public class Application {
 		get(TUTORS_PATH, (req, res) -> tutorsController.showTutorsPage(req, res), new HandlebarsTemplateEngine());
 		get(STUDENTDASHBOARD_PATH, (req, res) -> studentdashController.showStudentDashboardPage(req, res),
 				new HandlebarsTemplateEngine());
+		post(STUDENTDASHBOARD_PATH, (req, res) -> studentdashController.requestAppointment(req, res));
 		get(APPOINTMENT_PATH, (req, res) -> tutorsController.showAppointmentPage(req, res), new HandlebarsTemplateEngine());
 		get(MESSAGE_PATH, (req, res) -> tutorsController.showMessagePage(req, res), new HandlebarsTemplateEngine());
 		get(CALENDAR_PATH, (req, res) -> tutorsController.showCalendarPage(req, res), new HandlebarsTemplateEngine());
