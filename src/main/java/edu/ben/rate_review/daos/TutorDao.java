@@ -9,7 +9,9 @@ import java.util.List;
 
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.AnnouncementForm;
+import edu.ben.rate_review.models.CoursesToReview;
 import edu.ben.rate_review.models.Tutor;
+import edu.ben.rate_review.models.TutorAppointment;
 import edu.ben.rate_review.models.TutorForm;
 import edu.ben.rate_review.models.User;
 
@@ -17,6 +19,7 @@ public class TutorDao implements Dao<Tutor> {
 
 	String TUTOR_TABLE = "tutors";
 	String USER_TABLE = "users";
+	String APPOINTMENT_TABLE = "tutor_appointment";
 	Connection conn = null;
 
 	/**
@@ -62,6 +65,79 @@ public class TutorDao implements Dao<Tutor> {
 		}
 		return null;
 
+	}
+
+	/**
+	 * Stores a tutor appointment in the database
+	 * 
+	 * @param appointment
+	 * @return
+	 */
+	public TutorAppointment saveTutorAppointment(TutorAppointment appointment) {
+		final String sql = "INSERT INTO " + APPOINTMENT_TABLE
+				+ "(student_id, tutor_id, date, student_message) Values(?,?,?,?)";
+
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setLong(1, appointment.getStudent_id());
+			ps.setLong(2, appointment.getTutor_id());
+			ps.setString(3, appointment.getDate());
+			ps.setString(4, appointment.getStudent_message());
+			ps.executeUpdate();
+			return appointment;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+
+	/**
+	 * Gets a list of appointments for a specific tutor
+	 * 
+	 * @param tutor_id
+	 * @return
+	 */
+	public List<TutorAppointment> listAllTutorAppointments(Long tutor_id) {
+		final String SELECT = "SELECT * FROM " + APPOINTMENT_TABLE + " WHERE tutor_id = " + tutor_id;
+
+		List<TutorAppointment> appointments = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			appointments = new ArrayList<TutorAppointment>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					appointments.add(appointmentMapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return appointments;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return appointments;
+	}
+
+	/**
+	 * Builds a tutor object
+	 * 
+	 * @param rs
+	 * @return
+	 * @throws SQLException
+	 */
+	private TutorAppointment appointmentMapRow(ResultSet rs) throws SQLException {
+		// create student course object
+		TutorAppointment tmp = new TutorAppointment();
+		tmp.setStudent_id(rs.getLong("student_id"));
+		tmp.setTutor_id(rs.getLong("tutor_id"));
+		tmp.setDate(rs.getString("date"));
+		tmp.setStudent_message(rs.getString("student_message"));
+		tmp.setTutor_message(rs.getString("tutor_message"));
+		tmp.setAppointment_status(rs.getInt("appointment_status"));
+
+		return tmp;
 	}
 
 	/**
