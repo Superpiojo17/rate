@@ -73,6 +73,9 @@ public class StudentDashboardController {
 		TutorDao tDao = dao.getTutorDao();
 		List<Tutor> tutors = tDao.listAllTutors();
 		model.put("tutors", tutors);
+		
+		List<TutorAppointment> appointments = tDao.listAllStudentAppointments(u);
+		model.put("upcoming_appointments", appointments);
 
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/studentDashboard.hbs");
@@ -92,6 +95,8 @@ public class StudentDashboardController {
 		User u = (User) session.attribute("current_user");
 		DaoManager dao = DaoManager.getInstance();
 		TutorDao tDao = dao.getTutorDao();
+		UserDao uDao = dao.getUserDao();
+		User tutor = uDao.findById(Long.parseLong(req.queryParams("tutor_id")));
 
 		if (!req.queryParams("date").isEmpty() && !req.queryParams("time").isEmpty()) {
 
@@ -104,6 +109,8 @@ public class StudentDashboardController {
 			appointment.setStudent_message(req.queryParams("student_message"));
 			appointment.setStudent_firstname(u.getFirst_name());
 			appointment.setStudent_lastname(u.getLast_name());
+			appointment.setTutor_firstname(tutor.getFirst_name());
+			appointment.setTutor_lastname(tutor.getLast_name());
 			tDao.saveTutorAppointment(appointment);
 
 		} else {

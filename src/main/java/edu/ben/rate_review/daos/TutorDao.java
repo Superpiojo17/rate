@@ -10,6 +10,7 @@ import java.util.List;
 import edu.ben.rate_review.models.Tutor;
 import edu.ben.rate_review.models.TutorAppointment;
 import edu.ben.rate_review.models.TutorForm;
+import edu.ben.rate_review.models.User;
 
 public class TutorDao implements Dao<Tutor> {
 
@@ -71,7 +72,7 @@ public class TutorDao implements Dao<Tutor> {
 	 */
 	public TutorAppointment saveTutorAppointment(TutorAppointment appointment) {
 		final String sql = "INSERT INTO " + APPOINTMENT_TABLE + "(student_id, tutor_id, date, time, student_message, "
-				+ "student_firstname, student_lastname) Values(?,?,?,?,?,?,?)";
+				+ "student_firstname, student_lastname, tutor_firstname, tutor_lastname) Values(?,?,?,?,?,?,?,?,?)";
 
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -82,6 +83,8 @@ public class TutorDao implements Dao<Tutor> {
 			ps.setString(5, appointment.getStudent_message());
 			ps.setString(6, appointment.getStudent_firstname());
 			ps.setString(7, appointment.getStudent_lastname());
+			ps.setString(8, appointment.getTutor_firstname());
+			ps.setString(9, appointment.getTutor_lastname());
 			ps.executeUpdate();
 			return appointment;
 		} catch (SQLException e) {
@@ -140,6 +143,8 @@ public class TutorDao implements Dao<Tutor> {
 		tmp.setAppointment_status(rs.getBoolean("appointment_status"));
 		tmp.setStudent_firstname(rs.getString("student_firstname"));
 		tmp.setStudent_lastname(rs.getString("student_lastname"));
+		tmp.setTutor_firstname(rs.getString("tutor_firstname"));
+		tmp.setTutor_lastname(rs.getString("tutor_lastname"));
 
 		return tmp;
 	}
@@ -249,7 +254,36 @@ public class TutorDao implements Dao<Tutor> {
 	 * @return
 	 */
 	public List<TutorAppointment> listAllUnviewedTutorAppointments(Long tutor_id) {
-		final String SELECT = "SELECT * FROM " + APPOINTMENT_TABLE + " WHERE tutor_has_responded = 0 AND tutor_id = " + tutor_id;
+		final String SELECT = "SELECT * FROM " + APPOINTMENT_TABLE + " WHERE tutor_has_responded = 0 AND tutor_id = "
+				+ tutor_id;
+
+		List<TutorAppointment> appointments = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			appointments = new ArrayList<TutorAppointment>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					appointments.add(appointmentMapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return appointments;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return appointments;
+	}
+
+	/**
+	 * Lists a student's upcoming appointments
+	 * 
+	 * @param student_id
+	 * @return
+	 */
+	public List<TutorAppointment> listAllStudentAppointments(User user) {
+		final String SELECT = "SELECT * FROM " + APPOINTMENT_TABLE + " WHERE student_id = " + user.getId();
 
 		List<TutorAppointment> appointments = null;
 		try {

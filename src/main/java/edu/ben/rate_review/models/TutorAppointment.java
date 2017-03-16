@@ -1,5 +1,8 @@
 package edu.ben.rate_review.models;
 
+import edu.ben.rate_review.daos.DaoManager;
+import edu.ben.rate_review.daos.UserDao;
+
 /**
  * Object which stores a tutor appointment
  * 
@@ -19,6 +22,8 @@ public class TutorAppointment {
 	private boolean appointment_status;
 	private String student_firstname;
 	private String student_lastname;
+	private String tutor_firstname;
+	private String tutor_lastname;
 	
 	public long getAppointment_id() {
 		return appointment_id;
@@ -108,6 +113,20 @@ public class TutorAppointment {
 		this.student_lastname = student_lastname;
 	}
 
-	
+	public String getTutor_firstname() {
+		return tutor_firstname;
+	}
+
+	public void setTutor_firstname(String tutor_firstname) {
+		this.tutor_firstname = tutor_firstname;
+	}
+
+	public String getTutor_lastname() {
+		return tutor_lastname;
+	}
+
+	public void setTutor_lastname(String tutor_lastname) {
+		this.tutor_lastname = tutor_lastname;
+	}
 	
 }

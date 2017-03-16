@@ -103,7 +103,54 @@
         </h4>
       </div>
       <div id="collapse1" class="panel-collapse collapse in">
-        <div class="panel-body">You have no upcoming appointments. Search for a tutor to set up a study session!</div>
+        
+        
+        
+        <div class="table-wrapper">
+			<table class="alt">
+				<thead>
+					<tr>
+					<th><br>Tutor</th>
+					<th><br>Date</th>
+					<th><br>Time</th>
+					<th><br>Your Message</th>
+					<th><br>Tutor Response</th>
+					<th><br>Status</th>
+					</tr>
+				</thead>
+				<tbody>
+						{{#each upcoming_appointments}}
+						
+							<tr>
+							<td class="shrink">{{tutor_firstname}} {{tutor_lastname}}</td>
+							<td class="shrink">{{date}}</td>
+							<td class="shrink">{{time}}</td>
+							<td class="shrink">{{student_message}}</td>
+							<td>{{tutor_message}}</td>
+							<td class="shrink">
+								{{#unless tutor_has_responded}}
+									<div><i>Pending</i></div>
+								{{/unless}}
+								{{#if tutor_has_responded}} 
+									{{#unless appointment_status}}
+										<div><i>Denied</i></div>
+									{{/unless}}
+									{{#if appointment_status}}
+										<div><i>Approved</i></div>
+									{{/if}}
+								{{/if}}
+							</td>
+							</tr>
+						
+						{{/each}}
+				</tbody>
+					<tfoot>
+					</tfoot>
+				</table>
+			</div> 
+        
+  
+        
       </div>
     </div>
     
