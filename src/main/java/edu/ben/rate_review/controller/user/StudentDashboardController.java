@@ -93,14 +93,17 @@ public class StudentDashboardController {
 		DaoManager dao = DaoManager.getInstance();
 		TutorDao tDao = dao.getTutorDao();
 
-		if (!req.queryParams("date").isEmpty()) {
+		if (!req.queryParams("date").isEmpty() && !req.queryParams("time").isEmpty()) {
 
 			TutorAppointment appointment = new TutorAppointment();
 
 			appointment.setStudent_id(u.getId());
 			appointment.setTutor_id(Long.parseLong(req.queryParams("tutor_id")));
 			appointment.setDate(req.queryParams("date"));
+			appointment.setTime(req.queryParams("time"));
 			appointment.setStudent_message(req.queryParams("student_message"));
+			appointment.setStudent_firstname(u.getFirst_name());
+			appointment.setStudent_lastname(u.getLast_name());
 			tDao.saveTutorAppointment(appointment);
 
 		} else {

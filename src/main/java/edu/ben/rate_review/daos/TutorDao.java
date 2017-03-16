@@ -7,13 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.ben.rate_review.models.Announcement;
-import edu.ben.rate_review.models.AnnouncementForm;
-import edu.ben.rate_review.models.CoursesToReview;
 import edu.ben.rate_review.models.Tutor;
 import edu.ben.rate_review.models.TutorAppointment;
 import edu.ben.rate_review.models.TutorForm;
-import edu.ben.rate_review.models.User;
 
 public class TutorDao implements Dao<Tutor> {
 
@@ -74,15 +70,18 @@ public class TutorDao implements Dao<Tutor> {
 	 * @return
 	 */
 	public TutorAppointment saveTutorAppointment(TutorAppointment appointment) {
-		final String sql = "INSERT INTO " + APPOINTMENT_TABLE
-				+ "(student_id, tutor_id, date, student_message) Values(?,?,?,?)";
+		final String sql = "INSERT INTO " + APPOINTMENT_TABLE + "(student_id, tutor_id, date, time, student_message, "
+				+ "student_firstname, student_lastname) Values(?,?,?,?,?,?,?)";
 
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setLong(1, appointment.getStudent_id());
 			ps.setLong(2, appointment.getTutor_id());
 			ps.setString(3, appointment.getDate());
-			ps.setString(4, appointment.getStudent_message());
+			ps.setString(4, appointment.getTime());
+			ps.setString(5, appointment.getStudent_message());
+			ps.setString(6, appointment.getStudent_firstname());
+			ps.setString(7, appointment.getStudent_lastname());
 			ps.executeUpdate();
 			return appointment;
 		} catch (SQLException e) {
@@ -130,14 +129,116 @@ public class TutorDao implements Dao<Tutor> {
 	private TutorAppointment appointmentMapRow(ResultSet rs) throws SQLException {
 		// create student course object
 		TutorAppointment tmp = new TutorAppointment();
+		tmp.setAppointment_id(rs.getLong("appointment_id"));
 		tmp.setStudent_id(rs.getLong("student_id"));
 		tmp.setTutor_id(rs.getLong("tutor_id"));
 		tmp.setDate(rs.getString("date"));
+		tmp.setTime(rs.getString("time"));
 		tmp.setStudent_message(rs.getString("student_message"));
 		tmp.setTutor_message(rs.getString("tutor_message"));
 		tmp.setAppointment_status(rs.getInt("appointment_status"));
+		tmp.setStudent_firstname(rs.getString("student_firstname"));
+		tmp.setStudent_lastname(rs.getString("student_lastname"));
 
 		return tmp;
+	}
+
+	/**
+	 * Finds an appointment by appointment ID
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public TutorAppointment findAppointmentByID(long id) {
+		// Declare SQL template query
+		String sql = "SELECT * FROM " + APPOINTMENT_TABLE + " WHERE appointment_id = ? LIMIT 1";
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement q = conn.prepareStatement(sql);
+			q.setLong(1, id);
+
+			ResultSet rs = q.executeQuery();
+			if (rs.next()) {
+				return appointmentMapRow(rs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+
+	/**
+	 * Updates a tutor appointment with the tutor response
+	 * 
+	 * @param appointment
+	 * @return
+	 */
+	public TutorAppointment updateTutorResponse(TutorAppointment appointment) {
+		String sql = "UPDATE " + APPOINTMENT_TABLE + " SET tutor_message = ? WHERE appointment_id = ? LIMIT 1";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setString(1, appointment.getTutor_message());
+			ps.setLong(2, appointment.getAppointment_id());
+			// Runs query
+			ps.execute();
+			return appointment;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+	}
+
+	/**
+	 * Approves an appointment request
+	 * 
+	 * @param appointment
+	 * @return
+	 */
+	public TutorAppointment approveAppointment(TutorAppointment appointment) {
+		String sql = "UPDATE " + APPOINTMENT_TABLE + " SET appointment_status = 1 WHERE appointment_id = ? LIMIT 1";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setLong(1, appointment.getAppointment_id());
+			// Runs query
+			ps.execute();
+			return appointment;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+	}
+
+	/**
+	 * Denies an appointment request
+	 * 
+	 * @param appointment
+	 * @return
+	 */
+	public TutorAppointment denyAppointment(TutorAppointment appointment) {
+		String sql = "UPDATE " + APPOINTMENT_TABLE + " SET appointment_status = 2 WHERE appointment_id = ? LIMIT 1";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setLong(1, appointment.getAppointment_id());
+			// Runs query
+			ps.execute();
+			return appointment;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
 	}
 
 	/**
