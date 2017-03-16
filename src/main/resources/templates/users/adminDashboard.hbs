@@ -137,6 +137,7 @@
 				<thead>
 					<tr>
 					<th><br>Professor</th>
+					<th><br>StudentID</th>
 					<th><br>Comment</th>
 					<th></th>
 					</tr>
@@ -145,6 +146,7 @@
 					{{#each flagged}}
 						<tr>
 							<td class="shrink">{{professor_first_name}} {{professor_last_name}}</td>
+							<td class="shrink">{{student_id}}</td>
 							<td>{{comment}}</td>
 							<td class = "shrink">
 								<form action="/admindashboard" method="post">
