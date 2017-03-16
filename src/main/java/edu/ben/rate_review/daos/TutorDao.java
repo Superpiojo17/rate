@@ -136,7 +136,8 @@ public class TutorDao implements Dao<Tutor> {
 		tmp.setTime(rs.getString("time"));
 		tmp.setStudent_message(rs.getString("student_message"));
 		tmp.setTutor_message(rs.getString("tutor_message"));
-		tmp.setAppointment_status(rs.getInt("appointment_status"));
+		tmp.setTutor_has_responded(rs.getBoolean("tutor_has_responded"));
+		tmp.setAppointment_status(rs.getBoolean("appointment_status"));
 		tmp.setStudent_firstname(rs.getString("student_firstname"));
 		tmp.setStudent_lastname(rs.getString("student_lastname"));
 
@@ -199,8 +200,8 @@ public class TutorDao implements Dao<Tutor> {
 	 * @param appointment
 	 * @return
 	 */
-	public TutorAppointment approveAppointment(TutorAppointment appointment) {
-		String sql = "UPDATE " + APPOINTMENT_TABLE + " SET appointment_status = 1 WHERE appointment_id = ? LIMIT 1";
+	public TutorAppointment setTutorResponded(TutorAppointment appointment) {
+		String sql = "UPDATE " + APPOINTMENT_TABLE + " SET tutor_has_responded = 1 WHERE appointment_id = ? LIMIT 1";
 
 		try {
 			// Create Prepared Statement from query
@@ -223,8 +224,8 @@ public class TutorDao implements Dao<Tutor> {
 	 * @param appointment
 	 * @return
 	 */
-	public TutorAppointment denyAppointment(TutorAppointment appointment) {
-		String sql = "UPDATE " + APPOINTMENT_TABLE + " SET appointment_status = 2 WHERE appointment_id = ? LIMIT 1";
+	public TutorAppointment approveAppointment(TutorAppointment appointment) {
+		String sql = "UPDATE " + APPOINTMENT_TABLE + " SET appointment_status = 1 WHERE appointment_id = ? LIMIT 1";
 
 		try {
 			// Create Prepared Statement from query
@@ -239,6 +240,34 @@ public class TutorDao implements Dao<Tutor> {
 		}
 		// If you don't find a model
 		return null;
+	}
+
+	/**
+	 * Lists requests which have not been viewed by tutor
+	 * 
+	 * @param tutor_id
+	 * @return
+	 */
+	public List<TutorAppointment> listAllUnviewedTutorAppointments(Long tutor_id) {
+		final String SELECT = "SELECT * FROM " + APPOINTMENT_TABLE + " WHERE tutor_has_responded = 0 AND tutor_id = " + tutor_id;
+
+		List<TutorAppointment> appointments = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			appointments = new ArrayList<TutorAppointment>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					appointments.add(appointmentMapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return appointments;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return appointments;
 	}
 
 	/**

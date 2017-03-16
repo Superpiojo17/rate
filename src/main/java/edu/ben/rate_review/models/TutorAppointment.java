@@ -15,7 +15,8 @@ public class TutorAppointment {
 	private String time;
 	private String student_message;
 	private String tutor_message;
-	private int appointment_status;
+	private boolean tutor_has_responded;
+	private boolean appointment_status;
 	private String student_firstname;
 	private String student_lastname;
 	
@@ -75,11 +76,19 @@ public class TutorAppointment {
 		this.tutor_message = tutor_message;
 	}
 
-	public int getAppointment_status() {
+	public boolean getTutor_has_responded() {
+		return tutor_has_responded;
+	}
+
+	public void setTutor_has_responded(boolean tutor_has_responded) {
+		this.tutor_has_responded = tutor_has_responded;
+	}
+
+	public boolean getAppointment_status() {
 		return appointment_status;
 	}
 
-	public void setAppointment_status(int appointment_status) {
+	public void setAppointment_status(boolean appointment_status) {
 		this.appointment_status = appointment_status;
 	}
 

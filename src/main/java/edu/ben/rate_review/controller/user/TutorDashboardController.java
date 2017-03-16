@@ -36,6 +36,14 @@ public class TutorDashboardController {
 
 		TutorDao tDao = adao.getTutorDao();
 		List<TutorAppointment> appointments = tDao.listAllTutorAppointments(u.getId());
+		
+		List<TutorAppointment> unviewed_appointments = tDao.listAllUnviewedTutorAppointments(u.getId());
+
+		boolean appointments_requested = false;
+		if (!unviewed_appointments.isEmpty()) {
+			appointments_requested = true;
+		}
+		model.put("appointments_requested", appointments_requested);
 
 		model.put("appointments", appointments);
 
@@ -58,14 +66,19 @@ public class TutorDashboardController {
 		if (id > 0) {
 			TutorAppointment appointment = tDao.findAppointmentByID(id);
 			appointment.setTutor_message(req.queryParams("tutor_message"));
+			appointment.setTutor_has_responded(true);
+
 			tDao.updateTutorResponse(appointment);
+			tDao.setTutorResponded(appointment);
 			tDao.approveAppointment(appointment);
 		} else {
 			id *= -1;
 			TutorAppointment appointment = tDao.findAppointmentByID(id);
 			appointment.setTutor_message(req.queryParams("tutor_message"));
+			appointment.setTutor_has_responded(true);
+
 			tDao.updateTutorResponse(appointment);
-			tDao.denyAppointment(appointment);
+			tDao.setTutorResponded(appointment);
 		}
 
 		res.redirect(Application.TUTORDASHBOARD_PATH);
