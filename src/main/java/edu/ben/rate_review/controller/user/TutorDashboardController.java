@@ -8,6 +8,8 @@ import edu.ben.rate_review.authorization.AuthException;
 import edu.ben.rate_review.daos.AnnouncementDao;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.TutorDao;
+import edu.ben.rate_review.daos.UserDao;
+import edu.ben.rate_review.email.Email;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.TutorAppointment;
 import edu.ben.rate_review.models.User;
@@ -36,7 +38,7 @@ public class TutorDashboardController {
 
 		TutorDao tDao = adao.getTutorDao();
 		List<TutorAppointment> appointments = tDao.listAllTutorAppointments(u.getId());
-		
+
 		List<TutorAppointment> unviewed_appointments = tDao.listAllUnviewedTutorAppointments(u.getId());
 
 		boolean appointments_requested = false;
@@ -71,6 +73,7 @@ public class TutorDashboardController {
 			tDao.updateTutorResponse(appointment);
 			tDao.setTutorResponded(appointment);
 			tDao.approveAppointment(appointment);
+			emailAppointmentResponse(appointment);
 		} else {
 			id *= -1;
 			TutorAppointment appointment = tDao.findAppointmentByID(id);
@@ -79,10 +82,32 @@ public class TutorDashboardController {
 
 			tDao.updateTutorResponse(appointment);
 			tDao.setTutorResponded(appointment);
+			emailAppointmentResponse(appointment);
 		}
 
 		res.redirect(Application.TUTORDASHBOARD_PATH);
 		return "";
+	}
+
+	/**
+	 * Lets students know when their appointment requests have gotten a response
+	 * 
+	 * @param appointment
+	 */
+	private static void emailAppointmentResponse(TutorAppointment appointment) {
+
+		UserDao uDao = DaoManager.getInstance().getUserDao();
+		User student = uDao.findById(appointment.getStudent_id());
+
+		String subject = "Rate&Review Tutor Appointment Response";
+		String messageHeader = "<p>Hello " + student.getFirst_name() + ",</p><br />";
+		String messageBody = "<p>You have at least one appointment response waiting for you. " + "<a href=\"http://"
+				+ Application.DOMAIN + "/login" + "\">Login</a> to continue.</p>";
+		String messageFooter = "<br /><p>Sincerely,</p><p>The Rate&Review Team</p>";
+		String message = messageHeader + messageBody + messageFooter;
+
+		Email.deliverEmail(student.getFirst_name(), student.getEmail(), subject, message);
+
 	}
 
 }

@@ -10,6 +10,7 @@ import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.ProfessorReviewDao;
 import edu.ben.rate_review.daos.TutorDao;
 import edu.ben.rate_review.daos.UserDao;
+import edu.ben.rate_review.email.Email;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.CoursesToReview;
 import edu.ben.rate_review.models.ProfessorReview;
@@ -73,7 +74,7 @@ public class StudentDashboardController {
 		TutorDao tDao = dao.getTutorDao();
 		List<Tutor> tutors = tDao.listAllTutors();
 		model.put("tutors", tutors);
-		
+
 		List<TutorAppointment> appointments = tDao.listAllStudentAppointments(u);
 		model.put("upcoming_appointments", appointments);
 
@@ -113,12 +114,35 @@ public class StudentDashboardController {
 			appointment.setTutor_lastname(tutor.getLast_name());
 			tDao.saveTutorAppointment(appointment);
 
+			emailAppointmentRequest(appointment, uDao);
 		} else {
 			// message - please set a date
 		}
 
 		res.redirect(Application.STUDENTDASHBOARD_PATH);
 		return "";
+	}
+
+	/**
+	 * Sends email to tutor to notify them that a student has requested an
+	 * appointment
+	 * 
+	 * @param appointment
+	 * @param uDao
+	 */
+	private static void emailAppointmentRequest(TutorAppointment appointment, UserDao uDao) {
+
+		User tutor = uDao.findById(appointment.getTutor_id());
+
+		String subject = "Rate&Review Tutor Appointment Request";
+		String messageHeader = "<p>Hello " + tutor.getFirst_name() + ",</p><br />";
+		String messageBody = "<p>You have appointment request(s) waiting for you. " + "<a href=\"http://"
+				+ Application.DOMAIN + "/login" + "\">Login</a> to continue.</p>";
+		String messageFooter = "<br /><p>Sincerely,</p><p>The Rate&Review Team</p>";
+		String message = messageHeader + messageBody + messageFooter;
+
+		Email.deliverEmail(tutor.getFirst_name(), tutor.getEmail(), subject, message);
+
 	}
 
 }

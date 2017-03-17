@@ -96,13 +96,147 @@
 							
   <p>Click on the headings below to view your relevant information.</p>
   <div class="panel-group" id="accordion">
+	
+	<div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Courses To Review</a>
+        </h4>
+      </div>
+      <div id="collapse4" class="panel-collapse in"> 
+      	{{#if no_courses_to_review}}You have no more courses to review.{{/if}}
+		{{#unless no_courses_to_review}}	
+      	<div class="table-wrapper">
+								<table class="alt">
+									<thead>
+										<tr>
+											<th><br>Professor Name</th>
+											<th><br>Course</th>
+											<th><br>Semester</th>
+											<th><br>Year</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+									{{#each courses_not_reviewed}}
+										<tr>
+											<td>{{professor_first_name}} {{professor_last_name}}</td>
+											<td><a href="/reviewprofessor/{{course_id}}/review">{{course_name}}</a></td>
+											<td>{{semester}}</td>
+											<td>{{year}}</td>
+										</tr>
+									{{/each}}
+									</tbody>
+									<tfoot>
+									</tfoot>
+								</table>
+							</div> 
+							{{/unless}}
+      				</div>
+    	</div> 
+    
+    
+    
     <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">My Recent Reviews</a>
+        </h4>
+      </div>
+      <div id="collapse3" class="panel-collapse collapse">
+    {{#if no_courses_reviewed}}You do not have any recent reviews.{{/if}}
+	{{#unless no_courses_reviewed}}
+        <div class="table-wrapper">
+								<table class="alt">
+									<thead>
+										<tr>
+											<th></th>
+											<th><br>Professor Name</th>
+											<th><br>Course</th>
+											<th><br>Semester</th>
+											<th><br>Year</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+									{{#each courses_reviewed}}
+										<tr>
+											<td class="shrink" align="center">
+											{{#unless disable_edit}}
+											<a href="/reviewprofessor/{{course_id}}/review" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span></a>
+											{{/unless}}
+											</td>
+											<td>{{professor_first_name}} {{professor_last_name}}</td>
+											<td>{{course_name}}</td>
+											<td>{{semester}}</td>
+											<td>{{year}}</td>
+										</tr>
+									{{/each}}
+									</tbody>
+									<tfoot>
+									</tfoot>
+								</table>
+							</div> 
+							{{/unless}}
+      		</div>
+  	</div>
+  
+  
+  
+   
+    
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Request Tutor Appointment</a>
+        </h4>
+      </div>
+		<div id="collapse2" class="panel-collapse collapse">
+      	 <div class="table-wrapper">
+			<table class="alt">
+				<thead>
+					<tr>
+					<th><br>Tutor</th>
+					<th><br>Class</th>
+					<th><br>Date</th>
+					<th><br>Time</th>
+					<th><br>Message</th>
+					<th></th>
+					</tr>
+				</thead>
+				<tbody>
+						{{#each tutors}}
+						
+							<tr>
+							<form action="/studentdashboard" method="post">
+							<td class="shrink">{{tutor_first_name}} {{tutor_last_name}}</td>
+							<td class="shrink">{{course_name}}</td>
+							<td class="shrink"><input type="date" name="date" id="date" value="" placeholder="Date" /></td>
+							<td class="shrink"><input type="time" name="time" id="time" value="" placeholder="Time" /></td>
+							<td><input type="text" name="student_message" id="student_message" placeholder="Leave a message here." /></td>
+							<td class = "shrink">
+								<button class="btn btn-primary" type="submit" name="tutor_id" value="{{student_id}}"><span class="glyphicon glyphicon-arrow-right"></span></button>
+							</td>
+							</form>
+							</tr>
+						
+						{{/each}}
+				</tbody>
+					<tfoot>
+					</tfoot>
+				</table>
+			</div> 
+		</div>
+		</div>
+		
+		 <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
           <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">My Upcoming Appointments</a>
         </h4>
       </div>
-      <div id="collapse1" class="panel-collapse collapse in">
+      <div id="collapse1" class="panel-collapse collapse collapse">
         
         
         
@@ -152,141 +286,17 @@
   
         
       </div>
+	
+    </div>
     </div>
     
     
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Request Tutor Appointment</a>
-        </h4>
-      </div>
-		<div id="collapse2" class="panel-collapse collapse">
-      	 <div class="table-wrapper">
-			<table class="alt">
-				<thead>
-					<tr>
-					<th><br>Tutor</th>
-					<th><br>Class</th>
-					<th><br>Date</th>
-					<th><br>Time</th>
-					<th><br>Message</th>
-					<th></th>
-					</tr>
-				</thead>
-				<tbody>
-						{{#each tutors}}
-						
-							<tr>
-							<form action="/studentdashboard" method="post">
-							<td class="shrink">{{tutor_first_name}} {{tutor_last_name}}</td>
-							<td class="shrink">{{course_name}}</td>
-							<td class="shrink"><input type="date" name="date" id="date" value="" placeholder="Date" /></td>
-							<td class="shrink"><input type="time" name="time" id="time" value="" placeholder="Time" /></td>
-							<td><input type="text" name="student_message" id="student_message" placeholder="Leave a message here." /></td>
-							<td class = "shrink">
-								<button class="btn btn-primary" type="submit" name="tutor_id" value="{{student_id}}"><span class="glyphicon glyphicon-arrow-right"></span></button>
-							</td>
-							</form>
-							</tr>
-						
-						{{/each}}
-				</tbody>
-					<tfoot>
-					</tfoot>
-				</table>
-			</div> 
-		</div>
-	</div>
     
     
     
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">My Recent Reviews</a>
-        </h4>
-      </div>
-      <div id="collapse3" class="panel-collapse collapse">
-    {{#if no_courses_reviewed}}You do not have any recent reviews.{{/if}}
-	{{#unless no_courses_reviewed}}
-        <div class="table-wrapper">
-								<table class="alt">
-									<thead>
-										<tr>
-											<th></th>
-											<th><br>Professor Name</th>
-											<th><br>Course</th>
-											<th><br>Semester</th>
-											<th><br>Year</th>
-											<th></th>
-										</tr>
-									</thead>
-									<tbody>
-									{{#each courses_reviewed}}
-										<tr>
-											<td class="shrink" align="center">
-											{{#unless disable_edit}}
-											<a href="/reviewprofessor/{{course_id}}/review" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span></a>
-											{{/unless}}
-											</td>
-											<td>{{professor_first_name}} {{professor_last_name}}</td>
-											<td>{{course_name}}</td>
-											<td>{{semester}}</td>
-											<td>{{year}}</td>
-										</tr>
-									{{/each}}
-									</tbody>
-									<tfoot>
-									</tfoot>
-								</table>
-							</div> 
-							{{/unless}}
-      </div>
-    </div>
-    
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Courses To Review</a>
-        </h4>
-      </div>
-      <div id="collapse4" class="panel-collapse collapse"> 
-      	{{#if no_courses_to_review}}You have no more courses to review.{{/if}}
-		{{#unless no_courses_to_review}}	
-      	<div class="table-wrapper">
-								<table class="alt">
-									<thead>
-										<tr>
-											<th><br>Professor Name</th>
-											<th><br>Course</th>
-											<th><br>Semester</th>
-											<th><br>Year</th>
-											<th></th>
-										</tr>
-									</thead>
-									<tbody>
-									{{#each courses_not_reviewed}}
-										<tr>
-											<td>{{professor_first_name}} {{professor_last_name}}</td>
-											<td><a href="/reviewprofessor/{{course_id}}/review">{{course_name}}</a></td>
-											<td>{{semester}}</td>
-											<td>{{year}}</td>
-										</tr>
-									{{/each}}
-									</tbody>
-									<tfoot>
-									</tfoot>
-								</table>
-							</div> 
-							{{/unless}}
-      </div>
-    </div>
-    
-  </div> 
-</div>
-		
-			
+    	
+    		
+	</div>		
   </div>
   
     
