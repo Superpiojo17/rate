@@ -153,6 +153,7 @@
       <div class="panel-heading">
         <h4 class="panel-title">
           <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">My Appointment Requests</a>
+          {{#if appointments_requested}} <span class="glyphicon glyphicon-alert" style="color:red"></span>{{/if}}
         </h4>
       </div>
       <div id="collapse3" class="panel-collapse collapse">

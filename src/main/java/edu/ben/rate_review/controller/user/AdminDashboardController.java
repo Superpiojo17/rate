@@ -41,7 +41,14 @@ public class AdminDashboardController {
 
 		ProfessorReviewDao reviewDao = dao.getProfessorReviewDao();
 		List<ProfessorReview> flagged = reviewDao.listAllFlaggedComments();
+		
+		boolean unseen_flagged_comments = false;
+		if (!flagged.isEmpty()){
+			unseen_flagged_comments = true;
+		}
+		
 		model.put("flagged", flagged);
+		model.put("unseen_flagged_comments", unseen_flagged_comments);
 
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/admindashboard.hbs");
