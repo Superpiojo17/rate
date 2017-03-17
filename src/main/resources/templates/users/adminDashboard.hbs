@@ -150,8 +150,8 @@
 							<td>{{comment}}</td>
 							<td class = "shrink">
 								<form action="/admindashboard" method="post">
-									<button class="btn btn-primary" type="submit" name="flagged_comment" value="-{{course_id}}"><span class="glyphicon glyphicon-ok-sign"></span></button>
-									<button class="btn btn-danger" type="submit" name="flagged_comment" value="{{course_id}}"><span class="glyphicon glyphicon-remove-sign"></span></button>
+									<button title="approve comment" class="btn btn-primary" type="submit" name="flagged_comment" value="-{{course_id}}"><span class="glyphicon glyphicon-ok-sign"></span></button>
+									<button title="remove comment" class="btn btn-danger" type="submit" name="flagged_comment" value="{{course_id}}"><span class="glyphicon glyphicon-remove-sign"></span></button>
 								</form>
 							</td>
 						</tr>
