@@ -277,6 +277,35 @@ public class TutorDao implements Dao<Tutor> {
 	}
 
 	/**
+	 * Lists all approved tutor appointments
+	 * 
+	 * @param tutor_id
+	 * @return
+	 */
+	public List<TutorAppointment> listAllApprovedTutorAppointments(Long tutor_id) {
+		final String SELECT = "SELECT * FROM " + APPOINTMENT_TABLE + " WHERE appointment_status = 1 AND tutor_id = "
+				+ tutor_id;
+
+		List<TutorAppointment> appointments = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			appointments = new ArrayList<TutorAppointment>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					appointments.add(appointmentMapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return appointments;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return appointments;
+	}
+
+	/**
 	 * Lists a student's upcoming appointments
 	 * 
 	 * @param student_id

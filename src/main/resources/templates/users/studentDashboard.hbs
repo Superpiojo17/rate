@@ -5,6 +5,8 @@
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 -->
 <html>
+
+
 	<head>
 		<title>Student Dashboard</title>
 		<meta charset="utf-8" />
@@ -72,7 +74,7 @@
 									{{#each announcements}}
 										<tr>
 											<td>{{date}}</td>
-											<td>{{announcement_content}}</td>
+											<td>{{{announcement_content}}}</td>
 										</tr>
 										{{/each}}
 									</tbody>
@@ -84,6 +86,11 @@
 								</table>
 								
 							</div>
+							
+							
+							
+							
+							
 							
 							
 						</section>
@@ -114,7 +121,6 @@
 											<th><br>Course</th>
 											<th><br>Semester</th>
 											<th><br>Year</th>
-											<th></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -155,7 +161,6 @@
 											<th><br>Course</th>
 											<th><br>Semester</th>
 											<th><br>Year</th>
-											<th></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -263,14 +268,14 @@
 							<td>{{tutor_message}}</td>
 							<td class="shrink">
 								{{#unless tutor_has_responded}}
-									<div><i>Pending</i></div>
+									<span class="glyphicon glyphicon-option-horizontal"></span>
 								{{/unless}}
 								{{#if tutor_has_responded}} 
 									{{#unless appointment_status}}
-										<div><i>Denied</i></div>
+										<span class="glyphicon glyphicon-remove" style="color:red"></span>
 									{{/unless}}
 									{{#if appointment_status}}
-										<div><i>Approved</i></div>
+										<span class="glyphicon glyphicon-ok" style="color:green"></span>
 									{{/if}}
 								{{/if}}
 							</td>

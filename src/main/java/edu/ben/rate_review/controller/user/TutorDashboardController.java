@@ -37,17 +37,25 @@ public class TutorDashboardController {
 		model.put("announcements", announcements);
 
 		TutorDao tDao = adao.getTutorDao();
+		
 		List<TutorAppointment> appointments = tDao.listAllTutorAppointments(u.getId());
-
 		List<TutorAppointment> unviewed_appointments = tDao.listAllUnviewedTutorAppointments(u.getId());
+		List<TutorAppointment> approved_appointments = tDao.listAllApprovedTutorAppointments(u.getId());
 
 		boolean appointments_requested = false;
 		if (!unviewed_appointments.isEmpty()) {
 			appointments_requested = true;
 		}
+		boolean upcoming_appointments = false;
+		if (!approved_appointments.isEmpty()) {
+			upcoming_appointments = true;
+		}
+		
 		model.put("appointments_requested", appointments_requested);
-
+		model.put("upcoming_appointments", upcoming_appointments);
+		
 		model.put("appointments", appointments);
+		model.put("approved_appointments", approved_appointments);
 
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/tutorDashboard.hbs");

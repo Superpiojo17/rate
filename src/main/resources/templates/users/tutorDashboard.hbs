@@ -103,9 +103,40 @@
         </h4>
       </div>
       <div id="collapse1" class="panel-collapse collapse in">
-        <div class="panel-body">You have no upcoming appiontments. Search for a tutor to set up a study session!</div>
+		{{#unless upcoming_appointments}}You do not currently have any scheduled appointments.{{/unless}}
+		{{#if upcoming_appointments}}
+		<div class="table-wrapper">
+			<table class="alt">
+				<thead>
+					<tr>
+					<th><br>Student</th>
+					<th><br>Date</th>
+					<th><br>Time</th>
+					<th><br>Student Message</th>
+					<th><br>Your Response</th>
+					</tr>
+				</thead>
+				<tbody>
+						{{#each approved_appointments}}		
+							<tr>
+							<td class="shrink">{{student_firstname}} {{student_lastname}}</td>
+							<td class="shrink">{{date}}</td>
+							<td class="shrink">{{time}}</td>
+							<td class="shrink">{{student_message}}</td>
+							<td>{{tutor_message}}</td>
+							</tr>				
+						{{/each}}
+				</tbody>
+					<tfoot>
+					</tfoot>
+				</table>
+			</div> 
+     	{{/if}}
+
       </div>
     </div>
+    
+<!--   
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -116,6 +147,8 @@
         <div class="panel-body">You have not added any classes to your profile. Click on My Classes on the side menu to add your courses!</div>
       </div>
     </div>
+    
+-->  
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
