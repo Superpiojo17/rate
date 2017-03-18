@@ -116,23 +116,43 @@
         <div class="panel-body">You have no upcoming appiontments. Search for a tutor to set up a study session!</div>
       </div>
     </div>
+-->
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">My Classes</a>
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">My New Mixtape</a>
         </h4>
       </div>
       <div id="collapse2" class="panel-collapse collapse">
-        <div class="panel-body">You have not added any classes to your profile. Click on My Classes on the side menu to add your courses!</div>
+        <span class="glyphicon glyphicon-fire" style="color:red"></span>
+        <span class="glyphicon glyphicon-fire" style="color:red"></span>
+        <span class="glyphicon glyphicon-fire" style="color:red"></span>
+        <span class="glyphicon glyphicon-fire" style="color:red"></span>
+        <span class="glyphicon glyphicon-fire" style="color:red"></span>
+        <span class="glyphicon glyphicon-fire" style="color:red"></span>
+        <span class="glyphicon glyphicon-fire" style="color:red"></span>
+        <span class="glyphicon glyphicon-fire" style="color:red"></span>
+        <span class="glyphicon glyphicon-fire" style="color:red"></span>
+        <span class="glyphicon glyphicon-fire" style="color:red"></span>
+        <span class="glyphicon glyphicon-fire" style="color:red"></span>
+        <span class="glyphicon glyphicon-fire" style="color:red"></span>
+        <span class="glyphicon glyphicon-fire" style="color:red"></span>
+        <span class="glyphicon glyphicon-fire" style="color:red"></span>
+        <span class="glyphicon glyphicon-fire" style="color:red"></span>
+        <span class="glyphicon glyphicon-fire" style="color:red"></span>
+        <span class="glyphicon glyphicon-fire" style="color:red"></span>
+        <span class="glyphicon glyphicon-fire" style="color:red"></span>
+        <span class="glyphicon glyphicon-fire" style="color:red"></span>
+        <span class="glyphicon glyphicon-fire" style="color:red"></span>
+        <span class="glyphicon glyphicon-fire" style="color:red"></span>
       </div>
     </div>
     
---> 
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
           <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Flagged comments</a>
-          {{#if unseen_flagged_comments}} <span title="You have flagged comments waiting to be reviewed." class="glyphicon glyphicon-alert" style="color:red">&nbsp;</span>{{/if}}
+          {{#if unseen_flagged_comments}} <span title="You have flagged comments waiting to be reviewed." class="glyphicon glyphicon-alert" style="color:red"></span>{{/if}}
         </h4>
       </div>
       <div id="collapse3" class="panel-collapse in">
@@ -155,8 +175,8 @@
 							<td>{{comment}}</td>
 							<td class = "shrink">
 								<form action="/admindashboard" method="post">
-									<button title="approve comment" class="btn btn-primary" type="submit" name="flagged_comment" value="-{{course_id}}"><span class="glyphicon glyphicon-ok-sign"></span></button>
-									<button title="remove comment" class="btn btn-danger" type="submit" name="flagged_comment" value="{{course_id}}"><span class="glyphicon glyphicon-remove-sign"></span></button>
+									<button title="approve comment" class="btn btn-primary" type="submit" name="flagged_comment" value="-{{course_id}}"><span class="glyphicon glyphicon-ok"></span></button>
+									<button title="remove comment" class="btn btn-danger" type="submit" name="flagged_comment" value="{{course_id}}"><span class="glyphicon glyphicon-remove"></span></button>
 								</form>
 							</td>
 						</tr>
