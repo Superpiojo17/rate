@@ -122,7 +122,7 @@
 							<td class="shrink">{{student_firstname}} {{student_lastname}}</td>
 							<td class="shrink">{{date}}</td>
 							<td class="shrink">{{time}}</td>
-							<td class="shrink">{{student_message}}</td>
+							<td>{{student_message}}</td>
 							<td>{{tutor_message}}</td>
 							</tr>				
 						{{/each}}
@@ -167,7 +167,7 @@
 					<th><br>Date</th>
 					<th><br>Time</th>
 					<th><br>Message</th>
-					<th><br>Response</th>
+					<th><br>Response (Size limit: 200)</th>
 					<th></th>
 					</tr>
 				</thead>
@@ -179,7 +179,7 @@
 							<td class="shrink">{{student_firstname}} {{student_lastname}}</td>
 							<td class="shrink">{{date}}</td>
 							<td class="shrink">{{time}}</td>
-							<td class="shrink">{{student_message}}</td>
+							<td>{{student_message}}</td>
 							<td><input type="text" name="tutor_message" id="tutor_message" placeholder="Leave a response here." /></td>
 							<td class = "shrink">
 								<button title="approve request" class="btn btn-primary" type="submit" name="appointment_id" value="{{appointment_id}}"><span class="glyphicon glyphicon-ok"></span></button>

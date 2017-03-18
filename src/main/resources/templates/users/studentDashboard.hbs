@@ -128,7 +128,9 @@
 									{{#each courses_not_reviewed}}
 										<tr>
 											<td>{{professor_first_name}} {{professor_last_name}}</td>
-											<td><a href="/reviewprofessor/{{course_id}}/review">{{course_name}}</a></td>
+											<td>
+											<a title="click here to review" href="/reviewprofessor/{{course_id}}/review">{{course_name}}</a>
+											</td>
 											<td>{{semester}}</td>
 											<td>{{year}}</td>
 										</tr>
@@ -169,7 +171,7 @@
 										<tr>
 											<td class="shrink" align="center">
 											{{#unless disable_edit}}
-											<a href="/reviewprofessor/{{course_id}}/review" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span></a>
+											<a title="edit your review" href="/reviewprofessor/{{course_id}}/review" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span></a>
 											{{/unless}}
 											</td>
 											<td>{{professor_first_name}} {{professor_last_name}}</td>
@@ -207,7 +209,7 @@
 					<th><br>Class</th>
 					<th><br>Date</th>
 					<th><br>Time</th>
-					<th><br>Message</th>
+					<th><br>Message (Size limit: 200)</th>
 					<th></th>
 					</tr>
 				</thead>
@@ -265,7 +267,7 @@
 							<td class="shrink">{{tutor_firstname}} {{tutor_lastname}}</td>
 							<td class="shrink">{{date}}</td>
 							<td class="shrink">{{time}}</td>
-							<td class="shrink">{{student_message}}</td>
+							<td>{{student_message}}</td>
 							<td>{{tutor_message}}</td>
 							<td class="shrink">
 								{{#unless tutor_has_responded}}

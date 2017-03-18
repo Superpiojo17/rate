@@ -37,7 +37,7 @@ public class TutorDashboardController {
 		model.put("announcements", announcements);
 
 		TutorDao tDao = adao.getTutorDao();
-		
+
 		List<TutorAppointment> appointments = tDao.listAllTutorAppointments(u.getId());
 		List<TutorAppointment> unviewed_appointments = tDao.listAllUnviewedTutorAppointments(u.getId());
 		List<TutorAppointment> approved_appointments = tDao.listAllApprovedTutorAppointments(u.getId());
@@ -50,10 +50,10 @@ public class TutorDashboardController {
 		if (!approved_appointments.isEmpty()) {
 			upcoming_appointments = true;
 		}
-		
+
 		model.put("appointments_requested", appointments_requested);
 		model.put("upcoming_appointments", upcoming_appointments);
-		
+
 		model.put("appointments", appointments);
 		model.put("approved_appointments", approved_appointments);
 
@@ -78,19 +78,27 @@ public class TutorDashboardController {
 			appointment.setTutor_message(req.queryParams("tutor_message"));
 			appointment.setTutor_has_responded(true);
 
-			tDao.updateTutorResponse(appointment);
-			tDao.setTutorResponded(appointment);
-			tDao.approveAppointment(appointment);
-			emailAppointmentResponse(appointment);
+			if (appointment.getTutor_message().length() < 200) {
+				tDao.updateTutorResponse(appointment);
+				tDao.setTutorResponded(appointment);
+				tDao.approveAppointment(appointment);
+				emailAppointmentResponse(appointment);
+			} else {
+				// message too long
+			}
 		} else {
 			id *= -1;
 			TutorAppointment appointment = tDao.findAppointmentByID(id);
 			appointment.setTutor_message(req.queryParams("tutor_message"));
 			appointment.setTutor_has_responded(true);
 
-			tDao.updateTutorResponse(appointment);
-			tDao.setTutorResponded(appointment);
-			emailAppointmentResponse(appointment);
+			if (appointment.getTutor_message().length() < 200) {
+				tDao.updateTutorResponse(appointment);
+				tDao.setTutorResponded(appointment);
+				emailAppointmentResponse(appointment);
+			} else {
+				// message too long
+			}
 		}
 
 		res.redirect(Application.TUTORDASHBOARD_PATH);

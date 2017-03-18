@@ -92,33 +92,36 @@ public class StudentDashboardController {
 	 */
 	public String requestAppointment(Request req, Response res) {
 
-		Session session = req.session();
-		User u = (User) session.attribute("current_user");
-		DaoManager dao = DaoManager.getInstance();
-		TutorDao tDao = dao.getTutorDao();
-		UserDao uDao = dao.getUserDao();
-		User tutor = uDao.findById(Long.parseLong(req.queryParams("tutor_id")));
+			Session session = req.session();
+			User u = (User) session.attribute("current_user");
+			DaoManager dao = DaoManager.getInstance();
+			TutorDao tDao = dao.getTutorDao();
+			UserDao uDao = dao.getUserDao();
+			User tutor = uDao.findById(Long.parseLong(req.queryParams("tutor_id")));
 
-		if (!req.queryParams("date").isEmpty() && !req.queryParams("time").isEmpty()) {
+			if (!req.queryParams("date").isEmpty() && !req.queryParams("time").isEmpty()) {
 
-			TutorAppointment appointment = new TutorAppointment();
+				TutorAppointment appointment = new TutorAppointment();
 
-			appointment.setStudent_id(u.getId());
-			appointment.setTutor_id(Long.parseLong(req.queryParams("tutor_id")));
-			appointment.setDate(req.queryParams("date"));
-			appointment.setTime(req.queryParams("time"));
-			appointment.setStudent_message(req.queryParams("student_message"));
-			appointment.setStudent_firstname(u.getFirst_name());
-			appointment.setStudent_lastname(u.getLast_name());
-			appointment.setTutor_firstname(tutor.getFirst_name());
-			appointment.setTutor_lastname(tutor.getLast_name());
-			tDao.saveTutorAppointment(appointment);
-
-			emailAppointmentRequest(appointment, uDao);
-		} else {
-			// message - please set a date
-		}
-
+				appointment.setStudent_id(u.getId());
+				appointment.setTutor_id(Long.parseLong(req.queryParams("tutor_id")));
+				appointment.setDate(req.queryParams("date"));
+				appointment.setTime(req.queryParams("time"));
+				appointment.setStudent_message(req.queryParams("student_message"));
+				appointment.setStudent_firstname(u.getFirst_name());
+				appointment.setStudent_lastname(u.getLast_name());
+				appointment.setTutor_firstname(tutor.getFirst_name());
+				appointment.setTutor_lastname(tutor.getLast_name());
+				
+				if (appointment.getStudent_message().length() < 200){
+				tDao.saveTutorAppointment(appointment);
+				emailAppointmentRequest(appointment, uDao);
+				} else {
+					// message - comment too long
+				}
+			} else {
+				// message - please set a date
+			}
 		res.redirect(Application.STUDENTDASHBOARD_PATH);
 		return "";
 	}
