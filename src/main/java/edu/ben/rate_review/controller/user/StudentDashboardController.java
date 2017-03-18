@@ -11,6 +11,7 @@ import edu.ben.rate_review.daos.ProfessorReviewDao;
 import edu.ben.rate_review.daos.TutorDao;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.email.Email;
+import edu.ben.rate_review.formatTime.FormatTime;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.CoursesToReview;
 import edu.ben.rate_review.models.ProfessorReview;
@@ -76,6 +77,11 @@ public class StudentDashboardController {
 		model.put("tutors", tutors);
 
 		List<TutorAppointment> appointments = tDao.listAllStudentAppointments(u);
+		
+		for (int i = 0; i < appointments.size(); i++) {
+			appointments.get(i).setTime(FormatTime.formatTime(appointments.get(i).getTime()));
+		}
+		
 		model.put("upcoming_appointments", appointments);
 
 		// Tell the server to render the index page with the data in the model

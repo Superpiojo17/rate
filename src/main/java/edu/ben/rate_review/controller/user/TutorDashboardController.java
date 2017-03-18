@@ -10,6 +10,7 @@ import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.TutorDao;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.email.Email;
+import edu.ben.rate_review.formatTime.FormatTime;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.TutorAppointment;
 import edu.ben.rate_review.models.User;
@@ -41,6 +42,13 @@ public class TutorDashboardController {
 		List<TutorAppointment> appointments = tDao.listAllTutorAppointments(u.getId());
 		List<TutorAppointment> unviewed_appointments = tDao.listAllUnviewedTutorAppointments(u.getId());
 		List<TutorAppointment> approved_appointments = tDao.listAllApprovedTutorAppointments(u.getId());
+
+		for (int i = 0; i < approved_appointments.size(); i++) {
+			approved_appointments.get(i).setTime(FormatTime.formatTime(approved_appointments.get(i).getTime()));
+		}
+		for (int i = 0; i < appointments.size(); i++) {
+			appointments.get(i).setTime(FormatTime.formatTime(appointments.get(i).getTime()));
+		}
 
 		boolean appointments_requested = false;
 		if (!unviewed_appointments.isEmpty()) {
