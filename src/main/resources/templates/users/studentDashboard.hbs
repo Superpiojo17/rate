@@ -108,6 +108,7 @@
       <div class="panel-heading">
         <h4 class="panel-title">
           <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Courses To Review</a>
+          {{#unless no_courses_to_review}} <span title="You have classes waiting to be reviewed." class="glyphicon glyphicon-exclamation-sign" style="color:orange"></span>{{/unless}}
         </h4>
       </div>
       <div id="collapse4" class="panel-collapse in"> 
@@ -238,7 +239,7 @@
 		 <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">My Upcoming Appointments</a>
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Appointment Responses</a>
         </h4>
       </div>
       <div id="collapse1" class="panel-collapse collapse collapse">
@@ -268,14 +269,14 @@
 							<td>{{tutor_message}}</td>
 							<td class="shrink">
 								{{#unless tutor_has_responded}}
-									<span class="glyphicon glyphicon-option-horizontal"></span>
+									<span title="pending" class="glyphicon glyphicon-option-horizontal"></span>
 								{{/unless}}
 								{{#if tutor_has_responded}} 
 									{{#unless appointment_status}}
-										<span class="glyphicon glyphicon-remove" style="color:red"></span>
+										<span title="declined" class="glyphicon glyphicon-remove" style="color:red"></span>
 									{{/unless}}
 									{{#if appointment_status}}
-										<span class="glyphicon glyphicon-ok" style="color:green"></span>
+										<span title="approved" class="glyphicon glyphicon-ok" style="color:green"></span>
 									{{/if}}
 								{{/if}}
 							</td>
@@ -384,7 +385,7 @@ if (curr_min < 10){
 document.getElementById("hour").innerHTML = curr_hour + " : 0" + curr_min + " " + a_p;
 } else if (curr_min > 9){
 document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " + a_p;
-}s
+}
 
 
 
