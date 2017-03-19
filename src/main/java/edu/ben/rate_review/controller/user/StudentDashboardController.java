@@ -58,6 +58,7 @@ public class StudentDashboardController {
 			noCoursesReviewed = true;
 		}
 
+		// booleans for whether or not to display table
 		model.put("no_courses_to_review", noCoursesToReview);
 		model.put("no_courses_reviewed", noCoursesReviewed);
 
@@ -69,7 +70,10 @@ public class StudentDashboardController {
 
 		model.put("courses_not_reviewed", coursesNotReviewed);
 		model.put("courses_reviewed", coursesReviewed);
-
+		
+		//count of courses not reviewed
+		model.put("number_of_courses", coursesNotReviewed.size());
+		
 		model.put("current_user", u);
 
 		TutorDao tDao = dao.getTutorDao();

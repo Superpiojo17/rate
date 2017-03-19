@@ -61,11 +61,16 @@ public class TutorDashboardController {
 			upcoming_appointments = true;
 		}
 
+		// booleans for whether or not to display table/icon
 		model.put("appointments_requested", appointments_requested);
 		model.put("upcoming_appointments", upcoming_appointments);
 
+		// lists of appointments/requested appointments
 		model.put("appointments", appointments);
 		model.put("approved_appointments", approved_appointments);
+		
+		// count of appointment requests that need a response
+		model.put("number_of_requests", unviewed_appointments.size());
 
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/tutorDashboard.hbs");

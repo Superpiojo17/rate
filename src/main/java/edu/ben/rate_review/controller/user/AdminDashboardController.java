@@ -47,7 +47,11 @@ public class AdminDashboardController {
 			unseen_flagged_comments = true;
 		}
 		
+		// list of flagged comments
 		model.put("flagged", flagged);
+		// count of unreviewed flagged comments
+		model.put("number_of_flagged", flagged.size());
+		// boolean returns true if comments need to be reviewed
 		model.put("unseen_flagged_comments", unseen_flagged_comments);
 
 		// Tell the server to render the index page with the data in the model
