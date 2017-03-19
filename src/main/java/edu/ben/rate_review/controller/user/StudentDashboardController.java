@@ -11,7 +11,7 @@ import edu.ben.rate_review.daos.ProfessorReviewDao;
 import edu.ben.rate_review.daos.TutorDao;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.email.Email;
-import edu.ben.rate_review.formatTime.FormatTime;
+import edu.ben.rate_review.formatTime.FormatTimeAndDate;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.CoursesToReview;
 import edu.ben.rate_review.models.ProfessorReview;
@@ -79,7 +79,8 @@ public class StudentDashboardController {
 		List<TutorAppointment> appointments = tDao.listAllStudentAppointments(u);
 		
 		for (int i = 0; i < appointments.size(); i++) {
-			appointments.get(i).setTime(FormatTime.formatTime(appointments.get(i).getTime()));
+			appointments.get(i).setTime(FormatTimeAndDate.formatTime(appointments.get(i).getTime()));
+			appointments.get(i).setDate(FormatTimeAndDate.formatDate(appointments.get(i).getDate()));
 		}
 		
 		model.put("upcoming_appointments", appointments);
