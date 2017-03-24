@@ -1,0 +1,242 @@
+<!DOCTYPE HTML>
+<!--
+	Retrospect by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>Manage Users</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="/assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+	</head>
+	
+	
+	<body>
+
+		<!-- Header -->
+			<header id="adminheader">
+				<h1>Administrator Dashboard</h1>
+			</header>
+
+			<!-- Nav -->
+			<nav id="nav" class="visible">
+				<ul class="links">
+					<li><a href="/admindashboard">Home</a></li>
+					<li><a href="/register">My Account</a></li>
+					<li><a href="/aboutus">View Apointments</a></li>
+					<li><a href="/aboutus">View Reviews</a></li>
+					<li><a href="/contactus">Contact Us</a></li>
+					<li><a href="/allusers">Manage Users</a></li>
+					<li><a href="/announcement">Announcements</a></li>
+					<li><a href="/deactivation">De-Activate</a></li>
+					<li><a href="/login">Log Out</a></li>
+					
+				</ul>
+			</nav>
+			
+			<!-- Banner -->
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="adminDash">
+</div>
+ <p> </p>
+
+
+  
+<section id="main" class="wrapper">
+			<div class="leftcol"> 
+			
+			<!-- Button trigger modal -->
+ <br>
+			&nbsp;
+     <p><h4 id="date"></h4></p>
+     <p><h4 id="hour"></h4></p>
+      <a href="#announcement" class="btn btn-info" data-toggle="collapse">Announcements</a>
+  <div id="announcement" class="collapse">
+  &nbsp;
+  
+  
+							<div class="table-wrapper">
+								<table class="alt">
+									<thead>
+										<tr>
+											<th>Date</th>
+											<th>Description</th>
+										</tr>
+									</thead>
+									<tbody>
+									{{#each announcements}}
+										<tr>
+											<td>{{date}}</td>
+											<td>{{{announcement_content}}}</td>
+										</tr>
+										{{/each}}
+									</tbody>
+									<tfoot>
+										<tr>
+											<td colspan="2"></td>
+										</tr>
+									</tfoot>
+								</table>
+								
+							</div>
+							
+							
+						</section>
+						
+							<div class="centercol"> 
+							&ensp;
+							<h2> Manage your users </h2>
+							
+							
+							
+  <p>View all the registered users, as well as their information.</p>
+  &ensp;
+  
+  
+ 
+							<div class="table-wrapper">
+							&nbsp;&nbsp;
+								<table id = "indextable" class="indextable alt">
+									<thead>
+										<tr>
+											<th></th>
+											
+											
+											<th class=" shrink text-left"><a href="javascript:SortTable(1,'T');" class="btn btn-default">Subject</button></a></th>
+										<th class="shrink text-left"><a href="javascript:SortTable(2,'T');" class="btn btn-default" >Course</button></a></th>
+<th class="shrink text-left"><a href="javascript:SortTable(3,'T');" class="btn btn-default" >Professor</button></a></th>
+<th class="text-left"><a href="javascript:SortTable(4,'T');" class="btn btn-default" >Term</button></a></th>
+											
+										</tr>
+									</thead>
+									<tbody>
+									{{#each courses}}
+										<tr>
+											
+											
+											<td class="shrink" align="center"><a href="/user/{{id}}/edit"  class="btn btn-info">Edit<span class="glyphicon glyphicon-pencil"></span></a></td>
+											<td class="shrink">{{subject}}</td>
+											<td class="shrink">{{course_name}}</td>
+											<td class="shrink">{{professor_id}}</td>
+											<td class="shrink">{{term}}</td>
+																			
+										
+											
+										</tr>
+									{{/each}}
+									</tbody>
+									<tfoot>
+									</tfoot>
+								</table>
+								
+							</div>
+						</section>
+						
+						
+						
+				
+		
+			
+  </div>
+  
+ 
+
+		<!-- Scripts -->
+			<script src="/assets/js/jquery.min.js"></script>
+			<script src="/assets/js/skel.min.js"></script>
+			<script src="/assets/js/util.js"></script>
+			<script type="text/javascript" src="/assets/js/sortColumns.js"  ></script>
+			<script>
+
+// d = new Date();
+
+
+
+
+</script>
+<script type="text/javascript">
+<!--
+
+var d_names = new Array("Sunday", "Monday", "Tuesday",
+"Wednesday", "Thursday", "Friday", "Saturday");
+
+var m_names = new Array("January", "February", "March", 
+"April", "May", "June", "July", "August", "September", 
+"October", "November", "December");
+
+var d = new Date();
+var curr_day = d.getDay();
+var curr_date = d.getDate();
+var sup = "";
+if (curr_date == 1 || curr_date == 21 || curr_date ==31)
+   {
+   sup = "st";
+   }
+else if (curr_date == 2 || curr_date == 22)
+   {
+   sup = "nd";
+   }
+else if (curr_date == 3 || curr_date == 23)
+   {
+   sup = "rd";
+   }
+else
+   {
+   sup = "th";
+   }
+var curr_month = d.getMonth();
+var curr_year = d.getFullYear();
+document.getElementById("date").innerHTML = d_names[curr_day] + " " + curr_date + "<SUP>"
++ sup + "</SUP> " + m_names[curr_month] + " " + curr_year;
+
+
+var a_p = "";
+var hour = new Date();
+
+var curr_hour = hour.getHours();
+var curr_min = hour.getMinutes();
+
+if (curr_hour < 12)
+   {
+   a_p = "AM";
+   }
+else
+   {
+   a_p = "PM";
+   }
+if (curr_hour == 0)
+   {
+   curr_hour = 12;
+   }
+if (curr_hour > 12)
+   {
+   curr_hour = curr_hour - 12;
+   }
+
+var curr_min = hour.getMinutes();
+if (curr_min < 10){
+document.getElementById("hour").innerHTML = curr_hour + " : 0" + curr_min + " " + a_p;
+} else if (curr_min > 9){
+document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " + a_p;
+}
+
+
+</script>
+
+
+
+
+			<!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="/assets/js/main2.js"></script>
+
+	</body>
+</html>

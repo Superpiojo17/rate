@@ -50,6 +50,15 @@ public class DaoManager {
 		}
 		return null;
 	}
+	
+	public CourseDao getCourseDao() {
+		try {
+			return new CourseDao(this.src.getConnection());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public AnnouncementDao getAnnouncementDao() {
 		try {

@@ -308,6 +308,34 @@ public class UserDao implements Dao<User> {
 		}
 		return users;
 	}
+	
+	/**
+	 * 
+	 * @return all professors from the database.
+	 */
+
+	public List<User> allProfessors() {
+		final String SELECT = "SELECT * FROM " + USER_TABLE + " WHERE role_id = 2";
+
+		List<User> users = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			users = new ArrayList<User>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					users.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return users;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+
 
 	/**
 	 * 
