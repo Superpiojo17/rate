@@ -141,6 +141,7 @@ public class Application {
 	public static String CALENDAR_PATH = "/calendar";
 	public static String COURSELANDING_PATH = "/courseslanding";
 	public static String COURSES_PATH = "/courses/:department";
+	public static String EDITCOURSES_PATH = "/course/:id/edit";
 
 	public static void main(String[] args) throws Exception {
 
@@ -197,10 +198,13 @@ public class Application {
 		// tutorAppointmentController.showTutorAppointmentPage(req, res), new
 		// HandlebarsTemplateEngine());
 		//
+
+		get(EDITCOURSES_PATH, (req, res) -> editcoursesController.showEditCoursesPage(req, res),
+				new HandlebarsTemplateEngine());
 		
 		get(COURSES_PATH, (req, res) -> editcoursesController.showDeptCoursesPage(req, res),
 				new HandlebarsTemplateEngine());
-		
+
 		get(COURSELANDING_PATH, (req, res) -> admindashController.showManageCoursesLandingPage(req, res),
 				new HandlebarsTemplateEngine());
 

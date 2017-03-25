@@ -28,10 +28,13 @@ public class CourseDao {
 
 		// Create user object and pass to array
 		Course tmp = new Course();
+		tmp.setId(rs.getLong("course_id"));
 		tmp.setCourse_name(rs.getString("course_name"));
 		tmp.setProfessor_id(rs.getLong("course_professor_id"));
 		tmp.setSubject(rs.getString("course_subject"));
 		tmp.setTerm(rs.getString("course_term"));
+		tmp.setProfessor_name(rs.getString("course_professor_id"));
+		tmp.setCourse_number(rs.getLong("course_number"));
 
 		return tmp;
 	}
@@ -80,7 +83,7 @@ public class CourseDao {
 
 	public Course findById(long id) {
 		// Declare SQL template query
-		String sql = "SELECT * FROM " + COURSES_TABLE + " WHERE announcement_id = ? LIMIT 1";
+		String sql = "SELECT * FROM " + COURSES_TABLE + " WHERE course_id = ? LIMIT 1";
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement q = conn.prepareStatement(sql);

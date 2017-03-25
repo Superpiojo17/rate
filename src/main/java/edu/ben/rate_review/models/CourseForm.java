@@ -3,7 +3,7 @@ package edu.ben.rate_review.models;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.UserDao;
 
-public class Course {
+public class CourseForm {
 	private long id;
 	private String course_name;
 	private long professor_id;
@@ -11,6 +11,19 @@ public class Course {
 	private String subject;
 	private String term;
 	private long course_number;
+
+	public CourseForm() {
+		super();
+	}
+
+	public CourseForm(Course course) {
+		this.setId(course.getId());
+		this.setCourse_name(course.getCourse_name());
+		this.setCourse_number(course.getCourse_number());
+		this.setProfessor_id(course.getProfessor_id());
+		this.setSubject(course.getSubject());
+		this.setTerm(course.getTerm());
+	}
 
 	public long getId() {
 		return id;
@@ -56,8 +69,7 @@ public class Course {
 		UserDao user = DaoManager.getInstance().getUserDao();
 		User u = user.findById(professor_id);
 		return u.getLast_name() + ", " + u.getFirst_name();
-		
-		
+
 	}
 
 	public void setProfessor_name(String professor_name) {
