@@ -37,6 +37,8 @@ public class EditCoursesController {
 
 		model.put("courses", courses);
 
+		model.put("department", department);
+
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
@@ -82,6 +84,34 @@ public class EditCoursesController {
 		return new ModelAndView(model, "users/editcourse.hbs");
 	}
 
+	public ModelAndView showAddCoursesPage(Request req, Response res) throws AuthException {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+		CourseDao course = DaoManager.getInstance().getCourseDao();
+
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
+
+		// Get the :id from the url
+		String department = req.params("department");
+		model.put("department", department);
+
+		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+
+		DaoManager dao = DaoManager.getInstance();
+		UserDao ud = dao.getUserDao();
+		List<User> professors = ud.allProfessorsByDept(department);
+		model.put("professors", professors);
+
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+
+		// Tell the server to render the index page with the data in the model
+		return new ModelAndView(model, "users/addCourse.hbs");
+	}
+
 	public String updateCourse(Request req, Response res) {
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
@@ -102,6 +132,29 @@ public class EditCoursesController {
 		return " ";
 
 	}
+
+	public String addCourse(Request req, Response res) {
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
+		CourseDao courseDao = DaoManager.getInstance().getCourseDao();
+
+		String department = req.params("department");
+		CourseDao cDao = DaoManager.getInstance().getCourseDao();
+		Course course = new Course();
+
+		// tutor.setCourse(req.queryParams("course"));
+		course.setCourse_name(req.queryParams("coursename"));
+		course.setCourse_number(Long.parseLong(req.queryParams("coursenumber")));
+		course.setSubject(department);
+		course.setTerm(req.queryParams("semester"));
+		course.setProfessor_id(Long.parseLong(req.queryParams("professor_id")));
+		cDao.save(course);
+
+		res.redirect("/courses/" + department);
+		return "";
+
+	}
+
 	public String deleteCourse(Request req, Response res) {
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
@@ -110,12 +163,10 @@ public class EditCoursesController {
 		CourseDao courseDao = DaoManager.getInstance().getCourseDao();
 		Course c = courseDao.findById(id);
 		courseDao.deleteCourse(id);
-	
+
 		res.redirect("/courses/" + c.getSubject());
 		return " ";
 
 	}
-	
-	
 
 }

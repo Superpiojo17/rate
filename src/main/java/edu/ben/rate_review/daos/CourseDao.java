@@ -60,22 +60,25 @@ public class CourseDao {
 		return null;
 	}
 
-	// public Course save(Course course) {
-	// final String sql = "INSERT INTO " + COURSES_TABLE + " (announcement_date,
-	// announcement_content) VALUES(?,?)";
-	// try {
-	// PreparedStatement ps = conn.prepareStatement(sql);
-	// ps.setString(1, announcement.getDate());
-	// ps.setString(2, announcement.getAnnouncement_content());
-	// ;
-	// ps.executeUpdate();
-	// return announcement;
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// }
-	// return null;
-	//
-	// }
+	public Course save(Course course) {
+		final String sql = "INSERT INTO " + COURSES_TABLE
+				+ "(course_subject, course_number, course_name, course_professor_id, course_term) Values(?,?,?,?,?)";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, course.getSubject());
+			ps.setLong(2, course.getCourse_number());
+			ps.setString(3, course.getCourse_name());
+			ps.setLong(4, course.getProfessor_id());
+			ps.setString(5, course.getTerm());
+			;
+			ps.executeUpdate();
+			return course;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
 
 	public Course findById(long id) {
 		// Declare SQL template query
