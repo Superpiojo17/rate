@@ -100,9 +100,9 @@ public class CourseDao {
 
 	}
 
-	public String deletAnnouncement(long id) {
+	public String deleteCourse(long id) {
 
-		String sql = "DELETE FROM " + COURSES_TABLE + " WHERE announcement_id = ? LIMIT 1";
+		String sql = "DELETE FROM " + COURSES_TABLE + " WHERE course_id = ? LIMIT 1";
 
 		try {
 			// Create Prepared Statement from query

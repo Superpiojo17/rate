@@ -134,6 +134,7 @@ public class Application {
 	public static String ALLTUTORS_PATH = "/alltutors/:id";
 	public static String EDITTUTORS_PATH = "/tutor/:id/edit";
 	public static String DELETETUTOR_PATH = "/deletetutor/:id";
+	public static String DELETECOURSE_PATH = "/deletecourse/:id";
 	public static String ADDTUTOR_PATH = "/tutor/:id/add";
 	public static String ALLSTUDENTS_PATH = "/selectstudents";
 	public static String APPOINTMENT_PATH = "/appointment";
@@ -198,6 +199,9 @@ public class Application {
 		// tutorAppointmentController.showTutorAppointmentPage(req, res), new
 		// HandlebarsTemplateEngine());
 		//
+		
+		post(DELETECOURSE_PATH, (req, res) -> editcoursesController.deleteCourse(req, res));
+		
 
 		get(EDITCOURSES_PATH, (req, res) -> editcoursesController.showEditCoursesPage(req, res),
 				new HandlebarsTemplateEngine());

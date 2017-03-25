@@ -102,5 +102,20 @@ public class EditCoursesController {
 		return " ";
 
 	}
+	public String deleteCourse(Request req, Response res) {
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
+		String idString = req.params("id");
+		long id = Long.parseLong(idString);
+		CourseDao courseDao = DaoManager.getInstance().getCourseDao();
+		Course c = courseDao.findById(id);
+		courseDao.deleteCourse(id);
+	
+		res.redirect("/courses/" + c.getSubject());
+		return " ";
+
+	}
+	
+	
 
 }

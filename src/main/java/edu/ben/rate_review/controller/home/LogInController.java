@@ -13,6 +13,7 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.Session;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
 /**
  * Login controller
@@ -43,6 +44,8 @@ public class LogInController {
 	 * @return
 	 */
 	public String login(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+
 		// checks the email and password fields are filled out
 		if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()) {
 			// checks that the login credentials match a registered, confirmed,
@@ -56,7 +59,7 @@ public class LogInController {
 				UserDao user = DaoManager.getInstance().getUserDao();
 				User u = user.findByEmail(req.queryParams("email"));
 				session.attribute("current_user", u);
-				
+
 				if (u.getRole() == 4) {
 					res.redirect("/studentdashboard");
 				} else if (u.getRole() == 3) {
@@ -69,7 +72,10 @@ public class LogInController {
 				}
 			} else {
 				// if email is not found in the system, outputs message
-				res.redirect("/login");
+				
+				showLoginPage(req, res);
+//				res.redirect("/login");
+
 				// "Incorrect E-mail or Password. Please try again."
 			}
 		} else {
