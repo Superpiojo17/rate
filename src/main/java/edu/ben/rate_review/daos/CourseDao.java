@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.ben.rate_review.models.Course;
+import edu.ben.rate_review.models.CourseForm;
 
 public class CourseDao {
 
@@ -38,31 +39,26 @@ public class CourseDao {
 
 		return tmp;
 	}
-	//
-	// public AnnouncementForm updateAnnouncement(AnnouncementForm announcement)
-	// {
-	// String sql = "UPDATE " + COURSES_TABLE
-	// + " SET announcement_date = ?, announcement_content = ? WHERE
-	// announcement_id = ? LIMIT 1";
-	//
-	// try {
-	// // Create Prepared Statement from query
-	// PreparedStatement ps = conn.prepareStatement(sql);
-	// // Fill in the ? with the parameters you want
-	// ps.setString(1, announcement.getDate());
-	// ps.setString(2, announcement.getAnnouncement_content());
-	//
-	// ps.setLong(3, announcement.getId());
-	//
-	// // Runs query
-	// ps.execute();
-	// return announcement;
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// // If you don't find a model
-	// return null;
-	// }
+
+	public CourseForm updateCourse(CourseForm course) {
+		String sql = "UPDATE " + COURSES_TABLE + " SET course_professor_id = ? WHERE course_id = ? LIMIT 1";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setLong(1, course.getProfessor_id());
+			ps.setLong(2, course.getId());
+
+			// Runs query
+			ps.execute();
+			return course;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+	}
 
 	// public Course save(Course course) {
 	// final String sql = "INSERT INTO " + COURSES_TABLE + " (announcement_date,

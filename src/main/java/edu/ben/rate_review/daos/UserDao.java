@@ -308,14 +308,14 @@ public class UserDao implements Dao<User> {
 		}
 		return users;
 	}
-	
+
 	/**
 	 * 
 	 * @return all professors from the database.
 	 */
 
-	public List<User> allProfessors() {
-		final String SELECT = "SELECT * FROM " + USER_TABLE + " WHERE role_id = 2";
+	public List<User> allProfessorsByDept(String department) {
+		final String SELECT = "SELECT * FROM " + USER_TABLE + " WHERE role_id = 2 and major = '" + department + "'";
 
 		List<User> users = null;
 		try {
@@ -335,7 +335,6 @@ public class UserDao implements Dao<User> {
 		}
 		return users;
 	}
-
 
 	/**
 	 * 

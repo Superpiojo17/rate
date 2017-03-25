@@ -92,11 +92,6 @@ public class AdminDashboardController {
 		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
 
 		
-		DaoManager dao = DaoManager.getInstance();
-		UserDao ud = dao.getUserDao();
-		List<User> users = ud.allProfessors();
-		model.put("users", users);
-		
 		
 		
 		DaoManager adao = DaoManager.getInstance();

@@ -202,6 +202,8 @@ public class Application {
 		get(EDITCOURSES_PATH, (req, res) -> editcoursesController.showEditCoursesPage(req, res),
 				new HandlebarsTemplateEngine());
 		
+		post(EDITCOURSES_PATH, (req, res) -> editcoursesController.updateCourse(req, res));
+		
 		get(COURSES_PATH, (req, res) -> editcoursesController.showDeptCoursesPage(req, res),
 				new HandlebarsTemplateEngine());
 
