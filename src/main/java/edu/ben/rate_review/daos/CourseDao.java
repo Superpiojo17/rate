@@ -145,5 +145,32 @@ public class CourseDao {
 		}
 		return courses;
 	}
+	
+	/**
+	 * 
+	 * @return all users from the database.
+	 * @throws ParseException
+	 */
+
+	public List<Course> allByProfessor(Long id) {
+		final String SELECT = "SELECT * FROM " + COURSES_TABLE + " WHERE  course_professor_id = '" + id + "'";
+		List<Course> courses = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			courses = new ArrayList<Course>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					courses.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return courses;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return courses;
+	}
 
 }

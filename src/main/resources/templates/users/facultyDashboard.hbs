@@ -140,17 +140,17 @@
 								<table class="alt">
 									<thead>
 										<tr>
-											<th><br>Tutor </th>
-											<th><br>Email</th>
 											<th><br>Course</th>
+											<th><br>Name</th>
+											<th><br>Term</th>
 										</tr>
 									</thead>
 									<tbody>
 									{{#each courses}}
 										<tr>
-											<td>{{tutor_last_name}}, {{tutor_first_name}} </td>
-											<td>{{tutor_email}} </td>
-											<td>{{course_name}}</td>
+											<td>{{subject}} {{course_number}} </td>
+											<td>{{course_name}} </td>
+											<td>{{term}}</td>
 										</tr>
 									{{/each}}
 									</tbody>
