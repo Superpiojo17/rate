@@ -202,11 +202,10 @@ public class UserDao implements Dao<User> {
 		return null;
 
 	}
-	
+
 	public User completeProfProfile(User user) {
 		// Declare SQL template query
-		String sql = "UPDATE " + USER_TABLE
-				+ " SET major = ? WHERE user_id= ? LIMIT 1";
+		String sql = "UPDATE " + USER_TABLE + " SET major = ? WHERE user_id= ? LIMIT 1";
 
 		try {
 			// Create Prepared Statement from query
@@ -224,11 +223,10 @@ public class UserDao implements Dao<User> {
 		return null;
 
 	}
-	
+
 	public User completeProfile(User user) {
 		// Declare SQL template query
-		String sql = "UPDATE " + USER_TABLE
-				+ " SET major = ?, school_year = ? WHERE user_id= ? LIMIT 1";
+		String sql = "UPDATE " + USER_TABLE + " SET major = ?, school_year = ? WHERE user_id= ? LIMIT 1";
 
 		try {
 			// Create Prepared Statement from query
@@ -693,6 +691,38 @@ public class UserDao implements Dao<User> {
 		}
 		// If you don't find a model
 		return null;
+	}
+
+	// UserDao
+	public List<User> search(String sType, String sText) throws SQLException {
+		String NAME_SQL = "SELECT * FROM User WHERE first_name LIKE '%?%' OR last_name LIKE '%?%'";
+
+		List<User> users = null;
+
+		try {
+
+			PreparedStatement ps = conn.prepareStatement(NAME_SQL);
+			// both have 1 parameter
+			ps.setString(1, sText);
+
+			// Only name search has a second parameter
+			if (sType.equals("name")) {
+				ps.setString(2, sText);
+			}
+			users = new ArrayList<User>();
+			try {
+				ResultSet rs = ps.executeQuery(NAME_SQL);
+				while (rs.next()) {
+					users.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return users;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
 	}
 
 	/**

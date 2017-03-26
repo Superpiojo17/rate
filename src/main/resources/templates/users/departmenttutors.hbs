@@ -99,8 +99,24 @@
 							
   <p>These are the tutors available for your department.</p>
   <p>Don't see a student you are looking for?</p> <a href = "/selectstudents"> Click here to view other students.</a>
+  &nbsp;&nbsp;
+  &nbsp;&nbsp;
   
   
+   <p>Search by</p>
+  <form action="/selecttutors" method="GET">
+  <div>
+    <select name="search-type">
+      <option value="name">Name</option>
+      <option value="email">Email</option>
+    </select>
+  </div>
+  &nbsp;&nbsp;
+  <div>
+    <input type="text" name="search" placeholder="Search Users..." />
+  </div>
+
+</form>
   
   
   

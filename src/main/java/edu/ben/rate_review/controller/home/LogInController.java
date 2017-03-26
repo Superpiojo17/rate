@@ -74,6 +74,10 @@ public class LogInController {
 				// if email is not found in the system, outputs message
 				
 //				showLoginPage(req, res);
+//				model.put("error", error)
+//				req.requestMethod();
+//				get("/login" );
+				
 				res.redirect("/login");
 
 				// "Incorrect E-mail or Password. Please try again."
@@ -82,6 +86,11 @@ public class LogInController {
 			res.redirect("/login");
 		}
 		return "";
+	}
+
+	private void get(String string) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	/**

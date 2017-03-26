@@ -1,7 +1,15 @@
 package edu.ben.rate_review.controller.user;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+
+import javax.servlet.ServletException;
 
 import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.authorization.AuthException;
@@ -121,7 +129,7 @@ public class FacultyDashboardController {
 		return new ModelAndView(model, "users/alltutors.hbs");
 	}
 
-	public ModelAndView showSelectTutorsPage(Request req, Response res) throws AuthException {
+	public ModelAndView showSelectTutorsPage(Request req, Response res) throws AuthException, SQLException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 
@@ -138,9 +146,23 @@ public class FacultyDashboardController {
 		TutorDao td = tdao.getTutorDao();
 		UserDao ud = udao.getUserDao();
 
-		List<User> tutors = ud.allTutorsByMajor(u.getMajor());
+		if (req.params("search-type") != null & req.params("search") != null) {
+			String searchType = req.params("search-type").toLowerCase();
+			String searchTxt = req.params("search").toLowerCase();
 
-		model.put("tutors", tutors);
+			// Make sure you
+			if (searchType.equalsIgnoreCase("email") || searchType.equalsIgnoreCase("name") && searchTxt.length() > 0) {
+				// valid search, can proceed
+				model.put("tutors", ud.search(searchType, searchTxt));
+			} else {
+				List<User> tutors = ud.allTutorsByMajor(u.getMajor());
+
+				model.put("tutors", tutors);
+			}
+		} else {
+			List<User> tutors = ud.allTutorsByMajor(u.getMajor());
+			model.put("tutors", tutors);
+		}
 
 		model.put("current_user", u);
 		// Tell the server to render the index page with the data in the model
