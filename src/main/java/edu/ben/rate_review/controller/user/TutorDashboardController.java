@@ -31,6 +31,10 @@ public class TutorDashboardController {
 		AuthPolicyManager.getInstance().getUserPolicy().showTutorDashboardPage();
 
 		model.put("current_user", u);
+		
+		if (u.getMajor() == null) {
+			model.put("completeProfile", true);
+		}
 
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();

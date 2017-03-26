@@ -39,6 +39,9 @@
 					<li><a href="/studentdashboard">View Reviews</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
 					<li><a href="/deactivation">De-Activate</a></li>
+					{{#if completeProfile }}
+					<li><a href="/completeprofilestudent/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
+					{{/if}}
 					<li><a href="/login">Log Out</a></li>
 					
 				</ul>
