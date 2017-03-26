@@ -695,7 +695,7 @@ public class UserDao implements Dao<User> {
 
 	// UserDao
 	public List<User> search(String sType, String sText) throws SQLException {
-		String NAME_SQL = "SELECT * FROM User WHERE first_name LIKE '%?%' OR last_name LIKE '%?%'";
+		String NAME_SQL = "SELECT * FROM users WHERE first_name LIKE '%" + sText +"%' OR last_name LIKE '%" + sText +"%'";
 
 		List<User> users = null;
 
@@ -703,12 +703,12 @@ public class UserDao implements Dao<User> {
 
 			PreparedStatement ps = conn.prepareStatement(NAME_SQL);
 			// both have 1 parameter
-			ps.setString(1, sText);
-
-			// Only name search has a second parameter
-			if (sType.equals("name")) {
-				ps.setString(2, sText);
-			}
+//			ps.setString(1, sText);
+//
+//			// Only name search has a second parameter
+//			if (sType.equals("name")) {
+//				ps.setString(2, sText);
+//			}
 			users = new ArrayList<User>();
 			try {
 				ResultSet rs = ps.executeQuery(NAME_SQL);

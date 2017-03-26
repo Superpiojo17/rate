@@ -145,10 +145,12 @@ public class FacultyDashboardController {
 		DaoManager tdao = DaoManager.getInstance();
 		TutorDao td = tdao.getTutorDao();
 		UserDao ud = udao.getUserDao();
-
-		if (req.params("search-type") != null & req.params("search") != null) {
-			String searchType = req.params("search-type").toLowerCase();
-			String searchTxt = req.params("search").toLowerCase();
+ 
+		if (req.queryParams("search-type") != null & req.queryParams("search") != null) {
+			System.out.println(req.queryParams("search-type"));
+			System.out.println(req.queryParams("search"));
+			String searchType = req.queryParams("search-type").toLowerCase();
+			String searchTxt = req.queryParams("search").toLowerCase();
 
 			// Make sure you
 			if (searchType.equalsIgnoreCase("email") || searchType.equalsIgnoreCase("name") && searchTxt.length() > 0) {
