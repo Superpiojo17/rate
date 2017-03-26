@@ -73,8 +73,8 @@ public class LogInController {
 			} else {
 				// if email is not found in the system, outputs message
 				
-				showLoginPage(req, res);
-//				res.redirect("/login");
+//				showLoginPage(req, res);
+				res.redirect("/login");
 
 				// "Incorrect E-mail or Password. Please try again."
 			}

@@ -34,15 +34,20 @@ public class FacultyDashboardController {
 
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
+
+		if (u.getMajor() == null) {
+			model.put("completeProfile", true);
+		}
 		// AuthPolicyManager.getInstance().getUserPolicy().showFacultyDashboardPage();
 
 		DaoManager adao = DaoManager.getInstance();
 		DaoManager cdao = DaoManager.getInstance();
-		CourseDao cd = cdao.getCourseDao();
+
 		AnnouncementDao ad = adao.getAnnouncementDao();
-		
+
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
+		CourseDao cd = cdao.getCourseDao();
 		List<Course> courses = cd.allByProfessor(u.getId());
 		model.put("courses", courses);
 
@@ -55,6 +60,40 @@ public class FacultyDashboardController {
 		model.put("current_user", u);
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/facultyDashboard.hbs");
+	}
+
+	public ModelAndView showCompleteProfileProfPage(Request req, Response res) throws AuthException {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
+
+		if (u.getMajor() == null) {
+			model.put("completeProfile", true);
+		}
+		// AuthPolicyManager.getInstance().getUserPolicy().showFacultyDashboardPage();
+
+		DaoManager adao = DaoManager.getInstance();
+		DaoManager cdao = DaoManager.getInstance();
+
+		AnnouncementDao ad = adao.getAnnouncementDao();
+
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+		CourseDao cd = cdao.getCourseDao();
+		List<Course> courses = cd.allByProfessor(u.getId());
+		model.put("courses", courses);
+
+		DaoManager tdao = DaoManager.getInstance();
+		TutorDao td = tdao.getTutorDao();
+		List<Tutor> tutors = td.all(u.getId());
+
+		model.put("tutors", tutors);
+
+		model.put("current_user", u);
+		// Tell the server to render the index page with the data in the model
+		return new ModelAndView(model, "home/completeprofileprof.hbs");
 	}
 
 	public ModelAndView showAllTutorsPage(Request req, Response res) throws AuthException {
@@ -144,6 +183,11 @@ public class FacultyDashboardController {
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 
+		DaoManager cdao = DaoManager.getInstance();
+		CourseDao cd = cdao.getCourseDao();
+		List<Course> courses = cd.allByProfessor(u.getId());
+		model.put("courses", courses);
+
 		model.put("current_user", u);
 		// Get the :id from the url
 		String idString = req.params("id");
@@ -171,6 +215,24 @@ public class FacultyDashboardController {
 
 		// Render the page
 		return new ModelAndView(model, "users/addtutor.hbs");
+	}
+
+	public String completeProfile(Request req, Response res) {
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
+		UserDao uDao = DaoManager.getInstance().getUserDao();
+		String idString = req.params("id");
+		long id = Long.parseLong(idString);
+
+		User user = new User();
+
+		user.setMajor(req.queryParams("department"));
+		user.setId(id);
+
+		uDao.completeProfProfile(user);
+
+		res.redirect(Application.FACULTYDASHBOARD_PATH);
+		return "";
 	}
 
 	public String addTutor(Request req, Response res) {

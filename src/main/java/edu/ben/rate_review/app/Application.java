@@ -144,6 +144,7 @@ public class Application {
 	public static String COURSELANDING_PATH = "/courseslanding";
 	public static String COURSES_PATH = "/courses/:department";
 	public static String EDITCOURSES_PATH = "/course/:id/edit";
+	public static String COMPLETEPROF_PATH = "/completeprofileprof/:id";
 
 	public static void main(String[] args) throws Exception {
 
@@ -202,6 +203,11 @@ public class Application {
 		
 		
 		//
+		
+		post(COMPLETEPROF_PATH, (req, res) -> facultydashController.completeProfile(req, res));
+		
+		get(COMPLETEPROF_PATH, (req, res) -> facultydashController.showCompleteProfileProfPage(req, res),
+				new HandlebarsTemplateEngine());
 
 		get(ADDCOURSE_PATH, (req, res) -> editcoursesController.showAddCoursesPage(req, res),
 				new HandlebarsTemplateEngine());

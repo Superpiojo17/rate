@@ -202,6 +202,28 @@ public class UserDao implements Dao<User> {
 		return null;
 
 	}
+	
+	public User completeProfProfile(User user) {
+		// Declare SQL template query
+		String sql = "UPDATE " + USER_TABLE
+				+ " SET major = ? WHERE user_id= ? LIMIT 1";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setString(1, user.getMajor());
+			ps.setLong(2, user.getId());
+			// Runs query
+			ps.execute();
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+
+	}
 
 	/**
 	 * Method which will deactivate an active account
