@@ -43,7 +43,7 @@ public class StudentDashboardController {
 			model.put("completeProfile", true);
 		}
 
-		AuthPolicyManager.getInstance().getUserPolicy().showStudentDashboardPage();
+//		AuthPolicyManager.getInstance().getUserPolicy().showStudentDashboardPage();
 
 		DaoManager dao = DaoManager.getInstance();
 		ProfessorReviewDao reviewDao = dao.getProfessorReviewDao();
