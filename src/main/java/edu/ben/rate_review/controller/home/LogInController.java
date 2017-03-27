@@ -43,7 +43,7 @@ public class LogInController {
 	 * @param res
 	 * @return
 	 */
-	public String login(Request req, Response res) {
+	public ModelAndView login(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
 
 		// checks the email and password fields are filled out
@@ -72,25 +72,24 @@ public class LogInController {
 				}
 			} else {
 				// if email is not found in the system, outputs message
-				
-//				showLoginPage(req, res);
-//				model.put("error", error)
-//				req.requestMethod();
-//				get("/login" );
-				
-				res.redirect("/login");
+
+				model.put("error", "error");
+
+				// Tell the server to render the index page with the data in the
+				// model
+				return new ModelAndView(model, "/login");
 
 				// "Incorrect E-mail or Password. Please try again."
 			}
 		} else {
 			res.redirect("/login");
 		}
-		return "";
+		return new ModelAndView(model, "/login");
 	}
 
 	private void get(String string) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	/**

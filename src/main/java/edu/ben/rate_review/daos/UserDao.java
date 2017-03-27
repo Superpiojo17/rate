@@ -736,12 +736,10 @@ public class UserDao implements Dao<User> {
 				+ " SET first_name = ?, last_name = ?, email = ?, role_id = ?, school_year = ?, major = ? WHERE user_id = ? LIMIT 1";
 
 		try {
-			System.out.println("HERE");
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
 			ps.setString(1, user.getFirst_name());
-			System.out.println(user.getFirst_name());
 			ps.setString(2, user.getLast_name());
 			ps.setString(3, user.getEmail());
 			ps.setInt(4, user.getRole());
@@ -749,7 +747,6 @@ public class UserDao implements Dao<User> {
 			ps.setString(6, user.getMajor());
 
 			ps.setLong(7, user.getId());
-			System.out.println(user.getId());
 
 			// Runs query
 			ps.execute();

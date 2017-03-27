@@ -71,7 +71,6 @@ public class EditCoursesController {
 
 		DaoManager dao = DaoManager.getInstance();
 		UserDao ud = dao.getUserDao();
-		System.out.println(c.getSubject());
 		List<User> professors = ud.allProfessorsByDept(c.getSubject());
 		model.put("professors", professors);
 

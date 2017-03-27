@@ -98,6 +98,8 @@ public class EditUserController {
 		massedit.setBefore(Integer.parseInt(req.queryParams("activebefore")));
 		massedit.setAfter(Integer.parseInt(req.queryParams("activeafter")));
 		userDao.massEditActive(massedit);
+		
+		
 		res.redirect(Application.ALLUSERS_PATH);
 		return " ";
 
