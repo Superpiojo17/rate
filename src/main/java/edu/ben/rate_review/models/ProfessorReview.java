@@ -422,9 +422,4 @@ public class ProfessorReview {
 				+ rate_career_development) / 11));
 	}
 
-	public void setOverall(float overall) {
-
-		this.overall = overall;
-	}
-
 }
