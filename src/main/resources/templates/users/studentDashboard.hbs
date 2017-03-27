@@ -266,30 +266,42 @@
 					<th><br>Your Message</th>
 					<th><br>Tutor Response</th>
 					<th><br>Status</th>
+					<th></th>
 					</tr>
 				</thead>
 				<tbody>
 						{{#each upcoming_appointments}}
 						
 							<tr>
-							<td class="shrink">{{tutor_firstname}} {{tutor_lastname}}</td>
-							<td class="shrink">{{date}}</td>
-							<td class="shrink">{{time}}</td>
-							<td>{{student_message}}</td>
-							<td>{{tutor_message}}</td>
-							<td class="shrink">
-								{{#unless tutor_has_responded}}
-									<span title="pending" class="glyphicon glyphicon-option-horizontal"></span>
-								{{/unless}}
-								{{#if tutor_has_responded}} 
-									{{#unless appointment_status}}
-										<span title="declined" class="glyphicon glyphicon-remove" style="color:red"></span>
+							<form action="/studentdashboard" method="post">
+								<td class="shrink">{{tutor_firstname}} {{tutor_lastname}}</td>
+								<td class="shrink">{{date}}</td>
+								<td class="shrink">{{time}}</td>
+								<td>{{student_message}}</td>
+								<td>{{tutor_message}}</td>
+								<td class="shrink">
+									{{#unless tutor_has_responded}}
+										<span title="pending" class="glyphicon glyphicon-option-horizontal"></span>
 									{{/unless}}
-									{{#if appointment_status}}
-										<span title="approved" class="glyphicon glyphicon-ok" style="color:green"></span>
+									{{#if tutor_has_responded}} 
+										{{#unless appointment_status}}
+											<span title="declined" class="glyphicon glyphicon-remove" style="color:red"></span>
+										{{/unless}}
+										{{#if appointment_status}}
+												<span title="approved" class="glyphicon glyphicon-ok" style="color:green"></span>
+										{{/if}}
 									{{/if}}
-								{{/if}}
-							</td>
+								</td>
+								<td>
+									{{#if tutor_has_responded}}
+									{{#if appointment_status}}
+									<button title="cancel appointment" class="btn btn-danger" type="submit" name="tutor_id" value="-{{appointment_id}}"><span class="glyphicon glyphicon-trash"></span></button>
+									{{/if}}{{/if}}
+									{{#unless tutor_has_responded}}
+									<button title="cancel appointment" class="btn btn-danger" type="submit" name="tutor_id" value="-{{appointment_id}}"><span class="glyphicon glyphicon-trash"></span></button>
+									{{/unless}}
+								</td>
+							<form action="/studentdashboard" method="post">
 							</tr>
 						
 						{{/each}}

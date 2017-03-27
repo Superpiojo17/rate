@@ -16,7 +16,6 @@ import edu.ben.rate_review.formatTime.FormatTimeAndDate;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.Course;
 import edu.ben.rate_review.models.CoursesToReview;
-import edu.ben.rate_review.models.ProfessorReview;
 import edu.ben.rate_review.models.Tutor;
 import edu.ben.rate_review.models.TutorAppointment;
 import edu.ben.rate_review.models.User;
@@ -101,9 +100,9 @@ public class StudentDashboardController {
 			upcoming_appointments_scheduled = true;
 		}
 		model.put("upcoming_appointments_scheduled", upcoming_appointments_scheduled);
-		
+
 		boolean available_tutors = false;
-		if (!tutors.isEmpty()){
+		if (!tutors.isEmpty()) {
 			available_tutors = true;
 		}
 		model.put("available_tutors", available_tutors);
@@ -162,30 +161,40 @@ public class StudentDashboardController {
 		DaoManager dao = DaoManager.getInstance();
 		TutorDao tDao = dao.getTutorDao();
 		UserDao uDao = dao.getUserDao();
-		User tutor = uDao.findById(Long.parseLong(req.queryParams("tutor_id")));
 
-		if (!req.queryParams("date").isEmpty() && !req.queryParams("time").isEmpty()) {
+		// this check is for a student scheduling an appointment
+		if (Long.parseLong(req.queryParams("tutor_id")) > 0) {
+			User tutor = uDao.findById(Long.parseLong(req.queryParams("tutor_id")));
 
-			TutorAppointment appointment = new TutorAppointment();
+			if (!req.queryParams("date").isEmpty() && !req.queryParams("time").isEmpty()) {
 
-			appointment.setStudent_id(u.getId());
-			appointment.setTutor_id(Long.parseLong(req.queryParams("tutor_id")));
-			appointment.setDate(req.queryParams("date"));
-			appointment.setTime(req.queryParams("time"));
-			appointment.setStudent_message(req.queryParams("student_message"));
-			appointment.setStudent_firstname(u.getFirst_name());
-			appointment.setStudent_lastname(u.getLast_name());
-			appointment.setTutor_firstname(tutor.getFirst_name());
-			appointment.setTutor_lastname(tutor.getLast_name());
+				TutorAppointment appointment = new TutorAppointment();
 
-			if (appointment.getStudent_message().length() < 200) {
-				tDao.saveTutorAppointment(appointment);
-				emailAppointmentRequest(appointment, uDao);
+				appointment.setStudent_id(u.getId());
+				appointment.setTutor_id(Long.parseLong(req.queryParams("tutor_id")));
+				appointment.setDate(req.queryParams("date"));
+				appointment.setTime(req.queryParams("time"));
+				appointment.setStudent_message(req.queryParams("student_message"));
+				appointment.setStudent_firstname(u.getFirst_name());
+				appointment.setStudent_lastname(u.getLast_name());
+				appointment.setTutor_firstname(tutor.getFirst_name());
+				appointment.setTutor_lastname(tutor.getLast_name());
+
+				if (appointment.getStudent_message().length() < 200) {
+					tDao.saveTutorAppointment(appointment);
+					emailAppointmentRequest(appointment, uDao);
+				} else {
+					// message - comment too long
+				}
 			} else {
-				// message - comment too long
+				// message - please set a date
 			}
 		} else {
-			// message - please set a date
+			// if tutor_id is negative, it is a student canceling an
+			// appointment, and the negative number is the appointment_id
+			long appointment_id = -1 * Long.parseLong(req.queryParams("tutor_id"));
+			emailCancelAppointment(appointment_id, uDao, tDao);
+			tDao.cancelTutorAppointment(appointment_id);
 		}
 		res.redirect(Application.STUDENTDASHBOARD_PATH);
 		return "";
@@ -213,12 +222,41 @@ public class StudentDashboardController {
 
 	}
 
+	/**
+	 * Sends an email notifying a tutor that their appointment has been canceled
+	 * 
+	 * @param appointment_id
+	 * @param uDao
+	 * @param tDao
+	 */
+	private static void emailCancelAppointment(long appointment_id, UserDao uDao, TutorDao tDao) {
+
+		TutorAppointment appointment = tDao.findAppointmentByID(appointment_id);
+		User tutor = uDao.findById(appointment.getTutor_id());
+
+		String appointmentStatus = "";
+		if (!appointment.getAppointment_status()){
+			appointmentStatus = " Request ";
+		}
+		
+		String subject = "Rate&Review Tutor Appointment" + appointmentStatus + "Cancellation";
+		String messageHeader = "<p>Hello " + tutor.getFirst_name() + ",</p><br />";
+		String messageBody = "<p>Your appointment with " + appointment.getStudent_firstname() + " "
+				+ appointment.getStudent_lastname() + " at " + FormatTimeAndDate.formatTime(appointment.getTime())
+				+ " on " + FormatTimeAndDate.formatDate(appointment.getDate()) + " has been canceled.</p>";
+		String messageFooter = "<br /><p>Sincerely,</p><p>The Rate&Review Team</p>";
+		String message = messageHeader + messageBody + messageFooter;
+
+		Email.deliverEmail(tutor.getFirst_name(), "acendude@gmail.com", subject, message);
+		// Email.deliverEmail(tutor.getFirst_name(), tutor.getEmail(), subject,
+		// message);
+
+	}
+
 	/*
 	 * Complete profile for student
 	 */
 	public String completeProfile(Request req, Response res) {
-		Session session = req.session();
-		User u = (User) session.attribute("current_user");
 		UserDao uDao = DaoManager.getInstance().getUserDao();
 		String idString = req.params("id");
 		long id = Long.parseLong(idString);

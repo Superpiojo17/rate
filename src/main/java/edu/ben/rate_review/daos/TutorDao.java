@@ -200,6 +200,27 @@ public class TutorDao implements Dao<Tutor> {
 	}
 
 	/**
+	 * Allows a student to cancel a tutor appointment
+	 * 
+	 * @param appointment_id
+	 */
+	public void cancelTutorAppointment(long appointment_id) {
+		String sql = "DELETE FROM " + APPOINTMENT_TABLE + " WHERE appointment_id = ? LIMIT 1";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setLong(1, appointment_id);
+			// Runs query
+			ps.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+	}
+
+	/**
 	 * Approves an appointment request
 	 * 
 	 * @param appointment

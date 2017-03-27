@@ -187,8 +187,6 @@ public class TutorDashboardController {
 	 * Complete profile for student
 	 */
 	public String completeProfile(Request req, Response res) {
-		Session session = req.session();
-		User u = (User) session.attribute("current_user");
 		UserDao uDao = DaoManager.getInstance().getUserDao();
 		String idString = req.params("id");
 		long id = Long.parseLong(idString);
