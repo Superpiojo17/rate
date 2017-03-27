@@ -53,7 +53,8 @@ public class ProfessorReviewController {
 
 		// checks that the person accessing the page has access
 		if (user_id != -1 && user_id == course.getStudent_id()) {
-			if (!reviewDao.findReview(course.getCourse_id()).getComment_removed()) {
+			if (reviewDao.findReview(course.getCourse_id()) == null
+					|| !reviewDao.findReview(course.getCourse_id()).getComment_removed()) {
 
 				// create the form object, put it into request
 				model.put("course", course);

@@ -95,6 +95,19 @@ public class StudentDashboardController {
 
 		model.put("upcoming_appointments", appointments);
 
+		// checks whether or not there are appointments scheduled
+		boolean upcoming_appointments_scheduled = false;
+		if (!appointments.isEmpty()) {
+			upcoming_appointments_scheduled = true;
+		}
+		model.put("upcoming_appointments_scheduled", upcoming_appointments_scheduled);
+		
+		boolean available_tutors = false;
+		if (!tutors.isEmpty()){
+			available_tutors = true;
+		}
+		model.put("available_tutors", available_tutors);
+
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/studentDashboard.hbs");
 	}

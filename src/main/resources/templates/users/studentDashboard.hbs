@@ -204,6 +204,9 @@
         </h4>
       </div>
 		<div id="collapse2" class="panel-collapse collapse">
+		
+		{{#unless available_tutors}}No available tutors at this time.{{/unless}}
+		{{#if available_tutors}}
       	 <div class="table-wrapper">
 			<table class="alt">
 				<thead>
@@ -238,6 +241,7 @@
 					</tfoot>
 				</table>
 			</div> 
+			{{/if}}
 		</div>
 		</div>
 		
@@ -250,7 +254,8 @@
       <div id="collapse1" class="panel-collapse collapse collapse">
         
         
-        
+       {{#unless upcoming_appointments_scheduled}}You have no appointments listed.{{/unless}}
+       {{#if upcoming_appointments_scheduled}} 
         <div class="table-wrapper">
 			<table class="alt">
 				<thead>
@@ -293,7 +298,7 @@
 					</tfoot>
 				</table>
 			</div> 
-        
+    		{{/if}}   
   
         
       </div>
