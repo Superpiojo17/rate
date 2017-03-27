@@ -59,6 +59,9 @@ public class FacultyDashboardController {
 		model.put("announcements", announcements);
 		CourseDao cd = cdao.getCourseDao();
 		List<Course> courses = cd.allByProfessor(u.getId());
+		if (courses.size() > 0) {
+			model.put("coursesFlag", true);
+		}
 		model.put("courses", courses);
 
 		DaoManager tdao = DaoManager.getInstance();
@@ -67,8 +70,15 @@ public class FacultyDashboardController {
 
 		ProfessorReviewDao pdao = tdao.getProfessorReviewDao();
 		List<ProfessorReview> ProfessorReview = pdao.listRecentCoursesByProfessorEmail(u);
+		if (ProfessorReview.size() > 0) {
+			model.put("reviewsFlag", true);
+		}
 
 		model.put("reviews", ProfessorReview);
+
+		if (tutors.size() > 0) {
+			model.put("tutorFlag", true);
+		}
 
 		model.put("tutors", tutors);
 
@@ -129,8 +139,6 @@ public class FacultyDashboardController {
 
 		model.put("tutors", tutors);
 
-		System.out.println(u.getMajor());
-
 		model.put("current_user", u);
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/alltutors.hbs");
@@ -154,15 +162,21 @@ public class FacultyDashboardController {
 		UserDao ud = udao.getUserDao();
 
 		if (req.queryParams("search-type") != null & req.queryParams("search") != null) {
-			System.out.println(req.queryParams("search-type"));
-			System.out.println(req.queryParams("search"));
+
 			String searchType = req.queryParams("search-type").toLowerCase();
 			String searchTxt = req.queryParams("search").toLowerCase();
 
 			// Make sure you
 			if (searchType.equalsIgnoreCase("email") || searchType.equalsIgnoreCase("name") && searchTxt.length() > 0) {
 				// valid search, can proceed
-				model.put("tutors", ud.search(searchType, searchTxt));
+				List<User> tempTutors = ud.search(searchType, searchTxt);
+				if (tempTutors.size() > 0) {
+					model.put("tutors", tempTutors);
+				} else {
+					List<User> tutors = ud.allTutorsByMajor(u.getMajor());
+
+					model.put("tutors", tutors);
+				}
 			} else {
 				List<User> tutors = ud.allTutorsByMajor(u.getMajor());
 
@@ -228,8 +242,6 @@ public class FacultyDashboardController {
 		long id = Long.parseLong(idString);
 
 		User t = userT.findById(id);
-
-		System.out.println(t.getEmail());
 
 		model.put("tutor_form", new UserForm(t));
 

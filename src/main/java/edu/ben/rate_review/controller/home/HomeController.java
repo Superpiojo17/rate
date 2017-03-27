@@ -11,11 +11,9 @@ import spark.Session;
 public class HomeController {
 
 	public ModelAndView showHomePage(Request req, Response res) throws Exception {
-		System.out.println("HELLO");
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 		Session session = req.session(true);
-		System.out.println(session);
 		// Tell the server to render the index page with the data in the
 		// model
 		return new ModelAndView(model, "home/home.hbs");

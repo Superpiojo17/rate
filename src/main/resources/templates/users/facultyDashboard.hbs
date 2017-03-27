@@ -35,7 +35,7 @@
 					<li><a href="/register">My Account</a></li>
 					<li><a href="/alltutors/{{current_user.id}}">Manage Tutors</a></li>
 					<li><a href="/aboutus">View Apointments</a></li>
-					<li><a href="/aboutus">View Reviews</a></li>
+					<li><a href="/professor/{{current_user.id}}/overview>View Reviews</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
 					<li><a href="/deactivation">De-Activate</a></li>
 					{{#if completeProfile }}
@@ -108,6 +108,7 @@
       </div>
       <div id="collapse1" class="panel-collapse collapse in">
         <div class="panel-body">
+        {{#if tutorFlag}}
         	<div class="table-wrapper">
 								<table class="alt">
 									<thead>
@@ -129,6 +130,8 @@
 									<tfoot>
 									</tfoot>
 								</table>
+								{{/if}}
+								 {{#unless tutorFlag}}You have no tutors, go to Manage Tutors to add tutors.{{/unless}}
         </div>
       </div>
     </div>
@@ -139,7 +142,10 @@
         </h4>
       </div>
       <div id="collapse2" class="panel-collapse collapse">
-        <div class="panel-body"><div class="table-wrapper">
+        <div class="panel-body">
+        	
+        	{{#if tutorFlag}}
+        <div class="table-wrapper">
 								<table class="alt">
 									<thead>
 										<tr>
@@ -160,6 +166,9 @@
 									<tfoot>
 									</tfoot>
 								</table>
+								
+								{{/if}}
+								 {{#unless tutorFlag}}You have no courses.{{/unless}}
         </div></div>
       </div>
     </div>
@@ -170,7 +179,11 @@
         </h4>
       </div>
       <div id="collapse3" class="panel-collapse collapse">
-        <div class="panel-body"><div class="table-wrapper">
+        <div class="panel-body">
+        {{#if reviewsFlag}}
+        	<p> These are your 3 most recent reviews</p>
+        	
+        <div class="table-wrapper">
 								<table class="alt">
 									<thead>
 										<tr>
@@ -191,7 +204,10 @@
 									<tfoot>
 									</tfoot>
 								</table>
+								{{/if}}
+								 {{#unless reviewsFlag}}You have no recent reviews.{{/unless}}
         </div>
+        
         <a href="/professor/{{current_user.id}}/overview"  class="btn btn-info"> Overview
 											</a>
         	
