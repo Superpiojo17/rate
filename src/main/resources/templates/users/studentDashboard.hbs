@@ -294,11 +294,15 @@
 								</td>
 								<td>
 									{{#if tutor_has_responded}}
-									{{#if appointment_status}}
-									<button title="cancel appointment" class="btn btn-danger" type="submit" name="tutor_id" value="-{{appointment_id}}"><span class="glyphicon glyphicon-trash"></span></button>
-									{{/if}}{{/if}}
+										{{#if appointment_status}}
+											<button title="cancel appointment" class="btn" type="submit" name="tutor_id" value="-{{appointment_id}}"><span class="glyphicon glyphicon-remove"></span></button>
+										{{/if}}
+										{{#unless appointment_status}}
+											<button title="delete denied appointment" class="btn btn-danger" type="submit" name="tutor_id" value="-{{appointment_id}}"><span class="glyphicon glyphicon-trash"></span></button>
+										{{/unless}}
+									{{/if}}
 									{{#unless tutor_has_responded}}
-									<button title="cancel appointment" class="btn btn-danger" type="submit" name="tutor_id" value="-{{appointment_id}}"><span class="glyphicon glyphicon-trash"></span></button>
+										<button title="delete request" class="btn btn-danger" type="submit" name="tutor_id" value="-{{appointment_id}}"><span class="glyphicon glyphicon-trash"></span></button>
 									{{/unless}}
 								</td>
 							<form action="/studentdashboard" method="post">

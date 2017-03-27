@@ -193,7 +193,11 @@ public class StudentDashboardController {
 			// if tutor_id is negative, it is a student canceling an
 			// appointment, and the negative number is the appointment_id
 			long appointment_id = -1 * Long.parseLong(req.queryParams("tutor_id"));
-			emailCancelAppointment(appointment_id, uDao, tDao);
+
+			// only sends email when approved appointment is canceled
+			if (tDao.findAppointmentByID(appointment_id).getAppointment_status()) {
+				emailCancelAppointment(appointment_id, uDao, tDao);
+			}
 			tDao.cancelTutorAppointment(appointment_id);
 		}
 		res.redirect(Application.STUDENTDASHBOARD_PATH);
@@ -234,12 +238,9 @@ public class StudentDashboardController {
 		TutorAppointment appointment = tDao.findAppointmentByID(appointment_id);
 		User tutor = uDao.findById(appointment.getTutor_id());
 
-		String appointmentStatus = "";
-		if (!appointment.getAppointment_status()){
-			appointmentStatus = " Request ";
-		}
-		
-		String subject = "Rate&Review Tutor Appointment" + appointmentStatus + "Cancellation";
+
+
+		String subject = "Rate&Review Tutor Appointment Cancellation";
 		String messageHeader = "<p>Hello " + tutor.getFirst_name() + ",</p><br />";
 		String messageBody = "<p>Your appointment with " + appointment.getStudent_firstname() + " "
 				+ appointment.getStudent_lastname() + " at " + FormatTimeAndDate.formatTime(appointment.getTime())
