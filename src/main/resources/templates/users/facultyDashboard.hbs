@@ -170,7 +170,37 @@
         </h4>
       </div>
       <div id="collapse3" class="panel-collapse collapse">
-        <div class="panel-body">You have not left any recent reviews. Search for a teacher to leave some quality feedback!.</div>
+        <div class="panel-body"><div class="table-wrapper">
+								<table class="alt">
+									<thead>
+										<tr>
+											<th><br>Course</th>
+											<th><br>Overall</th>
+											<th><br>Comment</th>
+										</tr>
+									</thead>
+									<tbody>
+									{{#each reviews}}
+										<tr>
+											<td>{{course}} </td>
+											<td>{{rate_pace}} + {{rate_objectives}}</td>
+											<td>{{comment}}</td>
+										</tr>
+									{{/each}}
+									</tbody>
+									<tfoot>
+									</tfoot>
+								</table>
+        </div>
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        </div>
       </div>
     </div>
   </div> 

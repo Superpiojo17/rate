@@ -16,10 +16,12 @@ import edu.ben.rate_review.authorization.AuthException;
 import edu.ben.rate_review.daos.AnnouncementDao;
 import edu.ben.rate_review.daos.CourseDao;
 import edu.ben.rate_review.daos.DaoManager;
+import edu.ben.rate_review.daos.ProfessorReviewDao;
 import edu.ben.rate_review.daos.TutorDao;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.Course;
+import edu.ben.rate_review.models.ProfessorReview;
 import edu.ben.rate_review.models.Tutor;
 import edu.ben.rate_review.models.TutorForm;
 import edu.ben.rate_review.models.User;
@@ -62,6 +64,11 @@ public class FacultyDashboardController {
 		DaoManager tdao = DaoManager.getInstance();
 		TutorDao td = tdao.getTutorDao();
 		List<Tutor> tutors = td.all(u.getId());
+
+		ProfessorReviewDao pdao = tdao.getProfessorReviewDao();
+		List<ProfessorReview> ProfessorReview = pdao.listRecentCoursesByProfessorEmail(u);
+
+		model.put("reviews", ProfessorReview);
 
 		model.put("tutors", tutors);
 
@@ -145,7 +152,7 @@ public class FacultyDashboardController {
 		DaoManager tdao = DaoManager.getInstance();
 		TutorDao td = tdao.getTutorDao();
 		UserDao ud = udao.getUserDao();
- 
+
 		if (req.queryParams("search-type") != null & req.queryParams("search") != null) {
 			System.out.println(req.queryParams("search-type"));
 			System.out.println(req.queryParams("search"));
