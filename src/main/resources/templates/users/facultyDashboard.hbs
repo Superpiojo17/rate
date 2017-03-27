@@ -183,7 +183,7 @@
 									{{#each reviews}}
 										<tr>
 											<td>{{course}} </td>
-											<td>{{rate_pace}} + {{rate_objectives}}</td>
+											<td>{{overall}} / 5</td>
 											<td>{{comment}}</td>
 										</tr>
 									{{/each}}
@@ -192,6 +192,8 @@
 									</tfoot>
 								</table>
         </div>
+        <a href="/professor/{{current_user.id}}/overview"  class="btn btn-info"> Overview
+											</a>
         	
         	
         	
