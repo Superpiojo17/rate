@@ -171,15 +171,16 @@ public class FacultyDashboardController {
 				// valid search, can proceed
 				List<User> tempTutors = ud.search(searchType, searchTxt);
 				if (tempTutors.size() > 0) {
+					
 					model.put("tutors", tempTutors);
 				} else {
-					List<User> tutors = ud.allTutorsByMajor(u.getMajor());
-
+					List<User> tutors = ud.search(searchType, searchTxt);
+					model.put("error", "No Results Found");
 					model.put("tutors", tutors);
 				}
 			} else {
 				List<User> tutors = ud.allTutorsByMajor(u.getMajor());
-
+				model.put("error", "Cannot leave search bar blank");
 				model.put("tutors", tutors);
 			}
 		} else {

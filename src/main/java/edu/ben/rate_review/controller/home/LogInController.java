@@ -72,24 +72,24 @@ public class LogInController {
 				}
 			} else {
 				// if email is not found in the system, outputs message
-
-				model.put("error", "error");
-
-				// Tell the server to render the index page with the data in the
-				// model
-				return new ModelAndView(model, "/login");
+				
+//				showLoginPage(req, res);
+//				model.put("error", error)
+				
+				return new ModelAndView(model, "login.hbs");
 
 				// "Incorrect E-mail or Password. Please try again."
 			}
 		} else {
 			res.redirect("/login");
 		}
-		return new ModelAndView(model, "/login");
+		return new ModelAndView(model, "login.hbs");
+		
 	}
 
 	private void get(String string) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	/**
