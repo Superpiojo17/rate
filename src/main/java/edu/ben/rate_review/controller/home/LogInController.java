@@ -2,6 +2,7 @@ package edu.ben.rate_review.controller.home;
 
 import java.util.HashMap;
 
+import edu.ben.rate_review.app.Application;
 //import java.util.ArrayList;
 //import java.util.HashMap;
 import edu.ben.rate_review.daos.DaoManager;
@@ -29,6 +30,16 @@ public class LogInController {
 	public ModelAndView showLoginPage(Request req, Response res) {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
+		if (req.queryParams("email") != null && req.queryParams("password") != null) {
+			if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()) {
+				login(req, res);
+				if (login(req, res) == "error") {
+					model.put("error", "Invalid Username or Password");
+				}
+			} else {
+				model.put("error", "error");
+			}
+		}
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "sessions/login.hbs");
 	}
@@ -43,7 +54,7 @@ public class LogInController {
 	 * @param res
 	 * @return
 	 */
-	public ModelAndView login(Request req, Response res) {
+	public String login(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
 
 		// checks the email and password fields are filled out
@@ -72,24 +83,18 @@ public class LogInController {
 				}
 			} else {
 				// if email is not found in the system, outputs message
-				
-//				showLoginPage(req, res);
-//				model.put("error", error)
-				
-				return new ModelAndView(model, "login.hbs");
+
+				// showLoginPage(req, res);
+				// model.put("error", error)
+				return "error";
+				// res.redirect("/login");
 
 				// "Incorrect E-mail or Password. Please try again."
 			}
 		} else {
 			res.redirect("/login");
 		}
-		return new ModelAndView(model, "login.hbs");
-		
-	}
-
-	private void get(String string) {
-		// TODO Auto-generated method stub
-		
+		return "";
 	}
 
 	/**
