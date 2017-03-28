@@ -1,0 +1,486 @@
+<!DOCTYPE HTML>
+<!--
+	Retrospect by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>Professor</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="/assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
+  
+  	<style>
+	.reviewcolumns {
+    	-webkit-column-count: 2; /* Chrome, Safari, Opera */
+    	-moz-column-count: 2; /* Firefox */
+    	column-count: 2;
+	}
+	</style>
+	
+	 <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(draw_objective);
+      google.charts.setOnLoadCallback(draw_organized);
+      google.charts.setOnLoadCallback(draw_challenging);
+      google.charts.setOnLoadCallback(draw_outside_work);
+      google.charts.setOnLoadCallback(draw_pace);
+      google.charts.setOnLoadCallback(draw_assignments);
+      google.charts.setOnLoadCallback(draw_grade_fairly);
+      google.charts.setOnLoadCallback(draw_grade_time);
+      google.charts.setOnLoadCallback(draw_accessibility);
+      google.charts.setOnLoadCallback(draw_knowledge);
+      google.charts.setOnLoadCallback(draw_career_development);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function draw_objective() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Rating');
+        data.addColumn('number', 'Reviews');
+        data.addRows([
+          ['1 out of 5', {{arr_objectives1}}],
+          ['2 out of 5', {{arr_objectives2}}],
+          ['3 out of 5', {{arr_objectives3}}],
+          ['4 out of 5', {{arr_objectives4}}],
+          ['5 out of 5', {{arr_objectives5}}]
+        ]);
+
+        var options = {'title':'Course objectives were met: {{rate_objective}}/5',
+                       'width':600,
+                       'height':300,
+                       colors: ['#3B3EAC']};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_objective'));
+        chart.draw(data, options);
+      }
+      
+      function draw_organized() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Rating');
+        data.addColumn('number', 'Reviews');
+        data.addRows([
+          ['1 out of 5', {{arr_organized1}}],
+          ['2 out of 5', {{arr_organized2}}],
+          ['3 out of 5', {{arr_organized3}}],
+          ['4 out of 5', {{arr_organized4}}],
+          ['5 out of 5', {{arr_organized5}}]
+        ]);
+
+        var options = {'title':'Courses are well planned and scheduled: {{rate_organized}}/5',
+                       'width':600,
+                       'height':300,
+                       colors: ['#22AA99']};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_organized'));
+        chart.draw(data, options);
+      }
+      
+      function draw_challenging() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Rating');
+        data.addColumn('number', 'Reviews');
+        data.addRows([
+          ['1 out of 5', {{arr_challenging1}}],
+          ['2 out of 5', {{arr_challenging2}}],
+          ['3 out of 5', {{arr_challenging3}}],
+          ['4 out of 5', {{arr_challenging4}}],
+          ['5 out of 5', {{arr_challenging5}}]
+        ]);
+
+        var options = {'title':'Difficulty of courses: {{rate_challenging}}/5',
+                       'width':600,
+                       'height':300,
+                       colors: ['#FF9900']};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_challenging'));
+        chart.draw(data, options);
+      }
+      
+      function draw_outside_work() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Rating');
+        data.addColumn('number', 'Reviews');
+        data.addRows([
+          ['1 out of 5', {{arr_outside_work1}}],
+          ['2 out of 5', {{arr_outside_work2}}],
+          ['3 out of 5', {{arr_outside_work3}}],
+          ['4 out of 5', {{arr_outside_work4}}],
+          ['5 out of 5', {{arr_outside_work5}}]
+        ]);
+
+        var options = {'title':'Amount of work required outside of class: {{rate_outside_work}}/5',
+                       'width':600,
+                       'height':300,
+                       colors: ['#109618']};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_outside_work'));
+        chart.draw(data, options);
+      }
+      
+       function draw_pace() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Rating');
+        data.addColumn('number', 'Reviews');
+        data.addRows([
+          ['1 out of 5', {{arr_pace1}}],
+          ['2 out of 5', {{arr_pace2}}],
+          ['3 out of 5', {{arr_pace3}}],
+          ['4 out of 5', {{arr_pace4}}],
+          ['5 out of 5', {{arr_pace5}}]
+        ]);
+
+        var options = {'title':'Pace of presented course material: {{rate_pace}}/5',
+                       'width':600,
+                       'height':300,
+                       colors: ['#990099']};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_pace'));
+        chart.draw(data, options);
+      }
+      
+       function draw_assignments() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Rating');
+        data.addColumn('number', 'Reviews');
+        data.addRows([
+          ['1 out of 5', {{arr_assignments1}}],
+          ['2 out of 5', {{arr_assignments2}}],
+          ['3 out of 5', {{arr_assignments3}}],
+          ['4 out of 5', {{arr_assignments4}}],
+          ['5 out of 5', {{arr_assignments5}}]
+        ]);
+
+        var options = {'title':'Assignments - good learning experience: {{rate_assignments}}/5',
+                       'width':600,
+                       'height':300,
+                       colors: ['#DD4477']};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_assignments'));
+        chart.draw(data, options);
+      }
+      
+      function draw_grade_fairly() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Rating');
+        data.addColumn('number', 'Reviews');
+        data.addRows([
+          ['1 out of 5', {{arr_grade_fairly1}}],
+          ['2 out of 5', {{arr_grade_fairly2}}],
+          ['3 out of 5', {{arr_grade_fairly3}}],
+          ['4 out of 5', {{arr_grade_fairly4}}],
+          ['5 out of 5', {{arr_grade_fairly5}}]
+        ]);
+
+        var options = {'title':'Assignments and exams are graded fairly: {{rate_grade_fairly}}/5',
+                       'width':600,
+                       'height':300,
+                       colors: ['#AAAA11']};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_grade_fairly'));
+        chart.draw(data, options);
+      }
+      
+      function draw_grade_time() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Rating');
+        data.addColumn('number', 'Reviews');
+        data.addRows([
+          ['1 out of 5', {{arr_grade_time1}}],
+          ['2 out of 5', {{arr_grade_time2}}],
+          ['3 out of 5', {{arr_grade_time3}}],
+          ['4 out of 5', {{arr_grade_time4}}],
+          ['5 out of 5', {{arr_grade_time5}}]
+        ]);
+
+        var options = {'title':'Assignments are graded in a timely fashion: {{rate_grade_time}}/5',
+                       'width':600,
+                       'height':300,
+                       colors: ['#8B0707']};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_grade_time'));
+        chart.draw(data, options);
+      }
+      
+      function draw_accessibility() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Rating');
+        data.addColumn('number', 'Reviews');
+        data.addRows([
+          ['1 out of 5', {{arr_accessibility1}}],
+          ['2 out of 5', {{arr_accessibility2}}],
+          ['3 out of 5', {{arr_accessibility3}}],
+          ['4 out of 5', {{arr_accessibility4}}],
+          ['5 out of 5', {{arr_accessibility5}}]
+        ]);
+
+        var options = {'title':'The instructor is accessible outside of class: {{rate_accessibility}}/5',
+                       'width':600,
+                       'height':300,
+                       colors: ['#329262']};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_accessibility'));
+        chart.draw(data, options);
+      }
+      
+      function draw_knowledge() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Rating');
+        data.addColumn('number', 'Reviews');
+        data.addRows([
+          ['1 out of 5', {{arr_knowledge1}}],
+          ['2 out of 5', {{arr_knowledge2}}],
+          ['3 out of 5', {{arr_knowledge3}}],
+          ['4 out of 5', {{arr_knowledge4}}],
+          ['5 out of 5', {{arr_knowledge5}}]
+        ]);
+
+        var options = {'title':'Knowledge is relevant and up-to-date: {{rate_knowledge}}/5',
+                       'width':600,
+                       'height':300,
+                       colors: ['#5574A6']};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_knowledge'));
+        chart.draw(data, options);
+      }
+      
+      function draw_career_development() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Rating');
+        data.addColumn('number', 'Reviews');
+        data.addRows([
+          ['1 out of 5', {{arr_career_development1}}],
+          ['2 out of 5', {{arr_career_development2}}],
+          ['3 out of 5', {{arr_career_development3}}],
+          ['4 out of 5', {{arr_career_development4}}],
+          ['5 out of 5', {{arr_career_development5}}]
+        ]);
+
+        var options = {'title':'Courses are valuable for career development: {{rate_career_development}}/5',
+                       'width':600,
+                       'height':300,
+                       colors: ['#0099C6']};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_career_development'));
+        chart.draw(data, options);
+      }
+    </script>
+	
+	
+	</head>
+	<body class="landing">
+	
+
+		<!-- Header -->
+			<header id="header" class="skel-layers-fixed">
+				<h1>Professor {{prof_last_name}}</h1>
+			</header>
+
+			<!-- Nav -->
+			<nav id="nav" class="visible">
+				<ul class="links">
+					<li><a href="/">Home</a></li>
+					<li><a href="/studentdashboard">My Account</a></li>
+					<li><a href="/studentdashboard">View Apointments</a></li>
+					<li><a href="/studentdashboard">View Reviews</a></li>
+					<li><a href="/contactus">Contact Us</a></li>
+					<li><a href="/deactivation">De-Activate</a></li>
+					<li><a href="/login">Log Out</a></li>
+					
+				</ul>
+			</nav>
+			
+			<!-- Banner -->
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="reviewprof">
+			
+</div>
+			
+		<!-- Main -->
+			<section id="main" class="wrapper">
+					<div class="leftcol"> 
+			
+			<!-- Button trigger modal -->
+ <br>
+			&nbsp;
+     <p><h4 id="date"></h4></p>
+     <p><h4 id="hour"></h4></p>
+      <a href="#announcement" class="btn btn-info" data-toggle="collapse">Announcements</a>
+  <div id="announcement" class="collapse">
+  &nbsp;
+							<div class="table-wrapper">
+								<table class="alt">
+									<thead>
+										<tr>
+											<th>Date</th>
+											<th>Description</th>
+										</tr>
+									</thead>
+									<tbody>
+									{{#each announcements}}
+										<tr>
+											<td>{{date}}</td>
+											<td>{{{announcement_content}}}</td>
+										</tr>
+										{{/each}}
+									</tbody>
+									<tfoot>
+										<tr>
+											<td colspan="2"></td>
+										</tr>
+									</tfoot>
+								</table>
+								
+							</div>
+							
+							
+						</section>
+				<div class="centercol">
+					&nbsp;&nbsp;
+
+					<!-- Text -->
+						<section>
+						
+						
+							<header class="major special">
+								<h2><u>{{prof_first_name}} {{prof_last_name}}</u></h2>
+								<h4><b>Overall rating: {{overall}}/5</b></h4>
+							</header>
+							
+							<!-- <a href="/studentdashboard" class="button alt">Return To Student Dashboard</a> -->
+							 
+							<!-- <span class="stars">{{overall}}</span> -->
+								
+							<hr />
+							</section>
+							
+			<div class="reviewcolumns" align="center">
+		
+			<ul> <div id="chart_objective" ></div> </ul>
+			
+			<ul> <div id="chart_organized"></div> </ul>
+			
+			<ul> <div id="chart_challenging"></div> </ul>
+			
+			<ul> <div id="chart_outside_work"></div> </ul>
+			
+			<ul> <div id="chart_pace"></div> </ul>
+			
+			<ul> <div id="chart_assignments"></div> </ul>
+			
+			<ul> <div id="chart_grade_fairly"></div> </ul>
+			
+			<ul> <div id="chart_grade_time"></div> </ul>
+			
+			<ul> <div id="chart_accessibility"></div> </ul>
+			
+			<ul> <div id="chart_knowledge"></div> </ul>	
+			
+			</div>
+			<div align="center">
+			<!-- <ul><b> The instructor's courses are valuable for career development: {{rate_career_development}}/5</b> -->
+			<ul> <div id="chart_career_development"></div> </ul>
+			</div>
+			
+			
+			<!-- Table -->
+						<section>
+						<br>
+							<h3>Comments:</h3>
+							<div class="table-wrapper">
+								<table class="alt">
+									<thead>
+										<tr>
+											<th><br>Course</th>
+											<th><br>Semester</th>
+											<th><br>Comment</th>
+											<th><br></th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+									{{#each courses}}
+									{{#if comment}}
+									{{#unless comment_removed}}
+										<tr>
+											<td class = "shrink">{{course}}</td>
+											<td class = "shrink">{{semester}} {{year}}</td>
+											{{#if comment_flagged}}<td><i>This comment is under review.</i></td>{{/if}}
+											{{#unless comment_flagged}}<td>{{comment}}</td>{{/unless}}
+											<td class = "shrink">
+											{{#unless comment_approved}}
+											<form action="/professor/{{prof_id}}/overview" method="post">
+											<button class="btn btn-danger" type="submit" name="course_flagged" value="{{course_id}}"><span class="glyphicon glyphicon-flag"></span></button>
+											</form>
+											{{/unless}}
+											</td>
+										</tr>
+									{{/unless}}
+									{{/if}}
+									{{/each}}
+									</tbody>
+									<tfoot>
+									</tfoot>
+								</table>
+							</div> 
+							
+				
+			
+			
+			
+			</section>
+			
+
+		<!-- Scripts -->
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="/assets/js/main.js"></script>
+ 			<script src="/assets/js/jquery.min.js"></script>
+ 			<script src="/assets/js/ratingjquery.js"></script>
+	</body>
+</html>
