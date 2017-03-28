@@ -32,6 +32,8 @@ public class UserForm {
 		this.role = user.getRole();
 		this.school_year = user.getSchool_year();
 		this.id = user.getId();
+		this.role_string = user.getRole_string();
+		this.year_string = user.getYear_string();
 	}
 
 	public UserForm(String first_name, String last_name, String email, String role_string, String year_string,

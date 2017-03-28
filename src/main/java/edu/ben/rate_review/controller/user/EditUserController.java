@@ -1,5 +1,7 @@
 package edu.ben.rate_review.controller.user;
 
+import static spark.Spark.get;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,6 +19,8 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.Session;
+import spark.Spark;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class EditUserController {
 
@@ -35,6 +39,12 @@ public class EditUserController {
 
 		// Get user if ID is valid
 		User u = user.findById(id);
+		boolean role_flag = true;
+
+		if (u.getRole() == 1 || u.getRole() == 2) {
+			role_flag = false;
+		}
+		model.put("role_flag", role_flag);
 
 		// Authorize that the user can edit the user selected
 		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
@@ -72,7 +82,6 @@ public class EditUserController {
 		massedit.setAfter(Integer.parseInt(req.queryParams("yearafter")));
 		userDao.massEditYear(massedit);
 
-		
 		res.redirect(Application.ALLUSERS_PATH);
 		return " ";
 
@@ -103,7 +112,9 @@ public class EditUserController {
 
 	}
 
-	public String updateUser(Request req, Response res) {
+	public ModelAndView updateUser(Request req, Response res) throws AuthException {
+		HashMap<String, Object> model = new HashMap<>();
+
 		String idString = req.params("id");
 		long id = Long.parseLong(idString);
 		UserDao userDao = DaoManager.getInstance().getUserDao();
@@ -116,13 +127,7 @@ public class EditUserController {
 		user.setSchool_year(Integer.parseInt(req.queryParams("year")));
 		user.setId(id);
 
-		userDao.updateUser(user);
-
-		
-		req.attribute("error", "error");
-
-		res.redirect(Application.ALLUSERS_PATH);
-		return " ";
+		return new ModelAndView(model, "users/edituser.hbs");
 
 	}
 

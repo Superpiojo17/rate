@@ -205,8 +205,6 @@ public class Application {
 
 		//
 
-
-		
 		post(COMPLETETUTOR_PATH, (req, res) -> tutordashController.completeProfile(req, res));
 
 		post(COMPLETEPROF_PATH, (req, res) -> facultydashController.completeProfile(req, res));
@@ -278,7 +276,7 @@ public class Application {
 
 		post(EDITANNOUNCEMENT_PATH, (req, res) -> editannouncementController.updateAnnouncement(req, res));
 
-		post(EDITUSER_PATH, (req, res) -> edituserController.updateUser(req, res));
+		post(EDITUSER_PATH, (req, res) -> edituserController.updateUser(req, res), new HandlebarsTemplateEngine());
 
 		get(TUTOR_PATH, (req, res) -> tutorController.showTutorPage(req, res), new HandlebarsTemplateEngine());
 

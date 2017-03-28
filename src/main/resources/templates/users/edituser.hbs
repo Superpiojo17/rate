@@ -98,10 +98,12 @@
 							
   <p>Fill out the form and click save to edit a user.</p>
   &ensp;
-  
+    <div name="error">
+						<p style='color: red'>{{error}}</p>
+					</div>
 							<!-- Form -->
 						<section>
-							<form action="/user/{{user_form.id}}/edit" method="post">
+							<form action="/user/{{user_form.id}}/edit" method="POST">
 								<div class="row uniform 50%">
 									<div class="6u 12u$(xsmall)">
 										<input type="text" name="first_name" id="first_name" value="{{user_form.first_name}}" placeholder="First Name" />
@@ -110,6 +112,7 @@
 										&ensp;
 										<div class="select-wrapper">
 											<select name="role" id="role">
+												<option value="{{user_form.role}}">{{user_form.role_string}}</option>
 												<option value="1">Administrator</option>
 												<option value="2">Faculty</option>
 												<option value="3">Tutor</option>
@@ -118,13 +121,16 @@
 										</div>
 									</div>
 									
+									
 									<div class="6u$ 12u$(xsmall)">
 										<input type="text" name="last_name" id="last_name" value="{{user_form.last_name}}" placeholder="Last Name" />
 										 &ensp;
 										<input type="text" name="major" id="major" value="{{user_form.major}}" placeholder="Major" />
 										&ensp;
+										{{#if role_flag}}
 										<div class="select-wrapper">
 											<select name="year" id="year">
+											<option value="{{user_form.school_year}}">{{user_form.year_string}}</option>
 												<option value="1">Freshman</option>
 												<option value="2">Sophomore</option>
 												<option value="3">Junior</option>
@@ -132,7 +138,13 @@
 											</select>
 										</div>
 									</div>
-									
+									{{/if}}
+									 {{#unless role_flag}}<div class="select-wrapper">
+											<select name="year" id="year">
+												<option value="1">School year is N/A</option>
+											</select>
+										</div>
+									</div>{{/unless}}
 									
 									
 									&ensp;
@@ -151,7 +163,9 @@
 						
 						
 											<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#myModal" > Delete User
-											<span class="glyphicon glyphicon-remove"> </button>
+											<span class="glyphicon glyphicon-remove"> </button> 
+											<a href="/allusers" button type="submit" class="btn btn-info" data-toggle="modal"  > Back
+											</button></a>
 											
 											
 											<!-- Modal -->
