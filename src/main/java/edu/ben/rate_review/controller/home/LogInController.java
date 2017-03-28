@@ -32,12 +32,10 @@ public class LogInController {
 		HashMap<String, Object> model = new HashMap<>();
 		if (req.queryParams("email") != null && req.queryParams("password") != null) {
 			if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()) {
-				login(req, res);
+
 				if (login(req, res) == "error") {
 					model.put("error", "Invalid Username or Password");
 				}
-			} else {
-				model.put("error", "error");
 			}
 		}
 		// Tell the server to render the index page with the data in the model
@@ -92,7 +90,7 @@ public class LogInController {
 				// "Incorrect E-mail or Password. Please try again."
 			}
 		} else {
-			res.redirect("/login");
+			return "";
 		}
 		return "";
 	}
