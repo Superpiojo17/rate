@@ -72,7 +72,7 @@ public class TutorDao implements Dao<Tutor> {
 	 */
 	public TutorAppointment saveTutorAppointment(TutorAppointment appointment) {
 		final String sql = "INSERT INTO " + APPOINTMENT_TABLE + "(student_id, tutor_id, date, time, student_message, "
-				+ "student_firstname, student_lastname, tutor_firstname, tutor_lastname) Values(?,?,?,?,?,?,?,?,?)";
+				+ "student_firstname, student_lastname, tutor_firstname, tutor_lastname, tutor_message, tutor_has_responded, appointment_status) Values(?,?,?,?,?,?,?,?,?,?,?,?)";
 
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -85,6 +85,9 @@ public class TutorDao implements Dao<Tutor> {
 			ps.setString(7, appointment.getStudent_lastname());
 			ps.setString(8, appointment.getTutor_firstname());
 			ps.setString(9, appointment.getTutor_lastname());
+			ps.setString(10, appointment.getTutor_message());
+			ps.setBoolean(11, appointment.getTutor_has_responded());
+			ps.setBoolean(12, appointment.getAppointment_status());
 			ps.executeUpdate();
 			return appointment;
 		} catch (SQLException e) {

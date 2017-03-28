@@ -248,9 +248,7 @@ public class StudentDashboardController {
 		String messageFooter = "<br /><p>Sincerely,</p><p>The Rate&Review Team</p>";
 		String message = messageHeader + messageBody + messageFooter;
 
-		Email.deliverEmail(tutor.getFirst_name(), "acendude@gmail.com", subject, message);
-		// Email.deliverEmail(tutor.getFirst_name(), tutor.getEmail(), subject,
-		// message);
+		Email.deliverEmail(tutor.getFirst_name(), tutor.getEmail(), subject, message);
 
 	}
 

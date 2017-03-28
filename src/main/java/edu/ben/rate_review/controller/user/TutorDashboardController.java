@@ -34,7 +34,7 @@ public class TutorDashboardController {
 		AuthPolicyManager.getInstance().getUserPolicy().showTutorDashboardPage();
 
 		model.put("current_user", u);
-		
+
 		if (u.getMajor() == null) {
 			model.put("completeProfile", true);
 		}
@@ -75,14 +75,14 @@ public class TutorDashboardController {
 		// lists of appointments/requested appointments
 		model.put("appointments", appointments);
 		model.put("approved_appointments", approved_appointments);
-		
+
 		// count of appointment requests that need a response
 		model.put("number_of_requests", unviewed_appointments.size());
 
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/tutorDashboard.hbs");
 	}
-	
+
 	public ModelAndView showCompleteProfileTutorPage(Request req, Response res) throws AuthException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
@@ -128,34 +128,48 @@ public class TutorDashboardController {
 	public String replyToRequest(Request req, Response res) {
 
 		TutorDao tDao = DaoManager.getInstance().getTutorDao();
-		long id = Long.parseLong(req.queryParams("appointment_id"));
 
-		if (id > 0) {
-			TutorAppointment appointment = tDao.findAppointmentByID(id);
-			appointment.setTutor_message(req.queryParams("tutor_message"));
-			appointment.setTutor_has_responded(true);
+		if (req.queryParams("reschedule_appointment_id") == null) {
+			// tutor is handling an appointment response
 
-			if (appointment.getTutor_message().length() < 200) {
-				tDao.updateTutorResponse(appointment);
-				tDao.setTutorResponded(appointment);
-				tDao.approveAppointment(appointment);
-				emailAppointmentResponse(appointment);
+			long id = Long.parseLong(req.queryParams("appointment_id"));
+
+			if (id > 0) {
+				TutorAppointment appointment = tDao.findAppointmentByID(id);
+				appointment.setTutor_message(req.queryParams("tutor_message"));
+				appointment.setTutor_has_responded(true);
+
+				if (appointment.getTutor_message().length() < 200) {
+					tDao.updateTutorResponse(appointment);
+					tDao.setTutorResponded(appointment);
+					tDao.approveAppointment(appointment);
+					emailAppointmentResponse(appointment);
+				} else {
+					// message too long
+				}
 			} else {
-				// message too long
+				id *= -1;
+				TutorAppointment appointment = tDao.findAppointmentByID(id);
+				appointment.setTutor_message(req.queryParams("tutor_message"));
+				appointment.setTutor_has_responded(true);
+
+				if (appointment.getTutor_message().length() < 200) {
+					tDao.updateTutorResponse(appointment);
+					tDao.setTutorResponded(appointment);
+					emailAppointmentResponse(appointment);
+				} else {
+					// message too long
+				}
 			}
 		} else {
-			id *= -1;
+			// tutor is rescheduling an appointment
+			long id = Long.parseLong(req.queryParams("reschedule_appointment_id"));
 			TutorAppointment appointment = tDao.findAppointmentByID(id);
-			appointment.setTutor_message(req.queryParams("tutor_message"));
-			appointment.setTutor_has_responded(true);
-
-			if (appointment.getTutor_message().length() < 200) {
-				tDao.updateTutorResponse(appointment);
-				tDao.setTutorResponded(appointment);
-				emailAppointmentResponse(appointment);
-			} else {
-				// message too long
-			}
+			appointment.setTime(req.queryParams("reschedule_time"));
+			appointment.setDate(req.queryParams("reschedule_date"));
+			tDao.cancelTutorAppointment(id);
+			tDao.saveTutorAppointment(appointment);
+			emailReschedule(appointment);
 		}
 
 		res.redirect(Application.TUTORDASHBOARD_PATH);
@@ -182,7 +196,30 @@ public class TutorDashboardController {
 		Email.deliverEmail(student.getFirst_name(), student.getEmail(), subject, message);
 
 	}
-	
+
+	/**
+	 * Emails student notifying them of a tutor rescheduling an appointment
+	 * 
+	 * @param appointment
+	 */
+	private static void emailReschedule(TutorAppointment appointment) {
+
+		UserDao uDao = DaoManager.getInstance().getUserDao();
+		User student = uDao.findById(appointment.getStudent_id());
+
+		String subject = "Rate&Review Tutor Appointment Reschedule";
+		String messageHeader = "<p>Hello " + student.getFirst_name() + ",</p><br />";
+		String messageBody = "<p>Your appointment with " + appointment.getTutor_firstname() + " "
+				+ appointment.getTutor_lastname() + " has been rescheduled for "
+				+ FormatTimeAndDate.formatTime(appointment.getTime()) + " on "
+				+ FormatTimeAndDate.formatDate(appointment.getDate()) + ".</p>";
+		String messageFooter = "<br /><p>Sincerely,</p><p>The Rate&Review Team</p>";
+		String message = messageHeader + messageBody + messageFooter;
+
+		Email.deliverEmail(student.getFirst_name(), student.getEmail(), subject, message);
+
+	}
+
 	/*
 	 * Complete profile for student
 	 */

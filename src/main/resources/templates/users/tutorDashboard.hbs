@@ -117,16 +117,24 @@
 					<th><br>Time</th>
 					<th><br>Student Message</th>
 					<th><br>Your Response</th>
+					<th><br>Reschedule</th>
 					</tr>
 				</thead>
 				<tbody>
 						{{#each approved_appointments}}		
 							<tr>
-							<td class="shrink">{{student_firstname}} {{student_lastname}}</td>
-							<td class="shrink">{{date}}</td>
-							<td class="shrink">{{time}}</td>
-							<td>{{student_message}}</td>
-							<td>{{tutor_message}}</td>
+							<form action="/tutordashboard" method="post">
+								<td class="shrink">{{student_firstname}} {{student_lastname}}</td>
+								<td class="shrink">{{date}}</td>
+								<td class="shrink">{{time}}</td>
+								<td>{{student_message}}</td>
+								<td>{{tutor_message}}</td>
+								<td class="shrink">
+									<input type="date" name="reschedule_date" id="date" value="" placeholder="Date" />
+									<input type="time" name="reschedule_time" id="time" value="" placeholder="Time" />
+									<button title="reschedule appointment" class="btn btn-info" type="submit" name="reschedule_appointment_id" value="{{appointment_id}}"><span class="glyphicon glyphicon-edit fa-2x"></span></button>
+								</td>
+							</form>
 							</tr>			
 						{{/each}}
 				</tbody>
