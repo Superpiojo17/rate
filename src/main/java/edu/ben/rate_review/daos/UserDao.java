@@ -484,6 +484,29 @@ public class UserDao implements Dao<User> {
 		}
 		return " ";
 	}
+	
+	public List<User> sortByMajor(String string) {
+
+		final String SELECT = "SELECT * FROM users WHERE major = '" + string + "'";
+
+		List<User> users = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			users = new ArrayList<User>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					users.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return users;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
 
 	/**
 	 * Called when user has successfully recovered their account, or they

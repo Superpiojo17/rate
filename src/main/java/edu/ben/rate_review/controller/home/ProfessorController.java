@@ -42,6 +42,13 @@ public class ProfessorController {
 
 		List<ProfessorReview> reviews = reviewDao.listCoursesByProfessorEmail(prof);
 
+		for (int i = 0; i < reviews.size(); i++) {
+
+			ProfessorReview r = reviews.get(i);
+			
+			System.out.println(r.getCourse());
+		}
+		
 		// Testing new dao enhancements
 		// ProfessorReviewDaoTests.listCoursesByProfessorEmailTest();
 		// ProfessorReviewDaoTests.avgRateTest();
@@ -154,6 +161,8 @@ public class ProfessorController {
 		model.put("overall", df.format(overall));
 		model.put("courses", reviews);
 		model.put("prof_first_name", prof.getFirst_name());
+		model.put("prof_last_name", prof.getLast_name());
+		model.put("prof_id", prof.getId());
 		model.put("prof_last_name", prof.getLast_name());
 		model.put("prof_id", prof.getId());
 		// model.put("course", course);

@@ -86,4 +86,13 @@ public class UserPolicy extends AuthorizationPolicy<User> {
 
 	}
 
+	public void showCalendarPage() throws AuthException {
+		if (currentUser() == null) {
+			deny("You must be logged in to access this page");
+		}
+		if (!currentUser().hasRole(AuthorizationUser.TUTOR)) {
+			deny("You are not authorized to be here!");
+		}
+	}
+
 }

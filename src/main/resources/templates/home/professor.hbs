@@ -393,13 +393,37 @@
 								<h4><b>Overall rating: {{overall}}/5</b></h4>
 							</header>
 							
+							<!-- Drop Down -->
+					<select name="form_select">
+  					<option value="1">College of Liberal Arts</option>
+ 					<option value="2">College of Business</option>
+  					<option value="3">College of Science</option>
+  					<option value="4">College of Education and Health Services</option>
+					</select>
+					<div>
+						{{course_id}}
+						{{course_name}}
+						{{prof_first_name}}
+					</div>	
 							<!-- <a href="/studentdashboard" class="button alt">Return To Student Dashboard</a> -->
 							 
 							<!-- <span class="stars">{{overall}}</span> -->
 								
 							<hr />
 							</section>
-							
+							<div>
+									<table class="indextable alt">
+								<tbody>
+									{{#each users}}
+										<tr>
+											<td class="shrink"> {{last_name}}</td>
+											<td class="shrink">{{last_name}} , {{first_name}}</td>
+											
+										</tr>
+									{{/each}}
+									</tbody>
+							</table>
+							</div>
 			<div class="reviewcolumns" align="center">
 		
 			<ul> <div id="chart_objective" ></div> </ul>

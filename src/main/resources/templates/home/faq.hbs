@@ -21,13 +21,13 @@
 <link
 	href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700'
 	rel='stylesheet' type='text/css'>
+	
+<style>
+li {
+    display: inline;
+}
+</style>
 
-<link rel="stylesheet" href="faq-template/css/reset.css">
-<!-- CSS reset -->
-<link rel="stylesheet" href="faq-template/css/style.css">
-<!-- Resource style -->
-<script src="js/modernizr.js"></script>
-<!-- Modernizr -->
 </head>
 
 <style>
@@ -36,8 +36,6 @@
 	background-color: #1E2832;
 	color: rgba(255, 255, 255, 0.75);
 	background-attachment: fixed;
-	background-image: url(images/education.jpg),
-		url(../../images/education.jpg);
 	background-size: cover;
 	text-align: center;
 	color: #07090c;
@@ -90,17 +88,17 @@ header {
 			<a href="index.html">G.O.O.D</a>
 		</h1>
 		<a href="#nav">Menu</a>
-		<form>
-			<input type="text2" name="search" placeholder="Search..">
-		</form>
 	</header>
 
 	<!-- Nav -->
 	<nav id="nav">
 		<ul class="links">
-			<li><a href="index.html">Home</a></li>
-			<li><a href="generic.html">Generic</a></li>
-			<li><a href="elements.html">Elements</a></li>
+			<li><a href="/">Home</a></li>
+					<li><a href="/contactus">Contact Us</a></li>
+					<li><a href="/aboutus">About Us</a></li>
+					<li><a href="/contactus">Contact Us</a></li>
+					<li><a href="/deactivation">De-Activate</a></li>
+					<li><a href="/login">Log Out</a></li>
 		</ul>
 	</nav>
 
@@ -119,44 +117,42 @@ header {
 		</ul>
 	</section>
 
-	<section class="cd-faq">
-		<ul class="cd-faq-categories">
+		<ul>
 			<li><a class="selected" href="#basics">Basics</a></li>
 			<li><a href="#account">Account</a></li>
 			<li><a href="#privacy">Privacy</a></li>
-			<li><a href="#contact">Contact Us</a></li>
 
 		</ul>
 		<!-- cd-faq-categories -->
-
+<section class="cd-faq">
 		<div class="cd-faq-items">
 			<ul id="basics" class="cd-faq-group">
 				<li class="cd-faq-title"><h2>Basics</h2></li>
-				<li><a class="cd-faq-trigger" href="#0">How do I change my
-						password?</a>
+				<li>How do I change my
+						password?
 					<div class="cd-faq-content">
 						<p>On the Login/Sign Up page there is a link that states "
 							forgot my password ". If you follow the link you will recieve an
 							email that will allow you to reset your password.</p>
 					</div> <!-- cd-faq-content --></li>
 
-				<li><a class="cd-faq-trigger" href="#0">How do I sign up?</a>
+				<li>How do I sign up?
 					<div class="cd-faq-content">
 						<p>Utilizing the side menu navigate to login page. The second
 							tab states Sign Up, simply select the Sign Up tab and fill out
 							the required information</p>
 					</div> <!-- cd-faq-content --></li>
 
-				<li><a class="cd-faq-trigger" href="#0">Can I remove a
-						post?</a>
+				<li>Can I remove a
+						post?
 					<div class="cd-faq-content">
 						<p>As for now posts can only be managed by our Administrators.
 							If you would like a post removed please contact them via the
 							portal on the bottom of the page.</p>
 					</div> <!-- cd-faq-content --></li>
 
-				<li><a class="cd-faq-trigger" href="#0">How do reviews
-						work?</a>
+				<li>How do reviews
+						work?
 					<div class="cd-faq-content">
 						<p>The review system only grants access to registered student
 							that are currently attending a class that the professor is
@@ -170,31 +166,31 @@ header {
 
 			<ul id="account" class="cd-faq-group">
 				<li class="cd-faq-title"><h2>Account</h2></li>
-				<li><a class="cd-faq-trigger" href="#0">How do I change my
-						password?</a>
+				<li>How do I change my
+						password?
 					<div class="cd-faq-content">
 						<p>>On the Login/Sign Up page there is a link that states "
 							forgot my password ". If you follow the link you will recieve an
 							email that will allow you to reset your password.</p>
 					</div> <!-- cd-faq-content --></li>
 
-				<li><a class="cd-faq-trigger" href="#0">How do I delete my
-						account?</a>
+				<li>How do I delete my
+						account?
 					<div class="cd-faq-content">
 						<p>Utilizing the side menu, while logged in you can select the
 							deactivate account link. There you will have verify your email
 							and password in order to deactivate the account.</p>
 					</div> <!-- cd-faq-content --></li>
 
-				<li><a class="cd-faq-trigger" href="#0">How do I change my
-						account settings?</a>
+				<li>How do I change my
+						account settings?
 					<div class="cd-faq-content">
 						<p>The user would be able to manage their own profile settings
 							via the user dashboard or by contacting the site admin.</p>
 					</div> <!-- cd-faq-content --></li>
 
-				<li><a class="cd-faq-trigger" href="#0">I forgot my
-						password. How do I reset it?</a>
+				<li>I forgot my
+						password. How do I reset it?
 					<div class="cd-faq-content">
 						<p>There are two options, option number one is to follow the
 							change password link on the login page, option number two is to
@@ -207,16 +203,16 @@ header {
 
 			<ul id="privacy" class="cd-faq-group">
 				<li class="cd-faq-title"><h2>Privacy</h2></li>
-				<li><a class="cd-faq-trigger" href="#0">Are the accounts
-						secure?</a>
+				<li>Are the accounts
+						secure?
 					<div class="cd-faq-content">
 						<p>The site account are secured via password and URL
 							encryptions. This allows for us to limit the users as well as
 							avoid spam and other security threats.</p>
 					</div> <!-- cd-faq-content --></li>
 
-				<li><a class="cd-faq-trigger" href="#0">Can the professor
-						tell who left the review?</a>
+				<li>Can the professor
+						tell who left the review?
 					<div class="cd-faq-content">
 						<p>The reviews are all anonymous to the professor. Unless the
 							student makes any self identifying remarks the professor would
@@ -224,8 +220,8 @@ header {
 							commentary.</p>
 					</div> <!-- cd-faq-content --></li>
 
-				<li><a class="cd-faq-trigger" href="#0">How can I access my
-						account data?</a>
+				<li>How can I access my
+						account data?
 					<div class="cd-faq-content">
 						<p>Account data will be available through the user dashboard.
 							Either Student, Professor or tutor dashboars will grant access to
@@ -236,48 +232,11 @@ header {
 			<!-- cd-faq-group -->
 
 			<!-- cd-faq-items -->
-			<a href="#0" class="cd-close-panel">Close</a>
 	</section>
 
 
 
-	<!-- Four -->
-	<section id="four" class="wrapper style2 special">
-		<div class="inner">
-			<header class="major narrow">
-				<h2>Get in touch</h2>
-				<p>Please contact us with any other questions</p>
-			</header>
-			<form action="#" method="POST">
-				<div class="container 75%">
-					<div class="row uniform 50%">
-						<div class="6u 12u$(xsmall)">
-							<input name="name" placeholder="Name" type="text" />
-						</div>
-						<div class="6u$ 12u$(xsmall)">
-							<input name="email" placeholder="Email" type="email" />
-						</div>
-						<div class="12u$">
-							<textarea name="message" placeholder="Message" rows="4"></textarea>
-						</div>
-					</div>
-				</div>
-				<ul class="actions">
-					<li><input type="submit" class="special" value="Submit" /></li>
-					<li><input type="reset" class="alt" value="Reset" /></li>
-				</ul>
-			</form>
-		</div>
-	</section>
-	<!-- cd-faq -->
-	<script src="faq-template/js/jquery-2.1.1.js"></script>
-	<script src="faq-template/js/jquery.mobile.custom.min.js"></script>
-	<script src="faq-template/js/main.js"></script>
-	<!-- Resource jQuery -->
-
-
-
-
+	
 
 	<!-- Footer -->
 	<footer id="footer">
