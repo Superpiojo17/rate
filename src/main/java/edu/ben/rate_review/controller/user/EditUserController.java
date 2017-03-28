@@ -61,7 +61,9 @@ public class EditUserController {
 		return new ModelAndView(model, "users/edituser.hbs");
 	}
 
-	public String massEditConfirmed(Request req, Response res) {
+	public ModelAndView massEditConfirmed(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+
 		UserDao userDao = DaoManager.getInstance().getUserDao();
 
 		MassEditForm massedit = new MassEditForm();
@@ -69,12 +71,20 @@ public class EditUserController {
 		massedit.setAfter(Integer.parseInt(req.queryParams("confirmedafter")));
 		userDao.massEditConfirmed(massedit);
 
-		res.redirect(Application.ALLUSERS_PATH);
-		return " ";
+		model.put("error", "You mass updated the email confirmation status of all users");
+
+		DaoManager dao = DaoManager.getInstance();
+		UserDao ud = dao.getUserDao();
+		List<User> users = ud.sortbyRole();
+		model.put("users", users);
+
+		return new ModelAndView(model, "users/allusers.hbs");
 
 	}
 
-	public String massEditYear(Request req, Response res) {
+	public ModelAndView massEditYear(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+
 		UserDao userDao = DaoManager.getInstance().getUserDao();
 
 		MassEditForm massedit = new MassEditForm();
@@ -82,12 +92,20 @@ public class EditUserController {
 		massedit.setAfter(Integer.parseInt(req.queryParams("yearafter")));
 		userDao.massEditYear(massedit);
 
-		res.redirect(Application.ALLUSERS_PATH);
-		return " ";
+		model.put("error", "You mass updated the school year of all users");
+
+		DaoManager dao = DaoManager.getInstance();
+		UserDao ud = dao.getUserDao();
+		List<User> users = ud.sortbyRole();
+		model.put("users", users);
+
+		return new ModelAndView(model, "users/allusers.hbs");
 
 	}
 
-	public String massEditRole(Request req, Response res) {
+	public ModelAndView massEditRole(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+
 		UserDao userDao = DaoManager.getInstance().getUserDao();
 
 		MassEditForm massedit = new MassEditForm();
@@ -95,20 +113,36 @@ public class EditUserController {
 		massedit.setAfter(Integer.parseInt(req.queryParams("roleafter")));
 		userDao.massEditRole(massedit);
 
-		res.redirect(Application.ALLUSERS_PATH);
-		return " ";
+		model.put("error", "You mass updated the role of all users");
+
+		DaoManager dao = DaoManager.getInstance();
+		UserDao ud = dao.getUserDao();
+		List<User> users = ud.sortbyRole();
+		model.put("users", users);
+
+		return new ModelAndView(model, "users/allusers.hbs");
 
 	}
 
-	public String massEditActive(Request req, Response res) {
+	public ModelAndView massEditActive(Request req, Response res) {
+
+		HashMap<String, Object> model = new HashMap<>();
+
 		UserDao userDao = DaoManager.getInstance().getUserDao();
 
 		MassEditForm massedit = new MassEditForm();
 		massedit.setBefore(Integer.parseInt(req.queryParams("activebefore")));
 		massedit.setAfter(Integer.parseInt(req.queryParams("activeafter")));
 		userDao.massEditActive(massedit);
-		res.redirect(Application.ALLUSERS_PATH);
-		return " ";
+
+		model.put("error", "You mass updated the account status of all users");
+
+		DaoManager dao = DaoManager.getInstance();
+		UserDao ud = dao.getUserDao();
+		List<User> users = ud.sortbyRole();
+		model.put("users", users);
+
+		return new ModelAndView(model, "users/allusers.hbs");
 
 	}
 
@@ -126,6 +160,15 @@ public class EditUserController {
 		user.setMajor(req.queryParams("major"));
 		user.setSchool_year(Integer.parseInt(req.queryParams("year")));
 		user.setId(id);
+
+		UserDao userD = DaoManager.getInstance().getUserDao();
+		// Get user if ID is valid
+		User u = userD.findById(id);
+
+		model.put("error", "You updated " + user.getFirst_name() + " " + user.getLast_name() + "'s account");
+
+		// create the form object, put it into request
+		model.put("user_form", new UserForm(u));
 
 		return new ModelAndView(model, "users/edituser.hbs");
 

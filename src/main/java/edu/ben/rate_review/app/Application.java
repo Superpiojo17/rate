@@ -286,10 +286,14 @@ public class Application {
 
 		put(PROFESSOR_PATH, (req, res) -> professorController.display(req, res));
 
-		post(MASSEDITCONFIRMED_PATH, (req, res) -> edituserController.massEditConfirmed(req, res));
-		post(MASSEDITACTIVE_PATH, (req, res) -> edituserController.massEditActive(req, res));
-		post(MASSEDITYEAR_PATH, (req, res) -> edituserController.massEditYear(req, res));
-		post(MASSEDITROLE_PATH, (req, res) -> edituserController.massEditRole(req, res));
+		post(MASSEDITCONFIRMED_PATH, (req, res) -> edituserController.massEditConfirmed(req, res),
+				new HandlebarsTemplateEngine());
+		post(MASSEDITACTIVE_PATH, (req, res) -> edituserController.massEditActive(req, res),
+				new HandlebarsTemplateEngine());
+		post(MASSEDITYEAR_PATH, (req, res) -> edituserController.massEditYear(req, res),
+				new HandlebarsTemplateEngine());
+		post(MASSEDITROLE_PATH, (req, res) -> edituserController.massEditRole(req, res),
+				new HandlebarsTemplateEngine());
 
 		post(DELETEUSER_PATH, (req, res) -> edituserController.deleteUser(req, res));
 
