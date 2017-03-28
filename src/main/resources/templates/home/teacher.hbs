@@ -6,44 +6,25 @@
 -->
 <html>
 <head>
-<title>teacher</title>
+<title>Browse Professors</title>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 <link rel="stylesheet" href="assets/css/main.css" />
 <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-<!-- Glyphacons reference sheet-->
-<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </head>
 <style>
-input[type=text2] {
-	width: 130px;
-	float: right;
-	box-sizing: border-box;
-	border: 2px solid #ccc;
-	border-radius: 4px;
-	font-size: 16px;
-	background-color: #1e2832;
-	background-image: url('searchicon.png');
-	background-position: 10px 10px;
-	background-repeat: no-repeat;
-	padding: 5px 20px 5px 40px;
-	-webkit-transition: width 0.4s ease-in-out;
-	transition: width 0.4s ease-in-out;
-}
-
-input, textarea {
-	color: #f2f2f2;
-}
-
-input[type=text2]:focus {
-	width: 30%;
-}
-
 #banner {
-	padding: 3em 0 1em 0;
+	padding: 3em 0 3em 0;
 	background-color: #1E2832;
 	color: rgba(255, 255, 255, 0.75);
 	background-attachment: fixed;
@@ -54,53 +35,38 @@ input[type=text2]:focus {
 	color: #07090c;
 }
 
-
-input[type="submit"], input[type="reset"], input[type="button"], button, .button {
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    -ms-appearance: none;
-    appearance: none;
-    -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-    -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-    -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-    border-radius: 0em;
-    border: 0;
-    cursor: pointer;
-    display: inline-block;
-    font-weight: 200;
-    height: 2em;
-    width: 1em;
-    line-height: normal;
-    line-width: normal;
-    min-width: 1em;
-    padding: 0 1.5em;
-    text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
-    white-space: nowrap;
-}
-
-
-.wrapper.style1 input[type="submit"].alt, .wrapper.style1 input[type="reset"].alt, .wrapper.style1 input[type="button"].alt, .wrapper.style1 button.alt, .wrapper.style1 .button.alt {
-    background-color: transparent;
-    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2);
-    color: #51BAA4 !important;
+#header > h1 a {
+    font-size: 0.8em;
 }
 </style>
+
 <body>
-	<!-- Header -->
+	<!-- header -->
 	<header id="header" class="skel-layers-fixed">
 		<h1>
-			<a href="/">Rate & Review</a>
+			<a href="/">RateAndReview</a>
 		</h1>
 		<a href="#nav">Menu</a>
-		<form>
-			<input type="text2" name="search" placeholder="Search..">
-		</form>
+
 	</header>
 
-<!-- Banner -->
+	<!-- Nav -->
+	<nav id="nav"  class="visible">
+		<ul class="links">
+			<li><a href="/admindashboard">Home</a></li>
+			<li><a href="/register">My Account</a></li>
+			<li><a href="/aboutus">View Apointments</a></li>
+			<li><a href="/aboutus">View Reviews</a></li>
+			<li><a href="/contactus">Contact Us</a></li>
+			<li><a href="/allusers">Manage Users</a></li>
+			<li><a href="/announcement">Announcements</a></li>
+			<li><a href="/deactivation">De-Activate</a></li>
+			<li><a href="/login">Log Out</a></li>
+
+		</ul>
+	</nav>
+
+	<!-- Banner -->
 	<section id="banner">
 
 		<h2>
@@ -110,199 +76,210 @@ input[type="submit"], input[type="reset"], input[type="button"], button, .button
 
 		<!-- <i class="icon fa-diamond"></i> -->
 		<h2>Browse Teachers</h2>
-	<!--	<p>Here to answer the questions you might have</p>
-		<ul class="actions">
-			<li><a href="#" class="button big special">Learn More Below</a></li>
-		</ul> -->
+
 	</section>
 
-	<!-- Nav -->
-			<nav id="nav" class="visible">
-				<ul class="links">
-				<li><a href="/">Home</a></li>
-					<li><a href="/login">Log In</a></li>
-					<li><a href="/register">Register</a></li>
-					<li><a href="/contactus">Contact Us</a></li>
-					<li><a href="/aboutus">About Us</a></li>
-					<li><a href="/accountrecovery">Forgot Password?</a></li>
-					
+
+
+
+	<section id="main" class="wrapper">
+		<div class="leftcol">
+
+			<!-- Button trigger modal -->
+			<br> &nbsp;
+			<p>
+			<h4 id="date"></h4>
+			</p>
+			<p>
+			<h4 id="hour"></h4>
+			</p>
+			<a href="#announcement" class="btn btn-info" data-toggle="collapse">Announcements</a>
+			<div id="announcement" class="collapse">
+				&nbsp;
+
+
+				<div class="table-wrapper">
+					<table class="alt">
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Description</th>
+							</tr>
+						</thead>
+						<tbody>
+							{{#each announcements}}
+							<tr>
+								<td>{{date}}</td>
+								<td>{{{announcement_content}}}</td>
+							</tr>
+							{{/each}}
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="2"></td>
+							</tr>
+						</tfoot>
+					</table>
+
+				</div>
+	</section>
+
+	<div class="centercol">
+		&ensp;
+		<h2>View all professors</h2>
+
+
+
+		<p>View all the registered professors.</p>
+		&ensp;
+
+
+
+
+
+
+		<div class="table-wrapper">
+			&nbsp;&nbsp;
+			<table id="indextable" class="indextable alt">
+				<thead>
+					<tr>
+						<th></th>
+
+						<th class="shrink text-left"><a
+							href="javascript:SortTable(3,'T');" class="btn btn-default">Image
+								</button>
+						</a></th>
+						<th class=" shrink text-left"><a
+							href="javascript:SortTable(1,'T');" class="btn btn-default">Name
+								</button>
+						</a></th>
+						<th class="shrink text-left"><a
+							href="javascript:SortTable(2,'T');" class="btn btn-default">Email
+								</button>
+						</a></th>
+
+						<th class="text-left"><a href="javascript:SortTable(4,'T');"
+							class="btn btn-default">Major
+								</button>
+						</a></th>
+
+
+					</tr>
+				</thead>
+				<tbody>
+					{{#each users}}
+					<tr>
+
+
+						<td class="shrink" align="center"><a
+							href="/users/{{id}}/edit" class="btn btn-info">Edit<span
+								class="glyphicon glyphicon-pencil"></span></a></td>
+						<td class="shrink">{{image}}</td>
+						<td class="shrink">{{last_name}} , {{first_name}}</td>
+						<td class="shrink"><a
+							href="mailto:{{email}}?Subject=Rate%20and %20Review"><span
+								class="glyphicon glyphicon-envelope"></span> {{email}}</a></td>
+
+						<td class="shrink">{{major}}</td>
+
+
+
+
+
+
+					</tr>
+					{{/each}}
+				</tbody>
+				<tfoot>
+
+				</tfoot>
+			</table>
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+					<li class="page-item disabled"><a class="page-link" href="#"
+						tabindex="-1">Previous</a></li>
+					<li class="page-item"><a class="page-link" href="#">1</a></li>
+					<li class="page-item"><a class="page-link" href="#">2</a></li>
+					<li class="page-item"><a class="page-link" href="#">3</a></li>
+					<li class="page-item"><a class="page-link" href="#">Next</a></li>
 				</ul>
 			</nav>
-
-<<<<<<< HEAD
-
-
-
-
-=======
->>>>>>> origin/sprint5
-	<!-- One -->
-	<section id="one" class="wrapper style1">
-		<div class="inner">
-		
-		<div class="container">
-  <div class="btn-toolbar">
-    <div class="btn-group btn-group-sm">
-      <button class="btn btn-default">A</button>
-      <button class="btn btn-default">B</button>
-      <button class="btn btn-default">C</button>
-      <button class="btn btn-default">D</button>
-      <button class="btn btn-default">E</button>
-      <button class="btn btn-default">F</button>
-      <button class="btn btn-default">G</button>
-      <button class="btn btn-default">H</button>
-      <button class="btn btn-default">I</button>
-      <button class="btn btn-default">J</button>
-      <button class="btn btn-default">K</button>
-      <button class="btn btn-default">L</button>
-      <button class="btn btn-default">M</button>
-      <button class="btn btn-default">N</button>
-      <button class="btn btn-default">O</button>
-      <button class="btn btn-default">P</button>
-      <button class="btn btn-default">Q</button>
-      <button class="btn btn-default">R</button>
-      <button class="btn btn-default">S</button>
-      <button class="btn btn-default">T</button>
-      <button class="btn btn-default">U</button>
-      <button class="btn btn-default">V</button>
-      <button class="btn btn-default">W</button>
-      <button class="btn btn-default">X</button>
-      <button class="btn btn-default">Y</button>
-      <button class="btn btn-default">Z</button>
-    </div>
-  </div>
-</div>
-		<br/>
-	
-	
-	<div class="alphabet">Search: <span class="clear active">None</span><span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span><span>H</span><span>I</span><span>J</span><span>K</span><span>L</span><span>M</span><span>N</span><span>O</span><span>P</span><span>Q</span><span>R</span><span>S</span><span>T</span><span>U</span><span>V</span><span>W</span><span>X</span><span>Y</span><span>Z</span></div>
-		
-			<article class="feature left">
-				<span class="image"><img src="images/pollack.jpg" alt="" /></span>
-				<div class="content">
-					<h2>Lawrence Pollack</h2>
-					<div class="rw-ui-container"></div>
-					<p>Sed egestas, ante et vulputate volutpat, eros pede semper
-						est, vitae luctus metus libero eu augue. Morbi purus libero,
-						faucibus adipiscing, commodo quis, gravida id, est.</p>
-
-					<ul class="actions">
-						<li><a href="#" class="button alt">More</a></li>
-					</ul>
-				</div>
-			</article>
-			<article class="feature right">
-				<span class="image"><img src="images/mirsky.jpg" alt="" /></span>
-				<div class="content">
-					<h2>Grace Mirsky</h2>
-					<div class="rw-ui-container"></div>
-					<p>Sed egestas, ante et vulputate volutpat, eros pede semper
-						est, vitae luctus metus libero eu augue. Morbi purus libero,
-						faucibus adipiscing, commodo quis, gravida id, est.</p>
-					<ul class="actions">
-						<li><a href="#" class="button alt">More</a></li>
-					</ul>
-				</div>
-			</article>
-			<article class="feature left">
-				<span class="image"><img src="images/nadolski.jpg" alt="" /></span>
-				<div class="content">
-					<h2>Jeremy Nadolski</h2>
-					<div class="rw-ui-container"></div>
-					<p>Sed egestas, ante et vulputate volutpat, eros pede semper
-						est, vitae luctus metus libero eu augue. Morbi purus libero,
-						faucibus adipiscing, commodo quis, gravida id, est.</p>
-
-					<ul class="actions">
-						<li><a href="#" class="button alt">More</a></li>
-					</ul>
-				</div>
-			</article>
-			<article class="feature right">
-				<span class="image"><img src="images/wangler.jpg" alt="" /></span>
-				<div class="content">
-					<h2>Thomas Wangler</h2>
-					<div class="rw-ui-container"></div>
-					<p>Sed egestas, ante et vulputate volutpat, eros pede semper
-						est, vitae luctus metus libero eu augue. Morbi purus libero,
-						faucibus adipiscing, commodo quis, gravida id, est.</p>
-					<ul class="actions">
-						<li><a href="#" class="button alt">More</a></li>
-					</ul>
-				</div>
-			</article>
 		</div>
-	</section>
 
-	
-
-	<!-- Footer -->
-	<footer id="footer">
-		<div class="inner">
-			<ul class="icons">
-				<li><a href="#" class="icon fa-facebook"> <span
-						class="label">Facebook</span>
-				</a></li>
-				<li><a href="#" class="icon fa-twitter"> <span
-						class="label">Twitter</span>
-				</a></li>
-				<li><a href="#" class="icon fa-instagram"> <span
-						class="label">Instagram</span>
-				</a></li>
-				<li><a href="#" class="icon fa-linkedin"> <span
-						class="label">LinkedIn</span>
-				</a></li>
-			</ul>
-			<ul class="copyright">
-				<li>&copy; Untitled.</li>
-				<li>Images: <a href="http://unsplash.com">Unsplash</a>.
-				</li>
-				<li>Design: <a href="http://templated.co">TEMPLATED</a>.
-				</li>
-			</ul>
-		</div>
-	</footer>
-
-	<!-- Scripts -->
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/skel.min.js"></script>
-	<script src="assets/js/util.js"></script>
-	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-	<script src="assets/js/main.js"></script>
+		</section>
 
 
 
-	<!-- The 5 Star rating			 -->
-	<script type="text/javascript">
-		(function(d, t, e, m) {
 
-			// Async Rating-Widget initialization.
-			window.RW_Async_Init = function() {
 
-				RW.init({
-					huid : "347204",
-					uid : "1010a535db91e434c5d5a3221ff8c0e3",
-					options : {
-						"style" : "oxygen"
-					}
-				});
-				RW.render();
-			};
-			// Append Rating-Widget JavaScript library.
-			var rw, s = d.getElementsByTagName(e)[0], id = "rw-js", l = d.location, ck = "Y"
-					+ t.getFullYear() + "M" + t.getMonth() + "D" + t.getDate(), p = l.protocol, f = ((l.search
-					.indexOf("DBG=") > -1) ? "" : ".min"), a = ("https:" == p ? "secure."
-					+ m + "js/"
-					: "js." + m);
-			if (d.getElementById(id))
-				return;
-			rw = d.createElement(e);
-			rw.id = id;
-			rw.async = true;
-			rw.type = "text/javascript";
-			rw.src = p + "//" + a + "external" + f + ".js?ck=" + ck;
-			s.parentNode.insertBefore(rw, s);
-		}(document, new Date(), "script", "rating-widget.com/"));
-	</script>
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/skel.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script type="text/javascript" src="assets/js/sortColumns.js"></script>
+		<script>
+			// d = new Date();
+		</script>
+		<script type="text/javascript">
+		<!--
+			var d_names = new Array("Sunday", "Monday", "Tuesday", "Wednesday",
+					"Thursday", "Friday", "Saturday");
+
+			var m_names = new Array("January", "February", "March", "April",
+					"May", "June", "July", "August", "September", "October",
+					"November", "December");
+
+			var d = new Date();
+			var curr_day = d.getDay();
+			var curr_date = d.getDate();
+			var sup = "";
+			if (curr_date == 1 || curr_date == 21 || curr_date == 31) {
+				sup = "st";
+			} else if (curr_date == 2 || curr_date == 22) {
+				sup = "nd";
+			} else if (curr_date == 3 || curr_date == 23) {
+				sup = "rd";
+			} else {
+				sup = "th";
+			}
+			var curr_month = d.getMonth();
+			var curr_year = d.getFullYear();
+			document.getElementById("date").innerHTML = d_names[curr_day] + " "
+					+ curr_date + "<SUP>" + sup + "</SUP> "
+					+ m_names[curr_month] + " " + curr_year;
+
+			var a_p = "";
+			var hour = new Date();
+
+			var curr_hour = hour.getHours();
+			var curr_min = hour.getMinutes();
+
+			if (curr_hour < 12) {
+				a_p = "AM";
+			} else {
+				a_p = "PM";
+			}
+			if (curr_hour == 0) {
+				curr_hour = 12;
+			}
+			if (curr_hour > 12) {
+				curr_hour = curr_hour - 12;
+			}
+
+			var curr_min = hour.getMinutes();
+			if (curr_min < 10) {
+				document.getElementById("hour").innerHTML = curr_hour + " : 0"
+						+ curr_min + " " + a_p;
+			} else if (curr_min > 9) {
+				document.getElementById("hour").innerHTML = curr_hour + " : "
+						+ curr_min + " " + a_p;
+			}
+		</script>
+
+
+
+
+		<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+		<script src="assets/js/main2.js"></script>
 </body>
 </html>
