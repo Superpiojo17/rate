@@ -43,7 +43,7 @@ public class StudentDashboardController {
 			model.put("completeProfile", true);
 		}
 
-//		AuthPolicyManager.getInstance().getUserPolicy().showStudentDashboardPage();
+		// AuthPolicyManager.getInstance().getUserPolicy().showStudentDashboardPage();
 
 		DaoManager dao = DaoManager.getInstance();
 		ProfessorReviewDao reviewDao = dao.getProfessorReviewDao();
@@ -167,24 +167,29 @@ public class StudentDashboardController {
 			User tutor = uDao.findById(Long.parseLong(req.queryParams("tutor_id")));
 
 			if (!req.queryParams("date").isEmpty() && !req.queryParams("time").isEmpty()) {
+				
+				// only allows appointments between 8AM and 8PM
+				if (FormatTimeAndDate.checkValidDateTime(req.queryParams("time"), req.queryParams("date"))) {
 
-				TutorAppointment appointment = new TutorAppointment();
+					TutorAppointment appointment = new TutorAppointment();
+					appointment.setStudent_id(u.getId());
+					appointment.setTutor_id(Long.parseLong(req.queryParams("tutor_id")));
+					appointment.setDate(req.queryParams("date"));
+					appointment.setTime(req.queryParams("time"));
+					appointment.setStudent_message(req.queryParams("student_message"));
+					appointment.setStudent_firstname(u.getFirst_name());
+					appointment.setStudent_lastname(u.getLast_name());
+					appointment.setTutor_firstname(tutor.getFirst_name());
+					appointment.setTutor_lastname(tutor.getLast_name());
 
-				appointment.setStudent_id(u.getId());
-				appointment.setTutor_id(Long.parseLong(req.queryParams("tutor_id")));
-				appointment.setDate(req.queryParams("date"));
-				appointment.setTime(req.queryParams("time"));
-				appointment.setStudent_message(req.queryParams("student_message"));
-				appointment.setStudent_firstname(u.getFirst_name());
-				appointment.setStudent_lastname(u.getLast_name());
-				appointment.setTutor_firstname(tutor.getFirst_name());
-				appointment.setTutor_lastname(tutor.getLast_name());
-
-				if (appointment.getStudent_message().length() < 200) {
-					tDao.saveTutorAppointment(appointment);
-					emailAppointmentRequest(appointment, uDao);
+					if (appointment.getStudent_message().length() < 200) {
+						tDao.saveTutorAppointment(appointment);
+						emailAppointmentRequest(appointment, uDao);
+					} else {
+						// message - comment too long
+					}
 				} else {
-					// message - comment too long
+					// meeting time is outside of 8AM-8PM window
 				}
 			} else {
 				// message - please set a date
@@ -237,8 +242,6 @@ public class StudentDashboardController {
 
 		TutorAppointment appointment = tDao.findAppointmentByID(appointment_id);
 		User tutor = uDao.findById(appointment.getTutor_id());
-
-
 
 		String subject = "Rate&Review Tutor Appointment Cancellation";
 		String messageHeader = "<p>Hello " + tutor.getFirst_name() + ",</p><br />";
