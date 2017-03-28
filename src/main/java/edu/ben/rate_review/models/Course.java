@@ -41,6 +41,7 @@ public class Course {
 	}
 
 	public void setProfessor_id(long professor_id) {
+
 		this.professor_id = professor_id;
 	}
 
@@ -53,11 +54,14 @@ public class Course {
 	}
 
 	public String getProfessor_name() {
-		UserDao user = DaoManager.getInstance().getUserDao();
-		User u = user.findById(professor_id);
-		return u.getLast_name() + ", " + u.getFirst_name();
-		
-		
+		if (professor_id == 0) {
+			return "This course has not been assigned!";
+		} else {
+
+			UserDao user = DaoManager.getInstance().getUserDao();
+			User u = user.findById(professor_id);
+			return u.getLast_name() + ", " + u.getFirst_name();
+		}
 	}
 
 	public void setProfessor_name(String professor_name) {

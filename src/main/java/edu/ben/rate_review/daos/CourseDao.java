@@ -60,22 +60,25 @@ public class CourseDao {
 		return null;
 	}
 
-	// public Course save(Course course) {
-	// final String sql = "INSERT INTO " + COURSES_TABLE + " (announcement_date,
-	// announcement_content) VALUES(?,?)";
-	// try {
-	// PreparedStatement ps = conn.prepareStatement(sql);
-	// ps.setString(1, announcement.getDate());
-	// ps.setString(2, announcement.getAnnouncement_content());
-	// ;
-	// ps.executeUpdate();
-	// return announcement;
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// }
-	// return null;
-	//
-	// }
+	public Course save(Course course) {
+		final String sql = "INSERT INTO " + COURSES_TABLE
+				+ "(course_subject, course_number, course_name, course_professor_id, course_term) Values(?,?,?,?,?)";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, course.getSubject());
+			ps.setLong(2, course.getCourse_number());
+			ps.setString(3, course.getCourse_name());
+			ps.setLong(4, course.getProfessor_id());
+			ps.setString(5, course.getTerm());
+			;
+			ps.executeUpdate();
+			return course;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
 
 	public Course findById(long id) {
 		// Declare SQL template query
@@ -100,9 +103,9 @@ public class CourseDao {
 
 	}
 
-	public String deletAnnouncement(long id) {
+	public String deleteCourse(long id) {
 
-		String sql = "DELETE FROM " + COURSES_TABLE + " WHERE announcement_id = ? LIMIT 1";
+		String sql = "DELETE FROM " + COURSES_TABLE + " WHERE course_id = ? LIMIT 1";
 
 		try {
 			// Create Prepared Statement from query
@@ -124,6 +127,33 @@ public class CourseDao {
 
 	public List<Course> allByDept(String subject) {
 		final String SELECT = "SELECT * FROM " + COURSES_TABLE + " WHERE course_subject = '" + subject + "'";
+		List<Course> courses = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			courses = new ArrayList<Course>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					courses.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return courses;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return courses;
+	}
+	
+	/**
+	 * 
+	 * @return all users from the database.
+	 * @throws ParseException
+	 */
+
+	public List<Course> allByProfessor(Long id) {
+		final String SELECT = "SELECT * FROM " + COURSES_TABLE + " WHERE  course_professor_id = '" + id + "'";
 		List<Course> courses = null;
 		try {
 			PreparedStatement ps = conn.prepareStatement(SELECT);

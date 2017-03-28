@@ -115,7 +115,18 @@
 										<tr>
 											<td>{{tutor_form.first_name}} {{tutor_form.last_name}} </td>
 											<td>{{tutor_form.email}} </td>
-											<td><input type="text" name="course" id="course" value="{{tutor_form.course}}" placeholder="Course" /></td>
+											<td>
+
+<select name="course" id="course">
+<option value="">Course</option>
+											{{#each courses}}
+											
+  <option value="{{course_name}}"> {{subject}} {{course_number}}</option>
+  {{/each}}
+</select>
+
+
+</td>
 										</tr>
 									</tbody>
 									<tfoot>

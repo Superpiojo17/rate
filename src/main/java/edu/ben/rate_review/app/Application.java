@@ -134,7 +134,9 @@ public class Application {
 	public static String ALLTUTORS_PATH = "/alltutors/:id";
 	public static String EDITTUTORS_PATH = "/tutor/:id/edit";
 	public static String DELETETUTOR_PATH = "/deletetutor/:id";
+	public static String DELETECOURSE_PATH = "/deletecourse/:id";
 	public static String ADDTUTOR_PATH = "/tutor/:id/add";
+	public static String ADDCOURSE_PATH = "/addCourse/:department";
 	public static String ALLSTUDENTS_PATH = "/selectstudents";
 	public static String APPOINTMENT_PATH = "/appointment";
 	public static String MESSAGE_PATH = "/instantmessage";
@@ -142,6 +144,9 @@ public class Application {
 	public static String COURSELANDING_PATH = "/courseslanding";
 	public static String COURSES_PATH = "/courses/:department";
 	public static String EDITCOURSES_PATH = "/course/:id/edit";
+	public static String COMPLETEPROF_PATH = "/completeprofileprof/:id";
+	public static String COMPLETESTUDENT_PATH = "/completeprofilestudent/:id";
+	public static String COMPLETETUTOR_PATH = "/completeprofiletutor/:id";
 
 	public static void main(String[] args) throws Exception {
 
@@ -197,13 +202,38 @@ public class Application {
 		// get(TUTORAPPOINTMENT_PATH, (req, res) ->
 		// tutorAppointmentController.showTutorAppointmentPage(req, res), new
 		// HandlebarsTemplateEngine());
+
 		//
+
+
+		
+		post(COMPLETETUTOR_PATH, (req, res) -> tutordashController.completeProfile(req, res));
+
+		post(COMPLETEPROF_PATH, (req, res) -> facultydashController.completeProfile(req, res));
+
+		post(COMPLETESTUDENT_PATH, (req, res) -> studentdashController.completeProfile(req, res));
+
+		get(COMPLETETUTOR_PATH, (req, res) -> tutordashController.showCompleteProfileTutorPage(req, res),
+				new HandlebarsTemplateEngine());
+
+		get(COMPLETEPROF_PATH, (req, res) -> facultydashController.showCompleteProfileProfPage(req, res),
+				new HandlebarsTemplateEngine());
+
+		get(COMPLETESTUDENT_PATH, (req, res) -> studentdashController.showCompleteProfileStudentPage(req, res),
+				new HandlebarsTemplateEngine());
+
+		get(ADDCOURSE_PATH, (req, res) -> editcoursesController.showAddCoursesPage(req, res),
+				new HandlebarsTemplateEngine());
+
+		post(ADDCOURSE_PATH, (req, res) -> editcoursesController.addCourse(req, res));
+
+		post(DELETECOURSE_PATH, (req, res) -> editcoursesController.deleteCourse(req, res));
 
 		get(EDITCOURSES_PATH, (req, res) -> editcoursesController.showEditCoursesPage(req, res),
 				new HandlebarsTemplateEngine());
-		
+
 		post(EDITCOURSES_PATH, (req, res) -> editcoursesController.updateCourse(req, res));
-		
+
 		get(COURSES_PATH, (req, res) -> editcoursesController.showDeptCoursesPage(req, res),
 				new HandlebarsTemplateEngine());
 

@@ -35,9 +35,12 @@
 					<li><a href="/register">My Account</a></li>
 					<li><a href="/alltutors/{{current_user.id}}">Manage Tutors</a></li>
 					<li><a href="/aboutus">View Apointments</a></li>
-					<li><a href="/aboutus">View Reviews</a></li>
+					<li><a href="/professor/{{current_user.id}}/overview>View Reviews</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
 					<li><a href="/deactivation">De-Activate</a></li>
+					{{#if completeProfile }}
+					<li><a href="/completeprofileprof/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
+					{{/if}}
 					<li><a href="/login">Log Out</a></li>
 					
 				</ul>
@@ -105,6 +108,7 @@
       </div>
       <div id="collapse1" class="panel-collapse collapse in">
         <div class="panel-body">
+        {{#if tutorFlag}}
         	<div class="table-wrapper">
 								<table class="alt">
 									<thead>
@@ -126,6 +130,8 @@
 									<tfoot>
 									</tfoot>
 								</table>
+								{{/if}}
+								 {{#unless tutorFlag}}You have no tutors, go to Manage Tutors to add tutors.{{/unless}}
         </div>
       </div>
     </div>
@@ -136,7 +142,34 @@
         </h4>
       </div>
       <div id="collapse2" class="panel-collapse collapse">
-        <div class="panel-body">You have not added any classes to your profile. Click on My Classes on the side menu to add your courses!</div>
+        <div class="panel-body">
+        	
+        	{{#if tutorFlag}}
+        <div class="table-wrapper">
+								<table class="alt">
+									<thead>
+										<tr>
+											<th><br>Course</th>
+											<th><br>Name</th>
+											<th><br>Term</th>
+										</tr>
+									</thead>
+									<tbody>
+									{{#each courses}}
+										<tr>
+											<td>{{subject}} {{course_number}} </td>
+											<td>{{course_name}} </td>
+											<td>{{term}}</td>
+										</tr>
+									{{/each}}
+									</tbody>
+									<tfoot>
+									</tfoot>
+								</table>
+								
+								{{/if}}
+								 {{#unless tutorFlag}}You have no courses.{{/unless}}
+        </div></div>
       </div>
     </div>
     <div class="panel panel-default">
@@ -146,7 +179,46 @@
         </h4>
       </div>
       <div id="collapse3" class="panel-collapse collapse">
-        <div class="panel-body">You have not left any recent reviews. Search for a teacher to leave some quality feedback!.</div>
+        <div class="panel-body">
+        {{#if reviewsFlag}}
+        	<p> These are your 3 most recent reviews</p>
+        	
+        <div class="table-wrapper">
+								<table class="alt">
+									<thead>
+										<tr>
+											<th><br>Course</th>
+											<th><br>Overall</th>
+											<th><br>Comment</th>
+										</tr>
+									</thead>
+									<tbody>
+									{{#each reviews}}
+										<tr>
+											<td>{{course}} </td>
+											<td>{{overall}} / 5</td>
+											<td>{{comment}}</td>
+										</tr>
+									{{/each}}
+									</tbody>
+									<tfoot>
+									</tfoot>
+								</table>
+								{{/if}}
+								 {{#unless reviewsFlag}}You have no recent reviews.{{/unless}}
+        </div>
+        
+        <a href="/professor/{{current_user.id}}/overview"  class="btn btn-info"> Overview
+											</a>
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        </div>
       </div>
     </div>
   </div> 

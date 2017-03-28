@@ -1,8 +1,5 @@
 package edu.ben.rate_review.models;
 
-import edu.ben.rate_review.daos.DaoManager;
-import edu.ben.rate_review.daos.UserDao;
-
 /**
  * Object which stores a tutor appointment
  * 

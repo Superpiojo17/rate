@@ -41,7 +41,6 @@ public class EditUserController {
 
 		// create the form object, put it into request
 		model.put("user_form", new UserForm(u));
-		
 
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
@@ -60,7 +59,6 @@ public class EditUserController {
 		massedit.setAfter(Integer.parseInt(req.queryParams("confirmedafter")));
 		userDao.massEditConfirmed(massedit);
 
-		System.out.println("EDIT");
 		res.redirect(Application.ALLUSERS_PATH);
 		return " ";
 
@@ -74,6 +72,7 @@ public class EditUserController {
 		massedit.setAfter(Integer.parseInt(req.queryParams("yearafter")));
 		userDao.massEditYear(massedit);
 
+		
 		res.redirect(Application.ALLUSERS_PATH);
 		return " ";
 
@@ -119,7 +118,8 @@ public class EditUserController {
 
 		userDao.updateUser(user);
 
-		System.out.println(user.getEmail());
+		
+		req.attribute("error", "error");
 
 		res.redirect(Application.ALLUSERS_PATH);
 		return " ";
@@ -129,7 +129,6 @@ public class EditUserController {
 	public String deleteUser(Request req, Response res) {
 		String idString = req.params("id");
 		long id = Long.parseLong(idString);
-		System.out.println(id);
 		UserDao userDao = DaoManager.getInstance().getUserDao();
 		userDao.deleteUser(id);
 

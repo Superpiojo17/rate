@@ -33,11 +33,12 @@
 				<ul class="links">
 					<li><a href="/admindashboard">Home</a></li>
 					<li><a href="/register">My Account</a></li>
+					<li><a href="/allusers">Manage Users</a></li>
+					<li><a href="/courseslanding">Manage Courses</a></li>
+					<li><a href="/announcement">Announcements</a></li>
 					<li><a href="/aboutus">View Apointments</a></li>
 					<li><a href="/aboutus">View Reviews</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
-					<li><a href="/allusers">Manage Users</a></li>
-					<li><a href="/announcement">Announcements</a></li>
 					<li><a href="/deactivation">De-Activate</a></li>
 					<li><a href="/login">Log Out</a></li>
 					
@@ -94,7 +95,7 @@
 						
 							<div class="centercol"> 
 							&ensp;
-							<h2> {{courses.course_name}} Courses </h2>
+							<h2> {{department}} Courses </h2>
 							
 							
 							
@@ -142,6 +143,13 @@
 								
 							</div>
 						</section>
+						<a href = "/addCourse/{{department}}" button type="submit" class="btn btn-info"> Add Course
+											<span class="glyphicon glyphicon-floppy-saved"></a></button>
+											&emsp;&emsp;
+											<br/>
+											<br/>
+						<a href="/courseslanding"  class="btn btn-info"> Back
+											</a>
 						
 						
 						

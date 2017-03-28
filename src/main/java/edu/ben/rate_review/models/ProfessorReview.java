@@ -1,5 +1,8 @@
 package edu.ben.rate_review.models;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 /**
  * Model for the review of a professor
  * 
@@ -42,7 +45,8 @@ public class ProfessorReview {
 	private boolean comment_flagged;
 	private boolean comment_removed;
 	private boolean comment_approved;
-	
+	private float overall;
+
 	public boolean getComment_approved() {
 		return comment_approved;
 	}
@@ -98,8 +102,6 @@ public class ProfessorReview {
 	// I found this course was valuable for my career development:
 	private int rate_career_development;
 
-	
-	
 	public long getCourse_id() {
 		return course_id;
 	}
@@ -125,7 +127,7 @@ public class ProfessorReview {
 	public void setStudent_id(long student_id) {
 		this.student_id = student_id;
 	}
-	
+
 	public String getProfessor_first_name() {
 		return professor_first_name;
 	}
@@ -410,6 +412,14 @@ public class ProfessorReview {
 	 */
 	public void setRate_career_development(int rate_career_development) {
 		this.rate_career_development = rate_career_development;
+	}
+
+	public String getOverall() {
+		DecimalFormat df = new DecimalFormat("##.##");
+		df.setRoundingMode(RoundingMode.DOWN);
+		return (df.format((float) (rate_objectives + rate_organized + rate_challenging + rate_outside_work + rate_pace
+				+ rate_assignments + rate_grade_fairly + rate_grade_time + rate_accessibility + rate_knowledge
+				+ rate_career_development) / 11));
 	}
 
 }

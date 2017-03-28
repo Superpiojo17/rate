@@ -2,6 +2,7 @@ package edu.ben.rate_review.controller.home;
 
 import java.util.HashMap;
 
+import edu.ben.rate_review.app.Application;
 //import java.util.ArrayList;
 //import java.util.HashMap;
 import edu.ben.rate_review.daos.DaoManager;
@@ -13,6 +14,7 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.Session;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
 /**
  * Login controller
@@ -28,6 +30,15 @@ public class LogInController {
 	public ModelAndView showLoginPage(Request req, Response res) {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
+		if (req.queryParams("email") != null && req.queryParams("password") != null) {
+			if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()) {
+				if (login(req, res) == "error") {
+					model.put("error", "Invalid Username or Password");
+				}
+			} else {
+				model.put("error", "error");
+			}
+		}
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "sessions/login.hbs");
 	}
@@ -43,6 +54,8 @@ public class LogInController {
 	 * @return
 	 */
 	public String login(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+
 		// checks the email and password fields are filled out
 		if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()) {
 			// checks that the login credentials match a registered, confirmed,
@@ -56,7 +69,7 @@ public class LogInController {
 				UserDao user = DaoManager.getInstance().getUserDao();
 				User u = user.findByEmail(req.queryParams("email"));
 				session.attribute("current_user", u);
-				
+
 				if (u.getRole() == 4) {
 					res.redirect("/studentdashboard");
 				} else if (u.getRole() == 3) {
@@ -69,7 +82,12 @@ public class LogInController {
 				}
 			} else {
 				// if email is not found in the system, outputs message
-				res.redirect("/login");
+
+				// showLoginPage(req, res);
+				// model.put("error", error)
+				return "error";
+				// res.redirect("/login");
+
 				// "Incorrect E-mail or Password. Please try again."
 			}
 		} else {

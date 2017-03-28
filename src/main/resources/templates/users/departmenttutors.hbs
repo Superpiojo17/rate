@@ -93,13 +93,34 @@
 						
 							<div class="centercol"> 
 							&ensp;
-							<h2> Department Tutors </h2>
+							<h2> {{current_user.major}} Tutors</h2>
 							
 							
 							
   <p>These are the tutors available for your department.</p>
   <p>Don't see a student you are looking for?</p> <a href = "/selectstudents"> Click here to view other students.</a>
+  &nbsp;&nbsp;
+  &nbsp;&nbsp;
   
+  
+  <br/>
+   <p>Search by</p>
+  <form action="/selecttutors" method="GET">
+  <div>
+    <select name="search-type">
+      <option value="name">Name</option>
+      <option value="email">Email</option>
+    </select>
+  </div>
+  &nbsp;&nbsp;
+  <div>
+    <input type="text" name="search" placeholder="Search Users..." />
+  </div>
+
+</form>
+ <div name="error">
+						<p style='color: red'>{{error}}</p>
+					</div>
   
   
   
@@ -152,11 +173,15 @@
 								
 							</div>
 							<ul class="actions">
-											<a href="/alltutors/{{current_user.id}}"  class="btn btn-info"> Back
+											<a href="/selecttutors"  class="btn btn-info"> View All
 											</a>
 											&emsp;&emsp;
 											
 											</ul>
+											
+											
+											<a href="/alltutors/{{current_user.id}}"  class="btn btn-info"> Back
+											</a>
 							
 							<form action="selecttutor" method="get">
 							

@@ -39,6 +39,9 @@
 					<li><a href="/studentdashboard">View Reviews</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
 					<li><a href="/deactivation">De-Activate</a></li>
+					{{#if completeProfile }}
+					<li><a href="/completeprofilestudent/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
+					{{/if}}
 					<li><a href="/login">Log Out</a></li>
 					
 				</ul>
@@ -98,6 +101,10 @@
 							&ensp;
 							<h2> Welcome {{current_user.first_name}}</h2> 
 							  <h6> You are logged in as a student</h6>
+							  <br/>
+							  <div name="error">
+						<p style='color: red'>{{error}}</p>
+					</div>
 							
 							&ensp;
 							
@@ -201,6 +208,9 @@
         </h4>
       </div>
 		<div id="collapse2" class="panel-collapse collapse">
+		
+		{{#unless available_tutors}}No available tutors at this time.{{/unless}}
+		{{#if available_tutors}}
       	 <div class="table-wrapper">
 			<table class="alt">
 				<thead>
@@ -235,6 +245,7 @@
 					</tfoot>
 				</table>
 			</div> 
+			{{/if}}
 		</div>
 		</div>
 		
@@ -247,7 +258,8 @@
       <div id="collapse1" class="panel-collapse collapse collapse">
         
         
-        
+       {{#unless upcoming_appointments_scheduled}}You have no appointments listed.{{/unless}}
+       {{#if upcoming_appointments_scheduled}} 
         <div class="table-wrapper">
 			<table class="alt">
 				<thead>
@@ -258,30 +270,46 @@
 					<th><br>Your Message</th>
 					<th><br>Tutor Response</th>
 					<th><br>Status</th>
+					<th></th>
 					</tr>
 				</thead>
 				<tbody>
 						{{#each upcoming_appointments}}
 						
 							<tr>
-							<td class="shrink">{{tutor_firstname}} {{tutor_lastname}}</td>
-							<td class="shrink">{{date}}</td>
-							<td class="shrink">{{time}}</td>
-							<td>{{student_message}}</td>
-							<td>{{tutor_message}}</td>
-							<td class="shrink">
-								{{#unless tutor_has_responded}}
-									<span title="pending" class="glyphicon glyphicon-option-horizontal"></span>
-								{{/unless}}
-								{{#if tutor_has_responded}} 
-									{{#unless appointment_status}}
-										<span title="declined" class="glyphicon glyphicon-remove" style="color:red"></span>
+							<form action="/studentdashboard" method="post">
+								<td class="shrink">{{tutor_firstname}} {{tutor_lastname}}</td>
+								<td class="shrink">{{date}}</td>
+								<td class="shrink">{{time}}</td>
+								<td>{{student_message}}</td>
+								<td>{{tutor_message}}</td>
+								<td class="shrink">
+									{{#unless tutor_has_responded}}
+										<span title="pending" class="glyphicon glyphicon-option-horizontal"></span>
 									{{/unless}}
-									{{#if appointment_status}}
-										<span title="approved" class="glyphicon glyphicon-ok" style="color:green"></span>
+									{{#if tutor_has_responded}} 
+										{{#unless appointment_status}}
+											<span title="declined" class="glyphicon glyphicon-remove" style="color:red"></span>
+										{{/unless}}
+										{{#if appointment_status}}
+												<span title="approved" class="glyphicon glyphicon-ok" style="color:green"></span>
+										{{/if}}
 									{{/if}}
-								{{/if}}
-							</td>
+								</td>
+								<td class="shrink">
+									{{#if tutor_has_responded}}
+										{{#if appointment_status}}
+											<button title="cancel appointment" class="btn" type="submit" name="tutor_id" value="-{{appointment_id}}"><span class="glyphicon glyphicon-remove"></span></button>
+										{{/if}}
+										{{#unless appointment_status}}
+											<button title="delete denied appointment" class="btn btn-danger" type="submit" name="tutor_id" value="-{{appointment_id}}"><span class="glyphicon glyphicon-trash"></span></button>
+										{{/unless}}
+									{{/if}}
+									{{#unless tutor_has_responded}}
+										<button title="delete request" class="btn btn-danger" type="submit" name="tutor_id" value="-{{appointment_id}}"><span class="glyphicon glyphicon-trash"></span></button>
+									{{/unless}}
+								</td>
+							<form action="/studentdashboard" method="post">
 							</tr>
 						
 						{{/each}}
@@ -290,7 +318,7 @@
 					</tfoot>
 				</table>
 			</div> 
-        
+    		{{/if}}   
   
         
       </div>

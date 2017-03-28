@@ -22,10 +22,7 @@
 	
 	<body>
 
-	<!-- Header -->
-			<header id="facultyheader">
-				<h1>Faculty Dashboard</h1>
-			</header>
+	
 
 			
 		<!-- Header -->
@@ -33,7 +30,7 @@
 				<h1>Administrator Dashboard</h1>
 			</header>
 
-			<!-- Nav -->
+				<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
 					<li><a href="/admindashboard">Home</a></li>
@@ -98,7 +95,7 @@
 						
 							<div class="centercol"> 
 							&ensp;
-							<h2> Edit the course </h2>
+							<h2> Add this {{department}} course </h2>
 							
 							
 							
@@ -107,13 +104,13 @@
   
 							<!-- Form -->
 						<section>
-							<form action="/course/{{course_form.id}}/edit" method="post">
+							<form action="/addCourse/{{department}}" method="post">
 							
 							<div class="table-wrapper">
 								<table class="alt">
 									<thead>
 										<tr>
-											<th><br>Course</th>
+											<th><br>Course Number</th>
 											<th><br>Name</th>
 											<th><br>Professor</th>
 											<th><br>Term</th>
@@ -121,13 +118,12 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td>{{course_form.subject}} {{course_form.course_number}} </td>
-											<td>{{course_form.course_name}} </td>
+											<td><input type="number" name="coursenumber" min="100" max="400" value= "101">  </td>
+											<td><input type="text" name="coursename"> </td>
 											
 											
 											
 											<td> <select name="professor_id" id="professor_id">
-											 <option value="{{course_form.professor_id}}">  {{course_form.professor_name}}</option>
 											{{#each professors}}
 											
   <option value="{{id}}">  {{first_name}} {{last_name}}</option>
@@ -140,7 +136,17 @@
 									
 									
 									
-										<td>{{course_form.term}} </td>
+										<td> 
+										<select name = "semester" id = "semester">
+  <option value="Spring 2017">Spring 2017</option>
+  <option value="Summer 2017">Summer 2017</option>
+  <option value="Fall 2017">Fall 2017</option>
+  <option value="Spring 2018">Spring 2018</option>
+</select>
+
+
+										
+										</td>
 										</tr>
 									</tbody>
 									<tfoot>
@@ -156,9 +162,10 @@
 									</div>
 							
 							</form>
+						<a href="/courses/{{department}}"  class="btn btn-info"> Back
+											</a>
+						
 						</section>
-						<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#myModal" > Remove Course
-											<span class="glyphicon glyphicon-remove"> </button>
 											
 											
 											<!-- Modal -->
