@@ -395,6 +395,17 @@
         {{#if all_comments}}
         <div class="table-wrapper">
 			<table class="alt">
+				
+				<div align="right">
+				<span class="glyphicon glyphicon-flag" style="color:red">:flagged</span>
+				&nbsp;
+				<span class="glyphicon glyphicon-remove" style="color:gray">:removed</span>
+				&nbsp;
+				<span class="glyphicon glyphicon-ok" style="color:green">:approved</span>
+				&nbsp;
+				<span class="glyphicon glyphicon-minus" style="color:blue">:untouched</span>
+				</div>
+				
 				<thead>
 					<tr>
 					<th><br>Professor</th>
@@ -411,18 +422,18 @@
 							<td>{{comment}}</td>
 							<td class = "shrink">
 								{{#if comment_flagged}}
-									flagged
+									<span title="flagged" class="glyphicon glyphicon-flag fa-2x" style="color:red"></span>
 								{{/if}}
 								{{#if comment_removed}}
-									removed
+									<span title="removed" class="glyphicon glyphicon-remove fa-2x" style="color:gray"></span>
 								{{/if}}
 								{{#if comment_approved}}
-									approved
+									<span title="approved" class="glyphicon glyphicon-ok fa-2x" style="color:green"></span>
 								{{/if}}
 								{{#unless comment_flagged}}
 								{{#unless comment_removed}}
 								{{#unless comment_approved}}
-									untouched
+									<span title="untouched" class="glyphicon glyphicon-minus fa-2x" style="color:blue"></span>
 								{{/unless}}{{/unless}}{{/unless}}
 							</td>
 						</tr>
