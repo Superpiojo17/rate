@@ -91,20 +91,6 @@ public class DaoManager {
 		}
 		return null;
 	}
-	
-	/**
-	 * gets instance of professors dao.
-	 * @return
-	 */
-	public ProfessorsDao getProfessorsDao() {
-		try {
-			return new ProfessorsDao(this.src.getConnection());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
 
 	/**
 	 * Used to return the singleton instance
@@ -145,5 +131,4 @@ public class DaoManager {
 		}
 	}
 
-	
 }
