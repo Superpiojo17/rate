@@ -36,6 +36,8 @@ public class FormatTimeAndDate {
 
 		if (minute < 10) {
 			minuteString = "0" + minute;
+		} else {
+			minuteString += minute;
 		}
 
 		return hour + ":" + minuteString + amOrPm;

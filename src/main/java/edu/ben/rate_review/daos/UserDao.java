@@ -203,6 +203,49 @@ public class UserDao implements Dao<User> {
 
 	}
 
+	public User completeProfProfile(User user) {
+		// Declare SQL template query
+		String sql = "UPDATE " + USER_TABLE + " SET major = ? WHERE user_id= ? LIMIT 1";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setString(1, user.getMajor());
+			ps.setLong(2, user.getId());
+			// Runs query
+			ps.execute();
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+
+	}
+
+	public User completeProfile(User user) {
+		// Declare SQL template query
+		String sql = "UPDATE " + USER_TABLE + " SET major = ?, school_year = ? WHERE user_id= ? LIMIT 1";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setString(1, user.getMajor());
+			ps.setInt(2, user.getSchool_year());
+			ps.setLong(3, user.getId());
+			// Runs query
+			ps.execute();
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+
+	}
+
 	/**
 	 * Method which will deactivate an active account
 	 * 
@@ -673,6 +716,38 @@ public class UserDao implements Dao<User> {
 		return null;
 	}
 
+	// UserDao
+	public List<User> search(String sType, String sText) throws SQLException {
+		String NAME_SQL = "SELECT * FROM users WHERE first_name LIKE '%" + sText +"%' OR last_name LIKE '%" + sText +"%'";
+
+		List<User> users = null;
+
+		try {
+
+			PreparedStatement ps = conn.prepareStatement(NAME_SQL);
+			// both have 1 parameter
+//			ps.setString(1, sText);
+//
+//			// Only name search has a second parameter
+//			if (sType.equals("name")) {
+//				ps.setString(2, sText);
+//			}
+			users = new ArrayList<User>();
+			try {
+				ResultSet rs = ps.executeQuery(NAME_SQL);
+				while (rs.next()) {
+					users.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return users;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+
 	/**
 	 * Updates user's password to their new password
 	 * 
@@ -684,12 +759,10 @@ public class UserDao implements Dao<User> {
 				+ " SET first_name = ?, last_name = ?, email = ?, role_id = ?, school_year = ?, major = ? WHERE user_id = ? LIMIT 1";
 
 		try {
-			System.out.println("HERE");
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
 			ps.setString(1, user.getFirst_name());
-			System.out.println(user.getFirst_name());
 			ps.setString(2, user.getLast_name());
 			ps.setString(3, user.getEmail());
 			ps.setInt(4, user.getRole());
@@ -697,7 +770,6 @@ public class UserDao implements Dao<User> {
 			ps.setString(6, user.getMajor());
 
 			ps.setLong(7, user.getId());
-			System.out.println(user.getId());
 
 			// Runs query
 			ps.execute();

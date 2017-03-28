@@ -72,7 +72,7 @@ public class TutorDao implements Dao<Tutor> {
 	 */
 	public TutorAppointment saveTutorAppointment(TutorAppointment appointment) {
 		final String sql = "INSERT INTO " + APPOINTMENT_TABLE + "(student_id, tutor_id, date, time, student_message, "
-				+ "student_firstname, student_lastname, tutor_firstname, tutor_lastname) Values(?,?,?,?,?,?,?,?,?)";
+				+ "student_firstname, student_lastname, tutor_firstname, tutor_lastname, tutor_message, tutor_has_responded, appointment_status) Values(?,?,?,?,?,?,?,?,?,?,?,?)";
 
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -85,6 +85,9 @@ public class TutorDao implements Dao<Tutor> {
 			ps.setString(7, appointment.getStudent_lastname());
 			ps.setString(8, appointment.getTutor_firstname());
 			ps.setString(9, appointment.getTutor_lastname());
+			ps.setString(10, appointment.getTutor_message());
+			ps.setBoolean(11, appointment.getTutor_has_responded());
+			ps.setBoolean(12, appointment.getAppointment_status());
 			ps.executeUpdate();
 			return appointment;
 		} catch (SQLException e) {
@@ -197,6 +200,27 @@ public class TutorDao implements Dao<Tutor> {
 		}
 		// If you don't find a model
 		return null;
+	}
+
+	/**
+	 * Allows a student to cancel a tutor appointment
+	 * 
+	 * @param appointment_id
+	 */
+	public void cancelTutorAppointment(long appointment_id) {
+		String sql = "DELETE FROM " + APPOINTMENT_TABLE + " WHERE appointment_id = ? LIMIT 1";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setLong(1, appointment_id);
+			// Runs query
+			ps.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
 	}
 
 	/**

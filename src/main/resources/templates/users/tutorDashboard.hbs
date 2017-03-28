@@ -38,6 +38,9 @@
 					<li><a href="/allusers">My Classes</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
 					<li><a href="/deactivation">De-Activate</a></li>
+					{{#if completeProfile }}
+					<li><a href="/completeprofiletutor/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
+					{{/if}}
 					<li><a href="/login">Log Out</a></li>
 					
 				</ul>
@@ -114,17 +117,25 @@
 					<th><br>Time</th>
 					<th><br>Student Message</th>
 					<th><br>Your Response</th>
+					<th><br>Reschedule</th>
 					</tr>
 				</thead>
 				<tbody>
 						{{#each approved_appointments}}		
 							<tr>
-							<td class="shrink">{{student_firstname}} {{student_lastname}}</td>
-							<td class="shrink">{{date}}</td>
-							<td class="shrink">{{time}}</td>
-							<td>{{student_message}}</td>
-							<td>{{tutor_message}}</td>
-							</tr>				
+							<form action="/tutordashboard" method="post">
+								<td class="shrink">{{student_firstname}} {{student_lastname}}</td>
+								<td class="shrink">{{date}}</td>
+								<td class="shrink">{{time}}</td>
+								<td>{{student_message}}</td>
+								<td>{{tutor_message}}</td>
+								<td class="shrink">
+									<input type="date" name="reschedule_date" id="date" value="" placeholder="Date" />
+									<input type="time" name="reschedule_time" id="time" value="" placeholder="Time" />
+									<button title="reschedule appointment" class="btn btn-info" type="submit" name="reschedule_appointment_id" value="{{appointment_id}}"><span class="glyphicon glyphicon-edit fa-2x"></span></button>
+								</td>
+							</form>
+							</tr>			
 						{{/each}}
 				</tbody>
 					<tfoot>
@@ -180,7 +191,7 @@
 							<td class="shrink">{{date}}</td>
 							<td class="shrink">{{time}}</td>
 							<td>{{student_message}}</td>
-							<td><input type="text" name="tutor_message" id="tutor_message" placeholder="Leave a response here." /></td>
+							<td style="min-width:250px"><input type="text" name="tutor_message" id="tutor_message" placeholder="Leave your response here." /></td>
 							<td class = "shrink">
 								<button title="approve request" class="btn btn-primary" type="submit" name="appointment_id" value="{{appointment_id}}"><span class="glyphicon glyphicon-ok"></span></button>
 								<button title="deny request" class="btn btn-danger" type="submit" name="appointment_id" value="-{{appointment_id}}"><span class="glyphicon glyphicon-remove"></span></button>

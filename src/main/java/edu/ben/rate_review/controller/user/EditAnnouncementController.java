@@ -129,7 +129,6 @@ public class EditAnnouncementController {
 	public String deleteAnnouncement(Request req, Response res) {
 		String idString = req.params("id");
 		long id = Long.parseLong(idString);
-		System.out.println(id);
 		AnnouncementDao announcementDao = DaoManager.getInstance().getAnnouncementDao();
 		announcementDao.deletAnnouncement(id);
 

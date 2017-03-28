@@ -8,11 +8,13 @@ import java.util.List;
 import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.authorization.AuthException;
 import edu.ben.rate_review.daos.AnnouncementDao;
+import edu.ben.rate_review.daos.CourseDao;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.TutorDao;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.AnnouncementForm;
+import edu.ben.rate_review.models.Course;
 import edu.ben.rate_review.models.Tutor;
 import edu.ben.rate_review.models.TutorForm;
 import edu.ben.rate_review.models.User;
@@ -29,11 +31,18 @@ public class EditTutorController {
 		HashMap<String, Object> model = new HashMap<>();
 		UserDao user = DaoManager.getInstance().getUserDao();
 		TutorDao tutor = DaoManager.getInstance().getTutorDao();
+		DaoManager cdao = DaoManager.getInstance();
 
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 
 		model.put("current_user", u);
+		
+		CourseDao cd = cdao.getCourseDao();
+		List<Course> courses = cd.allByProfessor(u.getId());
+		model.put("courses", courses);
+		
+		
 		// Get the :id from the url
 		String idString = req.params("id");
 

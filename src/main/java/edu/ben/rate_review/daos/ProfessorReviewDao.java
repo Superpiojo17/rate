@@ -239,6 +239,35 @@ public class ProfessorReviewDao {
 		return null;
 
 	}
+	
+	/**
+	 * Finds all reviews for a specific professor
+	 * 
+	 * @param prof
+	 * @return
+	 */
+	public List<ProfessorReview> listRecentCoursesByProfessorEmail(User prof) {
+
+		final String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ? LIMIT 3";
+		List<ProfessorReview> reviews = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, prof.getEmail());
+			reviews = new ArrayList<ProfessorReview>();
+			try {
+				ResultSet rs = ps.executeQuery();
+				while (rs.next()) {
+					reviews.add(reviewMapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return reviews;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return reviews;
+	}
 
 	/**
 	 * Finds all reviews for a specific professor

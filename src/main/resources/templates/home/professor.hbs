@@ -480,7 +480,7 @@
 											<td class = "shrink">
 											{{#unless comment_approved}}
 											<form action="/professor/{{prof_id}}/overview" method="post">
-											<button class="btn btn-danger" type="submit" name="course_flagged" value="{{course_id}}"><span class="glyphicon glyphicon-flag"></span></button>
+											<button title="flag comment as inappropriate" class="btn btn-danger" type="submit" name="course_flagged" value="{{course_id}}"><span class="glyphicon glyphicon-flag"></span></button>
 											</form>
 											{{/unless}}
 											</td>
