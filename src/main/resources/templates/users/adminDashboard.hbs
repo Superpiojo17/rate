@@ -383,11 +383,64 @@
         {{#unless flagged}}No comments are currently flagged.{{/unless}}
       </div>
     </div>
+    
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">All Comments</a>
+        </h4>
+      </div>
+      <div id="collapse4" class="panel-collapse collapse">
+        {{#if all_comments}}
+        <div class="table-wrapper">
+			<table class="alt">
+				<thead>
+					<tr>
+					<th><br>Professor</th>
+					<th><br>StudentID</th>
+					<th><br>Comment</th>
+					<th><br>Status</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each all_comments}}
+						<tr>
+							<td class="shrink">{{professor_first_name}} {{professor_last_name}}</td>
+							<td class="shrink">{{student_id}}</td>
+							<td>{{comment}}</td>
+							<td class = "shrink">
+								{{#if comment_flagged}}
+									flagged
+								{{/if}}
+								{{#if comment_removed}}
+									removed
+								{{/if}}
+								{{#if comment_approved}}
+									approved
+								{{/if}}
+								{{#unless comment_flagged}}
+								{{#unless comment_removed}}
+								{{#unless comment_approved}}
+									untouched
+								{{/unless}}{{/unless}}{{/unless}}
+							</td>
+						</tr>
+					{{/each}}
+				</tbody>
+				<tfoot>
+				</tfoot>
+			</table>
+		</div> 
+        {{/if}}
+        {{#unless all_comments}}There are currently no comments.{{/unless}}
+      </div>
+    </div>
+
+
   </div> 
 </div>
-		
-			
-  </div>
+</div>
   
     
     

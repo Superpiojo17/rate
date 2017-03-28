@@ -239,7 +239,7 @@ public class ProfessorReviewDao {
 		return null;
 
 	}
-	
+
 	/**
 	 * Finds all reviews for a specific professor
 	 * 
@@ -391,6 +391,33 @@ public class ProfessorReviewDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Lists comments from all professor reviews
+	 * 
+	 * @return
+	 */
+	public List<ProfessorReview> listAllComments() {
+
+		final String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE;
+		List<ProfessorReview> reviews = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			reviews = new ArrayList<ProfessorReview>();
+			try {
+				ResultSet rs = ps.executeQuery();
+				while (rs.next()) {
+					reviews.add(reviewMapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return reviews;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return reviews;
 	}
 
 	/**

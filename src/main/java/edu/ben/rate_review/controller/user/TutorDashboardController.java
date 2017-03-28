@@ -163,13 +163,28 @@ public class TutorDashboardController {
 			}
 		} else {
 			// tutor is rescheduling an appointment
-			long id = Long.parseLong(req.queryParams("reschedule_appointment_id"));
-			TutorAppointment appointment = tDao.findAppointmentByID(id);
-			appointment.setTime(req.queryParams("reschedule_time"));
-			appointment.setDate(req.queryParams("reschedule_date"));
-			tDao.cancelTutorAppointment(id);
-			tDao.saveTutorAppointment(appointment);
-			emailReschedule(appointment);
+
+			if (!req.queryParams("reschedule_time").isEmpty() && !req.queryParams("reschedule_date").isEmpty()
+					&& !req.queryParams("tutor_message").isEmpty()) {
+				// checks if fields are empty
+				if (FormatTimeAndDate.checkValidDateTime(req.queryParams("reschedule_time"),
+						req.queryParams("reschedule_date"))) {
+					// checks if time is valid
+					long id = Long.parseLong(req.queryParams("reschedule_appointment_id"));
+					TutorAppointment appointment = tDao.findAppointmentByID(id);
+					appointment.setTime(req.queryParams("reschedule_time"));
+					appointment.setDate(req.queryParams("reschedule_date"));
+					appointment.setTutor_message(req.queryParams("tutor_message"));
+					tDao.cancelTutorAppointment(id);
+					tDao.saveTutorAppointment(appointment);
+					emailReschedule(appointment);
+
+				} else {
+					// invalid time
+				}
+			} else {
+				// fields are empty
+			}
 		}
 
 		res.redirect(Application.TUTORDASHBOARD_PATH);
