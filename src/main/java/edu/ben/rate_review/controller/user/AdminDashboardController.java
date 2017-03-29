@@ -44,15 +44,15 @@ public class AdminDashboardController {
 
 		ProfessorReviewDao reviewDao = dao.getProfessorReviewDao();
 		List<ProfessorReview> flagged = reviewDao.listAllFlaggedComments();
-		
+
 		List<ProfessorReview> allComments = reviewDao.listAllComments();
 		model.put("all_comments", allComments);
-		
+
 		boolean unseen_flagged_comments = false;
-		if (!flagged.isEmpty()){
+		if (!flagged.isEmpty()) {
 			unseen_flagged_comments = true;
 		}
-		
+
 		// list of flagged comments
 		model.put("flagged", flagged);
 		// count of unreviewed flagged comments
@@ -85,18 +85,15 @@ public class AdminDashboardController {
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/allusers.hbs");
 	}
-	
+
 	public ModelAndView showManageCoursesLandingPage(Request req, Response res) throws AuthException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
-		
+
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
 
-		
-		
-		
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
@@ -133,7 +130,10 @@ public class AdminDashboardController {
 		return "";
 	}
 
-	public String addAnnouncement(Request req, Response res) {
+	public ModelAndView addAnnouncement(Request req, Response res) {
+
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
 
 		AnnouncementDao announceDao = DaoManager.getInstance().getAnnouncementDao();
 		Announcement announcement = new Announcement();
@@ -153,11 +153,17 @@ public class AdminDashboardController {
 
 		announceDao.save(announcement);
 
-		res.redirect("/announcement");
-		return "";
+		DaoManager dao = DaoManager.getInstance();
+		AnnouncementDao ad = dao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+
+		model.put("error", "You have added an event for " + announcement.getDate());
+
+		// Tell the server to render the index page with the data in the model
+		return new ModelAndView(model, "users/announcement.hbs");
 
 	}
-	
 
 	public String sortByLastName(Request req, Response res) {
 
@@ -183,7 +189,7 @@ public class AdminDashboardController {
 		// grabs course id from review comment
 		String courseToRemoveString = req.queryParams("flagged_comment");
 		long courseID = Long.parseLong(courseToRemoveString);
-		if (courseID > 0){
+		if (courseID > 0) {
 			// finds and removes the review
 			ProfessorReview review = reviewDao.findReview(courseID);
 			reviewDao.setCommentRemoved(review);
@@ -196,7 +202,7 @@ public class AdminDashboardController {
 			reviewDao.setCommentNotFlagged(review);
 			reviewDao.setCommentApproved(review);
 		}
-		
+
 		// redirects back to dashboard
 		res.redirect(Application.ADMINDASHBOARD_PATH);
 		return "";

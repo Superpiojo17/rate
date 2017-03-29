@@ -59,10 +59,8 @@ public class EditAnnouncementController {
 		AnnouncementDao announcement = DaoManager.getInstance().getAnnouncementDao();
 		Session session = req.session();
 
-
 		// Authorize that the user can edit the user selected
 		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
-
 
 		DaoManager dao = DaoManager.getInstance();
 		AnnouncementDao ad = dao.getAnnouncementDao();
@@ -73,7 +71,9 @@ public class EditAnnouncementController {
 
 	}
 
-	public String updateAnnouncement(Request req, Response res) {
+	public ModelAndView updateAnnouncement(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+
 		String idString = req.params("id");
 		long id = Long.parseLong(idString);
 		AnnouncementDao aDao = DaoManager.getInstance().getAnnouncementDao();
@@ -94,14 +94,20 @@ public class EditAnnouncementController {
 
 		aDao.updateAnnouncement(announcement);
 
-		// userDao.updateUser(user);
+		DaoManager dao = DaoManager.getInstance();
+		AnnouncementDao ad = dao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
 
-		res.redirect(Application.ANNOUNCEMENTS_PATH);
-		return " ";
+		model.put("error", "You have edited an event for " + announcement.getDate());
+
+		// Tell the server to render the index page with the data in the model
+		return new ModelAndView(model, "users/announcement.hbs");
 
 	}
-	
-	public String addAnnouncement(Request req, Response res) {
+
+	public ModelAndView addAnnouncement(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
 
 		AnnouncementDao announceDao = DaoManager.getInstance().getAnnouncementDao();
 		Announcement announcement = new Announcement();
@@ -121,21 +127,37 @@ public class EditAnnouncementController {
 
 		announceDao.save(announcement);
 
-		res.redirect("/announcement");
-		return "";
+		DaoManager dao = DaoManager.getInstance();
+		AnnouncementDao ad = dao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+
+		model.put("error", "You have added an event for " + announcement.getDate());
+
+		// Tell the server to render the index page with the data in the model
+		return new ModelAndView(model, "users/announcement.hbs");
 
 	}
 
-	public String deleteAnnouncement(Request req, Response res) {
+	public ModelAndView deleteAnnouncement(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+
 		String idString = req.params("id");
 		long id = Long.parseLong(idString);
 		AnnouncementDao announcementDao = DaoManager.getInstance().getAnnouncementDao();
-		announcementDao.deletAnnouncement(id);
+		
 
-		res.redirect(Application.ANNOUNCEMENTS_PATH);
-		return " ";
+		model.put("error", "You have deleted an event");
+
+		announcementDao.deletAnnouncement(id);
+		DaoManager dao = DaoManager.getInstance();
+		AnnouncementDao ad = dao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+
+		// Tell the server to render the index page with the data in the model
+		return new ModelAndView(model, "users/announcement.hbs");
 
 	}
-	
 
 }
