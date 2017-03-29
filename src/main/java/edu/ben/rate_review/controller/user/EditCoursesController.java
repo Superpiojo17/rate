@@ -122,6 +122,11 @@ public class EditCoursesController {
 		long id = Long.parseLong(idString);
 		CourseDao cDao = DaoManager.getInstance().getCourseDao();
 		CourseForm course = new CourseForm();
+		
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
 
 		// tutor.setCourse(req.queryParams("course"));
 		course.setProfessor_id(Integer.parseInt(req.queryParams("professor_id")));
@@ -162,6 +167,11 @@ public class EditCoursesController {
 		course.setTerm(req.queryParams("semester"));
 		course.setProfessor_id(Long.parseLong(req.queryParams("professor_id")));
 		cDao.save(course);
+		
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
 
 		DaoManager dao = DaoManager.getInstance();
 		CourseDao cd = dao.getCourseDao();
@@ -188,9 +198,15 @@ public class EditCoursesController {
 		CourseDao courseDao = DaoManager.getInstance().getCourseDao();
 		Course c = courseDao.findById(id);
 		courseDao.deleteCourse(id);
+		
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
 
 		DaoManager dao = DaoManager.getInstance();
 		CourseDao cd = dao.getCourseDao();
+		
 
 		List<Course> courses = cd.allByDept(c.getSubject());
 

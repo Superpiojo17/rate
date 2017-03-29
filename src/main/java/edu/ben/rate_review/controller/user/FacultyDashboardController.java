@@ -171,7 +171,7 @@ public class FacultyDashboardController {
 				// valid search, can proceed
 				List<User> tempTutors = ud.search(searchType, searchTxt);
 				if (tempTutors.size() > 0) {
-					
+
 					model.put("tutors", tempTutors);
 				} else {
 					List<User> tutors = ud.search(searchType, searchTxt);
@@ -279,7 +279,9 @@ public class FacultyDashboardController {
 		return "";
 	}
 
-	public String addTutor(Request req, Response res) {
+	public ModelAndView addTutor(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 
@@ -298,20 +300,38 @@ public class FacultyDashboardController {
 		tutor.setProfessor_id(u.getId());
 		tutor.setStudent_id(id);
 
+		User tempTutor = uDao.findById(id);
+
 		tDao.save(tutor);
 
-		res.redirect(Application.ALLTUTORS_PATH + u.getId());
-		return " ";
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+
+		DaoManager tdao = DaoManager.getInstance();
+		TutorDao td = tdao.getTutorDao();
+		List<Tutor> tutors = td.all(u.getId());
+
+		model.put("tutors", tutors);
+
+		model.put("error", "You have assigned " + tutor.getCourse_name() + " to " + tempTutor.getFirst_name() + " "
+				+ tempTutor.getLast_name());
+
+		return new ModelAndView(model, "users/alltutors.hbs");
 
 	}
 
-	public String addStudentAsTutor(Request req, Response res) {
+	public ModelAndView addStudentAsTutor(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 
 		String idString = req.params("id");
 		long id = Long.parseLong(idString);
 		TutorDao tDao = DaoManager.getInstance().getTutorDao();
+		UserDao uDao = DaoManager.getInstance().getUserDao();
 		Tutor tutor = new Tutor();
 
 		tutor.setCourse_name(req.queryParams("course"));
@@ -319,10 +339,25 @@ public class FacultyDashboardController {
 		tutor.setProfessor_id(u.getId());
 		tutor.setStudent_id(id);
 
+		User tempTutor = uDao.findById(id);
+
 		tDao.save(tutor);
 
-		res.redirect(Application.ALLTUTORS_PATH + u.getId());
-		return " ";
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+
+		DaoManager tdao = DaoManager.getInstance();
+		TutorDao td = tdao.getTutorDao();
+		List<Tutor> tutors = td.all(u.getId());
+
+		model.put("tutors", tutors);
+
+		model.put("error", "You have assigned " + tutor.getCourse_name() + " to " + tempTutor.getFirst_name() + " "
+				+ tempTutor.getLast_name());
+
+		return new ModelAndView(model, "users/alltutors.hbs");
 
 	}
 

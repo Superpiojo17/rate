@@ -37,12 +37,11 @@ public class EditTutorController {
 		User u = (User) session.attribute("current_user");
 
 		model.put("current_user", u);
-		
+
 		CourseDao cd = cdao.getCourseDao();
 		List<Course> courses = cd.allByProfessor(u.getId());
 		model.put("courses", courses);
-		
-		
+
 		// Get the :id from the url
 		String idString = req.params("id");
 
@@ -69,7 +68,9 @@ public class EditTutorController {
 		return new ModelAndView(model, "users/edittutor.hbs");
 	}
 
-	public String updateTutor(Request req, Response res) {
+	public ModelAndView updateTutor(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 
@@ -78,35 +79,62 @@ public class EditTutorController {
 		TutorDao tDao = DaoManager.getInstance().getTutorDao();
 		TutorForm tutor = new TutorForm();
 
+		Tutor tempTutor = tDao.findById(id);
+
 		tutor.setCourse(req.queryParams("course"));
 		tutor.setId(id);
 
 		tDao.updateTutor(tutor);
 
-		res.redirect(Application.ALLTUTORS_PATH + u.getId());
-		return " ";
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+
+		DaoManager tdao = DaoManager.getInstance();
+		TutorDao td = tdao.getTutorDao();
+		List<Tutor> tutors = td.all(u.getId());
+
+		model.put("tutors", tutors);
+
+		model.put("error", "You have assigned " + tutor.getCourse() + " to " + tempTutor.getTutor_first_name() + " "
+				+ tempTutor.getTutor_last_name());
+
+		model.put("current_user", u);
+		// Tell the server to render the index page with the data in the model
+		return new ModelAndView(model, "users/alltutors.hbs");
 
 	}
-	
-	public String deleteTutor(Request req, Response res) {
+
+	public ModelAndView deleteTutor(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 		String idString = req.params("id");
 		long id = Long.parseLong(idString);
 		TutorDao tutorDao = DaoManager.getInstance().getTutorDao();
 		Long studentID = tutorDao.getStudentId(id);
+		Tutor tempTutor = tutorDao.findById(id);
+
 		tutorDao.deleteTutor(id);
-		
-		if(tutorDao.findByStudentId(studentID) == null){
+
+		if (tutorDao.findByStudentId(studentID) == null) {
 			tutorDao.changeTutorRole(studentID);
-			
+
 		}
-		res.redirect(Application.ALLTUTORS_PATH + u.getId());
-		return " ";
+
+		DaoManager tdao = DaoManager.getInstance();
+		TutorDao td = tdao.getTutorDao();
+		List<Tutor> tutors = td.all(u.getId());
+
+		model.put("tutors", tutors);
+
+		model.put("error", "You have removed " + tempTutor.getCourse_name() + " from " + tempTutor.getTutor_first_name()
+				+ " " + tempTutor.getTutor_last_name());
+
+		return new ModelAndView(model, "users/alltutors.hbs");
 
 	}
-	
-	
-	
-	
+
 }

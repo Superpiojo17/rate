@@ -250,14 +250,14 @@ public class Application {
 		get(ADDTUTOR_PATH, (req, res) -> facultydashController.showAddTutorPage(req, res),
 				new HandlebarsTemplateEngine());
 
-		post(ADDTUTOR_PATH, (req, res) -> facultydashController.addTutor(req, res));
+		post(ADDTUTOR_PATH, (req, res) -> facultydashController.addTutor(req, res), new HandlebarsTemplateEngine());
 
 		get(EDITTUTORS_PATH, (req, res) -> edittutorController.showEditTutorPage(req, res),
 				new HandlebarsTemplateEngine());
 
-		post(EDITTUTORS_PATH, (req, res) -> edittutorController.updateTutor(req, res));
+		post(EDITTUTORS_PATH, (req, res) -> edittutorController.updateTutor(req, res), new HandlebarsTemplateEngine());
 
-		post(DELETETUTOR_PATH, (req, res) -> edittutorController.deleteTutor(req, res));
+		post(DELETETUTOR_PATH, (req, res) -> edittutorController.deleteTutor(req, res), new HandlebarsTemplateEngine());
 
 		get(ALLTUTORS_PATH, (req, res) -> facultydashController.showAllTutorsPage(req, res),
 				new HandlebarsTemplateEngine());

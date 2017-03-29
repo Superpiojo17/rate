@@ -77,6 +77,11 @@ public class EditUserController {
 		UserDao ud = dao.getUserDao();
 		List<User> users = ud.sortbyRole();
 		model.put("users", users);
+		
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
 
 		return new ModelAndView(model, "users/allusers.hbs");
 
@@ -98,6 +103,11 @@ public class EditUserController {
 		UserDao ud = dao.getUserDao();
 		List<User> users = ud.sortbyRole();
 		model.put("users", users);
+		
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
 
 		return new ModelAndView(model, "users/allusers.hbs");
 
@@ -119,6 +129,11 @@ public class EditUserController {
 		UserDao ud = dao.getUserDao();
 		List<User> users = ud.sortbyRole();
 		model.put("users", users);
+		
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
 
 		return new ModelAndView(model, "users/allusers.hbs");
 
@@ -142,6 +157,11 @@ public class EditUserController {
 		List<User> users = ud.sortbyRole();
 		model.put("users", users);
 
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+		
 		return new ModelAndView(model, "users/allusers.hbs");
 
 	}
@@ -169,6 +189,11 @@ public class EditUserController {
 
 		// create the form object, put it into request
 		model.put("user_form", new UserForm(u));
+		
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
 
 		return new ModelAndView(model, "users/edituser.hbs");
 
