@@ -122,7 +122,7 @@ public class EditCoursesController {
 		long id = Long.parseLong(idString);
 		CourseDao cDao = DaoManager.getInstance().getCourseDao();
 		CourseForm course = new CourseForm();
-		
+
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
@@ -136,6 +136,11 @@ public class EditCoursesController {
 
 		DaoManager dao = DaoManager.getInstance();
 		CourseDao cd = dao.getCourseDao();
+
+		// Get the :id from the url
+		String department = c.getSubject();
+		System.out.println(department);
+		model.put("department", department);
 
 		List<Course> courses = cd.allByDept(c.getSubject());
 
@@ -159,15 +164,36 @@ public class EditCoursesController {
 		String department = req.params("department");
 		CourseDao cDao = DaoManager.getInstance().getCourseDao();
 		Course course = new Course();
+		if (!req.queryParams("coursename").isEmpty()) {
+			// tutor.setCourse(req.queryParams("course"));
+			course.setCourse_name(req.queryParams("coursename"));
+			course.setCourse_number(Long.parseLong(req.queryParams("coursenumber")));
+			course.setSubject(department);
+			course.setTerm(req.queryParams("semester"));
+			course.setProfessor_id(Long.parseLong(req.queryParams("professor_id")));
+			cDao.save(course);
+			String tempdepartment = req.params("department");
+			model.put("department", tempdepartment);
+		} else {
+			// Get the :id from the url
+			String tempdepartment = req.params("department");
+			model.put("department", tempdepartment);
 
-		// tutor.setCourse(req.queryParams("course"));
-		course.setCourse_name(req.queryParams("coursename"));
-		course.setCourse_number(Long.parseLong(req.queryParams("coursenumber")));
-		course.setSubject(department);
-		course.setTerm(req.queryParams("semester"));
-		course.setProfessor_id(Long.parseLong(req.queryParams("professor_id")));
-		cDao.save(course);
-		
+			// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+
+			DaoManager dao = DaoManager.getInstance();
+			UserDao ud = dao.getUserDao();
+			List<User> professors = ud.allProfessorsByDept(department);
+			model.put("professors", professors);
+
+			DaoManager adao = DaoManager.getInstance();
+			AnnouncementDao ad = adao.getAnnouncementDao();
+			List<Announcement> announcements = ad.all();
+			model.put("announcements", announcements);
+
+			model.put("error", "You may not leave field blank");
+			return new ModelAndView(model, "users/addcourse.hbs");
+		}
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
@@ -198,7 +224,7 @@ public class EditCoursesController {
 		CourseDao courseDao = DaoManager.getInstance().getCourseDao();
 		Course c = courseDao.findById(id);
 		courseDao.deleteCourse(id);
-		
+
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
@@ -206,11 +232,15 @@ public class EditCoursesController {
 
 		DaoManager dao = DaoManager.getInstance();
 		CourseDao cd = dao.getCourseDao();
-		
 
 		List<Course> courses = cd.allByDept(c.getSubject());
 
 		model.put("courses", courses);
+
+		// Get the :id from the url
+		String department = c.getSubject();
+		System.out.println(department);
+		model.put("department", department);
 
 		model.put("error", "You just deleted " + c.getSubject() + " " + " " + c.getCourse_number() + " "
 				+ c.getCourse_name() + " taught by " + c.getProfessor_name());
