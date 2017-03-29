@@ -1,7 +1,16 @@
 package edu.ben.rate_review.controller.home;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.ProfessorReviewDao;
@@ -20,17 +29,58 @@ public class DepartmentsController {
 
 		UserDao uDao = DaoManager.getInstance().getUserDao();
 		Session session = req.session();
-		//List list = uDao.all();
-		List list = uDao.sortByMajor("CMSC");
+		// List list = uDao.sortByMajor("CMSC");
 
-		for (int i = 0; i < list.size(); i++) {
-			User user = (User) list.get(i);
+		List<User> prof = uDao.all();
+		List<User> professors = new ArrayList<User>();
 
-			System.out.println(user.getFirst_name() + " " + user.getMajor());
+		HttpServletRequest theRequest = req.raw();
+		String department = theRequest.getParameter("form_select");
+
+		model.put("table_type", department);
+
+		for (int i = 0; i < prof.size(); i++) {
+
+			User r = prof.get(i);
+			if (r.getDepartment() != null) {
+				if (r.getDepartment().equalsIgnoreCase(department)) {
+					model.put("department", r.getDepartment());
+					model.put("first_name", r.getFirst_name());
+					model.put("last_name", r.getLast_name());
+					model.put("role", r.getRole_string());
+					model.put("id", r.getId());
+					professors.add(r);
+				}
+			}
 
 		}
+		
+		for (int i = 0; i < professors.size(); i++) {
+
+		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
+		User temp = professors.get(i);
+		double objectives = reviewDao.avgRate(temp, "rate_objectives");
+		double organized = reviewDao.avgRate(temp, "rate_organized");
+		double challenging = reviewDao.avgRate(temp, "rate_challenging");
+		double outside = reviewDao.avgRate(temp, "rate_outside_work");
+		double pace = reviewDao.avgRate(temp, "rate_pace");
+		double assignments = reviewDao.avgRate(temp, "rate_assignments");
+		double grade_fairly = reviewDao.avgRate(temp, "rate_grade_fairly");
+		double grade_time = reviewDao.avgRate(temp, "rate_grade_time");
+		double accessibility = reviewDao.avgRate(temp, "rate_accessibility");
+		double knowledge = reviewDao.avgRate(temp, "rate_knowledge");
+		double career = reviewDao.avgRate(temp, "rate_career_development");
+		double overall = ((objectives + organized + challenging + outside + pace + assignments + grade_fairly
+				+ grade_time + accessibility + knowledge + career) / 11);
+		
+		DecimalFormat df = new DecimalFormat("0.#");
+		
+		model.put("overall", df.format(overall));
+		}
+		model.put("users", professors);
 
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "home/departments.hbs");
 	}
+
 }

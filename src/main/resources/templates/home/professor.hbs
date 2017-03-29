@@ -368,7 +368,7 @@
 											<td>{{date}}</td>
 											<td>{{{announcement_content}}}</td>
 										</tr>
-										{{/each}}
+									{{/each}}
 									</tbody>
 									<tfoot>
 										<tr>
@@ -391,24 +391,25 @@
 							<header class="major special">
 								<h2><u>{{prof_first_name}} {{prof_last_name}}</u></h2>
 								<h4><b>Overall rating: {{overall}}/5</b></h4>
+								
 							</header>
 							
-							<!-- Drop Down -->
-					<select name="form_select">
-  					<option value="1">College of Liberal Arts</option>
- 					<option value="2">College of Business</option>
-  					<option value="3">College of Science</option>
-  					<option value="4">College of Education and Health Services</option>
+				<form action="/professor/{{prof_id}}/overview" method="post">
+					<select id="form1" name="form_select">
+					<option value=0>All</option>
+					{{#each courses}}
+  					<option value={{course_id}}>{{course_id}}</option>
+  					{{/each}}
 					</select>
-					<div>
-						{{course_id}}
-						{{course_name}}
-						{{prof_first_name}}
-					</div>	
+					<button type="submit" class="btn btn-info"> Switch
+					</button>
+					&emsp;&emsp;
+			</form>
+					
 							<!-- <a href="/studentdashboard" class="button alt">Return To Student Dashboard</a> -->
 							 
 							<!-- <span class="stars">{{overall}}</span> -->
-								
+							
 							<hr />
 							</section>
 							<div>

@@ -239,7 +239,7 @@ public class ProfessorReviewDao {
 		return null;
 
 	}
-	
+
 	/**
 	 * Finds all reviews for a specific professor
 	 * 
@@ -547,6 +547,35 @@ public class ProfessorReviewDao {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
 			ps.setString(1, prof.getEmail());
+			ps.setInt(2, ratingScore);
+			// Runs query
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	/**
+	 * Returns counts of a specific rating from a specific category
+	 * 
+	 * @param prof
+	 * @param column
+	 * @param ratingScore
+	 * @return
+	 */
+	public int ratings(User prof, String column, int ratingScore, long id) {
+
+		String sql = "SELECT COUNT(" + column + ") FROM " + REVIEW_PROFESSOR_TABLE + " WHERE course_id = ? AND "
+				+ column + " = ?";
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setFloat(1, id);
 			ps.setInt(2, ratingScore);
 			// Runs query
 			ResultSet rs = ps.executeQuery();

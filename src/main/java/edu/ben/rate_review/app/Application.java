@@ -207,8 +207,6 @@ public class Application {
 
 		//
 
-
-		
 		post(COMPLETETUTOR_PATH, (req, res) -> tutordashController.completeProfile(req, res));
 
 		post(COMPLETEPROF_PATH, (req, res) -> facultydashController.completeProfile(req, res));
@@ -286,6 +284,8 @@ public class Application {
 
 		get(PROFESSOR_PATH, (req, res) -> professorController.showProfessorPage(req, res),
 				new HandlebarsTemplateEngine());
+		post(PROFESSOR_PATH, (req, res) -> professorController.showProfessorPage(req, res),
+				new HandlebarsTemplateEngine());
 		post(PROFESSOR_PATH, (req, res) -> professorController.flag(req, res));
 
 		put(PROFESSOR_PATH, (req, res) -> professorController.display(req, res));
@@ -309,6 +309,9 @@ public class Application {
 
 		get(DEPARTMENTS_PATH, (req, res) -> departmentsController.showDepartmentsPage(req, res),
 				new HandlebarsTemplateEngine());
+		post(DEPARTMENTS_PATH, (req, res) -> departmentsController.showDepartmentsPage(req, res),
+				new HandlebarsTemplateEngine());
+
 		get(TUTORS_PATH, (req, res) -> tutorsController.showTutorsPage(req, res), new HandlebarsTemplateEngine());
 
 		get(ANNOUNCEMENTS_PATH, (req, res) -> admindashController.showEditAnnouncements(req, res),
@@ -353,6 +356,8 @@ public class Application {
 				new HandlebarsTemplateEngine());
 		get(MESSAGE_PATH, (req, res) -> tutorsController.showMessagePage(req, res), new HandlebarsTemplateEngine());
 		get(CALENDAR_PATH, (req, res) -> calendarController.showCalendarPage(req, res), new HandlebarsTemplateEngine());
+		post(CALENDAR_PATH, (req, res) -> calendarController.showCalendarPage(req, res),
+				new HandlebarsTemplateEngine());
 
 		// Change password paths
 		get(CHANGEPASSWORD_PATH, (req, res) -> changePasswordController.showChangePasswordPage(req, res),

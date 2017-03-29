@@ -1,10 +1,13 @@
 package edu.ben.rate_review.controller.user;
 
 import java.sql.Connection;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 
 import edu.ben.rate_review.authorization.AuthException;
 import edu.ben.rate_review.daos.AnnouncementDao;
@@ -32,7 +35,7 @@ public class CalendarController {
 
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
-		
+
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 		AuthPolicyManager.getInstance().getUserPolicy().showCalendarPage();
@@ -43,6 +46,13 @@ public class CalendarController {
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
+
+		HttpServletRequest theRequest = req.raw();
+		String title = theRequest.getParameter("Title");
+		String date = theRequest.getParameter("Date");
+
+		model.put("title", title);
+		model.put("date", date);
 
 		TutorDao tDao = adao.getTutorDao();
 
@@ -75,13 +85,40 @@ public class CalendarController {
 		// lists of appointments/requested appointments
 		model.put("appointments", appointments);
 		model.put("approved_appointments", approved_appointments);
-		
+
 		// count of appointment requests that need a response
 		model.put("number_of_requests", unviewed_appointments.size());
 
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/calendar.hbs");
 	}
+
+	// public String addAnnouncement(Request req, Response res) {
+	//
+	// AnnouncementDao announceDao =
+	// DaoManager.getInstance().getAnnouncementDao();
+	// Announcement announcement = new Announcement();
+	//
+	// SimpleDateFormat fromUser = new SimpleDateFormat("yyyy-MM-dd");
+	// SimpleDateFormat myFormat = new SimpleDateFormat("MM/dd/yy");
+	//
+	// try {
+	// String formatteddate =
+	// myFormat.format(fromUser.parse(req.queryParams("date")));
+	// announcement.setDate(formatteddate);
+	// } catch (ParseException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	//
+	// announcement.setAnnouncement_content(req.queryParams("message"));
+	//
+	// announceDao.save(announcement);
+	//
+	// res.redirect("/announcement");
+	// return "";
+	//
+	// }
 
 	public void doit(Request req, Response res) {
 
