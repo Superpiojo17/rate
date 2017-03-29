@@ -32,6 +32,7 @@ import edu.ben.rate_review.controller.home.TutorsController;
 import edu.ben.rate_review.controller.session.SessionsController;
 import edu.ben.rate_review.controller.user.AccountRecoveryController;
 import edu.ben.rate_review.controller.user.AdminDashboardController;
+import edu.ben.rate_review.controller.user.CalendarController;
 import edu.ben.rate_review.controller.user.EditAnnouncementController;
 import edu.ben.rate_review.controller.user.EditCoursesController;
 import edu.ben.rate_review.controller.user.EditTutorController;
@@ -71,6 +72,7 @@ public class Application {
 	private static ProfessorController professorController = new ProfessorController();
 	private static AdminController adminController = new AdminController();
 	private static EditCoursesController editcoursesController = new EditCoursesController();
+	private static CalendarController calendarController = new CalendarController();
 
 	private static FaqController faqController = new FaqController();
 	// private static TutorAppointmentController tutorAppointmentController =
@@ -288,6 +290,8 @@ public class Application {
 
 		get(PROFESSOR_PATH, (req, res) -> professorController.showProfessorPage(req, res),
 				new HandlebarsTemplateEngine());
+		post(PROFESSOR_PATH, (req, res) -> professorController.showProfessorPage(req, res),
+				new HandlebarsTemplateEngine());
 		post(PROFESSOR_PATH, (req, res) -> professorController.flag(req, res));
 
 		put(PROFESSOR_PATH, (req, res) -> professorController.display(req, res));
@@ -316,6 +320,9 @@ public class Application {
 
 		get(DEPARTMENTS_PATH, (req, res) -> departmentsController.showDepartmentsPage(req, res),
 				new HandlebarsTemplateEngine());
+		post(DEPARTMENTS_PATH, (req, res) -> departmentsController.showDepartmentsPage(req, res),
+				new HandlebarsTemplateEngine());
+
 		get(TUTORS_PATH, (req, res) -> tutorsController.showTutorsPage(req, res), new HandlebarsTemplateEngine());
 
 		get(ANNOUNCEMENTS_PATH, (req, res) -> admindashController.showEditAnnouncements(req, res),
@@ -360,7 +367,9 @@ public class Application {
 		get(APPOINTMENT_PATH, (req, res) -> tutorsController.showAppointmentPage(req, res),
 				new HandlebarsTemplateEngine());
 		get(MESSAGE_PATH, (req, res) -> tutorsController.showMessagePage(req, res), new HandlebarsTemplateEngine());
-		get(CALENDAR_PATH, (req, res) -> tutorsController.showCalendarPage(req, res), new HandlebarsTemplateEngine());
+		get(CALENDAR_PATH, (req, res) -> calendarController.showCalendarPage(req, res), new HandlebarsTemplateEngine());
+		post(CALENDAR_PATH, (req, res) -> calendarController.showCalendarPage(req, res),
+				new HandlebarsTemplateEngine());
 
 		// Change password paths
 		get(CHANGEPASSWORD_PATH, (req, res) -> changePasswordController.showChangePasswordPage(req, res),

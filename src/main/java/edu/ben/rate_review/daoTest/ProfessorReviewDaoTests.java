@@ -60,10 +60,10 @@ public class ProfessorReviewDaoTests {
 		String column = "rate_pace";
 		int score = 5;
 
-		if (reviewDao.allRatings(testUser, column, score) == 1) {
-			System.out.println("pass");
-		} else {
-			System.out.println("fail");
-		}
+		// if (reviewDao.allRatings(testUser, column, score) == 1) {
+		// System.out.println("pass");
+		// } else {
+		// System.out.println("fail");
+		// }
 	}
 }
