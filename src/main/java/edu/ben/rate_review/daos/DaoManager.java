@@ -12,7 +12,7 @@ public class DaoManager {
 	private final String HOST = "jdbc:mysql://localhost:3306";
 	private final String DATABASE_NAME = "rate";
 	private final String USERNAME = "root";
-	private final String PASSWORD = "LiterallyAnything";
+	private final String PASSWORD = "root";
 
 	// Private
 	private DataSource src;
