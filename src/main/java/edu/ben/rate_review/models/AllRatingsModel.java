@@ -24,102 +24,102 @@ public class AllRatingsModel {
 	int[] knowledge = new int[5];
 	int[] career_development = new int[5];
 
-	public int[] getObjectives(User professor) {
+	public int[] getObjectives(User professor, String display) {
 		String column = "rate_objectives";
 
 		for (int i = 0; i < 5; i++) {
-			objectives[i] = rDao.allRatings(professor, column, i + 1);
+			objectives[i] = rDao.allRatings(professor, column, i + 1, display);
 		}
 		return objectives;
 	}
 
-	public int[] getOrganized(User professor) {
+	public int[] getOrganized(User professor, String display) {
 		String column = "rate_organized";
 
 		for (int i = 0; i < 5; i++) {
-			organized[i] = rDao.allRatings(professor, column, i + 1);
+			organized[i] = rDao.allRatings(professor, column, i + 1, display);
 		}
 		return organized;
 	}
 
-	public int[] getChallenging(User professor) {
+	public int[] getChallenging(User professor, String display) {
 		String column = "rate_challenging";
 
 		for (int i = 0; i < 5; i++) {
-			challenging[i] = rDao.allRatings(professor, column, i + 1);
+			challenging[i] = rDao.allRatings(professor, column, i + 1, display);
 		}
 		return challenging;
 	}
 
-	public int[] getOutside_work(User professor) {
+	public int[] getOutside_work(User professor, String display) {
 		String column = "rate_outside_work";
 
 		for (int i = 0; i < 5; i++) {
-			outside_work[i] = rDao.allRatings(professor, column, i + 1);
+			outside_work[i] = rDao.allRatings(professor, column, i + 1, display);
 		}
 		return outside_work;
 	}
 
-	public int[] getPace(User professor) {
+	public int[] getPace(User professor, String display) {
 		String column = "rate_pace";
 
 		for (int i = 0; i < 5; i++) {
-			pace[i] = rDao.allRatings(professor, column, i + 1);
+			pace[i] = rDao.allRatings(professor, column, i + 1, display);
 		}
 		return pace;
 	}
 
-	public int[] getAssignments(User professor) {
+	public int[] getAssignments(User professor, String display) {
 		String column = "rate_assignments";
 
 		for (int i = 0; i < 5; i++) {
-			assignments[i] = rDao.allRatings(professor, column, i + 1);
+			assignments[i] = rDao.allRatings(professor, column, i + 1, display);
 		}
 		return assignments;
 	}
 
-	public int[] getGrade_fairly(User professor) {
+	public int[] getGrade_fairly(User professor, String display) {
 		String column = "rate_grade_fairly";
 		int[] grade_fairly = new int[5];
 
 		for (int i = 0; i < 5; i++) {
-			grade_fairly[i] = rDao.allRatings(professor, column, i + 1);
+			grade_fairly[i] = rDao.allRatings(professor, column, i + 1, display);
 		}
 		return grade_fairly;
 	}
 
-	public int[] getGrade_time(User professor) {
+	public int[] getGrade_time(User professor, String display) {
 		String column = "rate_grade_time";
 
 		for (int i = 0; i < 5; i++) {
-			grade_time[i] = rDao.allRatings(professor, column, i + 1);
+			grade_time[i] = rDao.allRatings(professor, column, i + 1, display);
 		}
 		return grade_time;
 	}
 
-	public int[] getAccessibility(User professor) {
+	public int[] getAccessibility(User professor, String display) {
 		String column = "rate_accessibility";
 
 		for (int i = 0; i < 5; i++) {
-			accessibility[i] = rDao.allRatings(professor, column, i + 1);
+			accessibility[i] = rDao.allRatings(professor, column, i + 1, display);
 		}
 		return accessibility;
 	}
 
-	public int[] getKnowledge(User professor) {
+	public int[] getKnowledge(User professor, String display) {
 		String column = "rate_knowledge";
 
 		for (int i = 0; i < 5; i++) {
-			knowledge[i] = rDao.allRatings(professor, column, i + 1);
+			knowledge[i] = rDao.allRatings(professor, column, i + 1, display);
 		}
 		return knowledge;
 	}
 
-	public int[] getCareer_development(User professor) {
+	public int[] getCareer_development(User professor, String display) {
 		String column = "rate_career_development";
 
 		for (int i = 0; i < 5; i++) {
-			career_development[i] = rDao.allRatings(professor, column, i + 1);
+			career_development[i] = rDao.allRatings(professor, column, i + 1, display);
 		}
 		return career_development;
 	}

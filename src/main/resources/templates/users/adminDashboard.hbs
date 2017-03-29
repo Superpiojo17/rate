@@ -367,7 +367,7 @@
 							<td class="shrink">{{student_id}}</td>
 							<td>{{comment}}</td>
 							<td class = "shrink">
-								<form action="/admindashboard" method="post">
+								<form style="margin: 0 0 0 0;" action="/admindashboard" method="post">
 									<button title="approve comment" class="btn btn-primary" type="submit" name="flagged_comment" value="-{{course_id}}"><span class="glyphicon glyphicon-ok"></span></button>
 									<button title="remove comment" class="btn btn-danger" type="submit" name="flagged_comment" value="{{course_id}}"><span class="glyphicon glyphicon-remove"></span></button>
 								</form>
