@@ -24,7 +24,7 @@ public class ProfessorReviewDaoTests {
 	 */
 	public static void listCoursesByProfessorEmailTest() {
 		testUser.setEmail("fprofessor@ben.edu");
-		List<ProfessorReview> testReviews = reviewDao.listCoursesByProfessorEmail(testUser);
+		List<ProfessorReview> testReviews = reviewDao.listCoursesByProfessorEmail(testUser, "overview");
 		int count = 0;
 
 		for (int i = 0; i < testReviews.size(); i++) {
@@ -43,7 +43,7 @@ public class ProfessorReviewDaoTests {
 	public static void avgRateTest() {
 		testUser.setEmail("fprofessor@ben.edu");
 		String column = "rate_pace";
-		double avg = reviewDao.avgRate(testUser, column);
+		double avg = reviewDao.avgRate(testUser, column, "overview");
 
 		if (avg == 3) {
 			System.out.println("pass");
@@ -60,10 +60,10 @@ public class ProfessorReviewDaoTests {
 		String column = "rate_pace";
 		int score = 5;
 
-		// if (reviewDao.allRatings(testUser, column, score) == 1) {
-		// System.out.println("pass");
-		// } else {
-		// System.out.println("fail");
-		// }
+		if (reviewDao.allRatings(testUser, column, score, "overview") == 1) {
+			System.out.println("pass");
+		} else {
+			System.out.println("fail");
+		}
 	}
 }

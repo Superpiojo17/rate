@@ -275,13 +275,21 @@ public class ProfessorReviewDao {
 	 * @param prof
 	 * @return
 	 */
-	public List<ProfessorReview> listCoursesByProfessorEmail(User prof) {
+	public List<ProfessorReview> listCoursesByProfessorEmail(User prof, String display) {
 
-		final String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ?";
+		String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ?";
 		List<ProfessorReview> reviews = null;
+
+		if (!display.equalsIgnoreCase("overview")) {
+			sql = sql + " AND course = ?";
+		}
+
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, prof.getEmail());
+			if (!display.equalsIgnoreCase("overview")) {
+				ps.setString(2, display);
+			}
 			reviews = new ArrayList<ProfessorReview>();
 			try {
 				ResultSet rs = ps.executeQuery();
@@ -539,13 +547,21 @@ public class ProfessorReviewDao {
 	 * @param table
 	 * @return
 	 */
-	public double avgRate(User prof, String column) {
-		String sql = "SELECT AVG(" + column + ") FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ?";
+	public double avgRate(User prof, String column, String display) {
+		String sql = "SELECT AVG(" + column + ") FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ? ";
+
+		if (!display.equalsIgnoreCase("overview")) {
+			sql = sql + " AND course = ?";
+		}
+
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
 			ps.setString(1, prof.getEmail());
+			if (!display.equalsIgnoreCase("overview")) {
+				ps.setString(2, display);
+			}
 			// Runs query
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
@@ -565,16 +581,24 @@ public class ProfessorReviewDao {
 	 * @param ratingScore
 	 * @return
 	 */
-	public int allRatings(User prof, String column, int ratingScore) {
+	public int allRatings(User prof, String column, int ratingScore, String display) {
 
 		String sql = "SELECT COUNT(" + column + ") FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ? AND "
 				+ column + " = ?";
+
+		if (!display.equalsIgnoreCase("overview")) {
+			sql = sql + " AND course = ?";
+		}
+
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
 			ps.setString(1, prof.getEmail());
 			ps.setInt(2, ratingScore);
+			if (!display.equalsIgnoreCase("overview")) {
+				ps.setString(3, display);
+			}
 			// Runs query
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
@@ -587,32 +611,33 @@ public class ProfessorReviewDao {
 	}
 
 	/**
-	 * Returns counts of a specific rating from a specific category
+	 * Lists all courses taught by a professor
 	 * 
 	 * @param prof
-	 * @param column
-	 * @param ratingScore
 	 * @return
 	 */
-	public int ratings(User prof, String column, int ratingScore, long id) {
+	public List<String> listUniqueCourses(User prof) {
 
-		String sql = "SELECT COUNT(" + column + ") FROM " + REVIEW_PROFESSOR_TABLE + " WHERE course_id = ? AND "
-				+ column + " = ?";
+		final String sql = "SELECT DISTINCT course FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ?";
+		List<String> uniqueCourses = null;
+
 		try {
-			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
-			// Fill in the ? with the parameters you want
-			ps.setFloat(1, id);
-			ps.setInt(2, ratingScore);
-			// Runs query
-			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
-				return rs.getInt(1);
+			ps.setString(1, prof.getEmail());
+			uniqueCourses = new ArrayList<String>();
+			try {
+				ResultSet rs = ps.executeQuery();
+				while (rs.next()) {
+					uniqueCourses.add(rs.getString("course"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
+			return uniqueCourses;
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return 0;
+		return uniqueCourses;
 	}
 
 	/**

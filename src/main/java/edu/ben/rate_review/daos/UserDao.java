@@ -59,7 +59,7 @@ public class UserDao implements Dao<User> {
 		tmp.setSchool_year(rs.getInt("school_year"));
 		tmp.setMajor(rs.getString("major"));
 		tmp.setYear_string(rs.getString("school_year"));
-		tmp.setDepartment(rs.getString("department"));
+		//tmp.setDepartment(rs.getString("department"));
 		return tmp;
 	}
 

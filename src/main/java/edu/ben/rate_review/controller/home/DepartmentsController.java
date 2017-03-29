@@ -59,17 +59,17 @@ public class DepartmentsController {
 
 		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
 		User temp = professors.get(i);
-		double objectives = reviewDao.avgRate(temp, "rate_objectives");
-		double organized = reviewDao.avgRate(temp, "rate_organized");
-		double challenging = reviewDao.avgRate(temp, "rate_challenging");
-		double outside = reviewDao.avgRate(temp, "rate_outside_work");
-		double pace = reviewDao.avgRate(temp, "rate_pace");
-		double assignments = reviewDao.avgRate(temp, "rate_assignments");
-		double grade_fairly = reviewDao.avgRate(temp, "rate_grade_fairly");
-		double grade_time = reviewDao.avgRate(temp, "rate_grade_time");
-		double accessibility = reviewDao.avgRate(temp, "rate_accessibility");
-		double knowledge = reviewDao.avgRate(temp, "rate_knowledge");
-		double career = reviewDao.avgRate(temp, "rate_career_development");
+		double objectives = reviewDao.avgRate(temp, "rate_objectives", "overview");
+		double organized = reviewDao.avgRate(temp, "rate_organized", "overview");
+		double challenging = reviewDao.avgRate(temp, "rate_challenging", "overview");
+		double outside = reviewDao.avgRate(temp, "rate_outside_work", "overview");
+		double pace = reviewDao.avgRate(temp, "rate_pace", "overview");
+		double assignments = reviewDao.avgRate(temp, "rate_assignments", "overview");
+		double grade_fairly = reviewDao.avgRate(temp, "rate_grade_fairly", "overview");
+		double grade_time = reviewDao.avgRate(temp, "rate_grade_time", "overview");
+		double accessibility = reviewDao.avgRate(temp, "rate_accessibility", "overview");
+		double knowledge = reviewDao.avgRate(temp, "rate_knowledge", "overview");
+		double career = reviewDao.avgRate(temp, "rate_career_development", "overview");
 		double overall = ((objectives + organized + challenging + outside + pace + assignments + grade_fairly
 				+ grade_time + accessibility + knowledge + career) / 11);
 		

@@ -368,7 +368,7 @@
 											<td>{{date}}</td>
 											<td>{{{announcement_content}}}</td>
 										</tr>
-									{{/each}}
+										{{/each}}
 									</tbody>
 									<tfoot>
 										<tr>
@@ -390,41 +390,28 @@
 						
 							<header class="major special">
 								<h2><u>{{prof_first_name}} {{prof_last_name}}</u></h2>
-								<h4><b>Overall rating: {{overall}}/5</b></h4>
+								<h4>
+									<b>
+										{{#if is_overview}}Overall {{/if}}{{#unless is_overview}}{{display}} {{/unless}}rating: {{overall}}/5
+									</b>
+								</h4>
 								
+									<select style="max-width:15%;" name="course_name" id="course_name" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+										{{#each unique_courses}}
+										<option value="http://localhost:3000/professor/{{prof_id}}/{{this}}">{{this}}</option>
+										<!-- <span class="glyphicon glyphicon-triangle-bottom"></span> -->
+										{{/each}}
+									</select>
+									
 							</header>
 							
-				<form action="/professor/{{prof_id}}/overview" method="post">
-					<select id="form1" name="form_select">
-					<option value=0>All</option>
-					{{#each courses}}
-  					<option value={{course_id}}>{{course_id}}</option>
-  					{{/each}}
-					</select>
-					<button type="submit" class="btn btn-info"> Switch
-					</button>
-					&emsp;&emsp;
-			</form>
-					
 							<!-- <a href="/studentdashboard" class="button alt">Return To Student Dashboard</a> -->
 							 
 							<!-- <span class="stars">{{overall}}</span> -->
-							
+								
 							<hr />
 							</section>
-							<div>
-									<table class="indextable alt">
-								<tbody>
-									{{#each users}}
-										<tr>
-											<td class="shrink"> {{last_name}}</td>
-											<td class="shrink">{{last_name}} , {{first_name}}</td>
-											
-										</tr>
-									{{/each}}
-									</tbody>
-							</table>
-							</div>
+							
 			<div class="reviewcolumns" align="center">
 		
 			<ul> <div id="chart_objective" ></div> </ul>
@@ -480,7 +467,7 @@
 											{{#unless comment_flagged}}<td>{{comment}}</td>{{/unless}}
 											<td class = "shrink">
 											{{#unless comment_approved}}
-											<form action="/professor/{{prof_id}}/overview" method="post">
+											<form style="margin: 0 0 0 0;" action="/professor/{{prof_id}}/overview" method="post">
 											<button title="flag comment as inappropriate" class="btn btn-danger" type="submit" name="course_flagged" value="{{course_id}}"><span class="glyphicon glyphicon-flag"></span></button>
 											</form>
 											{{/unless}}
