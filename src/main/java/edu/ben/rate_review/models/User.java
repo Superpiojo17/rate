@@ -18,6 +18,7 @@ public class User implements AuthorizationUser {
 	private int role;
 	private boolean confirmed;
 	private boolean active;
+	private String department;
 
 	public Long getId() {
 		return id;
@@ -177,6 +178,14 @@ public class User implements AuthorizationUser {
 		}
 
 		this.year_string = year_string;
+	}
+
+	public String getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(String department) {
+		this.department = department;
 	}
 
 }

@@ -368,7 +368,7 @@
 											<td>{{date}}</td>
 											<td>{{{announcement_content}}}</td>
 										</tr>
-										{{/each}}
+									{{/each}}
 									</tbody>
 									<tfoot>
 										<tr>
@@ -391,15 +391,40 @@
 							<header class="major special">
 								<h2><u>{{prof_first_name}} {{prof_last_name}}</u></h2>
 								<h4><b>Overall rating: {{overall}}/5</b></h4>
+								
 							</header>
 							
+				<form action="/professor/{{prof_id}}/overview" method="post">
+					<select id="form1" name="form_select">
+					<option value=0>All</option>
+					{{#each courses}}
+  					<option value={{course_id}}>{{course_id}}</option>
+  					{{/each}}
+					</select>
+					<button type="submit" class="btn btn-info"> Switch
+					</button>
+					&emsp;&emsp;
+			</form>
+					
 							<!-- <a href="/studentdashboard" class="button alt">Return To Student Dashboard</a> -->
 							 
 							<!-- <span class="stars">{{overall}}</span> -->
-								
+							
 							<hr />
 							</section>
-							
+							<div>
+									<table class="indextable alt">
+								<tbody>
+									{{#each users}}
+										<tr>
+											<td class="shrink"> {{last_name}}</td>
+											<td class="shrink">{{last_name}} , {{first_name}}</td>
+											
+										</tr>
+									{{/each}}
+									</tbody>
+							</table>
+							</div>
 			<div class="reviewcolumns" align="center">
 		
 			<ul> <div id="chart_objective" ></div> </ul>

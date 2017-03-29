@@ -13,7 +13,7 @@ import edu.ben.rate_review.models.CourseForm;
 
 public class CourseDao {
 
-	String COURSES_TABLE = "courses";
+	String COURSES_TABLE = "student_courses";
 	Connection conn = null;
 
 	/**
@@ -34,7 +34,7 @@ public class CourseDao {
 		tmp.setProfessor_id(rs.getLong("course_professor_id"));
 		tmp.setSubject(rs.getString("course_subject"));
 		tmp.setTerm(rs.getString("course_term"));
-		tmp.setProfessor_name(rs.getString("course_professor_id"));
+		tmp.setProfessor_name(rs.getString("course_professor"));
 		tmp.setCourse_number(rs.getLong("course_number"));
 
 		return tmp;

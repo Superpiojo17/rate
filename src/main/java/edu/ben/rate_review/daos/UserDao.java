@@ -59,6 +59,7 @@ public class UserDao implements Dao<User> {
 		tmp.setSchool_year(rs.getInt("school_year"));
 		tmp.setMajor(rs.getString("major"));
 		tmp.setYear_string(rs.getString("school_year"));
+		tmp.setDepartment(rs.getString("department"));
 		return tmp;
 	}
 
@@ -526,6 +527,29 @@ public class UserDao implements Dao<User> {
 			e.printStackTrace();
 		}
 		return " ";
+	}
+	
+	public List<User> sortByMajor(String string) {
+
+		final String SELECT = "SELECT * FROM users WHERE major = '" + string + "'";
+
+		List<User> users = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			users = new ArrayList<User>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					users.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return users;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
 	}
 
 	/**
