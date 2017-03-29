@@ -110,7 +110,8 @@ public class Application {
 	public static String TEST_PATH = "/test";
 	public static String TUTOR_PATH = "/tutor";
 	public static String PROFESSOR_PATH = "/professor/:professor_id/overview";
-	//public static String PROFESSOR_PATH = "/professor/:professor_id/:display";
+	// public static String PROFESSOR_PATH =
+	// "/professor/:professor_id/:display";
 	public static String REVIEWPROFESSOR_PATH = "/reviewprofessor/:course_id/review";
 	public static String SELECTTUTOR_PATH = "/selecttutors";
 	public static String ADDPROFESSOR_PATH = "/addprofessor";
@@ -224,14 +225,16 @@ public class Application {
 		get(ADDCOURSE_PATH, (req, res) -> editcoursesController.showAddCoursesPage(req, res),
 				new HandlebarsTemplateEngine());
 
-		post(ADDCOURSE_PATH, (req, res) -> editcoursesController.addCourse(req, res));
+		post(ADDCOURSE_PATH, (req, res) -> editcoursesController.addCourse(req, res), new HandlebarsTemplateEngine());
 
-		post(DELETECOURSE_PATH, (req, res) -> editcoursesController.deleteCourse(req, res));
+		post(DELETECOURSE_PATH, (req, res) -> editcoursesController.deleteCourse(req, res),
+				new HandlebarsTemplateEngine());
 
 		get(EDITCOURSES_PATH, (req, res) -> editcoursesController.showEditCoursesPage(req, res),
 				new HandlebarsTemplateEngine());
 
-		post(EDITCOURSES_PATH, (req, res) -> editcoursesController.updateCourse(req, res));
+		post(EDITCOURSES_PATH, (req, res) -> editcoursesController.updateCourse(req, res),
+				new HandlebarsTemplateEngine());
 
 		get(COURSES_PATH, (req, res) -> editcoursesController.showDeptCoursesPage(req, res),
 				new HandlebarsTemplateEngine());
@@ -267,7 +270,8 @@ public class Application {
 
 		get(EDITUSER_PATH, (req, res) -> edituserController.showEditUserPage(req, res), new HandlebarsTemplateEngine());
 
-		post(ADDANNOUNCEMENT_PATH, (req, res) -> editannouncementController.addAnnouncement(req, res));
+		post(ADDANNOUNCEMENT_PATH, (req, res) -> editannouncementController.addAnnouncement(req, res),
+				new HandlebarsTemplateEngine());
 
 		get(ADDANNOUNCEMENT_PATH, (req, res) -> editannouncementController.showAddAnnouncementPage(req, res),
 				new HandlebarsTemplateEngine());
@@ -275,7 +279,8 @@ public class Application {
 		get(EDITANNOUNCEMENT_PATH, (req, res) -> editannouncementController.showEditAnnouncementPage(req, res),
 				new HandlebarsTemplateEngine());
 
-		post(EDITANNOUNCEMENT_PATH, (req, res) -> editannouncementController.updateAnnouncement(req, res));
+		post(EDITANNOUNCEMENT_PATH, (req, res) -> editannouncementController.updateAnnouncement(req, res),
+				new HandlebarsTemplateEngine());
 
 		post(EDITUSER_PATH, (req, res) -> edituserController.updateUser(req, res), new HandlebarsTemplateEngine());
 
@@ -298,7 +303,8 @@ public class Application {
 
 		post(DELETEUSER_PATH, (req, res) -> edituserController.deleteUser(req, res));
 
-		post(DELETEANNOUNCEMENT_PATH, (req, res) -> editannouncementController.deleteAnnouncement(req, res));
+		post(DELETEANNOUNCEMENT_PATH, (req, res) -> editannouncementController.deleteAnnouncement(req, res),
+				new HandlebarsTemplateEngine());
 
 		get(REVIEWPROFESSOR_PATH, (req, res) -> professorReviewController.showReviewProfessorPage(req, res),
 				new HandlebarsTemplateEngine());
@@ -314,7 +320,8 @@ public class Application {
 
 		get(ANNOUNCEMENTS_PATH, (req, res) -> admindashController.showEditAnnouncements(req, res),
 				new HandlebarsTemplateEngine());
-		post(ANNOUNCEMENTS_PATH, (req, res) -> admindashController.addAnnouncement(req, res));
+		post(ANNOUNCEMENTS_PATH, (req, res) -> admindashController.addAnnouncement(req, res),
+				new HandlebarsTemplateEngine());
 
 		post(SORTBYLASTNAME_PATH, (req, res) -> admindashController.sortByLastName(req, res));
 

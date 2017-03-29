@@ -111,7 +111,9 @@ public class EditCoursesController {
 		return new ModelAndView(model, "users/addCourse.hbs");
 	}
 
-	public String updateCourse(Request req, Response res) {
+	public ModelAndView updateCourse(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 		CourseDao courseDao = DaoManager.getInstance().getCourseDao();
@@ -127,12 +129,24 @@ public class EditCoursesController {
 		Course c = courseDao.findById(id);
 		cDao.updateCourse(course);
 
-		res.redirect("/courses/" + c.getSubject());
-		return " ";
+		DaoManager dao = DaoManager.getInstance();
+		CourseDao cd = dao.getCourseDao();
+
+		List<Course> courses = cd.allByDept(c.getSubject());
+
+		model.put("courses", courses);
+
+		model.put("error",
+				"You just edited " + c.getSubject() + " " + " " + c.getCourse_number() + " " + c.getCourse_name());
+
+		// Tell the server to render the index page with the data in the model
+		return new ModelAndView(model, "users/courses.hbs");
 
 	}
 
-	public String addCourse(Request req, Response res) {
+	public ModelAndView addCourse(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 		CourseDao courseDao = DaoManager.getInstance().getCourseDao();
@@ -149,12 +163,24 @@ public class EditCoursesController {
 		course.setProfessor_id(Long.parseLong(req.queryParams("professor_id")));
 		cDao.save(course);
 
-		res.redirect("/courses/" + department);
-		return "";
+		DaoManager dao = DaoManager.getInstance();
+		CourseDao cd = dao.getCourseDao();
+
+		List<Course> courses = cd.allByDept(course.getSubject());
+
+		model.put("courses", courses);
+
+		model.put("error", "You just added " + course.getSubject() + " " + " " + course.getCourse_number() + " "
+				+ course.getCourse_name() + " to " + course.getProfessor_name());
+
+		// Tell the server to render the index page with the data in the model
+		return new ModelAndView(model, "users/courses.hbs");
 
 	}
 
-	public String deleteCourse(Request req, Response res) {
+	public ModelAndView deleteCourse(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 		String idString = req.params("id");
@@ -163,8 +189,18 @@ public class EditCoursesController {
 		Course c = courseDao.findById(id);
 		courseDao.deleteCourse(id);
 
-		res.redirect("/courses/" + c.getSubject());
-		return " ";
+		DaoManager dao = DaoManager.getInstance();
+		CourseDao cd = dao.getCourseDao();
+
+		List<Course> courses = cd.allByDept(c.getSubject());
+
+		model.put("courses", courses);
+
+		model.put("error", "You just deleted " + c.getSubject() + " " + " " + c.getCourse_number() + " "
+				+ c.getCourse_name() + " taught by " + c.getProfessor_name());
+
+		// Tell the server to render the index page with the data in the model
+		return new ModelAndView(model, "users/courses.hbs");
 
 	}
 
