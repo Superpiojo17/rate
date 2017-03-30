@@ -301,13 +301,24 @@
 									{{#if tutor_has_responded}}
 										{{#if appointment_status}}
 											<button title="cancel appointment" class="btn" type="submit" name="tutor_id" value="-{{appointment_id}}"><span class="glyphicon glyphicon-remove"></span></button>
-										{{/if}}{{/if}}
+										{{/if}}
+										{{#unless appointment_status}}
+											<button class="btn disabled" type="button"><span class="glyphicon glyphicon-remove"></span></button>
+										{{/unless}}
+									{{/if}}
+									{{#unless tutor_has_responded}}
+										<button class="btn disabled" type="button"><span class="glyphicon glyphicon-remove"></span></button>
+									{{/unless}}
+									
 								</td>
 								<td class="shrink">
 									{{#if tutor_has_responded}}
 										{{#unless appointment_status}}
 											<button title="delete denied appointment" class="btn btn-danger" type="submit" name="tutor_id" value="-{{appointment_id}}"><span class="glyphicon glyphicon-trash"></span></button>
 										{{/unless}}
+										{{#if appointment_status}}
+											<button class="btn btn-danger disabled" type="button"><span class="glyphicon glyphicon-trash"></span></button>
+										{{/if}}
 									{{/if}}
 									{{#unless tutor_has_responded}}
 										<button title="delete request" class="btn btn-danger" type="submit" name="tutor_id" value="-{{appointment_id}}"><span class="glyphicon glyphicon-trash"></span></button>
