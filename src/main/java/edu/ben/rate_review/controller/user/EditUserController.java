@@ -77,7 +77,7 @@ public class EditUserController {
 		UserDao ud = dao.getUserDao();
 		List<User> users = ud.sortbyRole();
 		model.put("users", users);
-		
+
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
@@ -103,7 +103,7 @@ public class EditUserController {
 		UserDao ud = dao.getUserDao();
 		List<User> users = ud.sortbyRole();
 		model.put("users", users);
-		
+
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
@@ -129,7 +129,7 @@ public class EditUserController {
 		UserDao ud = dao.getUserDao();
 		List<User> users = ud.sortbyRole();
 		model.put("users", users);
-		
+
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
@@ -161,7 +161,7 @@ public class EditUserController {
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
-		
+
 		return new ModelAndView(model, "users/allusers.hbs");
 
 	}
@@ -180,16 +180,18 @@ public class EditUserController {
 		user.setMajor(req.queryParams("major"));
 		user.setSchool_year(Integer.parseInt(req.queryParams("year")));
 		user.setId(id);
+		userDao.updateUser(user);
 
 		UserDao userD = DaoManager.getInstance().getUserDao();
 		// Get user if ID is valid
 		User u = userD.findById(id);
 
+
 		model.put("error", "You updated " + user.getFirst_name() + " " + user.getLast_name() + "'s account");
 
 		// create the form object, put it into request
 		model.put("user_form", new UserForm(u));
-		
+
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();

@@ -409,6 +409,34 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * 
+	 * @return all professors from the database.
+	 */
+
+	public String getPicString(Long id) {
+		// Declare SQL template query
+		String sql = "SELECT pic_location FROM profile_pic WHERE user_id = ? LIMIT 1";
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement q = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			q.setLong(1, id);
+
+			// Run your shit
+			ResultSet rs = q.executeQuery();
+			if (rs.next()) {
+				return rs.getString("pic_location");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// If you don't find a model
+		return null;
+
+	}
+
+	/**
+	 * 
 	 * @return all users from the database.
 	 */
 

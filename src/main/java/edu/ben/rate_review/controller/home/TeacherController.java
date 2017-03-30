@@ -27,7 +27,6 @@ public class TeacherController {
 
 		UserDao ud = dao.getUserDao();
 		List<User> professors = ud.allProfessors();
-		
 		model.put("professors", professors);
 
 		// Tell the server to render the index page with the data in the model

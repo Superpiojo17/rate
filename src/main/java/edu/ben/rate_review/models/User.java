@@ -1,6 +1,8 @@
 package edu.ben.rate_review.models;
 
 import edu.ben.rate_review.authorization.AuthorizationUser;
+import edu.ben.rate_review.daos.DaoManager;
+import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.encryption.SecurePassword;
 
 public class User implements AuthorizationUser {
@@ -19,6 +21,7 @@ public class User implements AuthorizationUser {
 	private boolean confirmed;
 	private boolean active;
 	private String department;
+	private String profilepic;
 
 	public Long getId() {
 		return id;
@@ -186,6 +189,15 @@ public class User implements AuthorizationUser {
 
 	public void setDepartment(String department) {
 		this.department = department;
+	}
+
+	public String getProfilepic() {
+		DaoManager dao = DaoManager.getInstance();
+		UserDao ud = dao.getUserDao();
+		if (ud.getPicString(id) != null) {
+			return ud.getPicString(id);
+		}
+		return profilepic;
 	}
 
 }
