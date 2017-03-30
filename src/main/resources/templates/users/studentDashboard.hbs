@@ -125,10 +125,10 @@
 								<table class="alt">
 									<thead>
 										<tr>
-											<th><br>Professor Name</th>
-											<th><br>Course</th>
-											<th><br>Semester</th>
-											<th><br>Year</th>
+											<th><br />Professor Name</th>
+											<th><br />Course</th>
+											<th><br />Semester</th>
+											<th><br />Year</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -167,10 +167,10 @@
 									<thead>
 										<tr>
 											<th></th>
-											<th><br>Professor Name</th>
-											<th><br>Course</th>
-											<th><br>Semester</th>
-											<th><br>Year</th>
+											<th><br />Professor Name</th>
+											<th><br />Course</th>
+											<th><br />Semester</th>
+											<th><br />Year</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -215,11 +215,11 @@
 			<table class="alt">
 				<thead>
 					<tr>
-					<th><br>Tutor</th>
-					<th><br>Class</th>
-					<th><br>Date</th>
-					<th><br>Time</th>
-					<th><br>Message (Size limit: 200)</th>
+					<th><br />Tutor</th>
+					<th><br />Class</th>
+					<th><br />Date</th>
+					<th><br />Time</th>
+					<th><br />Message (Size limit: 200)</th>
 					<th></th>
 					</tr>
 				</thead>
@@ -264,13 +264,14 @@
 			<table class="alt">
 				<thead>
 					<tr>
-					<th><br>Tutor</th>
-					<th><br>Date</th>
-					<th><br>Time</th>
-					<th><br>Your Message</th>
-					<th><br>Tutor Response</th>
-					<th><br>Status</th>
-					<th></th>
+					<th><br />Tutor</th>
+					<th><br />Date</th>
+					<th><br />Time</th>
+					<th><br />Your Message</th>
+					<th><br />Tutor Response</th>
+					<th><br />Status</th>
+					<th><br />Cancel</th>
+					<th><br />Remove</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -300,7 +301,10 @@
 									{{#if tutor_has_responded}}
 										{{#if appointment_status}}
 											<button title="cancel appointment" class="btn" type="submit" name="tutor_id" value="-{{appointment_id}}"><span class="glyphicon glyphicon-remove"></span></button>
-										{{/if}}
+										{{/if}}{{/if}}
+								</td>
+								<td class="shrink">
+									{{#if tutor_has_responded}}
 										{{#unless appointment_status}}
 											<button title="delete denied appointment" class="btn btn-danger" type="submit" name="tutor_id" value="-{{appointment_id}}"><span class="glyphicon glyphicon-trash"></span></button>
 										{{/unless}}

@@ -397,13 +397,13 @@
 			<table class="alt">
 				
 				<div align="right">
-				<span class="glyphicon glyphicon-flag" style="color:red">:flagged</span>
-				&nbsp;
-				<span class="glyphicon glyphicon-remove" style="color:gray">:removed</span>
-				&nbsp;
 				<span class="glyphicon glyphicon-ok" style="color:green">:approved</span>
 				&nbsp;
-				<span class="glyphicon glyphicon-minus" style="color:blue">:untouched</span>
+				<span class="glyphicon glyphicon-flag" style="color:orange">:flagged</span>
+				&nbsp;
+				<span class="glyphicon glyphicon-remove" style="color:red">:removed</span>
+				&nbsp;
+				<span class="glyphicon glyphicon-minus" style="color:gray">:untouched</span>
 				</div>
 				
 				<thead>
@@ -422,10 +422,10 @@
 							<td>{{comment}}</td>
 							<td class = "shrink">
 								{{#if comment_flagged}}
-									<span title="flagged" class="glyphicon glyphicon-flag fa-2x" style="color:red"></span>
+									<span title="flagged" class="glyphicon glyphicon-flag fa-2x" style="color:orange"></span>
 								{{/if}}
 								{{#if comment_removed}}
-									<span title="removed" class="glyphicon glyphicon-remove fa-2x" style="color:gray"></span>
+									<span title="removed" class="glyphicon glyphicon-remove fa-2x" style="color:red"></span>
 								{{/if}}
 								{{#if comment_approved}}
 									<span title="approved" class="glyphicon glyphicon-ok fa-2x" style="color:green"></span>
@@ -433,7 +433,7 @@
 								{{#unless comment_flagged}}
 								{{#unless comment_removed}}
 								{{#unless comment_approved}}
-									<span title="untouched" class="glyphicon glyphicon-minus fa-2x" style="color:blue"></span>
+									<span title="untouched" class="glyphicon glyphicon-minus fa-2x" style="color:gray"></span>
 								{{/unless}}{{/unless}}{{/unless}}
 							</td>
 						</tr>

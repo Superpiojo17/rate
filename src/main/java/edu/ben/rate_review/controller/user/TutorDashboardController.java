@@ -164,26 +164,35 @@ public class TutorDashboardController {
 		} else {
 			// tutor is rescheduling an appointment
 
-			if (!req.queryParams("reschedule_time").isEmpty() && !req.queryParams("reschedule_date").isEmpty()
-					&& !req.queryParams("tutor_message").isEmpty()) {
-				// checks if fields are empty
-				if (FormatTimeAndDate.checkValidDateTime(req.queryParams("reschedule_time"),
-						req.queryParams("reschedule_date"))) {
-					// checks if time is valid
+			if (!req.queryParams("tutor_message").isEmpty()) {
+				if (!req.queryParams("reschedule_time").isEmpty() && !req.queryParams("reschedule_date").isEmpty()) {
+					// checks if fields are empty
+					if (FormatTimeAndDate.checkValidDateTime(req.queryParams("reschedule_time"),
+							req.queryParams("reschedule_date"))) {
+						// checks if time is valid
+						long id = Long.parseLong(req.queryParams("reschedule_appointment_id"));
+						TutorAppointment appointment = tDao.findAppointmentByID(id);
+						appointment.setTime(req.queryParams("reschedule_time"));
+						appointment.setDate(req.queryParams("reschedule_date"));
+						appointment.setTutor_message(req.queryParams("tutor_message"));
+						tDao.cancelTutorAppointment(id);
+						tDao.saveTutorAppointment(appointment);
+						emailReschedule(appointment);
+
+					} else {
+						// invalid time
+					}
+				} else {
 					long id = Long.parseLong(req.queryParams("reschedule_appointment_id"));
 					TutorAppointment appointment = tDao.findAppointmentByID(id);
-					appointment.setTime(req.queryParams("reschedule_time"));
-					appointment.setDate(req.queryParams("reschedule_date"));
 					appointment.setTutor_message(req.queryParams("tutor_message"));
 					tDao.cancelTutorAppointment(id);
 					tDao.saveTutorAppointment(appointment);
-					emailReschedule(appointment);
-
-				} else {
-					// invalid time
+					emailEditTutorMessage(appointment);
+					// fields are empty
 				}
 			} else {
-				// fields are empty
+				// need to enter a message
 			}
 		}
 
@@ -231,7 +240,29 @@ public class TutorDashboardController {
 		String messageFooter = "<br /><p>Sincerely,</p><p>The Rate&Review Team</p>";
 		String message = messageHeader + messageBody + messageFooter;
 
-		Email.deliverEmail(student.getFirst_name(), student.getEmail(), subject, message);
+		// Email.deliverEmail(student.getFirst_name(), student.getEmail(),
+		// subject, message);
+		Email.deliverEmail(student.getFirst_name(), "acendude@gmail.com", subject, message);
+
+	}
+
+	private static void emailEditTutorMessage(TutorAppointment appointment) {
+
+		UserDao uDao = DaoManager.getInstance().getUserDao();
+		User student = uDao.findById(appointment.getStudent_id());
+
+		String subject = "Rate&Review Tutor Edited Message";
+		String messageHeader = "<p>Hello " + student.getFirst_name() + ",</p><br />";
+		String messageBody = "<p>Your appointment with " + appointment.getTutor_firstname() + " "
+				+ appointment.getTutor_lastname() + " at " + FormatTimeAndDate.formatTime(appointment.getTime())
+				+ " on " + FormatTimeAndDate.formatDate(appointment.getDate())
+				+ " has a new response waiting for you.</p>";
+		String messageFooter = "<br /><p>Sincerely,</p><p>The Rate&Review Team</p>";
+		String message = messageHeader + messageBody + messageFooter;
+
+		// Email.deliverEmail(student.getFirst_name(), student.getEmail(),
+		// subject, message);
+		Email.deliverEmail(student.getFirst_name(), "acendude@gmail.com", subject, message);
 
 	}
 
