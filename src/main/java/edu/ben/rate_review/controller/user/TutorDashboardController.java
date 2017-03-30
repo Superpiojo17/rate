@@ -189,7 +189,6 @@ public class TutorDashboardController {
 					tDao.cancelTutorAppointment(id);
 					tDao.saveTutorAppointment(appointment);
 					emailEditTutorMessage(appointment);
-					// fields are empty
 				}
 			} else {
 				// need to enter a message
@@ -240,9 +239,7 @@ public class TutorDashboardController {
 		String messageFooter = "<br /><p>Sincerely,</p><p>The Rate&Review Team</p>";
 		String message = messageHeader + messageBody + messageFooter;
 
-		// Email.deliverEmail(student.getFirst_name(), student.getEmail(),
-		// subject, message);
-		Email.deliverEmail(student.getFirst_name(), "acendude@gmail.com", subject, message);
+		Email.deliverEmail(student.getFirst_name(), student.getEmail(), subject, message);
 
 	}
 
@@ -260,9 +257,7 @@ public class TutorDashboardController {
 		String messageFooter = "<br /><p>Sincerely,</p><p>The Rate&Review Team</p>";
 		String message = messageHeader + messageBody + messageFooter;
 
-		// Email.deliverEmail(student.getFirst_name(), student.getEmail(),
-		// subject, message);
-		Email.deliverEmail(student.getFirst_name(), "acendude@gmail.com", subject, message);
+		Email.deliverEmail(student.getFirst_name(), student.getEmail(), subject, message);
 
 	}
 
