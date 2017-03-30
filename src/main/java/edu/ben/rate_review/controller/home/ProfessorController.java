@@ -30,13 +30,12 @@ public class ProfessorController {
 
 		// gets instance of review dao
 		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
-
+		
 		// gets professor id from url, finds professor in user table
 		String idString = req.params("professor_id");
 		long id = Long.parseLong(idString);
 		UserDao uDao = DaoManager.getInstance().getUserDao();
 		User prof = uDao.findById(id);
-
 		// if user attempts to access using a non-professor's ID
 		if (prof == null || prof.getRole() != 2) {
 			res.redirect("/authorizationerror");

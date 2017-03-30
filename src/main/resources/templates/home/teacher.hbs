@@ -143,7 +143,7 @@
 			<table id="indextable" class="indextable alt">
 				<thead>
 					<tr>
-						<th></th>
+						
 
 						<th class="shrink text-left"><a
 							href="javascript:SortTable(3,'T');" class="btn btn-default">Image
@@ -167,15 +167,14 @@
 					</tr>
 				</thead>
 				<tbody>
-					{{#each users}}
+					{{#each professors}}
+					
 					<tr>
 
 
-						<td class="shrink" align="center"><a
-							href="/users/{{id}}/edit" class="btn btn-info">Edit<span
-								class="glyphicon glyphicon-pencil"></span></a></td>
+						
 						<td class="shrink">{{image}}</td>
-						<td class="shrink">{{last_name}} , {{first_name}}</td>
+						<td class="shrink"><a href="/professor/{{id}}/Overview">{{last_name}} , {{first_name}}</a></td>
 						<td class="shrink"><a
 							href="mailto:{{email}}?Subject=Rate%20and %20Review"><span
 								class="glyphicon glyphicon-envelope"></span> {{email}}</a></td>

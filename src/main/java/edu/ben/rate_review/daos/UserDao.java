@@ -59,7 +59,7 @@ public class UserDao implements Dao<User> {
 		tmp.setSchool_year(rs.getInt("school_year"));
 		tmp.setMajor(rs.getString("major"));
 		tmp.setYear_string(rs.getString("school_year"));
-		//tmp.setDepartment(rs.getString("department"));
+		// tmp.setDepartment(rs.getString("department"));
 		return tmp;
 	}
 
@@ -382,6 +382,33 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * 
+	 * @return all professors from the database.
+	 */
+
+	public List<User> allProfessors() {
+		final String SELECT = "SELECT * FROM " + USER_TABLE + " WHERE role_id = 2 ";
+
+		List<User> users = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			users = new ArrayList<User>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					users.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return users;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+
+	/**
+	 * 
 	 * @return all users from the database.
 	 */
 
@@ -528,7 +555,7 @@ public class UserDao implements Dao<User> {
 		}
 		return " ";
 	}
-	
+
 	public List<User> sortByMajor(String string) {
 
 		final String SELECT = "SELECT * FROM users WHERE major = '" + string + "'";
@@ -719,7 +746,8 @@ public class UserDao implements Dao<User> {
 
 	// UserDao
 	public List<User> search(String sType, String sText) throws SQLException {
-		String NAME_SQL = "SELECT * FROM users WHERE first_name LIKE '%" + sText +"%' OR last_name LIKE '%" + sText +"%'";
+		String NAME_SQL = "SELECT * FROM users WHERE first_name LIKE '%" + sText + "%' OR last_name LIKE '%" + sText
+				+ "%'";
 
 		List<User> users = null;
 
@@ -727,12 +755,12 @@ public class UserDao implements Dao<User> {
 
 			PreparedStatement ps = conn.prepareStatement(NAME_SQL);
 			// both have 1 parameter
-//			ps.setString(1, sText);
-//
-//			// Only name search has a second parameter
-//			if (sType.equals("name")) {
-//				ps.setString(2, sText);
-//			}
+			// ps.setString(1, sText);
+			//
+			// // Only name search has a second parameter
+			// if (sType.equals("name")) {
+			// ps.setString(2, sText);
+			// }
 			users = new ArrayList<User>();
 			try {
 				ResultSet rs = ps.executeQuery(NAME_SQL);
