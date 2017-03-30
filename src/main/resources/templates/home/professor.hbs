@@ -182,7 +182,7 @@
           ['5 out of 5', {{arr_assignments5}}]
         ]);
 
-        var options = {'title':'Assignments - good learning experience: {{rate_assignments}}/5',
+        var options = {'title':'Assignments provide a good learning experience: {{rate_assignments}}/5',
                        'width':600,
                        'height':300,
                        colors: ['#DD4477']};
@@ -467,9 +467,11 @@
 											{{#unless comment_flagged}}<td>{{comment}}</td>{{/unless}}
 											<td class = "shrink">
 											{{#unless comment_approved}}
+											{{#unless comment_flagged}}
 											<form style="margin: 0 0 0 0;" action="/professor/{{prof_id}}/overview" method="post">
 											<button title="flag comment as inappropriate" class="btn btn-danger" type="submit" name="course_flagged" value="{{course_id}}"><span class="glyphicon glyphicon-flag"></span></button>
 											</form>
+											{{/unless}}
 											{{/unless}}
 											</td>
 										</tr>
