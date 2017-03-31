@@ -169,12 +169,12 @@ public class FacultyDashboardController {
 			// Make sure you
 			if (searchType.equalsIgnoreCase("email") || searchType.equalsIgnoreCase("name") && searchTxt.length() > 0) {
 				// valid search, can proceed
-				List<User> tempTutors = ud.search(searchType, searchTxt);
+				List<User> tempTutors = ud.searchTutor(searchType, searchTxt);
 				if (tempTutors.size() > 0) {
 
 					model.put("tutors", tempTutors);
 				} else {
-					List<User> tutors = ud.search(searchType, searchTxt);
+					List<User> tutors = ud.searchTutor(searchType, searchTxt);
 					model.put("error", "No Results Found");
 					model.put("tutors", tutors);
 				}

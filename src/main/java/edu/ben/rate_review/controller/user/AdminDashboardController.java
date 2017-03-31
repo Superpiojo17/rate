@@ -1,6 +1,7 @@
 package edu.ben.rate_review.controller.user;
 
 import java.io.FileNotFoundException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -64,7 +65,7 @@ public class AdminDashboardController {
 		return new ModelAndView(model, "users/admindashboard.hbs");
 	}
 
-	public ModelAndView showAllUsersPage(Request req, Response res) throws AuthException {
+	public ModelAndView showAllUsersPage(Request req, Response res) throws AuthException, SQLException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 
@@ -74,8 +75,34 @@ public class AdminDashboardController {
 
 		DaoManager dao = DaoManager.getInstance();
 		UserDao ud = dao.getUserDao();
-		List<User> users = ud.sortbyRole();
-		model.put("users", users);
+		if (req.queryParams("search") != null) {
+
+			String searchType = "name";
+			String searchTxt = req.queryParams("search").toLowerCase();
+
+			// Make sure you
+			if (searchType.equalsIgnoreCase("email") || searchType.equalsIgnoreCase("name") && searchTxt.length() > 0) {
+				// valid search, can proceed
+				List<User> tempUsers = ud.search(searchType, searchTxt);
+				if (tempUsers.size() > 0) {
+
+					model.put("users", tempUsers);
+				} else {
+					List<User> users = ud.search(searchType, searchTxt);
+					model.put("error", "No Results Found");
+					model.put("users", users);
+				}
+			} else {
+				List<User> users = ud.sortbyRole();
+				model.put("error", "Cannot leave search bar blank");
+				model.put("users", users);
+			}
+		} else {
+			List<User> users = ud.sortbyRole();
+			model.put("users", users);
+		}
+
+		model.put("current_user", u);
 
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();

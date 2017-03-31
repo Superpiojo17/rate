@@ -101,6 +101,14 @@
 							
   <p>View all the registered users, as well as their information.</p>
   &ensp;
+    <form action="/allusers" method="GET">
+  &nbsp;&nbsp;
+  <div>
+    <input type="text" name="search" placeholder="Search Users..." />
+  </div>
+
+</form>
+
   
   <div name="error">
 						<p style='color: red'>{{error}}</p>
@@ -268,7 +276,10 @@
 							 
 						</section>
 						
-						
+						<a href="/allusers"  class="btn btn-info"> View All
+											</a>
+											<br/><br/><br/>
+											
 						<h6> Register multiple users at a time </h6>
 						<a href="#massRegistration" class="btn btn-info" data-toggle="collapse">Mass Registration</a> 
   <div id="massRegistration" class="collapse">
