@@ -30,42 +30,113 @@ public class ProfessorController {
 
 		// gets instance of review dao
 		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
-		
+
 		// gets professor id from url, finds professor in user table
 		String idString = req.params("professor_id");
 		long id = Long.parseLong(idString);
 		UserDao uDao = DaoManager.getInstance().getUserDao();
 		User prof = uDao.findById(id);
+
 		// if user attempts to access using a non-professor's ID
 		if (prof == null || prof.getRole() != 2) {
 			res.redirect("/authorizationerror");
+		} else {
+			// gets a list of all unique courses a given professor teaches
+			List<String> uniqueCourses = reviewDao.listUniqueCourses(prof);
+			// adds overview option and initial SELECT COURSE
+			uniqueCourses.add(0, "Overview");
+			uniqueCourses.add(0, "SELECT COURSE");
+			// lists unique courses for top of page
+			model.put("unique_courses", uniqueCourses);
+
+			// used for url - overview or specific class
+			String display = req.params("display");
+
+			// displays whether rating is overall or for a specific class
+			boolean isOverview = true;
+			if (!display.equalsIgnoreCase("overview")) {
+				isOverview = false;
+			}
+			model.put("is_overview", isOverview);
+			model.put("display", display);
+
+			// creates a list of all reviews for that given professor/course
+			List<ProfessorReview> reviews = reviewDao.listCoursesByProfessorEmail(prof, display);
+
+			// if user attempts to access a course not offered by professor
+			if (reviews.isEmpty()) {
+				res.redirect("/authorizationerror");
+			}
+			// lists all reviews which will be use when rendering the page
+			model.put("courses", reviews);
+
+			// handles retrieving, calculating, and putting ratings
+			handleRatings(model, reviewDao, prof, display);
+
+			// puts professor information for use on the page
+			model.put("prof_first_name", prof.getFirst_name());
+			model.put("prof_last_name", prof.getLast_name());
+			model.put("prof_id", prof.getId());
+
+			// puts announcements on the page
+			AnnouncementDao ad = DaoManager.getInstance().getAnnouncementDao();
+			List<Announcement> announcements = ad.all();
+			model.put("announcements", announcements);
 		}
 
-		// gets a list of all unique courses a given professor teaches
-		List<String> uniqueCourses = reviewDao.listUniqueCourses(prof);
-		uniqueCourses.add(0, "Overview");
-		uniqueCourses.add(0, "SELECT COURSE");
-		// used for url - overview or specific class
+		// Tell the server to render the index page with the data in the model
+		return new ModelAndView(model, "home/professor.hbs");
+	}
+
+	/**
+	 * Put route method
+	 * 
+	 * @param req
+	 * @param res
+	 * @return
+	 */
+	public ModelAndView display(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+
+		model.put("course_id", req.params("course_id"));
+
+		return new ModelAndView(model, "/professor.hbs");
+	}
+
+	/**
+	 * Flags potentially offensive comment
+	 * 
+	 * @param req
+	 * @param res
+	 * @return
+	 */
+	public String flag(Request req, Response res) {
+		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
+
+		// grabs course id from review comment
+		String idString = req.queryParams("course_flagged");
 		String display = req.params("display");
-		// lists unique courses for top of page
-		model.put("unique_courses", uniqueCourses);
+		long id = Long.parseLong(idString);
+		
+		// sets the comment flagged in the database
+		ProfessorReview review = reviewDao.findReview(id);
+		reviewDao.setCommentFlagged(review);
+		// redirects back to same professor page
+		res.redirect("/professor/" + req.params("professor_id") + "/" + display);
+		return "";
+	}
 
-		// displays whether rating is overall or for a specific class
-		boolean isOverview = true;
-		if (!display.equalsIgnoreCase("overview")) {
-			isOverview = false;
-		}
-		model.put("is_overview", isOverview);
-		model.put("display", display);
-
-		// creates a list of all reviews for that given professor/course
-		List<ProfessorReview> reviews = reviewDao.listCoursesByProfessorEmail(prof, display);
-
-		// if user attempts to access a course not offered by professor
-		if (reviews.isEmpty()) {
-			res.redirect("/authorizationerror");
-		}
-
+	/**
+	 * Calculates average ratings per category, creates an object of arrays
+	 * which store counts of each rating (1,2,3,4,5), then formats the results
+	 * and puts them into the model for display.
+	 * 
+	 * @param model
+	 * @param reviewDao
+	 * @param prof
+	 * @param display
+	 */
+	private void handleRatings(HashMap<String, Object> model, ProfessorReviewDao reviewDao, User prof, String display) {
 		// obtains average rating per category of the professor
 		double objectives = reviewDao.avgRate(prof, "rate_objectives", display);
 		double organized = reviewDao.avgRate(prof, "rate_organized", display);
@@ -176,58 +247,5 @@ public class ProfessorController {
 
 		// overall score of professor
 		model.put("overall", df.format(overall));
-
-		// lists all reviews which will be use when rendering the page
-		model.put("courses", reviews);
-
-		// puts professor information for use on the page
-		model.put("prof_first_name", prof.getFirst_name());
-		model.put("prof_last_name", prof.getLast_name());
-		model.put("prof_id", prof.getId());
-
-		AnnouncementDao ad = DaoManager.getInstance().getAnnouncementDao();
-		List<Announcement> announcements = ad.all();
-		model.put("announcements", announcements);
-
-		// Tell the server to render the index page with the data in the model
-		return new ModelAndView(model, "home/professor.hbs");
-	}
-
-	/**
-	 * Put route method
-	 * 
-	 * @param req
-	 * @param res
-	 * @return
-	 */
-	public ModelAndView display(Request req, Response res) {
-		HashMap<String, Object> model = new HashMap<>();
-
-		model.put("course_id", req.params("course_id"));
-
-		return new ModelAndView(model, "/professor.hbs");
-	}
-
-	/**
-	 * Flags potentially offensive comment
-	 * 
-	 * @param req
-	 * @param res
-	 * @return
-	 */
-	public String flag(Request req, Response res) {
-		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
-
-		// grabs course id from review comment
-		String idString = req.queryParams("course_flagged");
-		long id = Long.parseLong(idString);
-
-		// sets the comment flagged in the database
-		ProfessorReview review = reviewDao.findReview(id);
-		reviewDao.setCommentFlagged(review);
-
-		// redirects back to same professor page
-		res.redirect("/professor/" + req.params("professor_id") + "/overview");
-		return "";
 	}
 }
