@@ -52,18 +52,17 @@
 
 	<!-- Nav -->
 	<nav id="nav"  class="visible">
-		<ul class="links">
-			<li><a href="/admindashboard">Home</a></li>
-			<li><a href="/register">My Account</a></li>
-			<li><a href="/aboutus">View Apointments</a></li>
-			<li><a href="/aboutus">View Reviews</a></li>
-			<li><a href="/contactus">Contact Us</a></li>
-			<li><a href="/allusers">Manage Users</a></li>
-			<li><a href="/announcement">Announcements</a></li>
-			<li><a href="/deactivation">De-Activate</a></li>
-			<li><a href="/login">Log Out</a></li>
-
-		</ul>
+	<ul class="links">
+					<li><a href="/">Home</a></li>
+					<li><a href="/login">Log In</a></li>
+					<li><a href="/register">Register</a></li>
+					<li><a href="/contactus">Contact Us</a></li>
+					<li><a href="/aboutus">About Us</a></li>
+					<li><a href="/teacher">Browse Reviews</a></li>
+					<li><a href="/accountrecovery">Forgot Password?</a></li>
+					
+					
+				</ul>
 	</nav>
 
 	<!-- Banner -->
@@ -131,8 +130,17 @@
 
 
 		<p>View all the registered professors.</p>
+		<p>Click on the professors name to go to their overview page.</p>
 		&ensp;
+  <br/>
+  <form action="/selecttutors" method="GET">
+  
+  &nbsp;&nbsp;
+  <div>
+    <input type="text" name="search" placeholder="Search Users..." />
+  </div>
 
+</form>
 
 
 
@@ -159,7 +167,7 @@
 						</a></th>
 
 						<th class="text-left"><a href="javascript:SortTable(4,'T');"
-							class="btn btn-default">Major
+							class="btn btn-default">Department
 								</button>
 						</a></th>
 

@@ -161,9 +161,9 @@ public class FacultyDashboardController {
 		TutorDao td = tdao.getTutorDao();
 		UserDao ud = udao.getUserDao();
 
-		if (req.queryParams("search-type") != null & req.queryParams("search") != null) {
+		if (req.queryParams("search") != null) {
 
-			String searchType = req.queryParams("search-type").toLowerCase();
+			String searchType = "name";
 			String searchTxt = req.queryParams("search").toLowerCase();
 
 			// Make sure you

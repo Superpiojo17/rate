@@ -775,6 +775,7 @@ public class UserDao implements Dao<User> {
 	// UserDao
 	public List<User> search(String sType, String sText) throws SQLException {
 		String NAME_SQL = "SELECT * FROM users WHERE first_name LIKE '%" + sText + "%' OR last_name LIKE '%" + sText
+				+ "%' OR email LIKE '%" + sText
 				+ "%'";
 
 		List<User> users = null;
