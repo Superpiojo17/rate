@@ -133,7 +133,7 @@
 		<p>Click on the professors name to go to their overview page.</p>
 		&ensp;
   <br/>
-  <form action="/selecttutors" method="GET">
+  <form action="/teacher" method="GET">
   
   &nbsp;&nbsp;
   <div>
@@ -141,6 +141,10 @@
   </div>
 
 </form>
+
+ <div name="error">
+						<p style='color: red'>{{error}}</p>
+					</div>
 
 
 
@@ -211,6 +215,9 @@
 					<li class="page-item"><a class="page-link" href="#">Next</a></li>
 				</ul>
 			</nav>
+			
+			<a href="/teacher"  class="btn btn-info"> View All
+											</a>
 		</div>
 
 		</section>

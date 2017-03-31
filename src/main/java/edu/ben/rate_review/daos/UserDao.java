@@ -774,9 +774,40 @@ public class UserDao implements Dao<User> {
 
 	// UserDao
 	public List<User> search(String sType, String sText) throws SQLException {
-		String NAME_SQL = "SELECT * FROM users WHERE first_name LIKE '%" + sText + "%' OR last_name LIKE '%" + sText
-				+ "%' OR email LIKE '%" + sText
-				+ "%'";
+		String NAME_SQL = "SELECT * FROM users WHERE (role_id =3 or role_id =4) and (first_name LIKE '%" + sText
+				+ "%' OR last_name LIKE '%" + sText + "%' OR email LIKE '%" + sText + "%')";
+
+		List<User> users = null;
+
+		try {
+
+			PreparedStatement ps = conn.prepareStatement(NAME_SQL);
+			// both have 1 parameter
+			// ps.setString(1, sText);
+			//
+			// // Only name search has a second parameter
+			// if (sType.equals("name")) {
+			// ps.setString(2, sText);
+			// }
+			users = new ArrayList<User>();
+			try {
+				ResultSet rs = ps.executeQuery(NAME_SQL);
+				while (rs.next()) {
+					users.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return users;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+
+	public List<User> searchProf(String sType, String sText) throws SQLException {
+		String NAME_SQL = "SELECT * FROM users WHERE role_id = 2 and (first_name LIKE '%" + sText + "%' OR last_name LIKE '%" + sText
+				+ "%' OR email LIKE '%" + sText + "%' OR major LIKE '%" + sText + "%')";
 
 		List<User> users = null;
 
