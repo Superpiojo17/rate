@@ -473,6 +473,12 @@
 											</form>
 											{{/unless}}
 											{{/unless}}
+											{{#if comment_approved}}
+												<button title="comment has been approved" class="btn btn-danger disabled" type="button"><span class="glyphicon glyphicon-flag"></span></button>
+											{{/if}}
+											{{#if comment_flagged}}
+												<button title="comment is currently flagged" class="btn btn-danger disabled" type="button"><span class="glyphicon glyphicon-flag"></span></button>
+											{{/if}}
 											</td>
 										</tr>
 									{{/unless}}
