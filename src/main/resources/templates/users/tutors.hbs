@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Manage Courses</title>
+		<title>Manage Tutors</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -95,7 +95,7 @@
 						
 							<div class="centercol"> 
 							&ensp;
-							<h2> {{department}} Courses </h2>
+							<h2> {{department}} Tutors </h2>
 							
 							
 							
@@ -124,25 +124,21 @@
 											<th></th>
 											
 											
-											<th class=" shrink text-left"><a href="javascript:SortTable(1,'T');" class="btn btn-default">Course</button></a></th>
-										<th class=" shrink text-left"><a href="javascript:SortTable(2,'N');" class="btn btn-default">Number</button></a></th>
-										<th class="shrink text-left"><a href="javascript:SortTable(3,'T');" class="btn btn-default" >Name</button></a></th>
-<th class="shrink text-left"><a href="javascript:SortTable(4,'T');" class="btn btn-default" >Professor</button></a></th>
-<th class="text-left"><a href="javascript:SortTable(5,'T');" class="btn btn-default" >Term</button></a></th>
+											<th class=" shrink text-left"><a href="javascript:SortTable(1,'T');" class="btn btn-default">Tutor</button></a></th>
+										<th class=" shrink text-left"><a href="javascript:SortTable(2,'N');" class="btn btn-default">Professor</button></a></th>
+										<th class="shrink text-left"><a href="javascript:SortTable(3,'T');" class="btn btn-default" >Course</button></a></th>
 											
 										</tr>
 									</thead>
 									<tbody>
-									{{#each courses}}
+									{{#each tutors}}
 										<tr>
 											
 											
 											<td class="shrink" align="center"><a href="/course/{{id}}/edit"  class="btn btn-info">Edit<span class="glyphicon glyphicon-pencil"></span></a></td>
-											<td class="shrink">{{subject}}</td>
-											<td class="shrink">{{course_number}}</td>
-											<td class="shrink">{{course_name}}</td>
+											<td class="shrink">{{tutor_last_name}},{{tutor_first_name}}</td>
 											<td class="shrink">{{professor_name}}</td>
-											<td class="shrink">{{term}}</td>
+											<td class="shrink">{{course_name}}</td>
 																			
 										
 											

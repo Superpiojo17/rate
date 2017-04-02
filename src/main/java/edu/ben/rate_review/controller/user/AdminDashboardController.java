@@ -129,6 +129,23 @@ public class AdminDashboardController {
 		// Render the page
 		return new ModelAndView(model, "users/courseslanding.hbs");
 	}
+	
+	public ModelAndView showManageTutorsLandingPage(Request req, Response res) throws AuthException {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
+		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+
+		// Render the page
+		return new ModelAndView(model, "users/managetutorslanding.hbs");
+	}
 
 	public ModelAndView showEditAnnouncements(Request req, Response res) throws AuthException {
 		// Just a hash to pass data from the servlet to the page

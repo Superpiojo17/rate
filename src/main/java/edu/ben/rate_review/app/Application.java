@@ -32,6 +32,7 @@ import edu.ben.rate_review.controller.home.TutorsController;
 import edu.ben.rate_review.controller.session.SessionsController;
 import edu.ben.rate_review.controller.user.AccountRecoveryController;
 import edu.ben.rate_review.controller.user.AdminDashboardController;
+import edu.ben.rate_review.controller.user.AdminEditTutorController;
 import edu.ben.rate_review.controller.user.EditAnnouncementController;
 import edu.ben.rate_review.controller.user.EditCoursesController;
 import edu.ben.rate_review.controller.user.EditTutorController;
@@ -71,6 +72,7 @@ public class Application {
 	private static ProfessorController professorController = new ProfessorController();
 	private static AdminController adminController = new AdminController();
 	private static EditCoursesController editcoursesController = new EditCoursesController();
+	private static AdminEditTutorController adminedittutorController = new AdminEditTutorController();
 
 	private static FaqController faqController = new FaqController();
 	// private static TutorAppointmentController tutorAppointmentController =
@@ -109,7 +111,8 @@ public class Application {
 	public static String ALLUSERS_PATH = "/allusers";
 	public static String TEST_PATH = "/test";
 	public static String TUTOR_PATH = "/tutor";
-	//public static String PROFESSOR_PATH = "/professor/:professor_id/overview";
+	// public static String PROFESSOR_PATH =
+	// "/professor/:professor_id/overview";
 	public static String PROFESSOR_PATH = "/professor/:professor_id/:display";
 	public static String REVIEWPROFESSOR_PATH = "/reviewprofessor/:course_id/review";
 	public static String SELECTTUTOR_PATH = "/selecttutors";
@@ -148,6 +151,8 @@ public class Application {
 	public static String COMPLETEPROF_PATH = "/completeprofileprof/:id";
 	public static String COMPLETESTUDENT_PATH = "/completeprofilestudent/:id";
 	public static String COMPLETETUTOR_PATH = "/completeprofiletutor/:id";
+	public static String TUTORLANDING_PATH = "/managetutorslanding";
+	public static String ADMINTUTOR_PATH = "/tutors/:department";
 
 	public static void main(String[] args) throws Exception {
 
@@ -211,6 +216,12 @@ public class Application {
 		post(COMPLETEPROF_PATH, (req, res) -> facultydashController.completeProfile(req, res));
 
 		post(COMPLETESTUDENT_PATH, (req, res) -> studentdashController.completeProfile(req, res));
+
+		get(ADMINTUTOR_PATH, (req, res) -> adminedittutorController.showDeptTutorsPage(req, res),
+				new HandlebarsTemplateEngine());
+
+		get(TUTORLANDING_PATH, (req, res) -> admindashController.showManageTutorsLandingPage(req, res),
+				new HandlebarsTemplateEngine());
 
 		get(COMPLETETUTOR_PATH, (req, res) -> tutordashController.showCompleteProfileTutorPage(req, res),
 				new HandlebarsTemplateEngine());
@@ -359,7 +370,9 @@ public class Application {
 		get(APPOINTMENT_PATH, (req, res) -> tutorsController.showAppointmentPage(req, res),
 				new HandlebarsTemplateEngine());
 		get(MESSAGE_PATH, (req, res) -> tutorsController.showMessagePage(req, res), new HandlebarsTemplateEngine());
-		//get(CALENDAR_PATH, (req, res) -> tutorsController.showCalendarPage(req, res), new HandlebarsTemplateEngine());
+		// get(CALENDAR_PATH, (req, res) ->
+		// tutorsController.showCalendarPage(req, res), new
+		// HandlebarsTemplateEngine());
 
 		// Change password paths
 		get(CHANGEPASSWORD_PATH, (req, res) -> changePasswordController.showChangePasswordPage(req, res),

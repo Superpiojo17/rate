@@ -384,6 +384,28 @@ public class TutorDao implements Dao<Tutor> {
 		return tutors;
 	}
 
+	public List<Tutor> allbyDept(String department) {
+		final String SELECT = "SELECT * FROM " + TUTOR_TABLE + " WHERE user_id_professor = " + department;
+
+		List<Tutor> tutors = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			tutors = new ArrayList<Tutor>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					tutors.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return tutors;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return tutors;
+	}
+
 	/**
 	 * Selects all tutors from the table
 	 * 

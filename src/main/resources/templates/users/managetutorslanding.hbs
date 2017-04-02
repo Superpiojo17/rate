@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Manage Courses</title>
+		<title>Manage Tutors</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -28,7 +28,7 @@
 				<h1>Administrator Dashboard</h1>
 			</header>
 
-			<!-- Nav -->
+				<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
 					<li><a href="/admindashboard">Home</a></li>
@@ -95,80 +95,30 @@
 						
 							<div class="centercol"> 
 							&ensp;
-							<h2> {{department}} Courses </h2>
+							<h2> Manage Tutors</h2>
 							
 							
 							
-  <p>View and edit all the courses in the department. </p>
+  <p>Choose what department tutors you would like to view.</p>
   &ensp;
-   <form action="/courses/{{department}}" method="GET">
+  
   &nbsp;&nbsp;
-  <div>
-    <input type="text" name="search" placeholder="Search Users..." />
-  </div>
-
-</form>
   
   
-   <div name="error">
-						<p style='color: red'>{{error}}</p>
-					</div>
-					
-  
- 
-							<div class="table-wrapper">
-							&nbsp;&nbsp;
-								<table id = "indextable" class="indextable alt">
-									<thead>
-										<tr>
-											<th></th>
-											
-											
-											<th class=" shrink text-left"><a href="javascript:SortTable(1,'T');" class="btn btn-default">Course</button></a></th>
-										<th class=" shrink text-left"><a href="javascript:SortTable(2,'N');" class="btn btn-default">Number</button></a></th>
-										<th class="shrink text-left"><a href="javascript:SortTable(3,'T');" class="btn btn-default" >Name</button></a></th>
-<th class="shrink text-left"><a href="javascript:SortTable(4,'T');" class="btn btn-default" >Professor</button></a></th>
-<th class="text-left"><a href="javascript:SortTable(5,'T');" class="btn btn-default" >Term</button></a></th>
-											
-										</tr>
-									</thead>
-									<tbody>
-									{{#each courses}}
-										<tr>
-											
-											
-											<td class="shrink" align="center"><a href="/course/{{id}}/edit"  class="btn btn-info">Edit<span class="glyphicon glyphicon-pencil"></span></a></td>
-											<td class="shrink">{{subject}}</td>
-											<td class="shrink">{{course_number}}</td>
-											<td class="shrink">{{course_name}}</td>
-											<td class="shrink">{{professor_name}}</td>
-											<td class="shrink">{{term}}</td>
-																			
-										
-											
-										</tr>
-									{{/each}}
-									</tbody>
-									<tfoot>
-									</tfoot>
-								</table>
-								
-							</div>
+  <select onChange="window.location.href=this.value">
+   <option value="">Subjects</option>
+    <option value="tutors/CMSC">Computer Science</option>
+    <option value="tutors/Math">Math</option>
+    <option value="tutors/Music">Music</option>
+</select>
 						</section>
-						<a href = "/addCourse/{{department}}" button type="submit" class="btn btn-info"> Add Course
-											<span class="glyphicon glyphicon-floppy-saved"></a></button>
-											&emsp;&emsp;
-											<br/>
-											<br/>
-						<a href="/courseslanding"  class="btn btn-info"> Back
+  
+ <br/>
+						
+						<a href="/admindashboard"  class="btn btn-info"> Back
 											</a>
 						
 						
-						
-				
-		
-			
-  </div>
   
  
 
@@ -257,8 +207,8 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
 
 
 
-			<!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="/assets/js/main2.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main2.js"></script>
 
 	</body>
 </html>
