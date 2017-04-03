@@ -156,6 +156,7 @@ public class Application {
 	public static String ADMINTUTOREDIT_PATH = "/adminedittutor/:id/edit";
 	public static String ADMINADDTUTORLANDING_PATH = "/adminAddTutorlanding/:department";
 	public static String ADMINADDTUTOR_PATH = "/adminaddtutor/:id";
+	public static String ADMINDELETETUTOR_PATH = "/admindeletetutor/:id";
 
 	public static void main(String[] args) throws Exception {
 
@@ -213,7 +214,10 @@ public class Application {
 		// HandlebarsTemplateEngine());
 
 		//
-		
+
+		post(ADMINDELETETUTOR_PATH, (req, res) -> adminedittutorController.adminDeleteTutor(req, res),
+				new HandlebarsTemplateEngine());
+
 		post(ADMINADDTUTOR_PATH, (req, res) -> adminedittutorController.adminAddTutor(req, res),
 				new HandlebarsTemplateEngine());
 

@@ -122,6 +122,7 @@ public class AdminEditTutorController {
 
 		tutor.setStudent_id(Long.parseLong(req.queryParams("selecttutor")));
 		tutor.setId(id);
+		tutor.setCourse(tempTutor.getCourse_name());
 
 		tDao.adminUpdateTutor(tutor);
 
@@ -280,4 +281,52 @@ public class AdminEditTutorController {
 		return new ModelAndView(model, "users/tutors.hbs");
 
 	}
+
+	public ModelAndView adminDeleteTutor(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
+		String idString = req.params("id");
+		long id = Long.parseLong(idString);
+		TutorDao tutorDao = DaoManager.getInstance().getTutorDao();
+		Long studentID = tutorDao.getStudentId(id);
+		Tutor tempTutor = tutorDao.findById(id);
+		String department = tempTutor.getSubject();
+
+		tutorDao.deleteTutor(id);
+
+		if (tutorDao.findByStudentId(studentID) == null) {
+			tutorDao.changeTutorRole(studentID);
+
+		}
+
+		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+
+		DaoManager dao = DaoManager.getInstance();
+		TutorDao td = dao.getTutorDao();
+		List<Tutor> tutors = new ArrayList<Tutor>();
+		List<Tutor> Temptutors = td.listAllTutors();
+		for (int i = 0; i < Temptutors.size(); i++) {
+
+			if (Temptutors.get(i).getSubject().equalsIgnoreCase(department)) {
+
+				tutors.add(Temptutors.get(i));
+
+			}
+		}
+
+		model.put("tutors", tutors);
+
+		model.put("department", department);
+
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+
+		return new ModelAndView(model, "users/tutors.hbs");
+
+	}
+
 }
