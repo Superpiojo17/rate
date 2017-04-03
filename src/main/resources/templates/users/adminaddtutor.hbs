@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Edit Tutor</title>
+		<title>Add Tutor</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -95,16 +95,16 @@
 						
 							<div class="centercol"> 
 							&ensp;
-							<h2> Edit tutor </h2>
+							<h2> Add tutor to {{department}}</h2>
 							
 							
 							
-  <p>Fill out the form and click save to edit a tutor.</p>
+  <p>Fill out the form and click save to add a tutor.</p>
   &ensp;
   
 							<!-- Form -->
 						<section>
-							<form action="/adminedittutor/{{tutor_form.id}}/edit" method="post">
+							<form action="/adminaddtutor/{{course.id}}" method="post">
 							
 							<div class="table-wrapper">
 								<table class="alt">
@@ -120,7 +120,6 @@
 										
 											<td>
 											<select name="selecttutor" id="selecttutor">
-											 <option value="{{tutor_form.student_id}}">  {{tutor_form.tutor_first_name}} {{tutor_form.tutor_last_name}}</option>
 											{{#each deptstudents}}
 											
   <option value="{{id}}"> {{first_name}} {{last_name}}{{#if adminEditFlag}} (registered student would be made a tutor) {{/if}}</option>
@@ -132,8 +131,8 @@
 											
 											
 											</td>
-											<td>{{tutor_form.course}} </td>
-											<td>{{tutor_form.professor_name}}
+											<td>{{course.subject}} {{course.course_number}} {{course.course_name}} </td>
+											<td>{{course.professor_name}}
 											</td>
 										</tr>
 									</tbody>
@@ -153,9 +152,7 @@
 						</section>
 						
 						
-											<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#myModal" > Remove Tutor
-											<span class="glyphicon glyphicon-remove"> </button>
-											<a href="/tutors/{{department}}" button type="submit" class="btn btn-info" data-toggle="modal"  > Back
+											<a href="/adminAddTutorlanding/{{department}}" button type="submit" class="btn btn-info" data-toggle="modal"  > Back
 											</button></a>
 											
 											

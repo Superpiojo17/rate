@@ -433,6 +433,34 @@ public class TutorDao implements Dao<Tutor> {
 		}
 		return tutors;
 	}
+	
+	/**
+	 * Selects all tutors from the table
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public List<Tutor> listAllCourseTutors(String course) {
+		final String SELECT = "SELECT * FROM " + TUTOR_TABLE + " WHERE course_name = '" + course + "'";
+
+		List<Tutor> tutors = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			tutors = new ArrayList<Tutor>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					tutors.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return tutors;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return tutors;
+	}
 
 	public Tutor findById(long id) {
 		// Declare SQL template query

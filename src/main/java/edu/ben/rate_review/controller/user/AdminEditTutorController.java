@@ -2,6 +2,7 @@ package edu.ben.rate_review.controller.user;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import edu.ben.rate_review.authorization.AuthException;
@@ -84,6 +85,8 @@ public class AdminEditTutorController {
 
 		List<User> deptstudents = user.allByMajor(department);
 
+		model.put("department", department);
+
 		model.put("deptstudents", deptstudents);
 		// Authorize that the user can edit the user selected
 		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
@@ -146,8 +149,6 @@ public class AdminEditTutorController {
 
 		model.put("tutors", tutors);
 
-		model.put("department", department);
-
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
@@ -162,4 +163,121 @@ public class AdminEditTutorController {
 
 	}
 
+	public ModelAndView showAddTutorsLandingPage(Request req, Response res) throws AuthException {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
+		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+
+		DaoManager adao = DaoManager.getInstance();
+		CourseDao cDao = DaoManager.getInstance().getCourseDao();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+
+		String department = req.params("department");
+
+		model.put("department", department);
+
+		List<Course> courses = cDao.allByDept(department);
+		model.put("courses", courses);
+
+		// Render the page
+		return new ModelAndView(model, "users/addtutorlanding.hbs");
+	}
+
+	public ModelAndView showAddTutorsPage(Request req, Response res) throws AuthException {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
+		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+
+		DaoManager adao = DaoManager.getInstance();
+		CourseDao cDao = DaoManager.getInstance().getCourseDao();
+		UserDao user = DaoManager.getInstance().getUserDao();
+		TutorDao tutor = DaoManager.getInstance().getTutorDao();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+
+		// Get the :id from the url
+		String idString = req.params("id");
+
+		// Convert to Long
+		// /user/uh-oh/edit for example
+		long id = Long.parseLong(idString);
+
+		Course course = cDao.findById(id);
+
+		String department = course.getSubject();
+
+		model.put("department", department);
+
+		List<User> deptstudents = user.allByMajor(department);
+
+		model.put("deptstudents", deptstudents);
+
+		model.put("course", course);
+
+		// Render the page
+		return new ModelAndView(model, "users/adminaddtutor.hbs");
+	}
+
+	public ModelAndView adminAddTutor(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+		CourseDao cDao = DaoManager.getInstance().getCourseDao();
+		TutorDao tDao = DaoManager.getInstance().getTutorDao();
+
+		// Get the :id from the url
+		String idString = req.params("id");
+
+		// Convert to Long
+		// /user/uh-oh/edit for example
+		long id = Long.parseLong(idString);
+
+		Course course = cDao.findById(id);
+
+		Tutor tutor = new Tutor();
+
+		tutor.setCourse_name(course.getCourse_name());
+		tutor.setStudent_id(Long.parseLong(req.queryParams("selecttutor")));
+		tutor.setProfessor_id(course.getProfessor_id());
+
+		tDao.save(tutor);
+
+		String department = course.getSubject();
+
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
+		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+
+		DaoManager dao = DaoManager.getInstance();
+		TutorDao td = dao.getTutorDao();
+		List<Tutor> tutors = new ArrayList<Tutor>();
+		List<Tutor> Temptutors = td.listAllTutors();
+		for (int i = 0; i < Temptutors.size(); i++) {
+
+			if (Temptutors.get(i).getSubject().equalsIgnoreCase(department)) {
+
+				tutors.add(Temptutors.get(i));
+
+			}
+		}
+
+		model.put("tutors", tutors);
+
+		model.put("department", department);
+
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+
+		return new ModelAndView(model, "users/tutors.hbs");
+
+	}
 }

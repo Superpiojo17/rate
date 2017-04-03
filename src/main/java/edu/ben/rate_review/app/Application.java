@@ -154,6 +154,8 @@ public class Application {
 	public static String TUTORLANDING_PATH = "/managetutorslanding";
 	public static String ADMINTUTOR_PATH = "/tutors/:department";
 	public static String ADMINTUTOREDIT_PATH = "/adminedittutor/:id/edit";
+	public static String ADMINADDTUTORLANDING_PATH = "/adminAddTutorlanding/:department";
+	public static String ADMINADDTUTOR_PATH = "/adminaddtutor/:id";
 
 	public static void main(String[] args) throws Exception {
 
@@ -211,6 +213,15 @@ public class Application {
 		// HandlebarsTemplateEngine());
 
 		//
+		
+		post(ADMINADDTUTOR_PATH, (req, res) -> adminedittutorController.adminAddTutor(req, res),
+				new HandlebarsTemplateEngine());
+
+		get(ADMINADDTUTOR_PATH, (req, res) -> adminedittutorController.showAddTutorsPage(req, res),
+				new HandlebarsTemplateEngine());
+
+		get(ADMINADDTUTORLANDING_PATH, (req, res) -> adminedittutorController.showAddTutorsLandingPage(req, res),
+				new HandlebarsTemplateEngine());
 
 		get(ADMINTUTOREDIT_PATH, (req, res) -> adminedittutorController.showAdminEditTutorPage(req, res),
 				new HandlebarsTemplateEngine());
