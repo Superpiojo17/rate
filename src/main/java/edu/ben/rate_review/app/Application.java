@@ -153,6 +153,7 @@ public class Application {
 	public static String COMPLETETUTOR_PATH = "/completeprofiletutor/:id";
 	public static String TUTORLANDING_PATH = "/managetutorslanding";
 	public static String ADMINTUTOR_PATH = "/tutors/:department";
+	public static String ADMINTUTOREDIT_PATH = "/adminedittutor/:id/edit";
 
 	public static void main(String[] args) throws Exception {
 
@@ -210,6 +211,11 @@ public class Application {
 		// HandlebarsTemplateEngine());
 
 		//
+
+		get(ADMINTUTOREDIT_PATH, (req, res) -> adminedittutorController.showAdminEditTutorPage(req, res),
+				new HandlebarsTemplateEngine());
+		post(ADMINTUTOREDIT_PATH, (req, res) -> adminedittutorController.adminUpdateTutor(req, res),
+				new HandlebarsTemplateEngine());
 
 		post(COMPLETETUTOR_PATH, (req, res) -> tutordashController.completeProfile(req, res));
 

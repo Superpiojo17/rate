@@ -31,14 +31,13 @@ public class EditTutorController {
 		HashMap<String, Object> model = new HashMap<>();
 		UserDao user = DaoManager.getInstance().getUserDao();
 		TutorDao tutor = DaoManager.getInstance().getTutorDao();
-		DaoManager cdao = DaoManager.getInstance();
+		CourseDao cd = DaoManager.getInstance().getCourseDao();
 
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 
 		model.put("current_user", u);
 
-		CourseDao cd = cdao.getCourseDao();
 		List<Course> courses = cd.allByProfessor(u.getId());
 		model.put("courses", courses);
 

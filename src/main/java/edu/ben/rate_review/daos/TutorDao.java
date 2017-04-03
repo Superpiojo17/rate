@@ -413,7 +413,7 @@ public class TutorDao implements Dao<Tutor> {
 	 * @return
 	 */
 	public List<Tutor> listAllTutors() {
-		final String SELECT = "SELECT * FROM " + TUTOR_TABLE;
+		final String SELECT = "SELECT * FROM " + TUTOR_TABLE + " ORDER BY user_id_student DESC";
 
 		List<Tutor> tutors = null;
 		try {
@@ -545,6 +545,26 @@ public class TutorDao implements Dao<Tutor> {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
 			ps.setString(1, tutor.getCourse());
+			ps.setLong(2, tutor.getId());
+
+			// Runs query
+			ps.execute();
+			return tutor;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+	}
+
+	public TutorForm adminUpdateTutor(TutorForm tutor) {
+		String sql = "UPDATE " + TUTOR_TABLE + " SET user_id_student = ? WHERE tutor_relationship_id = ? LIMIT 1";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setLong(1, tutor.getStudent_id());
 			ps.setLong(2, tutor.getId());
 
 			// Runs query

@@ -22,6 +22,7 @@ public class User implements AuthorizationUser {
 	private boolean active;
 	private String department;
 	private String profilepic;
+	private boolean adminEditFlag;
 
 	public Long getId() {
 		return id;
@@ -198,6 +199,15 @@ public class User implements AuthorizationUser {
 			return ud.getPicString(id);
 		}
 		return "logo";
+	}
+
+	public boolean isAdminEditFlag() {
+		if (role == 4) {
+			adminEditFlag = true;
+		} else {
+			adminEditFlag = false;
+		}
+		return adminEditFlag;
 	}
 
 }

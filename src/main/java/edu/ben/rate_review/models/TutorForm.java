@@ -1,5 +1,8 @@
 package edu.ben.rate_review.models;
 
+import edu.ben.rate_review.daos.DaoManager;
+import edu.ben.rate_review.daos.UserDao;
+
 public class TutorForm {
 	private long id;
 	private String Course;
@@ -8,6 +11,8 @@ public class TutorForm {
 	private String tutor_first_name;
 	private String tutor_last_name;
 	private String tutor_email;
+	private String subject;
+	private String professor_name;
 	
 	
 	public TutorForm() {
@@ -84,6 +89,21 @@ public class TutorForm {
 
 	public void setTutor_email(String tutor_email) {
 		this.tutor_email = tutor_email;
+	}
+	
+	public String getSubject() {
+		DaoManager dao = DaoManager.getInstance();
+		UserDao ud = dao.getUserDao();
+		User user = ud.findById(professor_id);
+		return user.getMajor();
+	}
+
+	public String getProfessor_name() {
+		DaoManager dao = DaoManager.getInstance();
+		UserDao ud = dao.getUserDao();
+		User user = ud.findById(professor_id);
+		String professor_name = user.getFirst_name() + ", " + user.getLast_name();
+		return professor_name;
 	}
 
 }
