@@ -1,5 +1,6 @@
 package edu.ben.rate_review.controller.user;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -23,7 +24,7 @@ import spark.Session;
 
 public class AdminEditTutorController {
 
-	public ModelAndView showDeptTutorsPage(Request req, Response res) throws AuthException {
+	public ModelAndView showDeptTutorsPage(Request req, Response res) throws AuthException, SQLException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 
@@ -35,18 +36,61 @@ public class AdminEditTutorController {
 
 		DaoManager dao = DaoManager.getInstance();
 		TutorDao td = dao.getTutorDao();
-		List<Tutor> tutors = new ArrayList<Tutor>();
-		List<Tutor> Temptutors = td.listAllTutors();
-		for (int i = 0; i < Temptutors.size(); i++) {
+		if (req.queryParams("search") != null) {
+			String searchType = "name";
+			String searchTxt = req.queryParams("search").toLowerCase();
+			// Make sure you
+			if (searchType.equalsIgnoreCase("email") || searchType.equalsIgnoreCase("name") && searchTxt.length() > 0) {
+				// valid search, can proceed
+				List<Tutor> tutors = new ArrayList<Tutor>();
+				List<Tutor> searchTutors = td.search(searchType, searchTxt);
+				for (int i = 0; i < searchTutors.size(); i++) {
 
-			if (Temptutors.get(i).getSubject().equalsIgnoreCase(department)) {
+					if (searchTutors.get(i).getSubject().equalsIgnoreCase(department)) {
 
-				tutors.add(Temptutors.get(i));
+						tutors.add(searchTutors.get(i));
+
+					}
+				}
+				if (tutors.size() > 0) {
+					model.put("tutors", tutors);
+				} else {
+					List<Tutor> Temptutors = td.search(searchType, searchTxt);
+					model.put("searchmessage", "No Results Found");
+					model.put("tutors", Temptutors);
+				}
+			} else {
+				List<Tutor> tutors = new ArrayList<Tutor>();
+				List<Tutor> Temptutors = td.listAllTutors();
+
+				for (int i = 0; i < Temptutors.size(); i++) {
+
+					if (Temptutors.get(i).getSubject().equalsIgnoreCase(department)) {
+
+						tutors.add(Temptutors.get(i));
+
+					}
+				}
+				model.put("searchmessage", "Cannot leave search bar blank");
+				model.put("tutors", tutors);
 
 			}
-		}
+		} else {
+			List<Tutor> tutors = new ArrayList<Tutor>();
+			List<Tutor> Temptutors = td.listAllTutors();
 
-		model.put("tutors", tutors);
+			for (int i = 0; i < Temptutors.size(); i++) {
+
+				if (Temptutors.get(i).getSubject().equalsIgnoreCase(department)) {
+
+					tutors.add(Temptutors.get(i));
+
+				}
+			}
+
+			model.put("tutors", tutors);
+
+		}
 
 		model.put("department", department);
 

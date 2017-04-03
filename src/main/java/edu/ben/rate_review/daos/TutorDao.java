@@ -433,7 +433,7 @@ public class TutorDao implements Dao<Tutor> {
 		}
 		return tutors;
 	}
-	
+
 	/**
 	 * Selects all tutors from the table
 	 * 
@@ -603,6 +603,37 @@ public class TutorDao implements Dao<Tutor> {
 		}
 		// If you don't find a model
 		return null;
+	}
+
+	public List<Tutor> search(String sType, String sText) throws SQLException {
+		String NAME_SQL = "SELECT * FROM tutors WHERE course_name LIKE '%" + sText + "%'";
+
+		List<Tutor> tutors = null;
+
+		try {
+
+			PreparedStatement ps = conn.prepareStatement(NAME_SQL);
+			// both have 1 parameter
+			// ps.setString(1, sText);
+			//
+			// // Only name search has a second parameter
+			// if (sType.equals("name")) {
+			// ps.setString(2, sText);
+			// }
+			tutors = new ArrayList<Tutor>();
+			try {
+				ResultSet rs = ps.executeQuery(NAME_SQL);
+				while (rs.next()) {
+					tutors.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return tutors;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return tutors;
 	}
 
 	@Override

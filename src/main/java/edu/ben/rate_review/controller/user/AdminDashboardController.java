@@ -89,7 +89,7 @@ public class AdminDashboardController {
 					model.put("users", tempUsers);
 				} else {
 					List<User> users = ud.search(searchType, searchTxt);
-					model.put("error", "No Results Found");
+					model.put("error", "No Results Found"); 
 					model.put("users", users);
 				}
 			} else {
