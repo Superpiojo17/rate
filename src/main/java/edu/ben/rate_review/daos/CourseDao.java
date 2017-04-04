@@ -10,6 +10,7 @@ import java.util.List;
 
 import edu.ben.rate_review.models.Course;
 import edu.ben.rate_review.models.CourseForm;
+import edu.ben.rate_review.models.User;
 
 public class CourseDao {
 
@@ -145,7 +146,7 @@ public class CourseDao {
 		}
 		return courses;
 	}
-	
+
 	/**
 	 * 
 	 * @return all users from the database.
@@ -160,6 +161,38 @@ public class CourseDao {
 			courses = new ArrayList<Course>();
 			try {
 				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					courses.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return courses;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return courses;
+	}
+
+	public List<Course> search(String sType, String sText) throws SQLException {
+		String NAME_SQL = "SELECT * FROM courses WHERE course_name LIKE '%" + sText + "%' OR course_number LIKE '%"
+				+ sText + "%'";
+
+		List<Course> courses = null;
+
+		try {
+
+			PreparedStatement ps = conn.prepareStatement(NAME_SQL);
+			// both have 1 parameter
+			// ps.setString(1, sText);
+			//
+			// // Only name search has a second parameter
+			// if (sType.equals("name")) {
+			// ps.setString(2, sText);
+			// }
+			courses = new ArrayList<Course>();
+			try {
+				ResultSet rs = ps.executeQuery(NAME_SQL);
 				while (rs.next()) {
 					courses.add(mapRow(rs));
 				}

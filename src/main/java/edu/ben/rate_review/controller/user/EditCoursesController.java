@@ -1,5 +1,6 @@
 package edu.ben.rate_review.controller.user;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,7 +22,7 @@ import spark.Response;
 import spark.Session;
 
 public class EditCoursesController {
-	public ModelAndView showDeptCoursesPage(Request req, Response res) throws AuthException {
+	public ModelAndView showDeptCoursesPage(Request req, Response res) throws AuthException, SQLException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 
@@ -33,9 +34,35 @@ public class EditCoursesController {
 
 		DaoManager dao = DaoManager.getInstance();
 		CourseDao cd = dao.getCourseDao();
-		List<Course> courses = cd.allByDept(department);
+		if (req.queryParams("search") != null) {
 
-		model.put("courses", courses);
+			String searchType = "name";
+			String searchTxt = req.queryParams("search").toLowerCase();
+
+			// Make sure you
+			if (searchType.equalsIgnoreCase("email") || searchType.equalsIgnoreCase("name") && searchTxt.length() > 0) {
+				// valid search, can proceed
+				List<Course> tempCourses = cd.search(searchType, searchTxt);
+				if (tempCourses.size() > 0) {
+
+					model.put("courses", tempCourses);
+				} else {
+					List<Course> courses = cd.search(searchType, searchTxt);
+					model.put("error", "No Results Found");
+					model.put("courses", courses);
+				}
+			} else {
+
+				List<Course> courses = cd.allByDept(department);
+				model.put("error", "Cannot leave search bar blank");
+				model.put("courses", courses);
+			}
+		} else {
+
+			List<Course> courses = cd.allByDept(department);
+
+			model.put("courses", courses);
+		}
 
 		model.put("department", department);
 
