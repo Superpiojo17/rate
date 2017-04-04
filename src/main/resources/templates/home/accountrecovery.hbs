@@ -15,11 +15,50 @@
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 	</head>
+	<style>
+#banner {
+    padding: 8em 0 6em 0;
+    background-color: #1E2832;
+    color: rgba(255, 255, 255, 0.75);
+    background-attachment: fixed;
+    background-image: url(images/overlay.png), url(../../images/goodwin.jpg);
+    background-size: cover;
+    text-align: center;
+}	
+	
+	
+.wrapper.style2 textarea {
+	background-color: #f2f2f2;
+	border-color: #63c1ae;
+	color: #63c1ae
+}
+
+.wrapper.style2 {
+	background-color: rgba(0, 0, 0, 0.2);
+	border-color: #63c1ae;
+}
+
+.wrapper.style2 input[type="text"], .wrapper.style2 input[type="password"],
+	.wrapper.style2 input[type="email"], .wrapper.style2 select, .wrapper.style2 textarea
+	{
+	background-color: #f2f2f2;
+	border-color: #1ab188;
+	color: inherit;
+}
+#banner input, #banner select, #banner textarea {
+    color: #1e2832;
+}
+
+div.relative {
+	position: relative;
+	left: 240px;
+}
+	</style>
 	<body>
 
 		<!-- Header -->
 			<header id="header">
-				<h1><a href="index.html">Account Recovery</a></h1>
+				<h1><a href="/">RateAndReview</a></h1>
 				<a href="#nav">Menu</a>
 			</header>
 
@@ -36,10 +75,11 @@
 					
 				</ul>
 			</nav>
-
-		<!-- Main -->
-			<section id="main" class="wrapper">
-				<div class="container">
+<!-- Banner -->
+	<section id="banner">
+		<!-- Four -->
+		<section id="four" class="wrapper style2 special">
+			<div class="inner">
 
 					<header class="major special">
 						<h2>ACCOUNT RECOVERY</h2>
@@ -59,12 +99,12 @@
 						</ul>
 					</form>
 					</div>
-					</header>
+				</header>
 
 				
 				</div>
 			</section>
-
+</section>
 		<!-- Footer -->
 	<footer id="footer">
 		<div class="inner">

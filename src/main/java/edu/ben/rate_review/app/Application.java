@@ -15,6 +15,7 @@ import edu.ben.rate_review.authorization.AuthException;
 import edu.ben.rate_review.controller.home.AboutUsController;
 import edu.ben.rate_review.controller.home.ActivationController;
 import edu.ben.rate_review.controller.home.AdminController;
+import edu.ben.rate_review.controller.home.AnalysisController;
 import edu.ben.rate_review.controller.home.ChangePasswordController;
 import edu.ben.rate_review.controller.home.ConfirmationController;
 import edu.ben.rate_review.controller.home.ContactUsController;
@@ -85,6 +86,8 @@ public class Application {
 	private static UnauthorizedController unauthorizedController = new UnauthorizedController();
 	private static EditAnnouncementController editannouncementController = new EditAnnouncementController();
 	private static EditTutorController edittutorController = new EditTutorController();
+	
+	private static AnalysisController analysisController = new AnalysisController();
 
 	// match up paths
 	public static String DOMAIN = "localhost:3000";
@@ -157,6 +160,7 @@ public class Application {
 	public static String ADMINADDTUTORLANDING_PATH = "/adminAddTutorlanding/:department";
 	public static String ADMINADDTUTOR_PATH = "/adminaddtutor/:id";
 	public static String ADMINDELETETUTOR_PATH = "/admindeletetutor/:id";
+	public static String ANALYSIS_PATH = "/analysis";
 
 	public static void main(String[] args) throws Exception {
 
@@ -379,8 +383,6 @@ public class Application {
 
 		get(ABOUTUS_PATH, (req, res) -> aboutusController.showAboutUsPage(req, res), new HandlebarsTemplateEngine());
 
-		get(CONTACTUS_PATH, (req, res) -> contactusController.showContactUsPage(req, res),
-				new HandlebarsTemplateEngine());
 		get(DEPARTMENTS_PATH, (req, res) -> departmentsController.showDepartmentsPage(req, res),
 				new HandlebarsTemplateEngine());
 		get(TUTORS_PATH, (req, res) -> tutorsController.showTutorsPage(req, res), new HandlebarsTemplateEngine());
@@ -412,7 +414,6 @@ public class Application {
 				new HandlebarsTemplateEngine());
 		post(ACTIVATION_PATH, (req, res) -> activationController.activate(req, res));
 		post(DEACTIVATION_PATH, (req, res) -> activationController.deactivate(req, res));
-
 		post(ALLUSERS_PATH, (req, res) -> admindashController.massRegister(req, res));
 
 		// Account Recoveryso
@@ -446,5 +447,13 @@ public class Application {
 		put(USER_PATH + "/:id", (req, res) -> usersController.update(req, res));
 		// Delete the User
 		delete(USER_PATH + "/:id", (req, res) -> usersController.destroy(req, res));
+		
+		//analysis page 
+		get(ANALYSIS_PATH, (req, res) -> analysisController.showAnalysisPage(req, res), new HandlebarsTemplateEngine());
+				
+		// contact US
+		get(CONTACTUS_PATH, (req, res) -> contactusController.showContactUsPage(req, res),
+						new HandlebarsTemplateEngine());
+		post(CONTACTUS_PATH, (req, res) -> ContactUsController.contact(req, res));
 	}
 }

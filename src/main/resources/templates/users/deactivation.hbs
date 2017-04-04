@@ -6,7 +6,7 @@
 -->
 <html>
 <head>
-<title>Contact Us</title>
+<title> Account Deactivation</title>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -14,43 +14,54 @@
 <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 </head>
-<style> 
-input[type=text2] {
-    width: 130px;
-    float: right;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    background-color: #1e2832;
-    background-image: url('searchicon.png');
-    background-position: 10px 10px; 
-    background-repeat: no-repeat;
-   padding: 5px 20px 5px 40px;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out;
+<style>
+
+
+#banner {
+    padding: 8em 0 6em 0;
+    background-color: #1E2832;
+    color: rgba(255, 255, 255, 0.75);
+    background-attachment: fixed;
+    background-image: url(images/overlay.png), url(../../images/droneView.jpg);
+    background-size: cover;
+    text-align: center;
 }
-input, textarea {
-    color: #f2f2f2;
+
+
+
+.wrapper.style2 textarea {
+	background-color: #1e2832;
+	border-color: #63c1ae;
+	color: #63c1ae
 }
-input[type=text2]:focus {
-    width:30%;
-    
+
+.wrapper.style2 {
+    background-color: rgba(7, 9, 12, 0.62);
+	border-color: #63c1ae;
+}
+
+.wrapper.style2 input[type="text"], .wrapper.style2 input[type="password"],
+	.wrapper.style2 input[type="email"], .wrapper.style2 select, .wrapper.style2 textarea
+	{
+	background-color: #1e2832;
+	border-color: #1ab188;
+	color: inherit;
+}
+
+div.relative {
+	position: relative;
+	left: 240px;
 }
 </style>
-<body>
+<body class="landing">
 
 	<!-- Header -->
-	<header id="header" class="skel-layers-fixed">
+	<header id="header">
 		<h1>
-			<a href="index.html">G.O.O.D</a>
+			<a href="/">RateAndReview</a>
 		</h1>
 		<a href="#nav">Menu</a>
-		<form>
-  <input type="text2" name="search"  placeholder="Search..">
-</form>
 	</header>
-
 	<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
@@ -64,37 +75,46 @@ input[type=text2]:focus {
 				</ul>
 			</nav>
 
-	<!-- Main -->
-	<section id="main" class="wrapper">
-		<div class="container">
-
-			<section id="four" class="wrapper style2 special">
-				<div class="inner">
-					<header class="major narrow">
-						<h2>Deactivate your account</h2>
-						<p>If you would like to deactivate your </p>
-					</header>
-					<form action="/deactivation" method="post">
+	<!-- Banner -->
+	<section id="banner">
+		<!-- Four -->
+		<section id="four" class="wrapper style2 special">
+			<div class="inner">
+				<header class="major narrow">
+					<h2>Deactivate your account</h2>
+					<p>Enter Credentials to proceed</p>
+				</header>
+				<form action="#" method="POST">
+					<div class="left">
 						<div class="container 75%">
-							<div class="row uniform 50%">
+							<div class="row uniform 30%">
 								<div class="6u 12u$(xsmall)">
 									<input name="email" placeholder="Email" type="text" />
 								</div>
 								<div class="6u$ 12u$(xsmall)">
 									<input name="password" placeholder="Password" type="password" />
 								</div>
+
 							</div>
 						</div>
-						<ul class="actions">
+					</div>
+					<ul class="actions">
 							<li><input type="submit" class="special" value="Submit" /></li>
 							<li><input type="reset" class="alt" value="Reset" /></li>
 						</ul>
-					</form>
-				</div>
-			</section>
+					
+
+				</form>
+			</div>
+		</section>
+
+	</section>
 
 
-		<!-- Footer -->
+
+
+
+	<!-- Footer -->
 	<footer id="footer">
 		<div class="inner">
 			<ul class="icons">

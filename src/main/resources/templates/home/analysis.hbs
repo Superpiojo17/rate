@@ -1,0 +1,391 @@
+<!DOCTYPE HTML>
+<!--
+	Retrospect by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>Rating Analysis</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="/assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
+  
+  	<style>
+  #banner {
+	padding: 5em 5 1em 0;
+	background-color: #1E2832;
+	color: rgba(255, 255, 255, 0.75);
+	background-attachment: fixed;
+	background-image: url(images/analysis2.jpg),
+		url(../../images/education.jpg);
+	background-size: cover;
+	text-align: center;
+	color: #07090c;
+}
+#header > h1 a {
+    font-size: .7em;
+}
+	.reviewcolumns {
+    	-webkit-column-count: 2; /* Chrome, Safari, Opera */
+    	-moz-column-count: 2; /* Firefox */
+    	column-count: 2;
+	}
+	</style>
+	
+	
+	
+	
+	 <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+ 
+
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart', 'bar']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      
+      google.charts.setOnLoadCallback(draw_prof_by_rating);
+      
+       google.charts.setOnLoadCallback(draw_dep_rating);
+       google.charts.setOnLoadCallback(draw_appointment_rate);
+        google.charts.setOnLoadCallback(draw_app_per_tutor);
+       google.charts.setOnLoadCallback(draw_overall_professors_rating);
+        google.charts.setOnLoadCallback(draw_dep_avg);
+    
+    <!--
+    
+-->
+
+function draw_prof_by_rating() {
+
+      var data = google.visualization.arrayToDataTable([
+        ['Rating', 'Average ratings', { role: 'style' }],
+        ['Freshamn', 4.2, 'blue'],
+        ['Sophomore', 4.8, 'orange'],
+        ['Junior', 3, 'red'],
+        ['Senior', 4.12,'green'],
+       // ['Philadelphia, PA', 1526000]
+      ]);
+
+      var options = {
+        title: 'Professor rating - by year',
+        chartArea: {width: '50%'},
+        
+         'width':600,
+                       'height':300,
+                     <!--  colors: ['#3B3EAC'],-->
+        
+        hAxis: {
+       title: 'Average Student Ratings',
+          minValue: 0
+        },
+        vAxis: {
+          title: 'Year in school'
+        }
+      };
+
+      var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+
+      chart.draw(data, options);
+    }
+    
+     function draw_overall_professors_rating() {
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Appointments Per Tutor'],
+          ['Rating Average Achieved',     4.03],
+          ['Total Rating', (5-4.03)],
+          
+        ]);
+
+        var options = {
+          title: 'Percentage of appointments per tutor',
+          pieHole: 0.4,
+         'width':700,
+         'height':300,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('chart_overall_prof'));
+        chart.draw(data, options);
+      }
+    
+    <!-- The rating of professor by department bellow-->
+    
+    function draw_dep_rating() {
+
+      var data = google.visualization.arrayToDataTable([
+        ['Rating', '# of ratings', { role: 'style' }],
+        ['Computer Science', 4, '#76A7FA'],
+        ['Biology', 10, 'gold'],
+        ['Chemistry', 6, 'purple'],
+        ['Physics', 2,'silver'],
+      
+      ]);
+
+      var options = {
+        title: 'Professor rating - by departments',
+        chartArea: {width: '50%'},
+        
+         'width':600,
+         'height':300,
+               
+        
+        hAxis: {
+       title: '# Of Completed Ratings',
+          minValue: 0
+        },
+        vAxis: {
+          title: 'Department'
+        }
+      };
+
+      var chart = new google.visualization.BarChart(document.getElementById('chart_dep'));
+
+      chart.draw(data, options);
+    }
+   
+      
+     function draw_dep_avg() {
+        var data = new google.visualization.arrayToDataTable([
+          ['Department', 'Average Rating', { role: "style" }],
+          ["Computer Science", 4.4, "#76A7FA"],
+          ["Biology", 4, "gold"],
+          ["Chemistry", 4.5, "purple"],
+          ["Physics", 2, "silver"],
+        ]);
+
+        var options = {
+          title: 'Average rating per department',
+          width: 500,
+           'height':300,
+          legend: { position: 'none' },
+          
+          axes: {
+            x: {
+              0: { side: 'bottom', label: 'Departments'} // bottom x-axis.
+            }
+          },
+          bar: { groupWidth: "20%" }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('chart_dep_avg'));
+        // Convert the Classic options to Material options.
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      };
+    
+      function draw_appointment_rate() {
+
+      var data = google.visualization.arrayToDataTable([
+        ['Rating', '# of appointments', { role: 'style' }],
+        ['Approved', 23, '#00FF00'],
+        ['Denied', 19, '#FF0000'],
+        ['Cancelled', 11, 'silver'],
+        ['Rescheduled', 16,'#00FFFF'],
+      
+      ]);
+
+      var options = {
+        title: 'Tutor Appointment Status Ratings',
+        chartArea: {width: '50%'},
+        
+         'width':600,
+         'height':300,
+                   
+        
+        hAxis: {
+       title: 'Status Ratings',
+          minValue: 0
+        },
+        vAxis: {
+          title: 'Appointment Status'
+        }
+      };
+
+      var chart = new google.visualization.BarChart(document.getElementById('chart_app_rate'));
+
+      chart.draw(data, options);
+    }
+    
+     function draw_app_per_tutor() {
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Appointments Per Tutor'],
+          ['Joel Sandoval', 11],
+          ['Mike Webb',      9],
+          ['Frank Rooks',  6],
+          ['Becca Thomas', 7],
+          ['Raza Mohammed',  3]
+        ]);
+
+        var options = {
+          title: 'Percentage of appointments per tutor',
+          pieHole: 0.4,
+         'width':700,
+         'height':300,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('chart_app_tutor'));
+        chart.draw(data, options);
+      }
+    <!-- ////////////////////keep the methods below for reference when i get the controller working -->
+<!--
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function draw_objective() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Rating');
+        data.addColumn('number', 'Reviews');
+        data.addRows([
+          ['Computer Science', 3],
+          ['Mathematics', 1],
+          ['Business', 4],
+          ['Chemistry', 3],
+          ['Biology', 2]
+        ]);
+
+        var options = {'title':'Course objectives were met: 2.6/5',
+                       'width':600,
+                       'height':300,
+                       colors: ['#3B3EAC'],
+                         hAxis: {
+       title: 'Average Student Ratings',
+          minValue: 0
+        },
+        vAxis: {
+          title: 'Year in school'
+        }};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_objective'));
+        chart.draw(data, options);
+      }
+       -->
+    </script>
+	
+	
+	</head>
+	<body class="landing">
+	
+
+	<!-- Header -->
+	<header id="header" class="skel-layers-fixed">
+		<h1>
+			<a href="/">RateAndReview</a>
+		</h1>
+		<a href="#nav">Menu</a>
+		
+	</header>
+
+			<!-- Nav -->
+			<nav id="nav" class="visible">
+				<ul class="links">
+					<li><a href="/">Home</a></li>
+					<li><a href="/studentdashboard">My Account</a></li>
+					<li><a href="/studentdashboard">View Apointments</a></li>
+					<li><a href="/studentdashboard">View Reviews</a></li>
+					<li><a href="/contactus">Contact Us</a></li>
+					<li><a href="/deactivation">De-Activate</a></li>
+					<li><a href="/login">Log Out</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+			
+			<!-- Banner -->
+	<section id="banner">
+
+		<h2>
+			<i class="fa fa-bar-chart" aria-hidden="true"></i>
+		</h2>
+
+		<!-- <i class="icon fa-diamond"></i> -->
+		<h1>Analytics</h1>
+		<p>Derived from the site utilization</p>
+		
+	</section>
+			
+			
+</div>
+			
+		<!-- Main -->
+			<section id="main" class="wrapper">
+					<div class="leftcol"> 
+		
+
+					<!-- Text -->
+						<section>
+						
+						
+							<header class="major special">
+									
+								<!--
+									<select style="max-width:15%;" name="course_name" id="course_name" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+										{{#each unique_courses}}
+										<option value="http://localhost:3000/professor/{{prof_id}}/{{this}}">{{this}}</option>
+										<!-- <span class="glyphicon glyphicon-triangle-bottom"></span> -->
+										{{/each}}
+										
+									</select>
+									-->
+									<table>
+									  <tr>
+									    <th><h3>Professor Rating - By Year</h3></th>
+									   
+									  </tr>
+									  <tr>
+									    <td><div id="chart_div"></div></td>
+									     <td><div id ="chart_overall_prof"></div></td>
+									  
+									  </tr><tr>
+									    <th><h3>Professor Rating - BY Department</h3></th>
+									  
+									  </tr><tr>
+									  	<td><div id="chart_dep" ></div> </td>
+									  	
+									  	<td><div id="chart_dep_avg" ></div> </td>
+									  </tr><tr>
+									  	<th><h3>Tutor Ratings</h3></th>
+									  </tr><tr>
+									  	<td><div id="chart_app_rate" ></div></td>
+									
+										<td><div id="chart_app_tutor" ></div></td>
+									  </tr>
+									 </table>
+									
+							</header>
+							
+							<!-- <a href="/studentdashboard" class="button alt">Return To Student Dashboard</a> -->
+							 
+							<!-- <span class="stars">{{overall}}</span> -->
+								
+							<hr />
+							</section>
+					
+				<!--	 -->
+								
+			<div class="reviewcolumns" align="center">
+
+		
+		<!--	<ul> <div id="chart_objective" ></div> </ul> 
+			
+		-->	
+				</div>	
+			
+
+		<!-- Scripts -->
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="/assets/js/main.js"></script>
+ 			<script src="/assets/js/jquery.min.js"></script>
+ 			<script src="/assets/js/ratingjquery.js"></script>
+	</body>
+</html>
