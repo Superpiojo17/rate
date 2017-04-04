@@ -164,6 +164,8 @@ public class AdminEditTutorController {
 
 		String department = tempTutor.getSubject();
 
+		model.put("department", tempTutor.getSubject());
+
 		tutor.setStudent_id(Long.parseLong(req.queryParams("selecttutor")));
 		tutor.setId(id);
 		tutor.setCourse(tempTutor.getCourse_name());
@@ -276,6 +278,7 @@ public class AdminEditTutorController {
 		HashMap<String, Object> model = new HashMap<>();
 		CourseDao cDao = DaoManager.getInstance().getCourseDao();
 		TutorDao tDao = DaoManager.getInstance().getTutorDao();
+		UserDao uDao = DaoManager.getInstance().getUserDao();
 
 		// Get the :id from the url
 		String idString = req.params("id");
@@ -290,6 +293,16 @@ public class AdminEditTutorController {
 
 		tutor.setCourse_name(course.getCourse_name());
 		tutor.setStudent_id(Long.parseLong(req.queryParams("selecttutor")));
+
+		User user = uDao.findById(Long.parseLong(req.queryParams("selecttutor")));
+
+		if (user.getRole() == 4) {
+
+			uDao.updateRole(user, 3);
+			model.put("message",
+					"You have turned " + user.getFirst_name() + " " + user.getLast_name() + " into a tutor");
+		}
+
 		tutor.setProfessor_id(course.getProfessor_id());
 
 		tDao.save(tutor);
@@ -321,6 +334,9 @@ public class AdminEditTutorController {
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
+
+		model.put("error", "You have assigned " + user.getFirst_name() + " " + user.getLast_name()
+				+ " to " + tutor.getCourse_name());
 
 		return new ModelAndView(model, "users/tutors.hbs");
 
@@ -359,6 +375,9 @@ public class AdminEditTutorController {
 
 			}
 		}
+
+		model.put("message", "You have removed " + tempTutor.getTutor_first_name() + " "
+				+ tempTutor.getTutor_last_name() + " from " + tempTutor.getCourse_name());
 
 		model.put("tutors", tutors);
 
