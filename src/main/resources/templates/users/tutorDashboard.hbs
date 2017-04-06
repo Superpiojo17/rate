@@ -121,7 +121,8 @@
 					</tr>
 				</thead>
 				<tbody>
-						{{#each approved_appointments}}		
+						{{#each approved_appointments}}	
+						{{#unless appointment_past}}	
 							<tr>
 							<form action="/tutordashboard" method="post">
 								<td class="shrink">{{student_firstname}} {{student_lastname}}</td>
@@ -138,7 +139,8 @@
 									<button style="margin-top: 5px" title="send revised appointment" class="btn btn-primary" type="submit" name="reschedule_appointment_id" value="{{appointment_id}}"><span class="glyphicon glyphicon-arrow-right fa-2x"></span></button>
 								<//td>
 							</form>
-							</tr>			
+							</tr>	
+						{{/unless}}		
 						{{/each}}
 				</tbody>
 					<tfoot>
@@ -188,6 +190,7 @@
 				<tbody>
 						{{#each appointments}}
 						{{#unless tutor_has_responded}}
+						{{#unless appointment_past}}
 							<tr>
 							<form action="/tutordashboard" method="post">
 							<td class="shrink">{{student_firstname}} {{student_lastname}}</td>
@@ -201,6 +204,7 @@
 							</td>
 							</form>
 							</tr>
+						{{/unless}}
 						{{/unless}}
 						{{/each}}
 				</tbody>

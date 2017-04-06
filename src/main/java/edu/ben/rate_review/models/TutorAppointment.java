@@ -17,11 +17,20 @@ public class TutorAppointment {
 	private String tutor_message;
 	private boolean tutor_has_responded;
 	private boolean appointment_status;
+	private boolean appointment_past;
 	private String student_firstname;
 	private String student_lastname;
 	private String tutor_firstname;
 	private String tutor_lastname;
 	
+	public boolean isAppointment_past() {
+		return appointment_past;
+	}
+
+	public void setAppointment_past(boolean appointment_past) {
+		this.appointment_past = appointment_past;
+	}
+
 	public long getAppointment_id() {
 		return appointment_id;
 	}

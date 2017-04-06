@@ -11,6 +11,7 @@ import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.TutorDao;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.email.Email;
+import edu.ben.rate_review.formatTime.CheckIfExpired;
 import edu.ben.rate_review.formatTime.FormatTimeAndDate;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.Course;
@@ -45,6 +46,7 @@ public class TutorDashboardController {
 		model.put("announcements", announcements);
 
 		TutorDao tDao = adao.getTutorDao();
+		flagPastAppointments(tDao);
 
 		List<TutorAppointment> appointments = tDao.listAllTutorAppointments(u.getId());
 		List<TutorAppointment> unviewed_appointments = tDao.listAllUnviewedTutorAppointments(u.getId());
@@ -81,6 +83,26 @@ public class TutorDashboardController {
 
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/tutorDashboard.hbs");
+	}
+
+	/**
+	 * Flips flag in database if an appointment has past
+	 * 
+	 * @param tDao
+	 */
+	private void flagPastAppointments(TutorDao tDao) {
+		List<TutorAppointment> appointments = tDao.listAllAppointments();
+		for (int i = 0; i < appointments.size(); i++) {
+			if (!CheckIfExpired.checkDateCurrentOrUpcoming(appointments.get(i).getDate())) {
+				tDao.setAppointmentPast(appointments.get(i));
+
+				if (appointments.get(i).getAppointment_status() && appointments.get(i).isAppointment_past()) {
+					// appointment past, review appointment
+				} else if (!appointments.get(i).getTutor_has_responded() && appointments.get(i).isAppointment_past()) {
+					// appointment past, tutor did not respond
+				}
+			}
+		}
 	}
 
 	public ModelAndView showCompleteProfileTutorPage(Request req, Response res) throws AuthException {

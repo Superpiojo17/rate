@@ -12,6 +12,7 @@ import edu.ben.rate_review.daos.ProfessorReviewDao;
 import edu.ben.rate_review.daos.TutorDao;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.email.Email;
+import edu.ben.rate_review.formatTime.CheckIfExpired;
 import edu.ben.rate_review.formatTime.FormatTimeAndDate;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.Course;
@@ -82,6 +83,7 @@ public class StudentDashboardController {
 		model.put("current_user", u);
 
 		TutorDao tDao = dao.getTutorDao();
+		flagPastAppointments(tDao);
 		List<Tutor> tutors = tDao.listAllTutors();
 		model.put("tutors", tutors);
 
@@ -167,7 +169,7 @@ public class StudentDashboardController {
 			User tutor = uDao.findById(Long.parseLong(req.queryParams("tutor_id")));
 
 			if (!req.queryParams("date").isEmpty() && !req.queryParams("time").isEmpty()) {
-				
+
 				// only allows appointments between 8AM and 8PM
 				if (FormatTimeAndDate.checkValidDateTime(req.queryParams("time"), req.queryParams("date"))) {
 
@@ -273,6 +275,26 @@ public class StudentDashboardController {
 
 		res.redirect(Application.STUDENTDASHBOARD_PATH);
 		return "";
+	}
+
+	/**
+	 * Flips flag in database if an appointment has past
+	 * 
+	 * @param tDao
+	 */
+	private void flagPastAppointments(TutorDao tDao) {
+		List<TutorAppointment> appointments = tDao.listAllAppointments();
+		for (int i = 0; i < appointments.size(); i++) {
+			if (!CheckIfExpired.checkDateCurrentOrUpcoming(appointments.get(i).getDate())) {
+				tDao.setAppointmentPast(appointments.get(i));
+
+				if (appointments.get(i).getAppointment_status() && appointments.get(i).isAppointment_past()) {
+					// appointment past, review appointment
+				} else if (!appointments.get(i).getTutor_has_responded() && appointments.get(i).isAppointment_past()) {
+					// appointment past, tutor did not respond
+				}
+			}
+		}
 	}
 
 }
