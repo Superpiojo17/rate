@@ -18,8 +18,15 @@ public class CoursesToReview {
 	private String professor_email;
 	private boolean course_reviewed;
 	private boolean disable_edit;
+	private boolean semester_past;
 
-	
+	public boolean isSemester_past() {
+		return semester_past;
+	}
+
+	public void setSemester_past(boolean semester_past) {
+		this.semester_past = semester_past;
+	}
 
 	public boolean getDisable_edit() {
 		return disable_edit;

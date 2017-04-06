@@ -48,6 +48,8 @@ public class StudentDashboardController {
 
 		DaoManager dao = DaoManager.getInstance();
 		ProfessorReviewDao reviewDao = dao.getProfessorReviewDao();
+		flagPastCourses(reviewDao);
+
 		List<CoursesToReview> coursesNotReviewed = reviewDao.allStudentCoursesNotReviewed(u);
 		List<CoursesToReview> coursesReviewed = reviewDao.allStudentCoursesReviewed(u);
 
@@ -293,6 +295,21 @@ public class StudentDashboardController {
 				} else if (!appointments.get(i).getTutor_has_responded() && appointments.get(i).isAppointment_past()) {
 					// appointment past, tutor did not respond
 				}
+			}
+		}
+	}
+
+	/**
+	 * Flips a flag which will mark that a course's review window has past
+	 * 
+	 * @param reviewDao
+	 */
+	private void flagPastCourses(ProfessorReviewDao reviewDao) {
+		List<CoursesToReview> courses = reviewDao.listAllCourses();
+		for (int i = 0; i < courses.size(); i++) {
+			if (!CheckIfExpired.checkSemesterCurrentOrUpcoming(courses.get(i).getSemester(),
+					courses.get(i).getYear())) {
+				reviewDao.setSemesterPast(courses.get(i));
 			}
 		}
 	}

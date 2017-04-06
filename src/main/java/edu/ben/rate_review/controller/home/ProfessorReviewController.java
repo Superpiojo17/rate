@@ -53,16 +53,14 @@ public class ProfessorReviewController {
 
 		// checks that the person accessing the page has access
 		if (user_id != -1 && user_id == course.getStudent_id()) {
-			if (reviewDao.findReview(course.getCourse_id()) == null
-					|| !reviewDao.findReview(course.getCourse_id()).getComment_removed()) {
+			if (reviewDao.findReview(course.getCourse_id()) == null) {
 
 				// create the form object, put it into request
 				model.put("course", course);
 
 				ProfessorReview review = reviewDao.findReview(course_id);
 
-				// if user wants to edit a review, this will pre-populate old
-				// ratings
+				// if user wants to edit a review, this will pre-populate
 				if (review != null) {
 					model.put("review", review);
 					handlePrePopulatedButtons(model, review);
@@ -73,11 +71,32 @@ public class ProfessorReviewController {
 				List<Announcement> announcements = ad.all();
 				model.put("announcements", announcements);
 			} else {
-				// if student tries to access page directly through url after
-				// getting their comment removed
-				res.redirect("/authorizationerror");
+				if (reviewDao.findByCourseId(course.getCourse_id()).getDisable_edit()
+						|| reviewDao.findByCourseId(course.getCourse_id()).isSemester_past()) {
+					model.put("edit_is_disabled", true);
+					System.out.println("cannot edit");
+				} else {
+					model.put("edit_is_disabled", false);
+					System.out.println("can edit");
+				}
+				model.put("course", course);
+				ProfessorReview review = reviewDao.findReview(course_id);
+
+				// if user wants to edit a review, this will pre-populate
+				if (review != null) {
+					model.put("review", review);
+					handlePrePopulatedButtons(model, review);
+				}
+
+				DaoManager dao = DaoManager.getInstance();
+				AnnouncementDao ad = dao.getAnnouncementDao();
+				List<Announcement> announcements = ad.all();
+				model.put("announcements", announcements);
+
 			}
-		} else {
+		} else
+
+		{
 			res.redirect("/authorizationerror");
 		}
 		// Tell the server to render the index page with the data in the model

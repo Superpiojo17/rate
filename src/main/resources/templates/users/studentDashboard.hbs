@@ -133,6 +133,7 @@
 									</thead>
 									<tbody>
 									{{#each courses_not_reviewed}}
+									{{#unless semester_past}}
 										<tr>
 											<td>{{professor_first_name}} {{professor_last_name}}</td>
 											<td>
@@ -141,6 +142,7 @@
 											<td>{{semester}}</td>
 											<td>{{year}}</td>
 										</tr>
+									{{/unless}}
 									{{/each}}
 									</tbody>
 									<tfoot>
@@ -177,9 +179,21 @@
 									{{#each courses_reviewed}}
 										<tr>
 											<td class="shrink" align="center">
+											{{#unless semester_past}}
 											{{#unless disable_edit}}
 											<a title="edit your review" href="/reviewprofessor/{{course_id}}/review" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span></a>
 											{{/unless}}
+											{{/unless}}
+											
+											{{#if semester_past}}
+												<a title="cannot - past" href="/reviewprofessor/{{course_id}}/review" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
+											{{/if}}
+											{{#unless semester_past}}
+											{{#if disable_edit}}
+												<a title="cannot - disabled" href="/reviewprofessor/{{course_id}}/review" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
+											{{/if}}
+											{{/unless}}
+											
 											</td>
 											<td>{{professor_first_name}} {{professor_last_name}}</td>
 											<td>{{course_name}}</td>

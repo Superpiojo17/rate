@@ -39,7 +39,8 @@ public class ProfessorReviewDao {
 	 */
 	public List<CoursesToReview> allStudentCoursesNotReviewed(User user) {
 		final String SELECT = "SELECT * FROM " + COURSES_TABLE + " WHERE users_user_id = " + user.getId()
-				+ " AND course_reviewed = 0 AND semester = 'Spring' AND year = 2017";
+				+ " AND course_reviewed = 0";
+		// AND semester = 'Spring' AND year = 2017";
 		List<CoursesToReview> courses = null;
 		try {
 			PreparedStatement ps = conn.prepareStatement(SELECT);
@@ -67,7 +68,35 @@ public class ProfessorReviewDao {
 	 */
 	public List<CoursesToReview> allStudentCoursesReviewed(User user) {
 		final String SELECT = "SELECT * FROM " + COURSES_TABLE + " WHERE users_user_id = " + user.getId()
-				+ " AND course_reviewed = 1 AND semester = 'Spring' AND year = 2017";
+				+ " AND course_reviewed = 1";
+		// AND semester = 'Spring' AND year = 2017";
+		List<CoursesToReview> courses = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			courses = new ArrayList<CoursesToReview>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					courses.add(courseMapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return courses;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return courses;
+	}
+
+	/**
+	 * Lists all courses to be reviewed
+	 * 
+	 * @return
+	 */
+	public List<CoursesToReview> listAllCourses() {
+		final String SELECT = "SELECT * FROM " + COURSES_TABLE;
+
 		List<CoursesToReview> courses = null;
 		try {
 			PreparedStatement ps = conn.prepareStatement(SELECT);
@@ -126,6 +155,7 @@ public class ProfessorReviewDao {
 		tmp.setProfessor_last_name(rs.getString("professor_last_name"));
 		tmp.setProfessor_email(rs.getString("professor_email"));
 		tmp.setDisable_edit(rs.getBoolean("disable_edit"));
+		tmp.setSemester_past(rs.getBoolean("semester_past"));
 
 		return tmp;
 	}
@@ -528,6 +558,27 @@ public class ProfessorReviewDao {
 		// Declare SQL template query
 
 		String sql = "UPDATE " + COURSES_TABLE + " SET disable_edit = 1 WHERE course_id = ? LIMIT 1";
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setLong(1, course.getCourse_id());
+			// Runs query
+			ps.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Flips a flag that a course occurred in a previous semester
+	 * 
+	 * @param course
+	 */
+	public void setSemesterPast(CoursesToReview course) {
+		// Declare SQL template query
+
+		String sql = "UPDATE " + COURSES_TABLE + " SET semester_past = 1 WHERE course_id = ? LIMIT 1";
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
