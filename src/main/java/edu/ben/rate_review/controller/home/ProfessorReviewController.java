@@ -74,10 +74,8 @@ public class ProfessorReviewController {
 				if (reviewDao.findByCourseId(course.getCourse_id()).getDisable_edit()
 						|| reviewDao.findByCourseId(course.getCourse_id()).isSemester_past()) {
 					model.put("edit_is_disabled", true);
-					System.out.println("cannot edit");
 				} else {
 					model.put("edit_is_disabled", false);
-					System.out.println("can edit");
 				}
 				model.put("course", course);
 				ProfessorReview review = reviewDao.findReview(course_id);
