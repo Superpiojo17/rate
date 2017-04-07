@@ -79,6 +79,10 @@ public class ProfessorReviewController {
 				}
 				model.put("course", course);
 				ProfessorReview review = reviewDao.findReview(course_id);
+				
+				UserDao uDao = DaoManager.getInstance().getUserDao();
+				User professor = uDao.findByEmail(review.getProfessor_email());
+				model.put("professor_id", professor.getId());
 
 				// if user wants to edit a review, this will pre-populate
 				if (review != null) {

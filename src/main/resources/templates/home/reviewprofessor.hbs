@@ -42,12 +42,15 @@
 					<header class="major special">
 						<h2>{{course.professor_first_name}} {{course.professor_last_name}}</h2>
 						<h3>{{course.course_name}} <label id="semester_year"> {{course.semester}} {{course.year}}</label></h3>
+						{{#if edit_is_disabled}}
+						<h5><a href="/professor/{{professor_id}}/{{course.course_name}}">View ratings for this course</a></h5>
+						{{/if}}
 					</header>
 
 					<!-- Text -->
-			{{#if edit_is_disabled}}
+			{{#unless edit_is_disabled}}
 			<form action="/reviewprofessor/{{course.course_id}}/review" method="post">		
-			{{/if}}
+			{{/unless}}
 			<div class="table-wrapper">
 				<table class="alt">
 					<thead>
@@ -329,11 +332,12 @@
 				<textarea name="comment"">{{review.comment}}</textarea> <br>
 				<input type="submit" value="Submit">
 				{{/unless}}
-				{{#if edit_is_disabled}}
-					{{review.comment}}
-				
+			{{#if edit_is_disabled}}
+				{{review.comment}}
+			{{/if}}
+			{{#unless edit_is_disabled}}
 			</form>
-				{{/if}}
+			{{/unless}}
 			</div>
 			</div>
 		</section>
