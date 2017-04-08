@@ -39,6 +39,7 @@ import edu.ben.rate_review.controller.user.EditCoursesController;
 import edu.ben.rate_review.controller.user.EditTutorController;
 import edu.ben.rate_review.controller.user.EditUserController;
 import edu.ben.rate_review.controller.user.FacultyDashboardController;
+import edu.ben.rate_review.controller.user.MyAccountController;
 import edu.ben.rate_review.controller.user.StudentDashboardController;
 import edu.ben.rate_review.controller.user.TutorDashboardController;
 import edu.ben.rate_review.controller.user.UnauthorizedController;
@@ -88,6 +89,7 @@ public class Application {
 	private static EditTutorController edittutorController = new EditTutorController();
 	
 	private static AnalysisController analysisController = new AnalysisController();
+	private static MyAccountController myAccountController = new MyAccountController();
 
 	// match up paths
 	public static String DOMAIN = "localhost:3000";
@@ -161,6 +163,7 @@ public class Application {
 	public static String ADMINADDTUTOR_PATH = "/adminaddtutor/:id";
 	public static String ADMINDELETETUTOR_PATH = "/admindeletetutor/:id";
 	public static String ANALYSIS_PATH = "/analysis";
+	public static String MYACCOUNT_PATH = "/myaccount";
 
 	public static void main(String[] args) throws Exception {
 
@@ -455,5 +458,9 @@ public class Application {
 		get(CONTACTUS_PATH, (req, res) -> contactusController.showContactUsPage(req, res),
 						new HandlebarsTemplateEngine());
 		post(CONTACTUS_PATH, (req, res) -> ContactUsController.contact(req, res));
+		
+		//my account
+		get(MYACCOUNT_PATH, (req, res) -> myAccountController.showMyAccountPage(req, res),
+				new HandlebarsTemplateEngine());
 	}
 }
