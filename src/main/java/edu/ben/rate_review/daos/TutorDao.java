@@ -304,8 +304,8 @@ public class TutorDao implements Dao<Tutor> {
 	 * @return
 	 */
 	public List<TutorAppointment> listAllUnviewedTutorAppointments(Long tutor_id) {
-		final String SELECT = "SELECT * FROM " + APPOINTMENT_TABLE + " WHERE tutor_has_responded = 0 AND tutor_id = "
-				+ tutor_id;
+		final String SELECT = "SELECT * FROM " + APPOINTMENT_TABLE + " WHERE tutor_has_responded = 0 "
+				+ "AND appointment_past = 0 AND tutor_id = " + tutor_id;
 
 		List<TutorAppointment> appointments = null;
 		try {
