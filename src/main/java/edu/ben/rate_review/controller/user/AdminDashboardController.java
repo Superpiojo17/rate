@@ -130,8 +130,14 @@ public class AdminDashboardController {
 		HashMap<String, Object> model = new HashMap<>();
 
 		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 		User u = (User) session.attribute("current_user");
-		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
@@ -147,8 +153,14 @@ public class AdminDashboardController {
 		HashMap<String, Object> model = new HashMap<>();
 
 		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 		User u = (User) session.attribute("current_user");
-		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
@@ -164,8 +176,14 @@ public class AdminDashboardController {
 		HashMap<String, Object> model = new HashMap<>();
 
 		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 		User u = (User) session.attribute("current_user");
-		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 
 		DaoManager dao = DaoManager.getInstance();
 		AnnouncementDao ad = dao.getAnnouncementDao();

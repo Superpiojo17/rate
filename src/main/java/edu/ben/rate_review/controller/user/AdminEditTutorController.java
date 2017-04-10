@@ -28,11 +28,17 @@ public class AdminEditTutorController {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 
-		String department = req.params("department");
-
 		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 		User u = (User) session.attribute("current_user");
-		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+
+		String department = req.params("department");
 
 		DaoManager dao = DaoManager.getInstance();
 		TutorDao td = dao.getTutorDao();
@@ -106,13 +112,18 @@ public class AdminEditTutorController {
 	public ModelAndView showAdminEditTutorPage(Request req, Response res) throws AuthException {
 		HashMap<String, Object> model = new HashMap<>();
 
-		UserDao user = DaoManager.getInstance().getUserDao();
-		TutorDao tutor = DaoManager.getInstance().getTutorDao();
-
 		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 		User u = (User) session.attribute("current_user");
 
-		model.put("current_user", u);
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+
+		UserDao user = DaoManager.getInstance().getUserDao();
+		TutorDao tutor = DaoManager.getInstance().getTutorDao();
 
 		// Get the :id from the url
 		String idString = req.params("id");
@@ -152,7 +163,14 @@ public class AdminEditTutorController {
 		HashMap<String, Object> model = new HashMap<>();
 
 		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 		User u = (User) session.attribute("current_user");
+
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 
 		String idString = req.params("id");
 		long id = Long.parseLong(idString);
@@ -215,8 +233,14 @@ public class AdminEditTutorController {
 		HashMap<String, Object> model = new HashMap<>();
 
 		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 		User u = (User) session.attribute("current_user");
-		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 
 		DaoManager adao = DaoManager.getInstance();
 		CourseDao cDao = DaoManager.getInstance().getCourseDao();
@@ -240,8 +264,14 @@ public class AdminEditTutorController {
 		HashMap<String, Object> model = new HashMap<>();
 
 		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 		User u = (User) session.attribute("current_user");
-		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 
 		DaoManager adao = DaoManager.getInstance();
 		CourseDao cDao = DaoManager.getInstance().getCourseDao();
@@ -335,8 +365,8 @@ public class AdminEditTutorController {
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
 
-		model.put("error", "You have assigned " + user.getFirst_name() + " " + user.getLast_name()
-				+ " to " + tutor.getCourse_name());
+		model.put("error", "You have assigned " + user.getFirst_name() + " " + user.getLast_name() + " to "
+				+ tutor.getCourse_name());
 
 		return new ModelAndView(model, "users/tutors.hbs");
 
