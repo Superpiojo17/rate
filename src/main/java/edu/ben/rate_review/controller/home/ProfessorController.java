@@ -117,7 +117,7 @@ public class ProfessorController {
 		String idString = req.queryParams("course_flagged");
 		String display = req.params("display");
 		long id = Long.parseLong(idString);
-		
+
 		// sets the comment flagged in the database
 		ProfessorReview review = reviewDao.findReview(id);
 		reviewDao.setCommentFlagged(review);
@@ -247,5 +247,38 @@ public class ProfessorController {
 
 		// overall score of professor
 		model.put("overall", df.format(overall));
+	}
+
+	/**
+	 * Pass in a professor user and this will return their overall rating
+	 * 
+	 * @param prof
+	 * @return
+	 */
+	public static double getOverall(User prof) {
+		if (prof.getRole() == 2) {
+			ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
+			DecimalFormat df = new DecimalFormat("0.#");
+
+			double objectives = reviewDao.avgRate(prof, "rate_objectives", "overview");
+			double organized = reviewDao.avgRate(prof, "rate_organized", "overview");
+			double challenging = reviewDao.avgRate(prof, "rate_challenging", "overview");
+			double outside = reviewDao.avgRate(prof, "rate_outside_work", "overview");
+			double pace = reviewDao.avgRate(prof, "rate_pace", "overview");
+			double assignments = reviewDao.avgRate(prof, "rate_assignments", "overview");
+			double grade_fairly = reviewDao.avgRate(prof, "rate_grade_fairly", "overview");
+			double grade_time = reviewDao.avgRate(prof, "rate_grade_time", "overview");
+			double accessibility = reviewDao.avgRate(prof, "rate_accessibility", "overview");
+			double knowledge = reviewDao.avgRate(prof, "rate_knowledge", "overview");
+			double career = reviewDao.avgRate(prof, "rate_career_development", "overview");
+
+			double overall = ((objectives + organized + challenging + outside + pace + assignments + grade_fairly
+					+ grade_time + accessibility + knowledge + career) / 11);
+
+			return Double.parseDouble(df.format(overall));
+		} else {
+			return 0;
+		}
+
 	}
 }
