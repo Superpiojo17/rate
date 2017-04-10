@@ -33,8 +33,14 @@ public class AdminDashboardController {
 		HashMap<String, Object> model = new HashMap<>();
 
 		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 		User u = (User) session.attribute("current_user");
-		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 
 		model.put("current_user", u);
 
@@ -70,8 +76,14 @@ public class AdminDashboardController {
 		HashMap<String, Object> model = new HashMap<>();
 
 		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 		User u = (User) session.attribute("current_user");
-		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 
 		DaoManager dao = DaoManager.getInstance();
 		UserDao ud = dao.getUserDao();
@@ -89,7 +101,7 @@ public class AdminDashboardController {
 					model.put("users", tempUsers);
 				} else {
 					List<User> users = ud.search(searchType, searchTxt);
-					model.put("error", "No Results Found"); 
+					model.put("error", "No Results Found");
 					model.put("users", users);
 				}
 			} else {
@@ -129,7 +141,7 @@ public class AdminDashboardController {
 		// Render the page
 		return new ModelAndView(model, "users/courseslanding.hbs");
 	}
-	
+
 	public ModelAndView showManageTutorsLandingPage(Request req, Response res) throws AuthException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
