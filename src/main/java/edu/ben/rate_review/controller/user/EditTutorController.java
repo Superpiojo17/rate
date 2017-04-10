@@ -34,7 +34,14 @@ public class EditTutorController {
 		CourseDao cd = DaoManager.getInstance().getCourseDao();
 
 		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 		User u = (User) session.attribute("current_user");
+
+		if (u.getRole() != 2) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 
 		model.put("current_user", u);
 

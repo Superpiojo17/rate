@@ -29,6 +29,14 @@ public class EditUserController {
 		HashMap<String, Object> model = new HashMap<>();
 		UserDao user = DaoManager.getInstance().getUserDao();
 		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+		User us = (User) session.attribute("current_user");
+
+		if (us.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 
 		// Get the :id from the url
 		String idString = req.params("id");
