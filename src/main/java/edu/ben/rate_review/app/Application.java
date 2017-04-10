@@ -87,7 +87,7 @@ public class Application {
 	private static UnauthorizedController unauthorizedController = new UnauthorizedController();
 	private static EditAnnouncementController editannouncementController = new EditAnnouncementController();
 	private static EditTutorController edittutorController = new EditTutorController();
-	
+
 	private static AnalysisController analysisController = new AnalysisController();
 	private static MyAccountController myAccountController = new MyAccountController();
 
@@ -162,6 +162,7 @@ public class Application {
 	public static String ADMINDELETETUTOR_PATH = "/admindeletetutor/:id";
 	public static String ANALYSIS_PATH = "/analysis";
 	public static String MYACCOUNT_PATH = "/myaccount";
+	public static String LOGOUT_PATH = "/logout";
 
 	public static void main(String[] args) throws Exception {
 
@@ -228,6 +229,8 @@ public class Application {
 
 		get(ADMINADDTUTOR_PATH, (req, res) -> adminedittutorController.showAddTutorsPage(req, res),
 				new HandlebarsTemplateEngine());
+		
+		get(LOGOUT_PATH, (req, res) -> sessionsController.logout(req, res), new HandlebarsTemplateEngine());
 
 		get(ADMINADDTUTORLANDING_PATH, (req, res) -> adminedittutorController.showAddTutorsLandingPage(req, res),
 				new HandlebarsTemplateEngine());
@@ -448,16 +451,16 @@ public class Application {
 		put(USER_PATH + "/:id", (req, res) -> usersController.update(req, res));
 		// Delete the User
 		delete(USER_PATH + "/:id", (req, res) -> usersController.destroy(req, res));
-		
-		//analysis page 
+
+		// analysis page
 		get(ANALYSIS_PATH, (req, res) -> analysisController.showAnalysisPage(req, res), new HandlebarsTemplateEngine());
-				
+
 		// contact US
 		get(CONTACTUS_PATH, (req, res) -> contactusController.showContactUsPage(req, res),
-						new HandlebarsTemplateEngine());
+				new HandlebarsTemplateEngine());
 		post(CONTACTUS_PATH, (req, res) -> ContactUsController.contact(req, res));
-		
-		//my account
+
+		// my account
 		get(MYACCOUNT_PATH, (req, res) -> myAccountController.showMyAccountPage(req, res),
 				new HandlebarsTemplateEngine());
 	}

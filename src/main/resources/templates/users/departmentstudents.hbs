@@ -34,11 +34,13 @@
 					<li><a href="/facultydashboard">Home</a></li>
 					<li><a href="/register">My Account</a></li>
 					<li><a href="/alltutors/{{current_user.id}}">Manage Tutors</a></li>
-					<li><a href="/aboutus">View Apointments</a></li>
-					<li><a href="/aboutus">View Reviews</a></li>
+					<li><a href="/professor/{{current_user.id}}/overview">View Reviews</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
 					<li><a href="/deactivation">De-Activate</a></li>
-					<li><a href="/login">Log Out</a></li>
+					{{#if completeProfile }}
+					<li><a href="/completeprofileprof/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
+					{{/if}}
+					<li><a href="/logout">Log Out</a></li>
 					
 				</ul>
 			</nav>

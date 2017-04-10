@@ -1,5 +1,7 @@
 package edu.ben.rate_review.controller.session;
 
+import java.util.HashMap;
+
 import edu.ben.rate_review.app.Application;
 
 //import static spark.Spark.redirect;
@@ -14,6 +16,7 @@ import edu.ben.rate_review.models.User;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import spark.Session;
 
 public class SessionsController {
 
@@ -243,5 +246,16 @@ public class SessionsController {
 	 */
 	public boolean getValidateEmail(String email) {
 		return validateEmail(email);
+	}
+
+	public ModelAndView logout(Request req, Response res) {
+
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
+		req.session().removeAttribute("current_user");
+		return new ModelAndView(model, "home/home.hbs");
+
 	}
 }
