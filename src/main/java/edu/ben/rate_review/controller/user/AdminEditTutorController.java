@@ -38,6 +38,12 @@ public class AdminEditTutorController {
 			return new ModelAndView(model, "home/notauthorized.hbs");
 		}
 
+		if (u != null) {
+			if (u.getRole() == 1) {
+				model.put("user_admin", true);
+			}
+		}
+
 		String department = req.params("department");
 
 		DaoManager dao = DaoManager.getInstance();

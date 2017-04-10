@@ -39,6 +39,11 @@ public class EditCoursesController {
 		}
 		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
 
+		if (u != null) {
+			if (u.getRole() == 1) {
+				model.put("user_admin", true);
+			}
+		}
 		DaoManager dao = DaoManager.getInstance();
 		CourseDao cd = dao.getCourseDao();
 		if (req.queryParams("search") != null) {

@@ -42,36 +42,39 @@ public class EditTutorController {
 		if (u.getRole() != 2) {
 			return new ModelAndView(model, "home/notauthorized.hbs");
 		}
+		if (u != null) {
+			if (u.getRole() == 2) {
+				model.put("user_professor", true);
+			}
+		}
 
-		model.put("current_user", u);
+	model.put("current_user",u);
 
-		List<Course> courses = cd.allByProfessor(u.getId());
-		model.put("courses", courses);
+	List<Course> courses = cd.allByProfessor(u.getId());model.put("courses",courses);
 
-		// Get the :id from the url
-		String idString = req.params("id");
+	// Get the :id from the url
+	String idString = req.params("id");
 
-		// Convert to Long
-		// /user/uh-oh/edit for example
-		long id = Long.parseLong(idString);
+	// Convert to Long
+	// /user/uh-oh/edit for example
+	long id = Long.parseLong(idString);
 
-		Tutor t = tutor.findById(id);
+	Tutor t = tutor.findById(id);
 
-		model.put("tutor_form", new TutorForm(t));
+	model.put("tutor_form",new TutorForm(t));
 
-		// Authorize that the user can edit the user selected
-		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+	// Authorize that the user can edit the user selected
+	// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
 
-		// create the form object, put it into request
-		// model.put("tutor_form", new TutorForm(u));
+	// create the form object, put it into request
+	// model.put("tutor_form", new TutorForm(u));
 
-		DaoManager adao = DaoManager.getInstance();
-		AnnouncementDao ad = adao.getAnnouncementDao();
-		List<Announcement> announcements = ad.all();
-		model.put("announcements", announcements);
+	DaoManager adao = DaoManager.getInstance();
+	AnnouncementDao ad = adao.getAnnouncementDao();
+	List<Announcement> announcements = ad.all();model.put("announcements",announcements);
 
-		// Render the page
-		return new ModelAndView(model, "users/edittutor.hbs");
+	// Render the page
+	return new ModelAndView(model,"users/edittutor.hbs");
 	}
 
 	public ModelAndView updateTutor(Request req, Response res) {

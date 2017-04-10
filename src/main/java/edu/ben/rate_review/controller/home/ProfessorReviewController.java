@@ -38,6 +38,22 @@ public class ProfessorReviewController {
 		User user = (User) session.attribute("current_user");
 		long user_id = -1;
 
+		User u = (User) session.attribute("current_user");
+
+		if (u != null) {
+			if (u.getRole() == 1) {
+				model.put("user_admin", true);
+			} else if (u.getRole() == 2) {
+				model.put("user_professor", true);
+			} else if (u.getRole() == 3) {
+				model.put("user_tutor", true);
+			} else {
+				model.put("user_student", true);
+			}
+		} else {
+			model.put("user_null", true);
+		}
+
 		// if user is not logged in, will store -1 as user_id
 		if (user != null) {
 			user_id = user.getId();
@@ -79,7 +95,7 @@ public class ProfessorReviewController {
 				}
 				model.put("course", course);
 				ProfessorReview review = reviewDao.findReview(course_id);
-				
+
 				UserDao uDao = DaoManager.getInstance().getUserDao();
 				User professor = uDao.findByEmail(review.getProfessor_email());
 				model.put("professor_id", professor.getId());

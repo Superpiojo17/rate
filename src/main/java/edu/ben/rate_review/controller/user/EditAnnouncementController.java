@@ -35,6 +35,12 @@ public class EditAnnouncementController {
 			return new ModelAndView(model, "home/notauthorized.hbs");
 		}
 
+		if (u != null) {
+			if (u.getRole() == 1) {
+				model.put("user_admin", true);
+			}
+		}
+
 		AnnouncementDao announcement = DaoManager.getInstance().getAnnouncementDao();
 
 		// Get the :id from the url

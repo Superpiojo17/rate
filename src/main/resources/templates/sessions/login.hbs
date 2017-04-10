@@ -51,13 +51,42 @@
 			<nav id="nav">
 				<ul class="links">
 					<li><a href="/">Home</a></li>
-					<li><a href="/login">Log In</a></li>
-					<li><a href="/register">Register</a></li>
-					<li><a href="/departments">Departments</a></li>
-					<li><a href="/tutors">Tutors</a></li>
-					<li><a href="/contactus">Contact Us</a></li>
-					<li><a href="/aboutus">About Us</a></li>
 					
+					{{#if user_admin}}
+						<li><a href="/admindashboard">My Dashboard</a></li>
+					{{/if}}
+					{{#if user_professor}}
+						<li><a href="/facultydashboard">My Dashboard</a></li>
+					{{/if}}
+					{{#if user_tutor}}
+						<li><a href="/tutordashboard">My Dashboard</a></li>
+					{{/if}}
+					{{#if user_student}}
+						<li><a href="/studentdashboard">My Dashboard</a></li>
+					{{/if}}
+					
+					{{#if user_null}}
+						<li><a href="/login">Log In</a></li>
+						<li><a href="/register">Register</a></li>
+						<li><a href="/activation">Activate Account</a></li>
+						<li><a href="/accountrecovery">Forgot Password?</a></li>
+					{{/if}}
+					
+						<li><a href="/teacher">Browse Professors</a></li>
+					
+					{{#unless user_admin}}
+						<li><a href="/contactus">Contact Us</a></li>
+					{{/unless}}
+						<li><a href="/aboutus">About Us</a></li>
+						<li><a href="/faq">FAQ</a></li>
+					
+					{{#unless user_null}}
+					<!--
+						<li><a href="/changepassword">Change Password</a></li>
+						<li><a href="/deactivation">Deactivate Account</a></li>
+					-->
+						<li><a href="/logout">Log Out</a></li>
+					{{/unless}}
 				</ul>
 			</nav>
 
