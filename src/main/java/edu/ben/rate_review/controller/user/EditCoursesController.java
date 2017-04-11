@@ -29,9 +29,21 @@ public class EditCoursesController {
 		String department = req.params("department");
 
 		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 		User u = (User) session.attribute("current_user");
+
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
 
+		if (u != null) {
+			if (u.getRole() == 1) {
+				model.put("user_admin", true);
+			}
+		}
 		DaoManager dao = DaoManager.getInstance();
 		CourseDao cd = dao.getCourseDao();
 		if (req.queryParams("search") != null) {
@@ -81,7 +93,14 @@ public class EditCoursesController {
 		CourseDao course = DaoManager.getInstance().getCourseDao();
 
 		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 		User u = (User) session.attribute("current_user");
+
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 
 		// Get the :id from the url
 		String idString = req.params("id");
@@ -116,7 +135,14 @@ public class EditCoursesController {
 		CourseDao course = DaoManager.getInstance().getCourseDao();
 
 		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 		User u = (User) session.attribute("current_user");
+
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 
 		// Get the :id from the url
 		String department = req.params("department");

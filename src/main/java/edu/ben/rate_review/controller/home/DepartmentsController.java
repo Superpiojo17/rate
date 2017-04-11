@@ -28,7 +28,24 @@ public class DepartmentsController {
 		HashMap<String, Object> model = new HashMap<>();
 
 		UserDao uDao = DaoManager.getInstance().getUserDao();
+
 		Session session = req.session();
+		User u = (User) session.attribute("current_user");
+		
+		if (u != null){
+			if (u.getRole() == 1){
+				model.put("user_admin", true);
+			} else if (u.getRole() == 2){
+				model.put("user_professor", true);
+			} else if (u.getRole() == 3){
+				model.put("user_tutor", true);
+			} else {
+				model.put("user_student", true);
+			}
+		} else {
+			model.put("user_null", true);
+		}
+		
 		// List list = uDao.sortByMajor("CMSC");
 
 		List<User> prof = uDao.all();

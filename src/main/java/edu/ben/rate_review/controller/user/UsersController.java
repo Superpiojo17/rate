@@ -16,12 +16,13 @@ import edu.ben.rate_review.policy.AuthPolicyManager;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import spark.Session;
 
 /**
  * UsersController is a controller used to process requests from the end-user
  */
 public class UsersController implements BaseController {
-	
+
 	private static Logger logger = LoggerFactory.getLogger(UsersController.class);
 
 	/**
@@ -30,12 +31,28 @@ public class UsersController implements BaseController {
 	public ModelAndView index(Request req, Response res) {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
-		 
+
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
+
+		if (u != null) {
+			if (u.getRole() == 1) {
+				model.put("user_admin", true);
+			} else if (u.getRole() == 2) {
+				model.put("user_professor", true);
+			} else if (u.getRole() == 3) {
+				model.put("user_tutor", true);
+			} else {
+				model.put("user_student", true);
+			}
+		} else {
+			model.put("user_null", true);
+		}
 		// Using a Dao
-        DaoManager dao = DaoManager.getInstance();
-        UserDao ud = dao.getUserDao();
-        List<User> users = ud.all();
-        ud.close();
+		DaoManager dao = DaoManager.getInstance();
+		UserDao ud = dao.getUserDao();
+		List<User> users = ud.all();
+		ud.close();
 
 		// Attach users to an attribute to be accessed in the view
 		model.put("users", users);
@@ -50,6 +67,22 @@ public class UsersController implements BaseController {
 	public ModelAndView newEntity(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
 
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
+
+		if (u != null) {
+			if (u.getRole() == 1) {
+				model.put("user_admin", true);
+			} else if (u.getRole() == 2) {
+				model.put("user_professor", true);
+			} else if (u.getRole() == 3) {
+				model.put("user_tutor", true);
+			} else {
+				model.put("user_student", true);
+			}
+		} else {
+			model.put("user_null", true);
+		}
 		model.put("user_id", req.params("id"));
 
 		return new ModelAndView(model, "users/new.hbs");
@@ -84,6 +117,23 @@ public class UsersController implements BaseController {
 	public ModelAndView edit(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
 
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
+
+		if (u != null) {
+			if (u.getRole() == 1) {
+				model.put("user_admin", true);
+			} else if (u.getRole() == 2) {
+				model.put("user_professor", true);
+			} else if (u.getRole() == 3) {
+				model.put("user_tutor", true);
+			} else {
+				model.put("user_student", true);
+			}
+		} else {
+			model.put("user_null", true);
+		}
+
 		model.put("user_id", req.params("id"));
 
 		return new ModelAndView(model, "users/edit.hbs");
@@ -94,7 +144,7 @@ public class UsersController implements BaseController {
 	 *
 	 * @param req
 	 * @param res
-	 * @throws AuthException 
+	 * @throws AuthException
 	 */
 	public String update(Request req, Response res) throws AuthException {
 		AuthPolicyManager.getInstance().getUserPolicy().edit(new User());

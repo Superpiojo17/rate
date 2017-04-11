@@ -29,6 +29,20 @@ public class EditUserController {
 		HashMap<String, Object> model = new HashMap<>();
 		UserDao user = DaoManager.getInstance().getUserDao();
 		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+		User us = (User) session.attribute("current_user");
+
+		if (us.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+
+		if (us != null) {
+			if (us.getRole() == 1) {
+				model.put("user_admin", true);
+			}
+		}
 
 		// Get the :id from the url
 		String idString = req.params("id");
@@ -185,7 +199,6 @@ public class EditUserController {
 		UserDao userD = DaoManager.getInstance().getUserDao();
 		// Get user if ID is valid
 		User u = userD.findById(id);
-
 
 		model.put("error", "You updated " + user.getFirst_name() + " " + user.getLast_name() + "'s account");
 

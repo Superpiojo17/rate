@@ -54,12 +54,42 @@
 	<nav id="nav"  class="visible">
 	<ul class="links">
 					<li><a href="/">Home</a></li>
-					<li><a href="/login">Log In</a></li>
-					<li><a href="/register">Register</a></li>
-					<li><a href="/contactus">Contact Us</a></li>
-					<li><a href="/aboutus">About Us</a></li>
-					<li><a href="/teacher">Browse Reviews</a></li>
-					<li><a href="/accountrecovery">Forgot Password?</a></li>
+					
+					{{#if user_admin}}
+						<li><a href="/admindashboard">My Dashboard</a></li>
+					{{/if}}
+					{{#if user_professor}}
+						<li><a href="/facultydashboard">My Dashboard</a></li>
+					{{/if}}
+					{{#if user_tutor}}
+						<li><a href="/tutordashboard">My Dashboard</a></li>
+					{{/if}}
+					{{#if user_student}}
+						<li><a href="/studentdashboard">My Dashboard</a></li>
+					{{/if}}
+					
+					{{#if user_null}}
+						<li><a href="/login">Log In</a></li>
+						<li><a href="/register">Register</a></li>
+						<li><a href="/activation">Activate Account</a></li>
+						<li><a href="/accountrecovery">Forgot Password?</a></li>
+					{{/if}}
+					
+						<li><a href="/teacher">Browse Professors</a></li>
+					
+					{{#unless user_admin}}
+						<li><a href="/contactus">Contact Us</a></li>
+					{{/unless}}
+						<li><a href="/aboutus">About Us</a></li>
+						<li><a href="/faq">FAQ</a></li>
+					
+					{{#unless user_null}}
+					<!--
+						<li><a href="/changepassword">Change Password</a></li>
+						<li><a href="/deactivation">Deactivate Account</a></li>
+					-->
+						<li><a href="/logout">Log Out</a></li>
+					{{/unless}}
 					
 					
 				</ul>
@@ -74,7 +104,7 @@
 		</h2>
 
 		<!-- <i class="icon fa-diamond"></i> -->
-		<h2>Browse Teachers</h2>
+		<h2>Browse Professors</h2>
 
 	</section>
 
@@ -130,7 +160,7 @@
 
 
 		<p>View all the registered professors.</p>
-		<p>Click on the professors name to go to their overview page.</p>
+		<p>Click on the professor's name to go to their ratings page.</p>
 		&ensp;
   <br/>
   <form action="/teacher" method="GET">
@@ -170,8 +200,12 @@
 								</button>
 						</a></th>
 
-						<th class="text-left"><a href="javascript:SortTable(4,'T');"
+						<th class="text-left"><a href="javascript:SortTable(3,'T');"
 							class="btn btn-default">Department
+								</button>
+						</a></th>
+						<th class="text-left"><a href="javascript:SortTable(4,'N');"
+							class="btn btn-default">Overall Rating
 								</button>
 						</a></th>
 
@@ -193,7 +227,7 @@
 
 						<td class="shrink">{{major}}</td>
 
-
+<td class="shrink">{{overall}}</td>
 
 
 

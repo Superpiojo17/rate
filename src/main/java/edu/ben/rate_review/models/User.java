@@ -1,6 +1,7 @@
 package edu.ben.rate_review.models;
 
 import edu.ben.rate_review.authorization.AuthorizationUser;
+import edu.ben.rate_review.controller.home.ProfessorController;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.encryption.SecurePassword;
@@ -22,6 +23,7 @@ public class User implements AuthorizationUser {
 	private boolean active;
 	private String department;
 	private String profilepic;
+	private double overall;
 	private boolean adminEditFlag;
 
 	public Long getId() {
@@ -208,6 +210,14 @@ public class User implements AuthorizationUser {
 			adminEditFlag = false;
 		}
 		return adminEditFlag;
+	}
+
+	public double getOverall() {
+		DaoManager dao = DaoManager.getInstance();
+		UserDao ud = dao.getUserDao();
+		User user = ud.findById(id);
+		ProfessorController profController = new ProfessorController();
+		return profController.getOverall(user);
 	}
 
 }

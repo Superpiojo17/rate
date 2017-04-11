@@ -24,8 +24,24 @@ public class EditAnnouncementController {
 	public ModelAndView showEditAnnouncementPage(Request req, Response res) throws AuthException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
-		AnnouncementDao announcement = DaoManager.getInstance().getAnnouncementDao();
+
 		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+		User u = (User) session.attribute("current_user");
+
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+
+		if (u != null) {
+			if (u.getRole() == 1) {
+				model.put("user_admin", true);
+			}
+		}
+
+		AnnouncementDao announcement = DaoManager.getInstance().getAnnouncementDao();
 
 		// Get the :id from the url
 		String idString = req.params("id");
@@ -58,6 +74,14 @@ public class EditAnnouncementController {
 		HashMap<String, Object> model = new HashMap<>();
 		AnnouncementDao announcement = DaoManager.getInstance().getAnnouncementDao();
 		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+		User u = (User) session.attribute("current_user");
+
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 
 		// Authorize that the user can edit the user selected
 		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
@@ -145,7 +169,6 @@ public class EditAnnouncementController {
 		String idString = req.params("id");
 		long id = Long.parseLong(idString);
 		AnnouncementDao announcementDao = DaoManager.getInstance().getAnnouncementDao();
-		
 
 		model.put("error", "You have deleted an event");
 

@@ -24,6 +24,7 @@ public class UserPolicy extends AuthorizationPolicy<User> {
 
 	public void showAdminDashboardPage() throws AuthException {
 		if (currentUser() == null) {
+			currentUser().getRole();
 			deny("You must be logged in to access this page");
 		}
 		if (!currentUser().hasRole(AuthorizationUser.ADMIN)) {
@@ -32,10 +33,8 @@ public class UserPolicy extends AuthorizationPolicy<User> {
 	}
 
 	public void showFacultyDashboardPage() throws AuthException {
-		if (currentUser() == null) {
-			deny("You must be logged in to access this page");
-		}
-		if (!currentUser().hasRole(AuthorizationUser.PROFESSOR)) {
+		
+		if (currentUser() == null || !currentUser().hasRole(AuthorizationUser.PROFESSOR)) {
 			deny("You are not authorized to be here!");
 		}
 	}

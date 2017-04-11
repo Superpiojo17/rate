@@ -78,17 +78,41 @@ header {
 
 			
 		<!-- Nav -->
-			<nav id="nav">
+			<nav id="nav"  class="visible">
 				<ul class="links">
 					<li><a href="/">Home</a></li>
-					<li><a href="/login">Log In</a></li>
-					<li><a href="/register">Register</a></li>
-					<li><a href="/contactus">Contact Us</a></li>
-					<li><a href="/aboutus">About Us</a></li>
-					<li><a href="/teacher">Browse Reviews</a></li>
-					<li><a href="/accountrecovery">Forgot Password?</a></li>
 					
+					{{#if user_admin}}
+						<li><a href="/admindashboard">My Dashboard</a></li>
+					{{/if}}
+					{{#if user_professor}}
+						<li><a href="/facultydashboard">My Dashboard</a></li>
+					{{/if}}
+					{{#if user_tutor}}
+						<li><a href="/tutordashboard">My Dashboard</a></li>
+					{{/if}}
+					{{#if user_student}}
+						<li><a href="/studentdashboard">My Dashboard</a></li>
+					{{/if}}
 					
+					{{#if user_null}}
+						<li><a href="/login">Log In</a></li>
+						<li><a href="/register">Register</a></li>
+						<li><a href="/activation">Activate Account</a></li>
+						<li><a href="/accountrecovery">Forgot Password?</a></li>
+					{{/if}}
+					
+						<li><a href="/teacher">Browse Professors</a></li>
+					
+					{{#unless user_admin}}
+						<li><a href="/contactus">Contact Us</a></li>
+					{{/unless}}
+						<li><a href="/aboutus">About Us</a></li>
+						<li><a href="/faq">FAQ</a></li>
+					
+					{{#unless user_null}}
+						<li><a href="/logout">Log Out</a></li>
+					{{/unless}}
 				</ul>
 			</nav>
 
@@ -102,55 +126,59 @@ header {
 		<!-- <i class="icon fa-diamond"></i> -->
 		<h2>F.A.Q</h2>
 		<p>Here to answer the questions you might have</p>
+		<!--
 		<ul class="actions">
 			<li><a href="#" class="button big special">Learn More Below</a></li>
 		</ul>
+		-->
 	</section>
 
 	<section class="cd-faq">
+	<!--
 		<ul class="cd-faq-categories">
 			<li><a class="selected" href="#basics">Basics</a></li>
 			<li><a href="#account">Account</a></li>
 			<li><a href="#privacy">Privacy</a></li>
 			<li><a href="#contact">Contact Us</a></li>
-
+	-->
 		</ul>
 		<!-- cd-faq-categories -->
 
 		<div class="cd-faq-items">
 			<ul id="basics" class="cd-faq-group">
 				<li class="cd-faq-title"><h2>Basics</h2></li>
+<!--
 				<li><a class="cd-faq-trigger" href="#0">How do I change my
 						password?</a>
 					<div class="cd-faq-content">
 						<p>On the Login/Sign Up page there is a link that states "
 							forgot my password ". If you follow the link you will recieve an
 							email that will allow you to reset your password.</p>
-					</div> <!-- cd-faq-content --></li>
+					</div>
+--> 
+					<!-- cd-faq-content --></li>
 
 				<li><a class="cd-faq-trigger" href="#0">How do I sign up?</a>
 					<div class="cd-faq-content">
-						<p>Utilizing the side menu navigate to login page. The second
-							tab states Sign Up, simply select the Sign Up tab and fill out
-							the required information</p>
+						<p>Using the menu bar to the left, you can select 'Register'
+						and fill out the form. After successfully completing the form,
+						you will be sent an email instructing you how to confirm your account.</p>
 					</div> <!-- cd-faq-content --></li>
 
 				<li><a class="cd-faq-trigger" href="#0">Can I remove a
-						post?</a>
+						comment?</a>
 					<div class="cd-faq-content">
-						<p>As for now posts can only be managed by our Administrators.
-							If you would like a post removed please contact them via the
-							portal on the bottom of the page.</p>
+						<p>Comments are managed by our Administrators. If the course is currently
+						running, you can edit or remove your comment by accessing it through your dashboard.</p>
 					</div> <!-- cd-faq-content --></li>
 
 				<li><a class="cd-faq-trigger" href="#0">How do reviews
 						work?</a>
 					<div class="cd-faq-content">
 						<p>The review system only grants access to registered student
-							that are currently attending a class that the professor is
-							teaching. A registered student can rate the professor as well as
-							the tutor assigned to the class. A student is only allowed one
-							review in order to keep a more accurate statistics.</p>
+							that are currently attending that specific course. As a registered
+							student, you can fill out review. Each student is allowed to rate each
+							course once, but while the semester is running, students can edit their reviews.</p>
 					</div> <!-- cd-faq-content --></li>
 			</ul>
 
@@ -161,33 +189,35 @@ header {
 				<li><a class="cd-faq-trigger" href="#0">How do I change my
 						password?</a>
 					<div class="cd-faq-content">
-						<p>>On the Login/Sign Up page there is a link that states "
-							forgot my password ". If you follow the link you will recieve an
-							email that will allow you to reset your password.</p>
+						<p>Using the side menu bar, follow the 'change password' link.
+						If you have forgotten your password and would like to recover your
+						account, follow the 'forgot password?' link.</p>
 					</div> <!-- cd-faq-content --></li>
 
-				<li><a class="cd-faq-trigger" href="#0">How do I delete my
+				<li><a class="cd-faq-trigger" href="#0">How do I deactivate my
 						account?</a>
 					<div class="cd-faq-content">
-						<p>Utilizing the side menu, while logged in you can select the
-							deactivate account link. There you will have verify your email
-							and password in order to deactivate the account.</p>
+						<p>You can deactivate your account by following the link on the 
+						side menu of your dashboard. If you later choose to reactivate your
+						account, you can do so by choosing 'active account' on the home screen</p>
 					</div> <!-- cd-faq-content --></li>
-
+<!--
 				<li><a class="cd-faq-trigger" href="#0">How do I change my
 						account settings?</a>
 					<div class="cd-faq-content">
 						<p>The user would be able to manage their own profile settings
 							via the user dashboard or by contacting the site admin.</p>
-					</div> <!-- cd-faq-content --></li>
+					</div>--><!-- cd-faq-content --></li>
 
+<!--
 				<li><a class="cd-faq-trigger" href="#0">I forgot my
 						password. How do I reset it?</a>
 					<div class="cd-faq-content">
 						<p>There are two options, option number one is to follow the
 							change password link on the login page, option number two is to
 							request a password recovery.</p>
-					</div> <!-- cd-faq-content --></li>
+					</div> -->
+					<!-- cd-faq-content --></li>
 			</ul>
 			<!-- cd-faq-group -->
 
@@ -198,26 +228,21 @@ header {
 				<li><a class="cd-faq-trigger" href="#0">Are the accounts
 						secure?</a>
 					<div class="cd-faq-content">
-						<p>The site account are secured via password and URL
-							encryptions. This allows for us to limit the users as well as
-							avoid spam and other security threats.</p>
+						<p>Yes. Passwords are encrypted using industry standard encryption tools.
+						Unauthorized access is prevented on all pages with sensative information.</p>
 					</div> <!-- cd-faq-content --></li>
 
 				<li><a class="cd-faq-trigger" href="#0">Can the professor
 						tell who left the review?</a>
 					<div class="cd-faq-content">
-						<p>The reviews are all anonymous to the professor. Unless the
-							student makes any self identifying remarks the professor would
-							not know which one of his students had left the review and or
-							commentary.</p>
+						<p>All reviews are anonymous. Administrators have the ability to view
+						which ID left offensive comments. However, they do not see the names of those users.</p>
 					</div> <!-- cd-faq-content --></li>
 
 				<li><a class="cd-faq-trigger" href="#0">How can I access my
-						account data?</a>
+						account information?</a>
 					<div class="cd-faq-content">
-						<p>Account data will be available through the user dashboard.
-							Either Student, Professor or tutor dashboars will grant access to
-							personal information.</p>
+						<p>Account information will be available through the dashboard.</p>
 					</div> <!-- cd-faq-content --></li>
 
 			</ul>
@@ -229,7 +254,8 @@ header {
 
 
 
-	<!-- Four -->
+<!-- REMOVED - ALREADY CONTACT US FORM
+	Four
 	<section id="four" class="wrapper style2 special">
 		<div class="inner">
 			<header class="major narrow">
@@ -257,6 +283,7 @@ header {
 			</form>
 		</div>
 	</section>
+-->
 	<!-- cd-faq -->
 	<script src="faq-template/js/jquery-2.1.1.js"></script>
 	<script src="faq-template/js/jquery.mobile.custom.min.js"></script>

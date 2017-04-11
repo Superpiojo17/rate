@@ -34,37 +34,47 @@ public class EditTutorController {
 		CourseDao cd = DaoManager.getInstance().getCourseDao();
 
 		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 		User u = (User) session.attribute("current_user");
 
-		model.put("current_user", u);
+		if (u.getRole() != 2) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+		if (u != null) {
+			if (u.getRole() == 2) {
+				model.put("user_professor", true);
+			}
+		}
 
-		List<Course> courses = cd.allByProfessor(u.getId());
-		model.put("courses", courses);
+	model.put("current_user",u);
 
-		// Get the :id from the url
-		String idString = req.params("id");
+	List<Course> courses = cd.allByProfessor(u.getId());model.put("courses",courses);
 
-		// Convert to Long
-		// /user/uh-oh/edit for example
-		long id = Long.parseLong(idString);
+	// Get the :id from the url
+	String idString = req.params("id");
 
-		Tutor t = tutor.findById(id);
+	// Convert to Long
+	// /user/uh-oh/edit for example
+	long id = Long.parseLong(idString);
 
-		model.put("tutor_form", new TutorForm(t));
+	Tutor t = tutor.findById(id);
 
-		// Authorize that the user can edit the user selected
-		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+	model.put("tutor_form",new TutorForm(t));
 
-		// create the form object, put it into request
-		// model.put("tutor_form", new TutorForm(u));
+	// Authorize that the user can edit the user selected
+	// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
 
-		DaoManager adao = DaoManager.getInstance();
-		AnnouncementDao ad = adao.getAnnouncementDao();
-		List<Announcement> announcements = ad.all();
-		model.put("announcements", announcements);
+	// create the form object, put it into request
+	// model.put("tutor_form", new TutorForm(u));
 
-		// Render the page
-		return new ModelAndView(model, "users/edittutor.hbs");
+	DaoManager adao = DaoManager.getInstance();
+	AnnouncementDao ad = adao.getAnnouncementDao();
+	List<Announcement> announcements = ad.all();model.put("announcements",announcements);
+
+	// Render the page
+	return new ModelAndView(model,"users/edittutor.hbs");
 	}
 
 	public ModelAndView updateTutor(Request req, Response res) {

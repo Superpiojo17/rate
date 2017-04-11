@@ -31,8 +31,14 @@ public class TutorDashboardController {
 		HashMap<String, Object> model = new HashMap<>();
 
 		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 		User u = (User) session.attribute("current_user");
-		AuthPolicyManager.getInstance().getUserPolicy().showTutorDashboardPage();
+
+		if (u.getRole() != 3) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 
 		model.put("current_user", u);
 
@@ -110,7 +116,14 @@ public class TutorDashboardController {
 		HashMap<String, Object> model = new HashMap<>();
 
 		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 		User u = (User) session.attribute("current_user");
+
+		if (u.getRole() != 3) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
 
 		if (u.getMajor() == null) {
 			model.put("completeProfile", true);
