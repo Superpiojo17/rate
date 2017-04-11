@@ -31,16 +31,17 @@
 			<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
-					<li><a href="/tutordashboard">Home</a></li>
+					<li><a href="/">Home</a></li>
+					<li><a href="/studentdashboard">My Dashboard</a></li>
 					<li><a href="/register">My Account</a></li>
-					<li><a href="/aboutus">View Apointments</a></li>
-					<li><a href="/aboutus">View Reviews</a></li>
-					<li><a href="/allusers">My Classes</a></li>
-					<li><a href="/contactus">Contact Us</a></li>
-					<li><a href="/deactivation">De-Activate</a></li>
 					{{#if completeProfile }}
 					<li><a href="/completeprofiletutor/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
 					{{/if}}
+					<li><a href="/teacher">Browse Professors</a></li>
+					<li><a href="/contactus">Contact Us</a></li>
+					<li><a href="/aboutus">About Us</a></li>
+						<li><a href="/faq">FAQ</a></li>
+					<li><a href="/deactivation">De-Activate</a></li>
 					<li><a href="/logout">Log Out</a></li>
 					
 				</ul>
