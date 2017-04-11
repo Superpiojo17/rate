@@ -31,42 +31,19 @@
 			<nav id="nav" class="visible">
 				<ul class="links">
 					<li><a href="/">Home</a></li>
-					
-					{{#if user_admin}}
-						<li><a href="/admindashboard">My Dashboard</a></li>
-					{{/if}}
-					{{#if user_professor}}
-						<li><a href="/facultydashboard">My Dashboard</a></li>
-					{{/if}}
-					{{#if user_tutor}}
-						<li><a href="/tutordashboard">My Dashboard</a></li>
-					{{/if}}
-					{{#if user_student}}
-						<li><a href="/studentdashboard">My Dashboard</a></li>
-					{{/if}}
-					
-					{{#if user_null}}
-						<li><a href="/login">Log In</a></li>
-						<li><a href="/register">Register</a></li>
-						<li><a href="/activation">Activate Account</a></li>
-						<li><a href="/accountrecovery">Forgot Password?</a></li>
-					{{/if}}
-					
-						<li><a href="/teacher">Browse Professors</a></li>
-					
-					{{#unless user_admin}}
-						<li><a href="/contactus">Contact Us</a></li>
-					{{/unless}}
-						<li><a href="/aboutus">About Us</a></li>
-						<li><a href="/faq">FAQ</a></li>
-					
-					{{#unless user_null}}
-						<li><a href="/logout">Log Out</a></li>
-					{{/unless}}
-					<li><a href="/alltutors/{{current_user.id}}">Manage Tutors</a></li>
+					<li><a href="/admindashboard">My Dashboard</a></li>
+					<li><a href="/register">My Account</a></li>
 					{{#if completeProfile }}
 					<li><a href="/completeprofileprof/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
 					{{/if}}
+					<li><a href="/alltutors/{{current_user.id}}">Manage Tutors</a></li>
+					<li><a href="/professor/{{current_user.id}}/overview">View Reviews</a></li>
+					<li><a href="/teacher">Browse Professors</a></li>
+					<li><a href="/contactus">Contact Us</a></li>
+					<li><a href="/aboutus">About Us</a></li>
+						<li><a href="/faq">FAQ</a></li>
+					<li><a href="/deactivation">De-Activate</a></li>
+					<li><a href="/logout">Log Out</a></li>
 					
 				</ul>
 			</nav>
