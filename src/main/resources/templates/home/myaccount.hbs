@@ -97,7 +97,7 @@
 			<nav id="nav" class="visible">
 				<ul class="links">
 					<li><a href="/">Home</a></li>
-					<li><a href="/studentdashboard">My Account</a></li>
+					<li><a href="/myaccount">My Account</a></li>
 					<li><a href="/studentdashboard">View Apointments</a></li>
 					<li><a href="/studentdashboard">View Reviews</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
@@ -185,33 +185,20 @@
 <!-- Text input-->
        
 
- <!--
+
 <div class="form-group">
-  <label class="col-md-4 control-label">Role ID</label>  
+  <label class="col-md-4 control-label">Role</label>  
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-  <label name="role_id" placeholder="Role ID" class="form-control" > WTFFFF</p></label>
-    </div>
-  </div>
-</div>
--->
-
-<!-- Text input-->
-
-<div class="form-group">
-  <label class="col-md-4 control-label" >Role ID</label> 
-    <div class="col-md-4 inputGroupContainer">
-    <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-  <label name="role_id" placeholder="Last Name" class="form-control"><p id="role"></label>
+  <label name="role_id" placeholder="Role ID" class="form-control" >{{current_user.role_string}}</label>          <!-- <p id="role"></p> </label>-->
     </div>
   </div>
 </div>
 
 <script>
     var role ="blahhh";
-    var rolenum = {{current_user.role_id}};
+    var rolenum = {{current_user.role_string}};
     if(rolenum == 1){
     role = "Admin";
     document.getElementById("role").innerHTML = role;
@@ -260,8 +247,12 @@
 <script>
     var role ="blahhh";
     var rolenum = {{current_user.school_year}};
-    if(rolenum== 1){
-    role = "Freshman";
+    
+    if(rolenum== 0){
+    role = "N/A";
+    document.getElementById("demo").innerHTML = role;
+    }else if(rolenum == 1){
+     role = "Freshamn";
     document.getElementById("demo").innerHTML = role;
     }else if(rolenum == 2){
      role = "Sophomore";

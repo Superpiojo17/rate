@@ -26,8 +26,8 @@ import spark.Session;
 /**
  * Account Recovery controller
  * 
- * @author Mike
- * @version 2-4-2017
+ * @author Dex
+ * @version 
  */
 public class MyAccountController {
 	/**
@@ -46,15 +46,15 @@ public class MyAccountController {
 
 		// AuthPolicyManager.getInstance().getUserPolicy().showStudentDashboardPage();
 
-		DaoManager dao = DaoManager.getInstance();
+		//DaoManager dao = DaoManager.getInstance();
 
-		DaoManager adao = DaoManager.getInstance();
+		//DaoManager adao = DaoManager.getInstance();
 
 		model.put("current_user", u);
 
 		
 		
-		// Tell the server to render the index page with the data in the model
+		// Tell the server to render the my account page.
 		return new ModelAndView(model, "home/myaccount.hbs");
 	}
 
