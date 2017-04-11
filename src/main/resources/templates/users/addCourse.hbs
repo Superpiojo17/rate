@@ -29,19 +29,25 @@
 			<header id="adminheader">
 				<h1>Administrator Dashboard</h1>
 			</header>
-
-				<!-- Nav -->
+<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
-					<li><a href="/admindashboard">Home</a></li>
+					<li><a href="/">Home</a></li>
+					<li><a href="/admindashboard">My Dashboard</a></li>
 					<li><a href="/register">My Account</a></li>
 					<li><a href="/allusers">Manage Users</a></li>
+					{{#if completeProfile }}
+					<li><a href="/completeprofileprof/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
+					{{/if}}
 					<li><a href="/courseslanding">Manage Courses</a></li>
 					<li><a href="/managetutorslanding">Manage Tutors</a></li>
 					<li><a href="/announcement">Announcements</a></li>
-					<li><a href="/aboutus">View Apointments</a></li>
-					<li><a href="/aboutus">View Reviews</a></li>
+					<li><a href="/aboutus">Manage Apointments</a></li>
+					<li><a href="/aboutus">Manage Reviews</a></li>
+					<li><a href="/teacher">Browse Professors</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
+					<li><a href="/aboutus">About Us</a></li>
+						<li><a href="/faq">FAQ</a></li>
 					<li><a href="/deactivation">De-Activate</a></li>
 					<li><a href="/logout">Log Out</a></li>
 					

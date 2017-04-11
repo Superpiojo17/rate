@@ -27,46 +27,28 @@
 				<h1>Administrator Dashboard</h1>
 			</header>
 
-		<!-- Nav -->
+			<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
 					<li><a href="/">Home</a></li>
-					
-					{{#if user_admin}}
-						<li><a href="/admindashboard">My Dashboard</a></li>
-					{{/if}}
-					{{#if user_professor}}
-						<li><a href="/facultydashboard">My Dashboard</a></li>
-					{{/if}}
-					{{#if user_tutor}}
-						<li><a href="/tutordashboard">My Dashboard</a></li>
-					{{/if}}
-					{{#if user_student}}
-						<li><a href="/studentdashboard">My Dashboard</a></li>
-					{{/if}}
-					
-					{{#if user_null}}
-						<li><a href="/login">Log In</a></li>
-						<li><a href="/register">Register</a></li>
-						<li><a href="/activation">Activate Account</a></li>
-						<li><a href="/accountrecovery">Forgot Password?</a></li>
-					{{/if}}
-					
-						<li><a href="/teacher">Browse Professors</a></li>
-					
-					{{#unless user_admin}}
-						<li><a href="/contactus">Contact Us</a></li>
-					{{/unless}}
-						<li><a href="/aboutus">About Us</a></li>
-						<li><a href="/faq">FAQ</a></li>
-					
-					{{#unless user_null}}
-						<li><a href="/logout">Log Out</a></li>
-					{{/unless}}
+					<li><a href="/admindashboard">My Dashboard</a></li>
+					<li><a href="/register">My Account</a></li>
 					<li><a href="/allusers">Manage Users</a></li>
+					{{#if completeProfile }}
+					<li><a href="/completeprofileprof/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
+					{{/if}}
 					<li><a href="/courseslanding">Manage Courses</a></li>
 					<li><a href="/managetutorslanding">Manage Tutors</a></li>
-					<li><a href="/announcement">Announcements</a></li>				
+					<li><a href="/announcement">Announcements</a></li>
+					<li><a href="/aboutus">Manage Apointments</a></li>
+					<li><a href="/aboutus">Manage Reviews</a></li>
+					<li><a href="/teacher">Browse Professors</a></li>
+					<li><a href="/contactus">Contact Us</a></li>
+					<li><a href="/aboutus">About Us</a></li>
+						<li><a href="/faq">FAQ</a></li>
+					<li><a href="/deactivation">De-Activate</a></li>
+					<li><a href="/logout">Log Out</a></li>
+					
 				</ul>
 			</nav>
 			
