@@ -89,8 +89,12 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
 	$(document).ready(function() {
 
     // page is now ready, initialize the calendar...
+    var m = moment();
+    $('#calendar').each(function(){
+        var calendar = $(this);
+        calendar.fullCalendar({
 
-    $('#calendar').fullCalendar({
+    //$('#calendar').fullCalendar({
         
         header: {
         	left: 'prev today',
@@ -98,13 +102,13 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
         	right: 'month,agendaWeek,agendaDay next'
         },
         navLinks: true,
-        	selectable: true,
-        	selectHelper: true,
-        	select: function(start, end) {
-        		var title = prompt('Event Title:');
-        		var eventData;
-        		if (title) {
-        			eventData = {
+        selectable: true,
+        selectHelper: true,
+        select: function(start, end) {
+        	var title = prompt('Event Title:');
+        	var eventData;
+        	if (title) {
+        		eventData = {
         				title: title,
         				start: start,
         				end: end
@@ -119,13 +123,15 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
         	editable: true,
         	eventLimit: true,
         	events: [
+        		{{#each appointments}}
         		{
-        			title: 'All Day Events',
+        			title: 'Appointment with {{{tutor_first_name}}}',
         			start: '2017-03-30'
         		}
+        		{{/each}}
         	]
         })
-        
+        })
         });
 	</script>
 
@@ -192,7 +198,6 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
 
 		</div>
 		
-		<p>Click on the headings below to view your relevant information.</p>
   <div class="panel-group" id="accordion">
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -201,8 +206,7 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
         </h4>
       </div>
       <div id="collapse1" class="panel-collapse collapse in">
-		{{#unless upcoming_appointments}}You do not currently have any scheduled appointments.{{/unless}}
-		{{#if upcoming_appointments}}
+		{{#if appointments}}
 		<div class="table-wrapper">
 			<table class="alt">
 				<thead>
@@ -215,7 +219,7 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
 					</tr>
 				</thead>
 				<tbody>
-						{{#each approved_appointments}}		
+						{{#each appointments}}		
 							<tr>
 							<td class="shrink">{{student_firstname}} {{student_lastname}}</td>
 							<td class="shrink">{{date}}</td>
@@ -240,14 +244,6 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
   </div> 
 </div>
 
-<form action="/calendar" method="post" name="form_select">
-  					Title: <input type="text" name="Title"> {{title}} <br>
-					Date: <input type="text" name="Date"> {{date}} <br>
-					<button type="submit" class="btn btn-info"> Switch
-					</button>
-					&emsp;&emsp;
-			</form>
-		
 	</section>
 
 		

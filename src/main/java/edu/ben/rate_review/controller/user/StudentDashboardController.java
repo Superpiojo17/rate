@@ -1,10 +1,12 @@
 package edu.ben.rate_review.controller.user;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
 import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.authorization.AuthException;
+import edu.ben.rate_review.controller.home.LogInController;
 import edu.ben.rate_review.daos.AnnouncementDao;
 import edu.ben.rate_review.daos.CourseDao;
 import edu.ben.rate_review.daos.DaoManager;
@@ -17,6 +19,7 @@ import edu.ben.rate_review.formatTime.FormatTimeAndDate;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.Course;
 import edu.ben.rate_review.models.CoursesToReview;
+import edu.ben.rate_review.models.ProfessorReview;
 import edu.ben.rate_review.models.Tutor;
 import edu.ben.rate_review.models.TutorAppointment;
 import edu.ben.rate_review.models.User;
@@ -365,6 +368,133 @@ public class StudentDashboardController {
 				reviewDao.setSemesterPast(courses.get(i));
 			}
 		}
+	}
+
+	public ModelAndView showCourseTutorsPage(Request req, Response res) throws SQLException {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
+
+		if (u != null) {
+			if (u.getRole() == 1) {
+				model.put("user_admin", true);
+			} else if (u.getRole() == 2) {
+				model.put("user_professor", true);
+			} else if (u.getRole() == 3) {
+				model.put("user_tutor", true);
+			} else {
+				model.put("user_student", true);
+			}
+		} else {
+			model.put("user_null", true);
+		}
+
+		DaoManager dao = DaoManager.getInstance();
+		AnnouncementDao ad = dao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+
+		DaoManager udao = DaoManager.getInstance();
+		UserDao ud = udao.getUserDao();
+
+		if (req.queryParams("search") != null) {
+
+			String searchType = "name";
+			String searchTxt = req.queryParams("search").toLowerCase();
+
+			if (searchType.equalsIgnoreCase("email") || searchType.equalsIgnoreCase("name") && searchTxt.length() > 0) {
+				List<User> temp = ud.searchTutor(searchType, searchTxt);
+				if (temp.size() > 0) {
+
+					model.put("tutors", temp);
+				} else {
+					List<User> tutors = ud.searchTutor(searchType, searchTxt);
+					model.put("error", "No Results Found");
+					model.put("tutors", tutors);
+				}
+			} else {
+				List<User> tutors = ud.allTutors();
+				model.put("error", "Cannot leave search bar blank");
+				model.put("tutors", tutors);
+			}
+		} else {
+			List<User> tutors = ud.allTutors();
+			model.put("tutors", tutors);
+		}
+
+		model.put("current_user", u);
+
+		// Tell the server to render the index page with the data in the model
+		return new ModelAndView(model, "users/coursetutors.hbs");
+	}
+
+	public ModelAndView showCourseAllProfessorsPage(Request req, Response res) throws SQLException {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
+
+		if (u != null) {
+			if (u.getRole() == 1) {
+				model.put("user_admin", true);
+			} else if (u.getRole() == 2) {
+				model.put("user_professor", true);
+			} else if (u.getRole() == 3) {
+				model.put("user_tutor", true);
+			} else {
+				model.put("user_student", true);
+			}
+		} else {
+			model.put("user_null", true);
+		}
+
+		DaoManager dao = DaoManager.getInstance();
+		AnnouncementDao ad = dao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+
+		DaoManager udao = DaoManager.getInstance();
+		UserDao ud = udao.getUserDao();
+
+		model.put("current_user", u);
+
+		ProfessorReviewDao pDao = udao.getProfessorReviewDao();
+		CourseDao cDao = udao.getCourseDao();
+
+		List<User> users = ud.allProfessors();
+
+		List<String> courses = cDao.allCoursesString();
+		List<Course> courses2 = cDao.allCourses();
+
+		// adds overview option and initial SELECT COURSE
+		courses.add(0, "SELECT COURSE");
+
+		model.put("courses", courses);
+
+		String courseName = req.queryParams("course_name");
+
+		if (courseName != null && !courseName.equalsIgnoreCase("select course")) {
+
+			List<ProfessorReview> temp = pDao.listReviewsByCourse(courseName);
+			long courseID = 0;
+
+			for (int i = 0; i < courses2.size(); i++) {
+				if (courseName.equalsIgnoreCase(courses2.get(i).getCourse_name())) {
+					courseID = courses2.get(i).getId();
+				}
+			}
+
+			List<ProfessorReview> currentReviews = pDao.allReviewsForCourse(courseID);
+
+			model.put("current_reviews", currentReviews);
+
+		}
+
+		// Tell the server to render the index page with the data in the model
+		return new ModelAndView(model, "users/courseprofessors.hbs");
 	}
 
 }

@@ -147,6 +147,69 @@ public class CourseDao {
 		return courses;
 	}
 
+	public List<Course> allCourses() {
+		final String SELECT = "SELECT * FROM " + COURSES_TABLE;
+		List<Course> courses = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			courses = new ArrayList<Course>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					courses.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return courses;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return courses;
+	}
+
+	public List<String> allCoursesString() {
+		final String SELECT = "SELECT * FROM " + COURSES_TABLE;
+		List<String> courses = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			courses = new ArrayList<String>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					courses.add(rs.getString("course_name"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return courses;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return courses;
+	}
+
+	public List<Course> allCoursesByID(long id) {
+		final String SELECT = "SELECT * FROM " + COURSES_TABLE + " WHERE course_id = '" + id + "'";
+		List<Course> courses = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			courses = new ArrayList<Course>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					courses.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return courses;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return courses;
+	}
+
 	/**
 	 * 
 	 * @return all users from the database.

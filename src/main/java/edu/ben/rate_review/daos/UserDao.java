@@ -924,4 +924,26 @@ public class UserDao implements Dao<User> {
 		// If you don't find a model
 		return null;
 	}
+
+	public List<User> allTutors() {
+		final String SELECT = "SELECT * FROM " + USER_TABLE + " WHERE role_id = 3 ";
+
+		List<User> users = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			users = new ArrayList<User>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					users.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return users;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
 }

@@ -335,6 +335,29 @@ public class ProfessorReviewDao {
 		return reviews;
 	}
 
+	public List<ProfessorReview> listReviewsByCourse(String course) {
+
+		String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE course = '" + course + "'";
+		List<ProfessorReview> reviews = null;
+
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			reviews = new ArrayList<ProfessorReview>();
+			try {
+				ResultSet rs = ps.executeQuery();
+				while (rs.next()) {
+					reviews.add(reviewMapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return reviews;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return reviews;
+	}
+
 	/**
 	 * Finds and returns a specific ProfessorReview
 	 * 
@@ -690,6 +713,50 @@ public class ProfessorReviewDao {
 		return uniqueCourses;
 	}
 
+	public List<String> listCourses(String course) {
+
+		final String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE course = " + course;
+		List<String> uniqueCourses = null;
+
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			uniqueCourses = new ArrayList<String>();
+			try {
+				ResultSet rs = ps.executeQuery();
+				while (rs.next()) {
+					uniqueCourses.add(rs.getString("course"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return uniqueCourses;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return uniqueCourses;
+	}
+
+	public List<ProfessorReview> allReviewsForCourse(long course) {
+		final String SELECT = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE course_id = " + course;
+		List<ProfessorReview> reviews = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			reviews = new ArrayList<ProfessorReview>();
+			try {
+				ResultSet rs = ps.executeQuery();
+				while (rs.next()) {
+					reviews.add(reviewMapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return reviews;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return reviews;
+	}
+
 	/**
 	 * Closes the connection
 	 */
@@ -700,4 +767,5 @@ public class ProfessorReviewDao {
 			e.printStackTrace();
 		}
 	}
+
 }

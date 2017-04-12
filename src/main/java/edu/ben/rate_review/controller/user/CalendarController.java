@@ -1,5 +1,6 @@
 package edu.ben.rate_review.controller.user;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -8,6 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
 
 import edu.ben.rate_review.authorization.AuthException;
 import edu.ben.rate_review.daos.AnnouncementDao;
@@ -39,21 +43,22 @@ public class CalendarController {
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 
-		if (u != null){
-			if (u.getRole() == 1){
+		if (u != null) {
+			if (u.getRole() == 1) {
 				model.put("user_admin", true);
-			} else if (u.getRole() == 2){
+			} else if (u.getRole() == 2) {
 				model.put("user_professor", true);
-			} else if (u.getRole() == 3){
+			} else if (u.getRole() == 3) {
 				model.put("user_tutor", true);
 			} else {
 				model.put("user_student", true);
 			}
 		} else {
 			model.put("user_null", true);
+			return new ModelAndView(model, "home/notauthorized.hbs");
 		}
-		
-		AuthPolicyManager.getInstance().getUserPolicy().showCalendarPage();
+
+		// AuthPolicyManager.getInstance().getUserPolicy().showCalendarPage();
 
 		model.put("current_user", u);
 
@@ -62,115 +67,70 @@ public class CalendarController {
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
 
-		HttpServletRequest theRequest = req.raw();
-		String title = theRequest.getParameter("Title");
-		String date = theRequest.getParameter("Date");
+		// model.put("title", title);
+		// model.put("date", date);
 
-		model.put("title", title);
-		model.put("date", date);
+		// Convert to JSON String
+		// String json = new Gson().toJson(model);
+		//
+		// HttpServletResponse response = res.raw();
+		// response.setContentType("application/json");
+		// response.setCharacterEncoding("UTF-8");
+		//
+		// JSONObject obj = new JSONObject();
+		//
+		// obj.put("id", 111);
+		// obj.put("title", "event1");
+		// obj.put("start", "2017-04-12");
+		// obj.put("url", "http://yahoo.com");
+
+		// JSONArray objA = new JSONArray();
+		// objA.put(obj);
+		//
+		// obj.put("id", 111);
+		// obj.put("title", "event1");
+		// obj.put("start", "2017-04-14");
+		// obj.put("url", "http://yahoo.com");
+		//
+		// objA.put(obj);
 
 		TutorDao tDao = adao.getTutorDao();
 
-		List<TutorAppointment> appointments = tDao.listAllTutorAppointments(u.getId());
-		List<TutorAppointment> unviewed_appointments = tDao.listAllUnviewedTutorAppointments(u.getId());
-		List<TutorAppointment> approved_appointments = tDao.listAllApprovedTutorAppointments(u.getId());
+		if (u.getRole() == 4) {
+			List<TutorAppointment> appointments = tDao.listAllStudentAppointments(u);
 
-		for (int i = 0; i < approved_appointments.size(); i++) {
-			approved_appointments.get(i).setTime(FormatTimeAndDate.formatTime(approved_appointments.get(i).getTime()));
-			approved_appointments.get(i).setDate(FormatTimeAndDate.formatDate(approved_appointments.get(i).getDate()));
+			model.put("appointments", appointments);
+		} else if (u.getRole() == 3) {
+
+			List<TutorAppointment> appointments = tDao.listAllTutorAppointments(u.getId());
+			model.put("appointments", appointments);
 		}
-		for (int i = 0; i < appointments.size(); i++) {
-			appointments.get(i).setTime(FormatTimeAndDate.formatTime(appointments.get(i).getTime()));
-			appointments.get(i).setDate(FormatTimeAndDate.formatDate(appointments.get(i).getDate()));
-		}
-
-		boolean appointments_requested = false;
-		if (!unviewed_appointments.isEmpty()) {
-			appointments_requested = true;
-		}
-		boolean upcoming_appointments = false;
-		if (!approved_appointments.isEmpty()) {
-			upcoming_appointments = true;
-		}
-
-		// booleans for whether or not to display table/icon
-		model.put("appointments_requested", appointments_requested);
-		model.put("upcoming_appointments", upcoming_appointments);
-
-		// lists of appointments/requested appointments
-		model.put("appointments", appointments);
-		model.put("approved_appointments", approved_appointments);
-
-		// count of appointment requests that need a response
-		model.put("number_of_requests", unviewed_appointments.size());
 
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/calendar.hbs");
 	}
 
-	// public String addAnnouncement(Request req, Response res) {
-	//
-	// AnnouncementDao announceDao =
-	// DaoManager.getInstance().getAnnouncementDao();
-	// Announcement announcement = new Announcement();
-	//
-	// SimpleDateFormat fromUser = new SimpleDateFormat("yyyy-MM-dd");
-	// SimpleDateFormat myFormat = new SimpleDateFormat("MM/dd/yy");
-	//
-	// try {
-	// String formatteddate =
-	// myFormat.format(fromUser.parse(req.queryParams("date")));
-	// announcement.setDate(formatteddate);
-	// } catch (ParseException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	//
-	// announcement.setAnnouncement_content(req.queryParams("message"));
-	//
-	// announceDao.save(announcement);
-	//
-	// res.redirect("/announcement");
-	// return "";
-	//
-	// }
-
 	public void doit(Request req, Response res) {
+
+		// String name = "Gerald", age = "22";
+		// String name2 = "Bam", age2 = "23";
+
+		// JSONObject obj = new JSONObject();
+		//
+		// obj.put("name", name);
+		// obj.put("age", age);
+		//
+		// JSONArray objA = new JSONArray();
+		// objA.put(obj);
+		// obj.put("name", name2);
+		// obj.put("age", age2);
+		// objA.put(obj);
 
 		Calendar c = new Calendar();
 		c.setId(2);
 		c.setStart("2017-03-30");
 		c.setEnd("2017-04-01");
 		c.setTitle("Task");
-
-	}
-
-	public void doit2(Request req, Response res) {
-
-		List l = new ArrayList();
-
-		Calendar c = new Calendar();
-		c.setId(1);
-		c.setStart("2013-07-28");
-		c.setEnd("2013-07-29");
-		c.setTitle("Task in Progress");
-
-		Calendar d = new Calendar();
-		d.setId(2);
-		d.setStart("2013-07-26");
-		d.setEnd("2013-08-28");
-		d.setTitle("Task in Progress");
-
-		l.add(c);
-		l.add(d);
-
-		// res.header("Content-Type", "application/json");
-		// res.type("application/json");
-
-		// res.setContentType("application/json");
-		// res.setCharacterEncoding("UTF-8");
-		// PrintWriter out = res.getWriter();
-		// out.write(new Gson().toJson(l));
 
 	}
 

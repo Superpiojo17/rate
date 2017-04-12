@@ -1,0 +1,296 @@
+<!DOCTYPE HTML>
+<!--
+	Retrospect by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+<head>
+<title>Browse Professors</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+<link rel="stylesheet" href="assets/css/main.css" />
+<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+	<!-- header -->
+	<header id="header" class="skel-layers-fixed">
+		<h1>
+			<a href="/">RateAndReview</a>
+		</h1>
+		<a href="#nav">Menu</a>
+
+	</header>
+
+	<!-- Nav -->
+	<nav id="nav"  class="visible">
+	<ul class="links">
+					<li><a href="/">Home</a></li>
+					
+					{{#if user_admin}}
+						<li><a href="/admindashboard">My Dashboard</a></li>
+					{{/if}}
+					{{#if user_professor}}
+						<li><a href="/facultydashboard">My Dashboard</a></li>
+					{{/if}}
+					{{#if user_tutor}}
+						<li><a href="/tutordashboard">My Dashboard</a></li>
+					{{/if}}
+					{{#if user_student}}
+						<li><a href="/studentdashboard">My Dashboard</a></li>
+					{{/if}}
+					
+						<li><a href="/teacher">Browse Professors</a></li>
+					
+					{{#unless user_admin}}
+						<li><a href="/contactus">Contact Us</a></li>
+					{{/unless}}
+						<li><a href="/aboutus">About Us</a></li>
+						<li><a href="/faq">FAQ</a></li>
+					
+					{{#unless user_null}}
+					<!--
+						<li><a href="/changepassword">Change Password</a></li>
+						<li><a href="/deactivation">Deactivate Account</a></li>
+					-->
+						<li><a href="/logout">Log Out</a></li>
+					{{/unless}}
+					
+					
+				</ul>
+	</nav>
+
+	<!-- Banner -->
+	<section id="banner">
+
+		<h2>
+			<i class="fa fa-book fa-2x" aria-hidden="true"></i>
+
+		</h2>
+
+		<!-- <i class="icon fa-diamond"></i> -->
+		<h2>Tutors per course</h2>
+
+	</section>
+
+
+
+
+	<section id="main" class="wrapper">
+		<div class="leftcol">
+
+			<!-- Button trigger modal -->
+			<br> &nbsp;
+			<p>
+			<h4 id="date"></h4>
+			</p>
+			<p>
+			<h4 id="hour"></h4>
+			</p>
+			<a href="#announcement" class="btn btn-info" data-toggle="collapse">Announcements</a>
+			<div id="announcement" class="collapse">
+				&nbsp;
+
+
+				<div class="table-wrapper">
+					<table class="alt">
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Description</th>
+							</tr>
+						</thead>
+						<tbody>
+							{{#each announcements}}
+							<tr>
+								<td>{{date}}</td>
+								<td>{{{announcement_content}}}</td>
+							</tr>
+							{{/each}}
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="2"></td>
+							</tr>
+						</tfoot>
+					</table>
+
+				</div>
+	</section>
+
+	<div class="centercol">
+		&ensp;
+		<h2>Tutors per course</h2>
+
+
+
+  <br/>
+  <form action="/coursetutors" method="GET">
+  
+  &nbsp;&nbsp;
+  <div>
+    <input type="text" name="search" placeholder="Search Tutors..." />
+  </div>
+
+</form>
+
+ <div name="error">
+						<p style='color: red'>{{error}}</p>
+					</div>
+
+
+
+
+
+		<div class="table-wrapper">
+			&nbsp;&nbsp;
+			<table id="indextable" class="indextable alt">
+				<thead>
+					<tr>
+						
+
+						<th class="shrink text-left"><a
+							href="javascript:SortTable(3,'T');" class="btn btn-default">Image
+								</button>
+						</a></th>
+						<th class=" shrink text-left"><a
+							href="javascript:SortTable(1,'T');" class="btn btn-default">Name
+								</button>
+						</a></th>
+						<th class="shrink text-left"><a
+							href="javascript:SortTable(2,'T');" class="btn btn-default">Email
+								</button>
+						</a></th>
+
+						<th class="text-left"><a href="javascript:SortTable(3,'T');"
+							class="btn btn-default">Department
+								</button>
+						</a></th>
+
+
+					</tr>
+				</thead>
+				<tbody>
+					{{#each tutors}}
+					
+					<tr>
+
+
+						
+						<td class="shrink text-center"><img src="/images/{{profilepic}}.JPG"  width="55%" height="%55"></td>
+						<td class="shrink">{{last_name}} , {{first_name}}</a></td>
+						<td class="shrink"><a
+							href="mailto:{{email}}?Subject=Rate%20and %20Review"><span
+								class="glyphicon glyphicon-envelope"></span> {{email}}</a></td>
+
+						<td class="shrink">{{major}}</td>
+
+					</tr>
+					{{/each}}
+				</tbody>
+				<tfoot>
+
+				</tfoot>
+			</table>
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+					<li class="page-item disabled"><a class="page-link" href="#"
+						tabindex="-1">Previous</a></li>
+					<li class="page-item"><a class="page-link" href="#">1</a></li>
+					<li class="page-item"><a class="page-link" href="#">2</a></li>
+					<li class="page-item"><a class="page-link" href="#">3</a></li>
+					<li class="page-item"><a class="page-link" href="#">Next</a></li>
+				</ul>
+			</nav>
+			
+			<a href="/coursetutors"  class="btn btn-info"> View All
+											</a>
+		</div>
+
+		</section>
+
+
+
+
+
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/skel.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script type="text/javascript" src="assets/js/sortColumns.js"></script>
+		<script>
+			// d = new Date();
+		</script>
+		<script type="text/javascript">
+		<!--
+			var d_names = new Array("Sunday", "Monday", "Tuesday", "Wednesday",
+					"Thursday", "Friday", "Saturday");
+
+			var m_names = new Array("January", "February", "March", "April",
+					"May", "June", "July", "August", "September", "October",
+					"November", "December");
+
+			var d = new Date();
+			var curr_day = d.getDay();
+			var curr_date = d.getDate();
+			var sup = "";
+			if (curr_date == 1 || curr_date == 21 || curr_date == 31) {
+				sup = "st";
+			} else if (curr_date == 2 || curr_date == 22) {
+				sup = "nd";
+			} else if (curr_date == 3 || curr_date == 23) {
+				sup = "rd";
+			} else {
+				sup = "th";
+			}
+			var curr_month = d.getMonth();
+			var curr_year = d.getFullYear();
+			document.getElementById("date").innerHTML = d_names[curr_day] + " "
+					+ curr_date + "<SUP>" + sup + "</SUP> "
+					+ m_names[curr_month] + " " + curr_year;
+
+			var a_p = "";
+			var hour = new Date();
+
+			var curr_hour = hour.getHours();
+			var curr_min = hour.getMinutes();
+
+			if (curr_hour < 12) {
+				a_p = "AM";
+			} else {
+				a_p = "PM";
+			}
+			if (curr_hour == 0) {
+				curr_hour = 12;
+			}
+			if (curr_hour > 12) {
+				curr_hour = curr_hour - 12;
+			}
+
+			var curr_min = hour.getMinutes();
+			if (curr_min < 10) {
+				document.getElementById("hour").innerHTML = curr_hour + " : 0"
+						+ curr_min + " " + a_p;
+			} else if (curr_min > 9) {
+				document.getElementById("hour").innerHTML = curr_hour + " : "
+						+ curr_min + " " + a_p;
+			}
+		</script>
+
+
+
+
+		<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+		<script src="assets/js/main2.js"></script>
+</body>
+</html>
