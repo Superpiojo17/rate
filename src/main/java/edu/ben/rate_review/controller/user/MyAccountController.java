@@ -31,7 +31,7 @@ import spark.Session;
  */
 public class MyAccountController {
 	/**
-	 * Displays view for account recovery page
+	 * Displays view for my account page
 	 * 
 	 * @param req
 	 * @param res
@@ -64,12 +64,32 @@ public class MyAccountController {
 		//DaoManager adao = DaoManager.getInstance();
 
 		model.put("current_user", u);
-
-		
 		
 		// Tell the server to render the my account page.
 		return new ModelAndView(model, "home/myaccount.hbs");
 	}
+	
+	/*
+	 * Complete profile 
+	 * Utilizing the code one of the other guys made to update the fields
+	 */
+	public String completeProfile(Request req, Response res) {
+		UserDao uDao = DaoManager.getInstance().getUserDao();
+		String idString = req.params("id");
+		long id = Long.parseLong(idString);
+
+		User user = new User();
+
+		user.setMajor(req.queryParams("department"));
+		user.setId(id);
+		user.setSchool_year(Integer.parseInt(req.queryParams("year")));
+
+		uDao.completeProfile(user);
+
+		res.redirect(Application.STUDENTDASHBOARD_PATH);
+		return "";
+	}
+
 
 	
 }

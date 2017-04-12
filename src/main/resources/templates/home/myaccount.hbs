@@ -74,6 +74,10 @@
     background-image: linear-gradient(to bottom,#e8e8e8 0,rgba(144, 144, 144, 0.25) 100%);
 }
 
+#banner input, #banner select, #banner textarea {
+    color: #333;
+}
+
 	</style>
 	
 	
@@ -161,7 +165,7 @@
 			
 	 <div class="container">
 
-    <form class="well form-horizontal" action=" " method="post"  id="contact_form">
+    <form class="well form-horizontal" action="/completeprofilestudent/{{current_user.id}}" method="post"> <!-- id="contact_form">-->
 <fieldset>
 
 <!-- Form Name -->
@@ -225,11 +229,12 @@
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-  <label name="role_id" placeholder="Role ID" class="form-control" >{{current_user.role_string}}</label>          <!-- <p id="role"></p> </label>-->
+  <label name="role_id" placeholder="Role ID" class="form-control" >{{current_user.role_string}}</label> 
     </div>
   </div>
 </div>
 
+<!--
 <script>
     var role ="blahhh";
     var rolenum = {{current_user.role_string}};
@@ -246,12 +251,12 @@
      role = "Student";
     document.getElementById("role").innerHTML = role;
     }
-    
+  -->  
    
 </script>
 
 <!-- Text input-->
-      
+     <!-- 
 <div class="form-group">
 
   <label class="col-md-4 control-label">Major</label>  
@@ -262,11 +267,54 @@
     </div>
   </div>
 </div>
+	-->
+	
+	<!-- Select Basic -->
+   
+<div class="form-group"> 
+  <label class="col-md-4 control-label">Major</label>
+    <div class="col-md-4 selectContainer">
+    <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+    <select name="department" id="department"class="form-control selectpicker" > 
+      <option value=null><p id="major"> </p></option>              <!--<p id="major"></p></option>  -->
+      <option value="CMSC">CMSC</option>
+      <option value="Economics">Economics</option>
+      <option value="Math">Math</option>
+      <option value="Music">Music</option>
+     
+    </select>
+  </div>
+</div>
+</div>
+
+<script>
+    var role ="major";
+    var rolenum = {{current_user.major}};
+    
+    if(rolenum == ""){
+    role = "N/A";
+    document.getElementById("major").innerHTML = role;
+    }else if(rolenum =="CMSC"){
+     role = "CMSC";
+    document.getElementById("major").innerHTML = role;
+    }else if(rolenum == "Economics"){
+     role = "Economics";
+    document.getElementById("major").innerHTML = role;
+    }  else if(rolenum == "Math"){
+     role = "Math";
+    document.getElementById("major").innerHTML = role;
+    }  else if(rolenum == "Music"){
+     role = "Music";
+    document.getElementById("major").innerHTML = role;
+    }        
+   
+</script>
+
+
 
 <!-- Text input-->
- 
- 
- 
+ <!--
 <div class="form-group">
   <label class="col-md-4 control-label">School Year</label>  
     <div class="col-md-4 inputGroupContainer">
@@ -274,7 +322,6 @@
         <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
   <label name="school_year" placeholder="Freshamn" class="form-control"> <p id="demo"></p> </label
     </div>
-    <p id="demo"></p>
   </div>
 </div>
 
@@ -286,7 +333,7 @@
     role = "N/A";
     document.getElementById("demo").innerHTML = role;
     }else if(rolenum == 1){
-     role = "Freshamn";
+     role = "Freshman";
     document.getElementById("demo").innerHTML = role;
     }else if(rolenum == 2){
      role = "Sophomore";
@@ -298,10 +345,65 @@
      role = "Senior";
     document.getElementById("demo").innerHTML = role;
     }
-    
-   
 </script>
- 
+
+-->
+  
+<div class="form-group"> 
+  <label class="col-md-4 control-label">Year</label>
+    <div class="col-md-4 selectContainer">
+    <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+    <select name="year" id="year" class="form-control selectpicker" >
+      <option value="0" placeholder=" Select Your Major"><p id="years"></p></option>
+      <option value="1">Freshman</option>
+      <option value="2">Sophomore</option>
+      <option value="3">Junior</option>
+      <option value="4">Senior</option>
+     
+    </select>
+  </div>
+</div>
+</div>
+
+<script>
+    var role ="blahhh";
+    var rolenum = {{current_user.school_year}};
+    
+    if(rolenum== 0){
+    role = "N/A";
+    document.getElementById("years").innerHTML = role;
+    }else if(rolenum == 1){
+     role = "Freshman";
+    document.getElementById("years").innerHTML = role;
+    }else if(rolenum == 2){
+     role = "Sophomore";
+    document.getElementById("years").innerHTML = role;
+    }else if(rolenum == 3){
+     role = "Junior";
+    document.getElementById("years").innerHTML = role;
+    }else if(rolenum == 4){
+     role = "Senior";
+    document.getElementById("years").innerHTML = role;
+    }
+    
+</script>
+<!-- Button -->
+ <!--
+<div class="form-group">
+  <label class="col-md-4 control-label"></label>
+  <div class="col-md-4">
+    <button type="submit" class="btn btn-warning" >Save <span class="glyphicon glyphicon-send"></span></button>
+  </div>
+</div>
+-->
+ <div class="12u$">
+		<ul class="actions">
+		<button type="submit" class="btn btn-info"> Save 
+		<span class="glyphicon glyphicon-floppy-saved"></button>
+		&emsp;&emsp;
+		</ul>
+</div>
 
 </fieldset>
 </form>

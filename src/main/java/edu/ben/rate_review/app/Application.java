@@ -461,7 +461,10 @@ public class Application {
 		post(CONTACTUS_PATH, (req, res) -> ContactUsController.contact(req, res));
 
 		// my account
+		//get(MYACCOUNT_PATH, (req, res) -> myAccountController.showMyAccountPage(req, res),
+		//		new HandlebarsTemplateEngine());
 		get(MYACCOUNT_PATH, (req, res) -> myAccountController.showMyAccountPage(req, res),
-				new HandlebarsTemplateEngine());
+					new HandlebarsTemplateEngine());
+		post(MYACCOUNT_PATH, (req, res) -> myAccountController.completeProfile(req, res));
 	}
 }
