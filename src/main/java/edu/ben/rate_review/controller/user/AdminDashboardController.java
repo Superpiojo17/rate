@@ -243,6 +243,8 @@ public class AdminDashboardController {
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
+		
+		model.put("department", user.getMajor());
 
 
 		tempApt.setAppointment_status(Boolean.parseBoolean(req.queryParams("status")));
@@ -309,6 +311,8 @@ public class AdminDashboardController {
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
+		
+		model.put("department", user.getMajor());
 
 
 		tempApt.setAppointment_status(Boolean.parseBoolean(req.queryParams("status")));
