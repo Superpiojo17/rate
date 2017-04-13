@@ -167,7 +167,10 @@ public class Application {
 	public static String MYACCOUNT_PATH = "/myaccount";
 	public static String ADMINAPTLANDING_PATH = "/adminaptlanding";
 	public static String APPOINTMENTS_PATH = "/appointments/:department";
+	public static String EDITAPPOINTMENTS_PATH = "/appointment/:id/edit";
+	public static String UPDATEAPPOINTMENT_PATH = "/editapt/:id/edit";
 	public static String LOGOUT_PATH = "/logout";
+	public static String DELETEAPPOINTMENT_PATH = "/deleteapt/:id";
 
 	public static void main(String[] args) throws Exception {
 
@@ -225,10 +228,17 @@ public class Application {
 		// HandlebarsTemplateEngine());
 
 		//
-		
+
 		get(APPOINTMENTS_PATH, (req, res) -> admindashController.showAllDeptApt(req, res),
 				new HandlebarsTemplateEngine());
+		get(EDITAPPOINTMENTS_PATH, (req, res) -> admindashController.showEditApt(req, res),
+				new HandlebarsTemplateEngine());
 		
+		post(UPDATEAPPOINTMENT_PATH, (req, res) -> admindashController.adminUpdateApt(req, res),
+				new HandlebarsTemplateEngine());
+		
+		post(DELETEAPPOINTMENT_PATH, (req, res) -> admindashController.adminDeleteApt(req, res),
+				new HandlebarsTemplateEngine());
 
 		post(ADMINDELETETUTOR_PATH, (req, res) -> adminedittutorController.adminDeleteTutor(req, res),
 				new HandlebarsTemplateEngine());

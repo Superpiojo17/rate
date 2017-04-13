@@ -203,6 +203,37 @@ public class TutorDao implements Dao<Tutor> {
 		// If you don't find a model
 		return null;
 	}
+	
+	
+	
+	
+	/**
+	 * Updates a tutor appointment with the tutor response
+	 * 
+	 * @param appointment
+	 * @return
+	 */
+	public TutorAppointment updateApt(TutorAppointment appointment) {
+		String sql = "UPDATE " + APPOINTMENT_TABLE + " SET tutor_id = ? , tutor_firstname = ? , tutor_lastname = ? , appointment_status = ? WHERE appointment_id = ?";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setLong(1, appointment.getTutor_id());
+			ps.setString(2, appointment.getTutor_firstname());
+			ps.setString(3, appointment.getTutor_lastname());
+			ps.setBoolean(4, appointment.getAppointment_status());
+			ps.setLong(5, appointment.getAppointment_id());
+			// Runs query
+			ps.execute();
+			return appointment;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+	}
 
 	/**
 	 * Allows a student to cancel a tutor appointment

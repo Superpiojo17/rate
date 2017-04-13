@@ -150,6 +150,171 @@ public class AdminDashboardController {
 		return new ModelAndView(model, "users/courseslanding.hbs");
 	}
 
+	public ModelAndView showEditApt(Request req, Response res) throws AuthException {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+		TutorDao tdao = DaoManager.getInstance().getTutorDao();
+
+		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+		User u = (User) session.attribute("current_user");
+
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+
+		AnnouncementDao ad = DaoManager.getInstance().getAnnouncementDao();
+		UserDao ud = DaoManager.getInstance().getUserDao();
+
+		// Get the :id from the url
+		String idString = req.params("id");
+		long id = Long.parseLong(idString);
+
+		TutorAppointment apt = tdao.findAppointmentByID(id);
+		apt.setTime(FormatTimeAndDate.formatTime(apt.getTime()));
+		apt.setDate(FormatTimeAndDate.formatDate(apt.getDate()));
+
+		User user = ud.findById(apt.getTutor_id());
+
+		model.put("department", user.getMajor());
+
+		model.put("depttutors", ud.allTutorsByMajor(user.getMajor()));
+
+		model.put("apt", apt);
+
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+
+		// Render the page
+		return new ModelAndView(model, "users/editappointment.hbs");
+	}
+	
+	
+	public ModelAndView adminDeleteApt(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+
+		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+		User u = (User) session.attribute("current_user");
+
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+
+		String idString = req.params("id");
+		long id = Long.parseLong(idString);
+
+		TutorDao tDao = DaoManager.getInstance().getTutorDao();
+		UserDao uDao = DaoManager.getInstance().getUserDao();
+
+		TutorAppointment tempApt = tDao.findAppointmentByID(id);
+
+		
+
+		User user = uDao.findById(tempApt.getTutor_id());
+	
+		
+		tDao.cancelTutorAppointment(tempApt.getAppointment_id());
+		
+		model.put("error", "You have deleted an appointment on " + tempApt.getDate());
+		
+		
+		List<TutorAppointment> appointments = tDao.listUpcomingAllApptByDept(user.getMajor());
+
+		for (int i = 0; i < appointments.size(); i++) {
+			appointments.get(i).setTime(FormatTimeAndDate.formatTime(appointments.get(i).getTime()));
+			appointments.get(i).setDate(FormatTimeAndDate.formatDate(appointments.get(i).getDate()));
+		}
+		model.put("upcomingappointments", appointments);
+		
+		List<TutorAppointment> pastAppointments = tDao.listPastAllApptByDept(user.getMajor());
+
+		for (int i = 0; i < pastAppointments.size(); i++) {
+			pastAppointments.get(i).setTime(FormatTimeAndDate.formatTime(pastAppointments.get(i).getTime()));
+			pastAppointments.get(i).setDate(FormatTimeAndDate.formatDate(pastAppointments.get(i).getDate()));
+		}
+		model.put("pastappointments", pastAppointments);
+		
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+
+
+		tempApt.setAppointment_status(Boolean.parseBoolean(req.queryParams("status")));
+		return new ModelAndView(model, "users/appointments.hbs");
+	}
+
+	public ModelAndView adminUpdateApt(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+
+		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+		User u = (User) session.attribute("current_user");
+
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+
+		String idString = req.params("id");
+		long id = Long.parseLong(idString);
+
+		TutorDao tDao = DaoManager.getInstance().getTutorDao();
+		UserDao uDao = DaoManager.getInstance().getUserDao();
+
+		TutorAppointment tempApt = tDao.findAppointmentByID(id);
+
+		User user = uDao.findById(Integer.parseInt(req.queryParams("selecttutor")));
+		Long userID = user.getId();
+		
+		System.out.println(req.queryParams("selecttutor"));
+
+		tempApt.setTutor_firstname(user.getFirst_name());
+		tempApt.setTutor_lastname(user.getLast_name());
+		tempApt.setTutor_id(userID);
+		tempApt.setAppointment_status(Boolean.parseBoolean(req.queryParams("status")));
+		System.out.println(tempApt.getAppointment_status());
+		
+		tempApt.setDate(FormatTimeAndDate.formatDate(tempApt.getDate()));
+	
+		
+		tDao.updateApt(tempApt);
+		
+		model.put("message", "You have edited an appointment on " + tempApt.getDate());
+		
+		
+		List<TutorAppointment> appointments = tDao.listUpcomingAllApptByDept(user.getMajor());
+
+		for (int i = 0; i < appointments.size(); i++) {
+			appointments.get(i).setTime(FormatTimeAndDate.formatTime(appointments.get(i).getTime()));
+			appointments.get(i).setDate(FormatTimeAndDate.formatDate(appointments.get(i).getDate()));
+		}
+		model.put("upcomingappointments", appointments);
+		
+		List<TutorAppointment> pastAppointments = tDao.listPastAllApptByDept(user.getMajor());
+
+		for (int i = 0; i < pastAppointments.size(); i++) {
+			pastAppointments.get(i).setTime(FormatTimeAndDate.formatTime(pastAppointments.get(i).getTime()));
+			pastAppointments.get(i).setDate(FormatTimeAndDate.formatDate(pastAppointments.get(i).getDate()));
+		}
+		model.put("pastappointments", pastAppointments);
+		
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+
+
+		tempApt.setAppointment_status(Boolean.parseBoolean(req.queryParams("status")));
+		return new ModelAndView(model, "users/appointments.hbs");
+	}
+
 	public ModelAndView showManageAptLandingPage(Request req, Response res) throws AuthException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
@@ -218,9 +383,8 @@ public class AdminDashboardController {
 				model.put("appointments", appointments);
 			}
 		} else {
-			System.out.println("OK");
 			List<TutorAppointment> appointments = td.listUpcomingAllApptByDept(department);
-			
+
 			for (int i = 0; i < appointments.size(); i++) {
 				appointments.get(i).setTime(FormatTimeAndDate.formatTime(appointments.get(i).getTime()));
 				appointments.get(i).setDate(FormatTimeAndDate.formatDate(appointments.get(i).getDate()));
