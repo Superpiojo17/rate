@@ -140,14 +140,14 @@
 						<p style='color: red'>{{error}}</p>
 					</div>
 
-<form action="/courseprofessors" method="post" id="courselist"> <input type="submit">
- </form>
 <select form="courselist" style="max-width:20%; min-width:20%;" name="course_name" id="course_name">
 										{{#each courses}}
 										<option value="{{this}}">{{this}}</option>
 										<!-- <span class="glyphicon glyphicon-triangle-bottom"></span> -->
 										{{/each}}
 									</select>
+									<form action="/courseprofessors" method="post" id="courselist"> <input type="submit">
+ </form>
 
 		<div class="table-wrapper">
 			&nbsp;&nbsp;
@@ -212,8 +212,6 @@
 				</ul>
 			</nav>
 			
-			<a href="/courseprofessors"  class="btn btn-info"> View All
-											</a>
 		</div>
 
 		</section>
