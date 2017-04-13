@@ -372,19 +372,42 @@ public class AdminDashboardController {
 			// Make sure you
 			if (searchType.equalsIgnoreCase("email") || searchType.equalsIgnoreCase("name") && searchTxt.length() > 0) {
 				// valid search, can proceed
-				List<User> tempUsers = ud.search(searchType, searchTxt);
-				if (tempUsers.size() > 0) {
-
-					model.put("users", tempUsers);
+				List<TutorAppointment> tempApts = td.searchApt(searchType, searchTxt);
+				if (tempApts.size() > 0) {
+					
+					for (int i = 0; i < tempApts.size(); i++) {
+						tempApts.get(i).setTime(FormatTimeAndDate.formatTime(tempApts.get(i).getTime()));
+						tempApts.get(i).setDate(FormatTimeAndDate.formatDate(tempApts.get(i).getDate()));
+					}
+					model.put("upcomingappointments", tempApts);
 				} else {
-					List<User> users = ud.search(searchType, searchTxt);
+					List<TutorAppointment> apts = td.searchApt(searchType, searchTxt);
 					model.put("error", "No Results Found");
-					model.put("users", users);
+					
+					for (int i = 0; i < apts.size(); i++) {
+						apts.get(i).setTime(FormatTimeAndDate.formatTime(apts.get(i).getTime()));
+						apts.get(i).setDate(FormatTimeAndDate.formatDate(apts.get(i).getDate()));
+					}
+					
+					model.put("upcomingapointments", apts);
 				}
 			} else {
-				List<TutorAppointment> appointments = td.listUpcomingAllApptByDept(department);
+				List<TutorAppointment> apts = td.listUpcomingAllApptByDept(department);
 				model.put("error", "Cannot leave search bar blank");
-				model.put("appointments", appointments);
+				for (int i = 0; i < apts.size(); i++) {
+					apts.get(i).setTime(FormatTimeAndDate.formatTime(apts.get(i).getTime()));
+					apts.get(i).setDate(FormatTimeAndDate.formatDate(apts.get(i).getDate()));
+				}
+				model.put("upcomingappointments", apts);
+				
+				List<TutorAppointment> pastAppointments = td.listPastAllApptByDept(department);
+
+				for (int i = 0; i < pastAppointments.size(); i++) {
+					pastAppointments.get(i).setTime(FormatTimeAndDate.formatTime(pastAppointments.get(i).getTime()));
+					pastAppointments.get(i).setDate(FormatTimeAndDate.formatDate(pastAppointments.get(i).getDate()));
+				}
+				model.put("pastappointments", pastAppointments);
+				
 			}
 		} else {
 			List<TutorAppointment> appointments = td.listUpcomingAllApptByDept(department);
@@ -394,15 +417,17 @@ public class AdminDashboardController {
 				appointments.get(i).setDate(FormatTimeAndDate.formatDate(appointments.get(i).getDate()));
 			}
 			model.put("upcomingappointments", appointments);
+			
+			List<TutorAppointment> pastAppointments = td.listPastAllApptByDept(department);
+
+			for (int i = 0; i < pastAppointments.size(); i++) {
+				pastAppointments.get(i).setTime(FormatTimeAndDate.formatTime(pastAppointments.get(i).getTime()));
+				pastAppointments.get(i).setDate(FormatTimeAndDate.formatDate(pastAppointments.get(i).getDate()));
+			}
+			model.put("pastappointments", pastAppointments);
 		}
 
-		List<TutorAppointment> pastAppointments = td.listPastAllApptByDept(department);
-
-		for (int i = 0; i < pastAppointments.size(); i++) {
-			pastAppointments.get(i).setTime(FormatTimeAndDate.formatTime(pastAppointments.get(i).getTime()));
-			pastAppointments.get(i).setDate(FormatTimeAndDate.formatDate(pastAppointments.get(i).getDate()));
-		}
-		model.put("pastappointments", pastAppointments);
+	
 
 		model.put("current_user", u);
 

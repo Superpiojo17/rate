@@ -203,10 +203,7 @@ public class TutorDao implements Dao<Tutor> {
 		// If you don't find a model
 		return null;
 	}
-	
-	
-	
-	
+
 	/**
 	 * Updates a tutor appointment with the tutor response
 	 * 
@@ -214,7 +211,8 @@ public class TutorDao implements Dao<Tutor> {
 	 * @return
 	 */
 	public TutorAppointment updateApt(TutorAppointment appointment) {
-		String sql = "UPDATE " + APPOINTMENT_TABLE + " SET tutor_id = ? , tutor_firstname = ? , tutor_lastname = ? , appointment_status = ? WHERE appointment_id = ?";
+		String sql = "UPDATE " + APPOINTMENT_TABLE
+				+ " SET tutor_id = ? , tutor_firstname = ? , tutor_lastname = ? , appointment_status = ? WHERE appointment_id = ?";
 
 		try {
 			// Create Prepared Statement from query
@@ -469,11 +467,11 @@ public class TutorDao implements Dao<Tutor> {
 		}
 		return appointments;
 	}
-	
-	
+
 	public List<TutorAppointment> listPastAllApptByDept(String Dept) {
 		final String SELECT = "SELECT * FROM " + APPOINTMENT_TABLE
-				+ " WHERE tutor_id in (Select user_id from users where major = '" + Dept + "' and role_id = 3) AND appointment_past = 1";
+				+ " WHERE tutor_id in (Select user_id from users where major = '" + Dept
+				+ "' and role_id = 3) AND appointment_past = 1";
 
 		List<TutorAppointment> appointments = null;
 		try {
@@ -771,6 +769,39 @@ public class TutorDao implements Dao<Tutor> {
 			e.printStackTrace();
 		}
 		return tutors;
+	}
+
+	public List<TutorAppointment> searchApt(String sType, String sText) throws SQLException {
+		String NAME_SQL = "SELECT * FROM tutor_appointment WHERE (student_firstname LIKE '%" + sText
+				+ "%' OR student_lastname LIKE '%" + sText + "%' OR tutor_firstname LIKE '%" + sText
+				+ "%' OR tutor_lastname LIKE '%" + sText + "%')";
+
+		List<TutorAppointment> apts = null;
+
+		try {
+
+			PreparedStatement ps = conn.prepareStatement(NAME_SQL);
+			// both have 1 parameter
+			// ps.setString(1, sText);
+			//
+			// // Only name search has a second parameter
+			// if (sType.equals("name")) {
+			// ps.setString(2, sText);
+			// }
+			apts = new ArrayList<TutorAppointment>();
+			try {
+				ResultSet rs = ps.executeQuery(NAME_SQL);
+				while (rs.next()) {
+					apts.add(appointmentMapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return apts;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return apts;
 	}
 
 	@Override
