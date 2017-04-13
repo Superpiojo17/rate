@@ -117,19 +117,21 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
         		}
         		$('#calendar').fullCalendar('unselect');
         	},
-        	eventClick: function (calEvent, jsEvent, view) {
-        		$('#calendar').fullCalendar('removeEvents', calEvent._id);
-        	},
+        	// US Holidays
+			events: 'en.usa#holiday@group.v.calendar.google.com',
+			
+			eventClick: function(event) {
+				// opens events in a popup window
+				window.open(event.url, 'gcalevent', 'width=700,height=600');
+				return false;
+			},
         	editable: true,
         	eventLimit: true,
-        	events: [
-        		{{#each appointments}}
-        		{
-        			title: 'Appointment with {{{tutor_first_name}}}',
-        			start: '2017-03-30'
-        		}
-        		{{/each}}
-        	]
+        	
+        	googleCalendarApiKey: 'AIzaSyD0S1WbQcUJ31SkY7wU8vK6MQcNFbNppdA',
+       			events: {
+           		 googleCalendarId: 'chaosgrunt22@gmail.com'
+       		 }
         })
         })
         });
