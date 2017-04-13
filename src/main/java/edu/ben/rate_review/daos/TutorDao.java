@@ -411,6 +411,59 @@ public class TutorDao implements Dao<Tutor> {
 	}
 
 	/**
+	 * Lists a student's upcoming appointments
+	 * 
+	 * @param student_id
+	 * @return
+	 */
+	public List<TutorAppointment> listUpcomingAllApptByDept(String Dept) {
+		final String SELECT = "SELECT * FROM " + APPOINTMENT_TABLE
+				+ " WHERE tutor_id in (Select user_id from users where major = '" + Dept + "' and role_id = 3)";
+
+		List<TutorAppointment> appointments = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			appointments = new ArrayList<TutorAppointment>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					appointments.add(appointmentMapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return appointments;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return appointments;
+	}
+	
+	
+	public List<TutorAppointment> listPastAllApptByDept(String Dept) {
+		final String SELECT = "SELECT * FROM " + APPOINTMENT_TABLE
+				+ " WHERE tutor_id in (Select user_id from users where major = '" + Dept + "' and role_id = 3) AND appointment_past = 1";
+
+		List<TutorAppointment> appointments = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			appointments = new ArrayList<TutorAppointment>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					appointments.add(appointmentMapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return appointments;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return appointments;
+	}
+
+	/**
 	 * 
 	 * @return all users from the database.
 	 */

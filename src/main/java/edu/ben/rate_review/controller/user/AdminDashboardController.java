@@ -14,11 +14,13 @@ import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.ProfessorReviewDao;
 import edu.ben.rate_review.daos.TutorDao;
 import edu.ben.rate_review.daos.UserDao;
+import edu.ben.rate_review.formatTime.FormatTimeAndDate;
 import edu.ben.rate_review.massRegistration.MassRegistration;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.CoursesToReview;
 import edu.ben.rate_review.models.ProfessorReview;
 import edu.ben.rate_review.models.Tutor;
+import edu.ben.rate_review.models.TutorAppointment;
 import edu.ben.rate_review.models.TutorForm;
 import edu.ben.rate_review.models.User;
 import edu.ben.rate_review.policy.AuthPolicyManager;
@@ -146,6 +148,103 @@ public class AdminDashboardController {
 
 		// Render the page
 		return new ModelAndView(model, "users/courseslanding.hbs");
+	}
+
+	public ModelAndView showManageAptLandingPage(Request req, Response res) throws AuthException {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+
+		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+		User u = (User) session.attribute("current_user");
+
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+
+		// Render the page
+		return new ModelAndView(model, "users/adminaptlanding.hbs");
+	}
+
+	public ModelAndView showAllDeptApt(Request req, Response res) throws AuthException, SQLException {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+
+		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+		User u = (User) session.attribute("current_user");
+
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+
+		// Get the :id from the url
+		String department = req.params("department");
+		model.put("department", department);
+
+		DaoManager dao = DaoManager.getInstance();
+		UserDao ud = dao.getUserDao();
+		TutorDao td = dao.getTutorDao();
+
+		if (req.queryParams("search") != null) {
+
+			String searchType = "name";
+			String searchTxt = req.queryParams("search").toLowerCase();
+
+			// Make sure you
+			if (searchType.equalsIgnoreCase("email") || searchType.equalsIgnoreCase("name") && searchTxt.length() > 0) {
+				// valid search, can proceed
+				List<User> tempUsers = ud.search(searchType, searchTxt);
+				if (tempUsers.size() > 0) {
+
+					model.put("users", tempUsers);
+				} else {
+					List<User> users = ud.search(searchType, searchTxt);
+					model.put("error", "No Results Found");
+					model.put("users", users);
+				}
+			} else {
+				List<TutorAppointment> appointments = td.listUpcomingAllApptByDept(department);
+				model.put("error", "Cannot leave search bar blank");
+				model.put("appointments", appointments);
+			}
+		} else {
+			System.out.println("OK");
+			List<TutorAppointment> appointments = td.listUpcomingAllApptByDept(department);
+			
+			for (int i = 0; i < appointments.size(); i++) {
+				appointments.get(i).setTime(FormatTimeAndDate.formatTime(appointments.get(i).getTime()));
+				appointments.get(i).setDate(FormatTimeAndDate.formatDate(appointments.get(i).getDate()));
+			}
+			model.put("upcomingappointments", appointments);
+		}
+
+		List<TutorAppointment> pastAppointments = td.listPastAllApptByDept(department);
+
+		for (int i = 0; i < pastAppointments.size(); i++) {
+			pastAppointments.get(i).setTime(FormatTimeAndDate.formatTime(pastAppointments.get(i).getTime()));
+			pastAppointments.get(i).setDate(FormatTimeAndDate.formatDate(pastAppointments.get(i).getDate()));
+		}
+		model.put("pastappointments", pastAppointments);
+
+		model.put("current_user", u);
+
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+
+		// Tell the server to render the index page with the data in the model
+		return new ModelAndView(model, "users/appointments.hbs");
 	}
 
 	public ModelAndView showManageTutorsLandingPage(Request req, Response res) throws AuthException {
