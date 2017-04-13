@@ -338,6 +338,7 @@ public class ProfessorReviewDao {
 	public List<ProfessorReview> listReviewsByCourse(String course) {
 
 		String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE course = '" + course + "'";
+
 		List<ProfessorReview> reviews = null;
 
 		try {
@@ -736,8 +737,11 @@ public class ProfessorReviewDao {
 		return uniqueCourses;
 	}
 
-	public List<ProfessorReview> allReviewsForCourse(long course) {
+	public List<ProfessorReview> allReviewsForCourse(long course, String name) {
+		// final String SELECT = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + "
+		// WHERE course_id = " + course;
 		final String SELECT = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE course_id = " + course;
+
 		List<ProfessorReview> reviews = null;
 		try {
 			PreparedStatement ps = conn.prepareStatement(SELECT);

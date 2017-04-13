@@ -79,7 +79,7 @@
 		</h2>
 
 		<!-- <i class="icon fa-diamond"></i> -->
-		<h2>Tutors per course</h2>
+		<h2>Tutors in {{user_major}}</h2>
 
 	</section>
 
@@ -130,19 +130,11 @@
 
 	<div class="centercol">
 		&ensp;
-		<h2>Tutors per course</h2>
+		<h2>Tutors in {{user_major}}</h2>
 
 
 
   <br/>
-  <form action="/coursetutors" method="GET">
-  
-  &nbsp;&nbsp;
-  <div>
-    <input type="text" name="search" placeholder="Search Tutors..." />
-  </div>
-
-</form>
 
  <div name="error">
 						<p style='color: red'>{{error}}</p>

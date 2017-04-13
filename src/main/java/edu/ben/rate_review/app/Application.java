@@ -107,7 +107,7 @@ public class Application {
 	public static String TUTORDASHBOARD_PATH = "/tutordashboard";
 	public static String TEACHER_PATH = "/teacher";
 	public static String COURSESPROFESSOR_PATH = "/courseprofessors";
-	public static String COURSESTUTOR_PATH = "/coursetutors";
+	public static String MAJORTUTOR_PATH = "/majortutors";
 	public static String DEPARTMENTS_PATH = "/departments";
 	public static String TUTORS_PATH = "/tutors";
 	public static String ACTIVATION_PATH = "/activation";
@@ -270,9 +270,9 @@ public class Application {
 		post(COURSESPROFESSOR_PATH, (req, res) -> studentdashController.showCourseAllProfessorsPage(req, res),
 				new HandlebarsTemplateEngine());
 
-		get(COURSESTUTOR_PATH, (req, res) -> studentdashController.showCourseTutorsPage(req, res),
+		get(MAJORTUTOR_PATH, (req, res) -> studentdashController.showMajorTutorsPage(req, res),
 				new HandlebarsTemplateEngine());
-		post(COURSESTUTOR_PATH, (req, res) -> studentdashController.showCourseTutorsPage(req, res),
+		post(MAJORTUTOR_PATH, (req, res) -> studentdashController.showMajorTutorsPage(req, res),
 				new HandlebarsTemplateEngine());
 
 		get(ADDCOURSE_PATH, (req, res) -> editcoursesController.showAddCoursesPage(req, res),
@@ -417,10 +417,10 @@ public class Application {
 		// get(MESSAGE_PATH, (req, res) -> tutorsController.showMessagePage(req,
 		// res), new HandlebarsTemplateEngine());
 		get(CALENDAR_PATH, (req, res) -> calendarController.showCalendarPage(req, res), new HandlebarsTemplateEngine());
-		
-		post(CALENDAR_PATH, (req, res) -> calendarController.showCalendarPage(req, res), new HandlebarsTemplateEngine());
 
-		
+		post(CALENDAR_PATH, (req, res) -> calendarController.showCalendarPage(req, res),
+				new HandlebarsTemplateEngine());
+
 		// Change password paths
 		get(CHANGEPASSWORD_PATH, (req, res) -> changePasswordController.showChangePasswordPage(req, res),
 				new HandlebarsTemplateEngine());
