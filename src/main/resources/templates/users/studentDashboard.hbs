@@ -250,7 +250,7 @@
 							<td class="shrink">{{tutor_first_name}} {{tutor_last_name}}</td>
 							<td class="shrink">{{subject}}</td>
 							<td class="shrink">{{course_name}}</td>
-							<td class="shrink">{{overall}}/5</td>
+							<td class="shrink">{{#if overall}}{{overall}}/5{{/if}}{{#unless overall}}No Ratings{{/unless}}</td>
 							<td class="shrink"><input type="date" name="date" id="date" value="" placeholder="Date" /></td>
 							<td class="shrink"><input type="time" name="time" id="time" value="" placeholder="Time" /></td>
 							<td><input type="text" name="student_message" id="student_message" placeholder="Leave a message here." /></td>
