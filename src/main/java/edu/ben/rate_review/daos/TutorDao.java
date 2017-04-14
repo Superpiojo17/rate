@@ -72,7 +72,8 @@ public class TutorDao implements Dao<Tutor> {
 	 */
 	public TutorAppointment saveTutorAppointment(TutorAppointment appointment) {
 		final String sql = "INSERT INTO " + APPOINTMENT_TABLE + "(student_id, tutor_id, date, time, student_message, "
-				+ "student_firstname, student_lastname, tutor_firstname, tutor_lastname, tutor_message, tutor_has_responded, appointment_status, appointment_past) Values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "student_firstname, student_lastname, tutor_firstname, tutor_lastname, tutor_message, tutor_has_responded,"
+				+ " appointment_status, appointment_past, appointment_reviewed, relationship_id) Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -89,6 +90,8 @@ public class TutorDao implements Dao<Tutor> {
 			ps.setBoolean(11, appointment.getTutor_has_responded());
 			ps.setBoolean(12, appointment.getAppointment_status());
 			ps.setBoolean(13, appointment.isAppointment_past());
+			ps.setBoolean(14, appointment.isAppointment_reviewed());
+			ps.setLong(15, appointment.getRelationship_id());
 			ps.executeUpdate();
 			return appointment;
 		} catch (SQLException e) {
@@ -146,10 +149,12 @@ public class TutorDao implements Dao<Tutor> {
 		tmp.setTutor_has_responded(rs.getBoolean("tutor_has_responded"));
 		tmp.setAppointment_status(rs.getBoolean("appointment_status"));
 		tmp.setAppointment_past(rs.getBoolean("appointment_past"));
+		tmp.setAppointment_reviewed(rs.getBoolean("appointment_reviewed"));
 		tmp.setStudent_firstname(rs.getString("student_firstname"));
 		tmp.setStudent_lastname(rs.getString("student_lastname"));
 		tmp.setTutor_firstname(rs.getString("tutor_firstname"));
 		tmp.setTutor_lastname(rs.getString("tutor_lastname"));
+		tmp.setRelationship_id(rs.getLong("relationship_id"));
 
 		return tmp;
 	}
@@ -519,6 +524,34 @@ public class TutorDao implements Dao<Tutor> {
 		return tutors;
 	}
 
+	/**
+	 * Gets tutor for a specific course
+	 * 
+	 * @param course
+	 * @return
+	 */
+	public List<Tutor> getTutorByCourseName(String course, long student_id) {
+		final String SELECT = "SELECT * FROM " + TUTOR_TABLE + " WHERE course_name = " + course + " LIMIT 1";
+
+		List<Tutor> tutors = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			tutors = new ArrayList<Tutor>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					tutors.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return tutors;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return tutors;
+	}
+
 	public List<Tutor> allbyDept(String department) {
 		final String SELECT = "SELECT * FROM " + TUTOR_TABLE + " WHERE user_id_professor = " + department;
 
@@ -802,6 +835,35 @@ public class TutorDao implements Dao<Tutor> {
 			e.printStackTrace();
 		}
 		return apts;
+	}
+
+	/**
+	 * Lists reviews which have not been reviewed
+	 * 
+	 * @param student_id
+	 * @return
+	 */
+	public List<TutorAppointment> listAllNotReviewedTutorAppointments(User student) {
+		final String SELECT = "SELECT * FROM " + APPOINTMENT_TABLE + " WHERE student_id = " + student.getId()
+				+ " AND appointment_status = 1 AND appointment_past = 1 AND appointment_reviewed = 0";
+
+		List<TutorAppointment> appointments = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			appointments = new ArrayList<TutorAppointment>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					appointments.add(appointmentMapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return appointments;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return appointments;
 	}
 
 	@Override

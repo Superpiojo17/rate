@@ -1,5 +1,9 @@
 package edu.ben.rate_review.models;
 
+import edu.ben.rate_review.daos.DaoManager;
+import edu.ben.rate_review.daos.TutorDao;
+import edu.ben.rate_review.daos.UserDao;
+
 /**
  * Object which stores a tutor appointment
  * 
@@ -11,6 +15,7 @@ public class TutorAppointment {
 	private long appointment_id;
 	private long student_id;
 	private long tutor_id;
+	private long relationship_id;
 	private String date;
 	private String time;
 	private String student_message;
@@ -18,11 +23,31 @@ public class TutorAppointment {
 	private boolean tutor_has_responded;
 	private boolean appointment_status;
 	private boolean appointment_past;
+	private boolean appointment_reviewed;
 	private String student_firstname;
 	private String student_lastname;
 	private String tutor_firstname;
 	private String tutor_lastname;
+	// these are derived
+	private String course_name;
+	private String department;
 	
+	public long getRelationship_id() {
+		return relationship_id;
+	}
+
+	public void setRelationship_id(long relationship_id) {
+		this.relationship_id = relationship_id;
+	}
+
+	public boolean isAppointment_reviewed() {
+		return appointment_reviewed;
+	}
+
+	public void setAppointment_reviewed(boolean appointment_reviewed) {
+		this.appointment_reviewed = appointment_reviewed;
+	}
+
 	public boolean isAppointment_past() {
 		return appointment_past;
 	}
@@ -133,6 +158,21 @@ public class TutorAppointment {
 
 	public void setTutor_lastname(String tutor_lastname) {
 		this.tutor_lastname = tutor_lastname;
+	}
+	
+	public String getCourse_name(){
+		TutorDao tDao = DaoManager.getInstance().getTutorDao();
+		Tutor t = tDao.findById(relationship_id);
+		return t.getCourse_name();
+	}
+
+	public String getDepartment() {
+		DaoManager dao = DaoManager.getInstance();
+		TutorDao tDao = dao.getTutorDao();
+		UserDao uDao = dao.getUserDao();
+		Tutor tutor = tDao.findById(relationship_id);
+		User tutor_account = uDao.findById(tutor.getProfessor_id());
+		return tutor_account.getMajor();
 	}
 	
 }

@@ -233,7 +233,8 @@
 				<thead>
 					<tr>
 					<th><br />Tutor</th>
-					<th><br />Class</th>
+					<th><br />Subject</th>
+					<th><br />Specialty</th>
 					<th><br />Date</th>
 					<th><br />Time</th>
 					<th><br />Message (Size limit: 200)</th>
@@ -246,12 +247,13 @@
 							<tr>
 							<form action="/studentdashboard" method="post">
 							<td class="shrink">{{tutor_first_name}} {{tutor_last_name}}</td>
+							<td class="shrink">{{subject}}</td>
 							<td class="shrink">{{course_name}}</td>
 							<td class="shrink"><input type="date" name="date" id="date" value="" placeholder="Date" /></td>
 							<td class="shrink"><input type="time" name="time" id="time" value="" placeholder="Time" /></td>
 							<td><input type="text" name="student_message" id="student_message" placeholder="Leave a message here." /></td>
 							<td class = "shrink">
-								<button title="send request" class="btn btn-primary" type="submit" name="tutor_id" value="{{student_id}}"><span class="glyphicon glyphicon-arrow-right"></span></button>
+								<button title="send request" class="btn btn-primary" type="submit" name="tutor_id" value="{{student_id}},{{id}}"><span class="glyphicon glyphicon-arrow-right"></span></button>
 							</td>
 							</form>
 							</tr>
@@ -266,7 +268,7 @@
 		</div>
 		</div>
 		
-		 <div class="panel panel-default">
+		<div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
           <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Appointment Responses</a>
@@ -282,6 +284,7 @@
 				<thead>
 					<tr>
 					<th><br />Tutor</th>
+					<th><br />Subject</th>
 					<th><br />Date</th>
 					<th><br />Time</th>
 					<th><br />Your Message</th>
@@ -296,6 +299,7 @@
 							<tr>
 							<form action="/studentdashboard" method="post">
 								<td class="shrink">{{tutor_firstname}} {{tutor_lastname}}</td>
+								<td class="shrink">{{course_name}}</td>
 								<td class="shrink">{{date}}</td>
 								<td class="shrink">{{time}}</td>
 								<td>{{student_message}}</td>
@@ -327,7 +331,7 @@
 									{{#if tutor_has_responded}}
 										{{#if appointment_status}}
 										{{#unless appointment_past}}
-											<button title="cancel appointment" class="btn" type="submit" name="tutor_id" value="-{{appointment_id}}"><span class="glyphicon glyphicon-remove"></span></button>
+											<button title="cancel appointment" class="btn" type="submit" name="tutor_id" value="-{{appointment_id}},0"><span class="glyphicon glyphicon-remove"></span></button>
 										{{/unless}}
 										{{#if appointment_past}}
 											<button title="appointment past" class="btn disabled" type="button"><span class="glyphicon glyphicon-remove"></span></button>
@@ -345,19 +349,19 @@
 								<td class="shrink">
 									{{#if tutor_has_responded}}
 										{{#unless appointment_status}}
-											<button title="delete denied appointment" class="btn btn-danger" type="submit" name="tutor_id" value="-{{appointment_id}}"><span class="glyphicon glyphicon-trash"></span></button>
+											<button title="delete denied appointment" class="btn btn-danger" type="submit" name="tutor_id" value="-{{appointment_id}},0"><span class="glyphicon glyphicon-trash"></span></button>
 										{{/unless}}
 										{{#if appointment_status}}
 										{{#unless appointment_past}}
 											<button class="btn btn-danger disabled" type="button"><span class="glyphicon glyphicon-trash"></span></button>
 										{{/unless}}
 										{{#if appointment_past}}
-											<button title="remove past appointment" class="btn btn-danger" type="submit" name="tutor_id" value="-{{appointment_id}}"><span class="glyphicon glyphicon-trash"></span></button>
+											<button title="remove past appointment" class="btn btn-danger" type="submit" name="tutor_id" value="-{{appointment_id}},0"><span class="glyphicon glyphicon-trash"></span></button>
 										{{/if}}
 										{{/if}}
 									{{/if}}
 									{{#unless tutor_has_responded}}
-										<button title="delete request" class="btn btn-danger" type="submit" name="tutor_id" value="-{{appointment_id}}"><span class="glyphicon glyphicon-trash"></span></button>
+										<button title="delete request" class="btn btn-danger" type="submit" name="tutor_id" value="-{{appointment_id}},0"><span class="glyphicon glyphicon-trash"></span></button>
 									{{/unless}}
 								</td>
 							<form action="/studentdashboard" method="post">
@@ -374,6 +378,60 @@
       </div>
 	
     </div>
+    
+    
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">Review Tutor Appointment</a>
+        </h4>
+      </div>
+		<div id="collapse5" class="panel-collapse collapse">
+		
+		{{#unless appointments_not_reviewed}}No available tutors at this time.{{/unless}}
+		{{#if appointments_not_reviewed}}
+      	 <div class="table-wrapper">
+			<table class="alt">
+				<thead>
+					<tr>
+					<th><br />Tutor</th>
+					<th><br />Subject</th>
+					<th><br />Specialty</th>
+					<th><br />Date</th>
+					<th><br />Time</th>
+					<th></th>
+					</tr>
+				</thead>
+				<tbody>
+						{{#each appointments_not_reviewed}}
+						
+							<tr>
+							<form action="/studentdashboard" method="post">
+							<td class=>{{tutor_firstname}} {{tutor_lastname}}</td>
+							<td class=>{{department}}</td>
+							<td class=>{{course_name}}</td>
+							<td class="shrink">{{date}}</td>
+							<td class="shrink">{{time}}</td>
+							<td class = "shrink">
+								<button title="send request" class="btn btn-primary" type="submit" name="appointment_id" value="{{appointment_id}}"><span class="glyphicon glyphicon-arrow-right"></span></button>
+							</td>
+							</form>
+							</tr>
+						
+						{{/each}}
+				</tbody>
+					<tfoot>
+					</tfoot>
+				</table>
+			</div> 
+			{{/if}}
+		</div>
+		</div>
+    
+    
+    
+    
     </div>
     
     
