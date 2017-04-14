@@ -1,6 +1,10 @@
 package edu.ben.rate_review.models;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 import edu.ben.rate_review.daos.DaoManager;
+import edu.ben.rate_review.daos.TutorDao;
 import edu.ben.rate_review.daos.UserDao;
 
 public class Tutor {
@@ -12,8 +16,9 @@ public class Tutor {
 	private String tutor_first_name;
 	private String tutor_last_name;
 	private String tutor_email;
-	private String subject;
-	private String professor_name;
+	private String overall;
+	// private String subject;
+	// private String professor_name;
 
 	public Tutor() {
 		super();
@@ -90,4 +95,23 @@ public class Tutor {
 		return professor_name;
 	}
 
+	/**
+	 * Returns tutor's overall rating
+	 * 
+	 * @return
+	 */
+	public String getOverall() {
+		TutorDao tDao = DaoManager.getInstance().getTutorDao();
+		int numOfReviews = tDao.listTutorReviewsByTutor(student_id).size();
+		float sumOfReviews = tDao.getTutorAverageRating(student_id);
+		DecimalFormat df = new DecimalFormat("##.##");
+		df.setRoundingMode(RoundingMode.DOWN);
+		if (numOfReviews != 0) {
+			overall = df.format((float) sumOfReviews / (6 * numOfReviews));
+		} else {
+			overall = "0";
+		}
+
+		return overall;
+	}
 }

@@ -888,8 +888,8 @@ public class TutorDao implements Dao<Tutor> {
 	public void saveTutorReview(TutorReview review) {
 
 		final String sql = "INSERT INTO " + REVIEW_TABLE + "(appointment_id, enhance_understanding, "
-				+ "simple_examples, professional, prepared, schedule_again, recommend, comment)"
-				+ " Values(?,?,?,?,?,?,?,?)";
+				+ "simple_examples, professional, prepared, schedule_again, recommend, comment,"
+				+ "student_id, tutor_id) Values(?,?,?,?,?,?,?,?,?,?)";
 
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -901,13 +901,20 @@ public class TutorDao implements Dao<Tutor> {
 			ps.setInt(6, review.getSchedule_again());
 			ps.setInt(7, review.getRecommend());
 			ps.setString(8, review.getComment());
+			ps.setLong(9, review.getStudent_id());
+			ps.setLong(10, review.getTutor_id());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 	}
-	
+
+	/**
+	 * Sets an appointment in the database as reviewed
+	 * 
+	 * @param appointment
+	 */
 	public void setAppointmentReviewed(TutorAppointment appointment) {
 		String sql = "UPDATE " + APPOINTMENT_TABLE + " SET appointment_reviewed = 1 WHERE appointment_id = ? LIMIT 1";
 
@@ -920,4 +927,84 @@ public class TutorDao implements Dao<Tutor> {
 		}
 	}
 
+	/**
+	 * Lists all tutor reviews for a given tutor
+	 * 
+	 * @param tutor
+	 * @return
+	 */
+	public List<TutorReview> listTutorReviewsByTutor(long tutor_id) {
+		final String SELECT = "SELECT * FROM " + REVIEW_TABLE + " WHERE tutor_id = " + tutor_id;
+
+		List<TutorReview> reviews = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			reviews = new ArrayList<TutorReview>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					reviews.add(reviewMapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return reviews;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return reviews;
+	}
+
+	/**
+	 * returns tutor review object
+	 * 
+	 * @param rs
+	 * @return
+	 * @throws SQLException
+	 */
+	private TutorReview reviewMapRow(ResultSet rs) throws SQLException {
+		UserDao udao = new UserDao(conn);
+
+		TutorReview tmp = new TutorReview();
+
+		tmp.setReview_id(rs.getLong("review_id"));
+		tmp.setAppointment_id(rs.getLong("appointment_id"));
+		tmp.setEnhance_understanding(rs.getInt("enhance_understanding"));
+		tmp.setSimple_examples(rs.getInt("simple_examples"));
+		tmp.setProfessional(rs.getInt("professional"));
+		tmp.setPrepared(rs.getInt("prepared"));
+		tmp.setSchedule_again(rs.getInt("schedule_again"));
+		tmp.setRecommend(rs.getInt("recommend"));
+		tmp.setComment(rs.getString("comment"));
+		tmp.setStudent_id(rs.getLong("student_id"));
+		tmp.setTutor_id(rs.getLong("tutor_id"));
+
+		return tmp;
+	}
+
+	/**
+	 * Gets average rating of a tutor
+	 * 
+	 * @param tutor_id
+	 * @return
+	 */
+	public float getTutorAverageRating(long tutor_id) {
+		String sql = "SELECT SUM(enhance_understanding + simple_examples + professional + "
+				+ "prepared + schedule_again + recommend) FROM " + REVIEW_TABLE + "  WHERE tutor_id = ?";
+
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setLong(1, tutor_id);
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return rs.getFloat(1);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return 0;
+	}
 }

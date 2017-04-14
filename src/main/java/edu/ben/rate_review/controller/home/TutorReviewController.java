@@ -111,6 +111,8 @@ public class TutorReviewController {
 		review.setSchedule_again(Integer.parseInt(req.queryParams("schedule_again")));
 		review.setRecommend(Integer.parseInt(req.queryParams("recommend")));
 		review.setComment(req.queryParams("comment"));
+		review.setStudent_id(appointment.getStudent_id());
+		review.setTutor_id(appointment.getTutor_id());
 
 		tDao.saveTutorReview(review);
 		tDao.setAppointmentReviewed(appointment);

@@ -45,7 +45,7 @@ public class ProfessorReview {
 	private boolean comment_flagged;
 	private boolean comment_removed;
 	private boolean comment_approved;
-	private float overall;
+	//private float overall;
 
 	public boolean getComment_approved() {
 		return comment_approved;

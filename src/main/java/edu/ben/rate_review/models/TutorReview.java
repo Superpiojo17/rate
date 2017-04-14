@@ -3,6 +3,8 @@ package edu.ben.rate_review.models;
 public class TutorReview {
 	private long review_id;
 	private long appointment_id;
+	private long student_id;
+	private long tutor_id;
 	// Did appointment enhance your understanding of the material
 	private int enhance_understanding;
 	// Did the tutor provide simpler examples of difficult material
@@ -17,6 +19,26 @@ public class TutorReview {
 	private int recommend;
 	private String comment;
 	
+	public void setReview_id(long review_id) {
+		this.review_id = review_id;
+	}
+
+	public long getStudent_id() {
+		return student_id;
+	}
+
+	public void setStudent_id(long student_id) {
+		this.student_id = student_id;
+	}
+
+	public long getTutor_id() {
+		return tutor_id;
+	}
+
+	public void setTutor_id(long tutor_id) {
+		this.tutor_id = tutor_id;
+	}
+
 	public long getReview_id() {
 		return review_id;
 	}
