@@ -184,16 +184,16 @@
 											<td class="shrink" align="center">
 											{{#unless semester_past}}
 											{{#unless disable_edit}}
-											<a title="edit your review" href="/reviewprofessor/{{course_id}}/review" class="btn btn-info"><span class="glyphicon glyphicon-pencil fa-2x"></span></a>
+											<a title="edit your review" href="/reviewprofessor/{{course_id}}/review"><span class="glyphicon glyphicon-pencil fa-2x"></span></a>
 											{{/unless}}
 											{{/unless}}
 											
 											{{#if semester_past}}
-												<a title="edit-disabled" href="/reviewprofessor/{{course_id}}/review" class="btn btn-primary"><i class="fa fa-eye fa-2x" aria-hidden="true"></i></a>
+												<a title="edit-disabled" href="/reviewprofessor/{{course_id}}/review"><i class="fa fa-eye fa-2x" aria-hidden="true"></i></a>
 											{{/if}}
 											{{#unless semester_past}}
 											{{#if disable_edit}}
-												<a title="edit disabled" href="/reviewprofessor/{{course_id}}/review" class="btn btn-primary"><i class="fa fa-eye fa-2x" aria-hidden="true"></i></a>
+												<a title="edit disabled" href="/reviewprofessor/{{course_id}}/review"><i class="fa fa-eye fa-2x" aria-hidden="true"></i></a>
 											{{/if}}
 											{{/unless}}
 											
@@ -312,7 +312,7 @@
 										<span title="pending" class="glyphicon glyphicon-option-horizontal fa-2x"></span>
 									{{/unless}}
 									{{#if appointment_past}}
-										<i title="tutor did not respond" class="fa fa-eye-slash fa-2x" aria-hidden="true"></i>
+										<i title="tutor did not see request, and the date has passed" class="fa fa-eye-slash fa-2x" aria-hidden="true"></i>
 									{{/if}}
 									{{/unless}}
 									{{#if tutor_has_responded}} 
@@ -410,13 +410,13 @@
 						
 							<tr>
 							<form action="/studentdashboard" method="post">
-							<td class=>{{tutor_firstname}} {{tutor_lastname}}</td>
-							<td class=>{{department}}</td>
-							<td class=>{{course_name}}</td>
-							<td class="shrink">{{date}}</td>
-							<td class="shrink">{{time}}</td>
-							<td class = "shrink">
-								<a title="click here to review" href="/tutorreview/{{appointment_id}}">click</a>
+							<td>{{tutor_firstname}} {{tutor_lastname}}</td>
+							<td>{{department}}</td>
+							<td>{{course_name}}</td>
+							<td>{{date}}</td>
+							<td>{{time}}</td>
+							<td class="shrink">
+								<a title="click here to review" href="/tutorreview/{{appointment_id}}"><i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i></a>
 							</td>
 							</form>
 							</tr>
