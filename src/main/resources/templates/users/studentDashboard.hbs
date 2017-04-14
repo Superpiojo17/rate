@@ -389,7 +389,7 @@
       </div>
 		<div id="collapse5" class="panel-collapse collapse">
 		
-		{{#unless appointments_not_reviewed}}No available tutors at this time.{{/unless}}
+		{{#unless appointments_not_reviewed}}No appointments to review.{{/unless}}
 		{{#if appointments_not_reviewed}}
       	 <div class="table-wrapper">
 			<table class="alt">
@@ -414,7 +414,7 @@
 							<td class="shrink">{{date}}</td>
 							<td class="shrink">{{time}}</td>
 							<td class = "shrink">
-								<button title="send request" class="btn btn-primary" type="submit" name="appointment_id" value="{{appointment_id}}"><span class="glyphicon glyphicon-arrow-right"></span></button>
+								<a title="click here to review" href="/tutorreview/{{appointment_id}}">click</a>
 							</td>
 							</form>
 							</tr>

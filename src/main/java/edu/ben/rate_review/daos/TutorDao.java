@@ -10,6 +10,7 @@ import java.util.List;
 import edu.ben.rate_review.models.Tutor;
 import edu.ben.rate_review.models.TutorAppointment;
 import edu.ben.rate_review.models.TutorForm;
+import edu.ben.rate_review.models.TutorReview;
 import edu.ben.rate_review.models.User;
 
 public class TutorDao implements Dao<Tutor> {
@@ -17,6 +18,7 @@ public class TutorDao implements Dao<Tutor> {
 	String TUTOR_TABLE = "tutors";
 	String USER_TABLE = "users";
 	String APPOINTMENT_TABLE = "tutor_appointment";
+	String REVIEW_TABLE = "tutor_review";
 	Connection conn = null;
 
 	/**
@@ -876,6 +878,46 @@ public class TutorDao implements Dao<Tutor> {
 	public List<Tutor> all() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/**
+	 * Saves a tutor review in the database
+	 * 
+	 * @param review
+	 */
+	public void saveTutorReview(TutorReview review) {
+
+		final String sql = "INSERT INTO " + REVIEW_TABLE + "(appointment_id, enhance_understanding, "
+				+ "simple_examples, professional, prepared, schedule_again, recommend, comment)"
+				+ " Values(?,?,?,?,?,?,?,?)";
+
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setLong(1, review.getAppointment_id());
+			ps.setInt(2, review.getEnhance_understanding());
+			ps.setInt(3, review.getSimple_examples());
+			ps.setInt(4, review.getProfessional());
+			ps.setInt(5, review.getPrepared());
+			ps.setInt(6, review.getSchedule_again());
+			ps.setInt(7, review.getRecommend());
+			ps.setString(8, review.getComment());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void setAppointmentReviewed(TutorAppointment appointment) {
+		String sql = "UPDATE " + APPOINTMENT_TABLE + " SET appointment_reviewed = 1 WHERE appointment_id = ? LIMIT 1";
+
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setLong(1, appointment.getAppointment_id());
+			ps.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

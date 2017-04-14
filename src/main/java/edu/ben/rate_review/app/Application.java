@@ -28,6 +28,7 @@ import edu.ben.rate_review.controller.home.ProfessorReviewController;
 import edu.ben.rate_review.controller.home.RegisterController;
 //import edu.ben.rate_review.controller.home.TeacherAddTutorController;
 import edu.ben.rate_review.controller.home.TeacherController;
+import edu.ben.rate_review.controller.home.TutorReviewController;
 //import edu.ben.rate_review.controller.home.TutorAppointmentController;
 //import edu.ben.rate_review.controller.home.TutorsController;
 import edu.ben.rate_review.controller.session.SessionsController;
@@ -76,6 +77,7 @@ public class Application {
 	private static AdminController adminController = new AdminController();
 	private static EditCoursesController editcoursesController = new EditCoursesController();
 	private static AdminEditTutorController adminedittutorController = new AdminEditTutorController();
+	private static TutorReviewController tutorReviewController = new TutorReviewController();
 
 	private static FaqController faqController = new FaqController();
 	// private static TutorAppointmentController tutorAppointmentController =
@@ -171,6 +173,7 @@ public class Application {
 	public static String UPDATEAPPOINTMENT_PATH = "/editapt/:id/edit";
 	public static String LOGOUT_PATH = "/logout";
 	public static String DELETEAPPOINTMENT_PATH = "/deleteapt/:id";
+	public static String TUTORREVIEW_PATH = "/tutorreview/:appointment_id";
 
 	public static void main(String[] args) throws Exception {
 
@@ -385,6 +388,11 @@ public class Application {
 
 		put(REVIEWPROFESSOR_PATH, (req, res) -> professorReviewController.passCourse(req, res));
 
+		get(TUTORREVIEW_PATH, (req, res) -> tutorReviewController.showTutorReview(req, res),
+				new HandlebarsTemplateEngine());
+		
+		post(TUTORREVIEW_PATH, (req, res) -> tutorReviewController.reviewTutor(req, res));
+		
 		get(TEACHER_PATH, (req, res) -> teacherController.showTeacherPage(req, res), new HandlebarsTemplateEngine());
 
 		get(DEPARTMENTS_PATH, (req, res) -> departmentsController.showDepartmentsPage(req, res),

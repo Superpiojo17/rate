@@ -21,10 +21,6 @@ public class TutorReview {
 		return review_id;
 	}
 
-	public void setReview_id(long review_id) {
-		this.review_id = review_id;
-	}
-
 	public long getAppointment_id() {
 		return appointment_id;
 	}

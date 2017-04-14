@@ -1,0 +1,219 @@
+<!DOCTYPE HTML>
+<!--
+	Retrospect by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>Professor</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="/assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body class="landing">
+
+			<!-- Header -->
+			<header id="header" class="skel-layers-fixed">
+				<h1><a href="/">RateAndReview</a></h1>
+				<a href="#nav">Menu</a>
+			</header>
+
+		<!-- Nav -->
+			<nav id="nav" class="visible">
+				<ul class="links">
+					<li><a href="/">Home</a></li>
+					
+					{{#if user_admin}}
+						<li><a href="/admindashboard">My Dashboard</a></li>
+					{{/if}}
+					{{#if user_professor}}
+						<li><a href="/facultydashboard">My Dashboard</a></li>
+					{{/if}}
+					{{#if user_tutor}}
+						<li><a href="/tutordashboard">My Dashboard</a></li>
+					{{/if}}
+					{{#if user_student}}
+						<li><a href="/studentdashboard">My Dashboard</a></li>
+					{{/if}}
+					
+					{{#if user_null}}
+						<li><a href="/login">Log In</a></li>
+						<li><a href="/register">Register</a></li>
+						<li><a href="/activation">Activate Account</a></li>
+						<li><a href="/accountrecovery">Forgot Password?</a></li>
+					{{/if}}
+					
+						<li><a href="/teacher">Browse Professors</a></li>
+					
+					{{#unless user_admin}}
+						<li><a href="/contactus">Contact Us</a></li>
+					{{/unless}}
+						<li><a href="/aboutus">About Us</a></li>
+						<li><a href="/faq">FAQ</a></li>
+					
+					{{#unless user_null}}
+						<li><a href="/logout">Log Out</a></li>
+					{{/unless}}
+				</ul>
+			</nav>
+			
+		<!-- Main -->
+<section id="main" class="wrapper">
+	<div class="container">
+		<header class="major special">
+			<h2>{{appointment.tutor_firstname}} {{appointment.tutor_lastname}}</h2>
+			<h3>Course to Review<label id="course_name">{{appointment.course_name}}</label></h3>
+		</header>
+
+		<form action="/tutorreview/{{appointment.appointment_id}}" method="post">		
+			<div class="table-wrapper">
+			<table class="alt">
+				<thead>
+				<tr></tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<h4>Did the appointment enhance your understanding of the material?:</h4>
+							<p>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<i>1 = I did not leave with a better understanding. &nbsp; 5 = It greatly enhanced my knowledge of the material.</i>
+							</p>
+							<sup>lowest</sup>
+							<label class="radio inline"><input type="radio" name="enhance_understanding" value="1" checked>1</label>
+							<label class="radio inline"><input type="radio" name="enhance_understanding" value="2">2</label> 
+							<label class="radio inline"><input type="radio" name="enhance_understanding" value="3">3</label> 
+							<label class="radio inline"><input type="radio" name="enhance_understanding" value="4">4</label> 
+							<label class="radio inline"><input type="radio" name="enhance_understanding" value="5">5</label>
+							<sup>highest</sup>	
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h4>Did the tutor provide simpler examples of difficult material?:</h4>
+							<p>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<i>1 = The tutor's examples were difficult to understand. &nbsp; 5 = The tutor broke down the topic into understandable examples.</i>
+							</p>
+							<sup>lowest</sup>
+							<label class="radio inline"><input type="radio" name="simple_examples" value="1" checked>1</label>
+							<label class="radio inline"><input type="radio" name="simple_examples" value="2">2</label> 
+							<label class="radio inline"><input type="radio" name="simple_examples" value="3">3</label> 
+							<label class="radio inline"><input type="radio" name="simple_examples" value="4">4</label> 
+							<label class="radio inline"><input type="radio" name="simple_examples" value="5">5</label>
+							<sup>highest</sup>	
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h4>Did the tutor conduct the appointment in a professional manner?:</h4>
+							<p>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<i>1 = The tutor did not act like a professional. &nbsp; 5 = The tutor behaved like a true professional.</i>
+							</p>
+							<sup>lowest</sup>
+							<label class="radio inline"><input type="radio" name="professional" value="1" checked>1</label>
+							<label class="radio inline"><input type="radio" name="professional" value="2">2</label> 
+							<label class="radio inline"><input type="radio" name="professional" value="3">3</label> 
+							<label class="radio inline"><input type="radio" name="professional" value="4">4</label> 
+							<label class="radio inline"><input type="radio" name="professional" value="5">5</label>
+							<sup>highest</sup>	
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h4>Was the tutor prepared for the appointment?:</h4>
+							<p>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<i>1 = The tutor came unprepared. &nbsp; 5 = The tutor was extremely prepared for our appointment.</i>
+							</p>
+							<sup>lowest</sup>
+							<label class="radio inline"><input type="radio" name="prepared" value="1" checked>1</label>
+							<label class="radio inline"><input type="radio" name="prepared" value="2">2</label> 
+							<label class="radio inline"><input type="radio" name="prepared" value="3">3</label> 
+							<label class="radio inline"><input type="radio" name="prepared" value="4">4</label> 
+							<label class="radio inline"><input type="radio" name="prepared" value="5">5</label>
+							<sup>highest</sup>	
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h4>Would you schedule another appointment with this tutor?:</h4>
+							<p>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<i>1 = I would not work with this tutor again. &nbsp; 5 = I would definitely work with this tutor again.</i>
+							</p>
+							<sup>lowest</sup>
+							<label class="radio inline"><input type="radio" name="schedule_again" value="1" checked>1</label>
+							<label class="radio inline"><input type="radio" name="schedule_again" value="2">2</label> 
+							<label class="radio inline"><input type="radio" name="schedule_again" value="3">3</label> 
+							<label class="radio inline"><input type="radio" name="schedule_again" value="4">4</label> 
+							<label class="radio inline"><input type="radio" name="schedule_again" value="5">5</label>
+							<sup>highest</sup>	
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h4>Would you recommend this tutor to other students?:</h4>
+							<p>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<i>1 = I would never recommend this tutor. &nbsp; 5 = I would definitely recommend this tutor.</i>
+							</p>
+							<sup>lowest</sup>
+							<label class="radio inline"><input type="radio" name="recommend" value="1" checked>1</label>
+							<label class="radio inline"><input type="radio" name="recommend" value="2">2</label> 
+							<label class="radio inline"><input type="radio" name="recommend" value="3">3</label> 
+							<label class="radio inline"><input type="radio" name="recommend" value="4">4</label> 
+							<label class="radio inline"><input type="radio" name="recommend" value="5">5</label>
+							<sup>highest</sup>	
+						</td>
+					</tr>
+				</tbody>
+				<tfoot></tfoot>
+			</table>
+			</div> 
+			
+			<div class="container"> <br> 
+				<h4>Comment (500 character limit):</h4> <br>
+				<textarea name="comment""></textarea> <br>
+				<input type="submit" value="Submit">
+			</div>
+		</form>
+	</div>
+</section>
+  			
+			
+
+			<!-- Footer -->
+	<footer id="footer">
+		<div class="inner">
+			<ul class="icons">
+				<li><a href="https://www.facebook.com/Rateandreview-1894488470796383/?ref=aymt_homepage_panel
+				" class="icon fa-facebook"> <span
+						class="label">Facebook</span>
+				</a></li>
+				<li><a href="https://twitter.com/RateAndReview17" class="icon fa-twitter"> <span
+						class="label">Twitter</span>
+				</a></li>
+				<li><a href="https://www.instagram.com/rateandreview17/" class="icon fa-instagram"> <span
+						class="label">Instagram</span>
+				</a></li>
+				<li><a href="https://www.linkedin.com/in/rateandreview-capstone-b78751139" class="icon fa-linkedin"> <span
+						class="label">LinkedIn</span>
+				</a></li>
+			</ul>
+			
+		</div>
+	</footer>
+
+		<!-- Scripts -->
+		
+		<!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="/assets/js/main2.js"></script>
+		
+	</body>
+</html>
