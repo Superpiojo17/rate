@@ -62,7 +62,7 @@ public class ProfessorController {
 			List<String> uniqueCourses = reviewDao.listUniqueCourses(prof);
 			// adds overview option and initial SELECT COURSE
 			uniqueCourses.add(0, "Overview");
-			uniqueCourses.add(0, "SELECT COURSE");
+			//uniqueCourses.add(0, "SELECT COURSE");
 			// lists unique courses for top of page
 			model.put("unique_courses", uniqueCourses);
 
