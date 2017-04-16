@@ -38,6 +38,7 @@ import edu.ben.rate_review.controller.user.AdminEditTutorController;
 import edu.ben.rate_review.controller.user.CalendarController;
 import edu.ben.rate_review.controller.user.EditAnnouncementController;
 import edu.ben.rate_review.controller.user.EditCoursesController;
+import edu.ben.rate_review.controller.user.EditReviewsController;
 import edu.ben.rate_review.controller.user.EditTutorController;
 import edu.ben.rate_review.controller.user.EditUserController;
 import edu.ben.rate_review.controller.user.FacultyDashboardController;
@@ -80,6 +81,7 @@ public class Application {
 	private static TutorReviewController tutorReviewController = new TutorReviewController();
 
 	private static FaqController faqController = new FaqController();
+	private static EditReviewsController editReviewController = new EditReviewsController();
 	// private static TutorAppointmentController tutorAppointmentController =
 	// new TutorAppointmentController();
 	// private static TeacherAddTutorController teacherAddTutorController = new
@@ -174,6 +176,9 @@ public class Application {
 	public static String LOGOUT_PATH = "/logout";
 	public static String DELETEAPPOINTMENT_PATH = "/deleteapt/:id";
 	public static String TUTORREVIEW_PATH = "/tutorreview/:appointment_id";
+	public static String ADMINREVIEWLANDING_PATH = "/reviewlanding";
+	public static String DEPTREVIEWS_PATH = "/reviews/:department";
+	public static String DELETEREVIEW_PATH = "/deletereview/:courseid";
 
 	public static void main(String[] args) throws Exception {
 
@@ -234,12 +239,22 @@ public class Application {
 
 		get(APPOINTMENTS_PATH, (req, res) -> admindashController.showAllDeptApt(req, res),
 				new HandlebarsTemplateEngine());
+
+		get(DEPTREVIEWS_PATH, (req, res) -> editReviewController.showDeptReviews(req, res),
+				new HandlebarsTemplateEngine());
+
+		get(ADMINREVIEWLANDING_PATH, (req, res) -> admindashController.showManageReviewsLandingPage(req, res),
+				new HandlebarsTemplateEngine());
+
 		get(EDITAPPOINTMENTS_PATH, (req, res) -> admindashController.showEditApt(req, res),
 				new HandlebarsTemplateEngine());
-		
+
 		post(UPDATEAPPOINTMENT_PATH, (req, res) -> admindashController.adminUpdateApt(req, res),
 				new HandlebarsTemplateEngine());
 		
+		post(DELETEREVIEW_PATH, (req, res) -> editReviewController.deleteReview(req, res),
+				new HandlebarsTemplateEngine());
+
 		post(DELETEAPPOINTMENT_PATH, (req, res) -> admindashController.adminDeleteApt(req, res),
 				new HandlebarsTemplateEngine());
 
@@ -390,9 +405,9 @@ public class Application {
 
 		get(TUTORREVIEW_PATH, (req, res) -> tutorReviewController.showTutorReview(req, res),
 				new HandlebarsTemplateEngine());
-		
+
 		post(TUTORREVIEW_PATH, (req, res) -> tutorReviewController.reviewTutor(req, res));
-		
+
 		get(TEACHER_PATH, (req, res) -> teacherController.showTeacherPage(req, res), new HandlebarsTemplateEngine());
 
 		get(DEPARTMENTS_PATH, (req, res) -> departmentsController.showDepartmentsPage(req, res),

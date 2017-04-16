@@ -65,14 +65,18 @@ public class ProfessorReviewController {
 
 		// gets the course object from the course_id
 		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
+		UserDao userDao = DaoManager.getInstance().getUserDao();
 		CoursesToReview course = reviewDao.findByCourseId(course_id);
 
 		// checks that the person accessing the page has access
-		if (user_id != -1 && user_id == course.getStudent_id()) {
+		if ((user_id != -1 && user_id == course.getStudent_id()) || (u.getRole() == 1)) {
 			if (reviewDao.findReview(course.getCourse_id()) == null) {
 
 				// create the form object, put it into request
 				model.put("course", course);
+				
+				model.put("deletekey", course.getCourse_id());
+				
 
 				ProfessorReview review = reviewDao.findReview(course_id);
 
@@ -88,8 +92,16 @@ public class ProfessorReviewController {
 				model.put("announcements", announcements);
 			} else {
 				if (reviewDao.findByCourseId(course.getCourse_id()).getDisable_edit()
-						|| reviewDao.findByCourseId(course.getCourse_id()).isSemester_past()) {
+						|| reviewDao.findByCourseId(course.getCourse_id()).isSemester_past() || u.getRole() == 1) {
 					model.put("edit_is_disabled", true);
+					ProfessorReview review = reviewDao.findReview(course_id);
+					String email = review.getProfessor_email();
+
+					User useremail = userDao.findByEmail(email);
+
+					String department = useremail.getMajor();
+					model.put("deletekey", course.getCourse_id());
+					model.put("department", department);
 				} else {
 					model.put("edit_is_disabled", false);
 				}

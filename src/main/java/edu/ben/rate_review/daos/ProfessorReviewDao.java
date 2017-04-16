@@ -268,6 +268,23 @@ public class ProfessorReviewDao {
 		return null;
 
 	}
+	
+	
+	public String deleteReview(long id) {
+
+		String sql = "DELETE FROM " + REVIEW_PROFESSOR_TABLE + " WHERE course_id = ? LIMIT 1";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setLong(1, id);
+			// Runs query
+			ps.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return " ";
+	}
 
 	/**
 	 * Finds all reviews for a specific professor
@@ -386,6 +403,31 @@ public class ProfessorReviewDao {
 		// If you don't find a model
 		return null;
 
+	}
+
+	public List<ProfessorReview> allFromDept(String dept) {
+
+		String sql = "SELECT * FROM professor_review WHERE professor_email IN (Select email from users where major = '" + dept+ "')";
+
+
+		List<ProfessorReview> reviews = null;
+
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			reviews = new ArrayList<ProfessorReview>();
+			try {
+				ResultSet rs = ps.executeQuery();
+				while (rs.next()) {
+					reviews.add(reviewMapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return reviews;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return reviews;
 	}
 
 	/**

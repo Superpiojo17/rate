@@ -3,6 +3,9 @@ package edu.ben.rate_review.models;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
+import edu.ben.rate_review.daos.DaoManager;
+import edu.ben.rate_review.daos.UserDao;
+
 /**
  * Model for the review of a professor
  * 
@@ -45,7 +48,8 @@ public class ProfessorReview {
 	private boolean comment_flagged;
 	private boolean comment_removed;
 	private boolean comment_approved;
-	//private float overall;
+	private String studentname;
+	// private float overall;
 
 	public boolean getComment_approved() {
 		return comment_approved;
@@ -420,6 +424,12 @@ public class ProfessorReview {
 		return (df.format((float) (rate_objectives + rate_organized + rate_challenging + rate_outside_work + rate_pace
 				+ rate_assignments + rate_grade_fairly + rate_grade_time + rate_accessibility + rate_knowledge
 				+ rate_career_development) / 11));
+	}
+
+	public String getStudentname() {
+		UserDao udao = DaoManager.getInstance().getUserDao();
+		User user = udao.findById(student_id);
+		return user.getFirst_name() + " " + user.getLast_name();
 	}
 
 }
