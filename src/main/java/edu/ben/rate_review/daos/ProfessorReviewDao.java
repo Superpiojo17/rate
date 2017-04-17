@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.ben.rate_review.models.CoursesToReview;
 import edu.ben.rate_review.models.ProfessorReview;
 import edu.ben.rate_review.models.User;
 
@@ -20,7 +19,7 @@ import edu.ben.rate_review.models.User;
 public class ProfessorReviewDao {
 
 	String REVIEW_PROFESSOR_TABLE = "professor_review";
-	String COURSES_TABLE = "student_courses";
+//	String COURSES_TABLE = "student_courses";
 	Connection conn = null;
 
 	/**
@@ -32,32 +31,32 @@ public class ProfessorReviewDao {
 		this.conn = conn;
 	}
 
-	/**
-	 * Returns all courses to review for current semester
-	 * 
-	 * @return
-	 */
-	public List<CoursesToReview> allStudentCoursesNotReviewed(User user) {
-		final String SELECT = "SELECT * FROM " + COURSES_TABLE + " WHERE users_user_id = " + user.getId()
-				+ " AND course_reviewed = 0 AND semester_past = 0";
-		List<CoursesToReview> courses = null;
-		try {
-			PreparedStatement ps = conn.prepareStatement(SELECT);
-			courses = new ArrayList<CoursesToReview>();
-			try {
-				ResultSet rs = ps.executeQuery(SELECT);
-				while (rs.next()) {
-					courses.add(courseMapRow(rs));
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			return courses;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return courses;
-	}
+//	/**
+//	 * Returns all courses to review for current semester
+//	 * 
+//	 * @return
+//	 */
+//	public List<CoursesToReview> allStudentCoursesNotReviewed(User user) {
+//		final String SELECT = "SELECT * FROM " + COURSES_TABLE + " WHERE users_user_id = " + user.getId()
+//				+ " AND course_reviewed = 0 AND semester_past = 0";
+//		List<CoursesToReview> courses = null;
+//		try {
+//			PreparedStatement ps = conn.prepareStatement(SELECT);
+//			courses = new ArrayList<CoursesToReview>();
+//			try {
+//				ResultSet rs = ps.executeQuery(SELECT);
+//				while (rs.next()) {
+//					courses.add(courseMapRow(rs));
+//				}
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//			return courses;
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return courses;
+//	}
 	
 	
 	
@@ -103,99 +102,99 @@ public class ProfessorReviewDao {
 	 * @param user
 	 * @return
 	 */
-	public List<CoursesToReview> allStudentCoursesReviewed(User user) {
-		final String SELECT = "SELECT * FROM " + COURSES_TABLE + " WHERE users_user_id = " + user.getId()
-				+ " AND course_reviewed = 1";
-		// AND semester = 'Spring' AND year = 2017";
-		List<CoursesToReview> courses = null;
-		try {
-			PreparedStatement ps = conn.prepareStatement(SELECT);
-			courses = new ArrayList<CoursesToReview>();
-			try {
-				ResultSet rs = ps.executeQuery(SELECT);
-				while (rs.next()) {
-					courses.add(courseMapRow(rs));
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			return courses;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return courses;
-	}
+//	public List<CoursesToReview> allStudentCoursesReviewed(User user) {
+//		final String SELECT = "SELECT * FROM " + COURSES_TABLE + " WHERE users_user_id = " + user.getId()
+//				+ " AND course_reviewed = 1";
+//		// AND semester = 'Spring' AND year = 2017";
+//		List<CoursesToReview> courses = null;
+//		try {
+//			PreparedStatement ps = conn.prepareStatement(SELECT);
+//			courses = new ArrayList<CoursesToReview>();
+//			try {
+//				ResultSet rs = ps.executeQuery(SELECT);
+//				while (rs.next()) {
+//					courses.add(courseMapRow(rs));
+//				}
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//			return courses;
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return courses;
+//	}
 
 	/**
 	 * Lists all courses to be reviewed
 	 * 
 	 * @return
 	 */
-	public List<CoursesToReview> listAllCourses() {
-		final String SELECT = "SELECT * FROM " + COURSES_TABLE;
-
-		List<CoursesToReview> courses = null;
-		try {
-			PreparedStatement ps = conn.prepareStatement(SELECT);
-			courses = new ArrayList<CoursesToReview>();
-			try {
-				ResultSet rs = ps.executeQuery(SELECT);
-				while (rs.next()) {
-					courses.add(courseMapRow(rs));
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			return courses;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return courses;
-	}
+//	public List<CoursesToReview> listAllCourses() {
+//		final String SELECT = "SELECT * FROM " + COURSES_TABLE;
+//
+//		List<CoursesToReview> courses = null;
+//		try {
+//			PreparedStatement ps = conn.prepareStatement(SELECT);
+//			courses = new ArrayList<CoursesToReview>();
+//			try {
+//				ResultSet rs = ps.executeQuery(SELECT);
+//				while (rs.next()) {
+//					courses.add(courseMapRow(rs));
+//				}
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//			return courses;
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return courses;
+//	}
 
 	/**
 	 * Once a review is made, the course is marked reviewed
 	 * 
 	 * @param review
 	 */
-	public void setCourseReviewed(ProfessorReview review) {
-		// Declare SQL template query
-		String sql = "UPDATE " + COURSES_TABLE + " SET course_reviewed = 1 WHERE course_id = ? LIMIT 1";
-		try {
-			// Create Prepared Statement from query
-			PreparedStatement ps = conn.prepareStatement(sql);
-			// Fill in the ? with the parameters you want
-			ps.setLong(1, review.getCourse_id());
-			// Runs query
-			ps.execute();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	public void setCourseReviewed(ProfessorReview review) {
+//		// Declare SQL template query
+//		String sql = "UPDATE " + COURSES_TABLE + " SET course_reviewed = 1 WHERE course_id = ? LIMIT 1";
+//		try {
+//			// Create Prepared Statement from query
+//			PreparedStatement ps = conn.prepareStatement(sql);
+//			// Fill in the ? with the parameters you want
+//			ps.setLong(1, review.getCourse_id());
+//			// Runs query
+//			ps.execute();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
-	/**
-	 * Creates a courses object
-	 * 
-	 * @param rs
-	 * @return
-	 * @throws SQLException
-	 */
-	private CoursesToReview courseMapRow(ResultSet rs) throws SQLException {
-		// create student course object
-		CoursesToReview tmp = new CoursesToReview();
-		tmp.setCourse_id(rs.getLong("course_id"));
-		tmp.setStudent_id(rs.getInt("users_user_id"));
-		tmp.setCourse_name(rs.getString("course_name"));
-		tmp.setSemester(rs.getString("semester"));
-		tmp.setYear(rs.getInt("year"));
-		tmp.setProfessor_first_name(rs.getString("professor_first_name"));
-		tmp.setProfessor_last_name(rs.getString("professor_last_name"));
-		tmp.setProfessor_email(rs.getString("professor_email"));
-		tmp.setDisable_edit(rs.getBoolean("disable_edit"));
-		tmp.setSemester_past(rs.getBoolean("semester_past"));
-
-		return tmp;
-	}
+//	/**
+//	 * Creates a courses object
+//	 * 
+//	 * @param rs
+//	 * @return
+//	 * @throws SQLException
+//	 */
+//	private CoursesToReview courseMapRow(ResultSet rs) throws SQLException {
+//		// create student course object
+//		CoursesToReview tmp = new CoursesToReview();
+//		tmp.setCourse_id(rs.getLong("course_id"));
+//		tmp.setStudent_id(rs.getInt("users_user_id"));
+//		tmp.setCourse_name(rs.getString("course_name"));
+//		tmp.setSemester(rs.getString("semester"));
+//		tmp.setYear(rs.getInt("year"));
+//		tmp.setProfessor_first_name(rs.getString("professor_first_name"));
+//		tmp.setProfessor_last_name(rs.getString("professor_last_name"));
+//		tmp.setProfessor_email(rs.getString("professor_email"));
+//		tmp.setDisable_edit(rs.getBoolean("disable_edit"));
+//		tmp.setSemester_past(rs.getBoolean("semester_past"));
+//
+//		return tmp;
+//	}
 
 	/**
 	 * Creates a professor review object
@@ -207,7 +206,7 @@ public class ProfessorReviewDao {
 	private ProfessorReview reviewMapRow(ResultSet rs) throws SQLException {
 		// Create professor review object
 		ProfessorReview tmp = new ProfessorReview();
-		tmp.setCourse_id(rs.getLong("course_id"));
+		tmp.setStudent_course_id(rs.getLong("student_course_id"));
 		tmp.setProfessor_first_name(rs.getString("professor_first_name"));
 		tmp.setProfessor_last_name(rs.getString("professor_last_name"));
 		tmp.setStudent_id(rs.getLong("student_id"));
@@ -241,12 +240,12 @@ public class ProfessorReviewDao {
 	 */
 	public void save(ProfessorReview review) {
 
-		if (findReview(review.getCourse_id()) == null) {
+		if (findReview(review.getStudent_course_id()) == null) {
 			final String sql = "INSERT INTO " + REVIEW_PROFESSOR_TABLE
 					+ " (professor_first_name, professor_last_name, course, student_id, year, semester, comment,"
 					+ " rate_objectives, rate_organized, rate_challenging, rate_outside_work,"
 					+ " rate_pace, rate_assignments, rate_grade_fairly, rate_grade_time, rate_accessibility,"
-					+ " rate_knowledge, rate_career_development, course_id, professor_email) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+					+ " rate_knowledge, rate_career_development, student_course_id, professor_email) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			try {
 				PreparedStatement ps = conn.prepareStatement(sql);
 				ps.setString(1, review.getProfessor_first_name());
@@ -267,7 +266,7 @@ public class ProfessorReviewDao {
 				ps.setInt(16, review.getRate_accessibility());
 				ps.setInt(17, review.getRate_knowledge());
 				ps.setInt(18, review.getRate_career_development());
-				ps.setLong(19, review.getCourse_id());
+				ps.setLong(19, review.getStudent_course_id());
 				ps.setString(20, review.getProfessor_email());
 
 				ps.executeUpdate();
@@ -284,14 +283,14 @@ public class ProfessorReviewDao {
 	 * @param email
 	 * @return
 	 */
-	public ProfessorReview findReview(long course_id) {
+	public ProfessorReview findReview(long student_course_id) {
 		// Declare SQL template query
-		String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE course_id = ?";
+		String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE student_course_id = ?";
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement q = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
-			q.setLong(1, course_id);
+			q.setLong(1, student_course_id);
 
 			// Runs query
 			ResultSet rs = q.executeQuery();
@@ -310,7 +309,7 @@ public class ProfessorReviewDao {
 	
 	public String deleteReview(long id) {
 
-		String sql = "DELETE FROM " + REVIEW_PROFESSOR_TABLE + " WHERE course_id = ? LIMIT 1";
+		String sql = "DELETE FROM " + REVIEW_PROFESSOR_TABLE + " WHERE student_course_id = ? LIMIT 1";
 
 		try {
 			// Create Prepared Statement from query
@@ -420,28 +419,28 @@ public class ProfessorReviewDao {
 	 * @param email
 	 * @return
 	 */
-	public CoursesToReview findByCourseId(long course_id) {
-		// Declare SQL template query
-		String sql = "SELECT * FROM " + COURSES_TABLE + " WHERE course_id = ? LIMIT 1";
-		try {
-			// Create Prepared Statement from query
-			PreparedStatement q = conn.prepareStatement(sql);
-			// Fill in the ? with the parameters you want
-			q.setLong(1, course_id);
-
-			// Runs query
-			ResultSet rs = q.executeQuery();
-			if (rs.next()) {
-				return courseMapRow(rs);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		// If you don't find a model
-		return null;
-
-	}
+//	public CoursesToReview findByCourseId(long course_id) {
+//		// Declare SQL template query
+//		String sql = "SELECT * FROM " + COURSES_TABLE + " WHERE course_id = ? LIMIT 1";
+//		try {
+//			// Create Prepared Statement from query
+//			PreparedStatement q = conn.prepareStatement(sql);
+//			// Fill in the ? with the parameters you want
+//			q.setLong(1, course_id);
+//
+//			// Runs query
+//			ResultSet rs = q.executeQuery();
+//			if (rs.next()) {
+//				return courseMapRow(rs);
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//
+//		// If you don't find a model
+//		return null;
+//
+//	}
 
 	public List<ProfessorReview> allFromDept(String dept) {
 
@@ -476,16 +475,19 @@ public class ProfessorReviewDao {
 	 */
 	public ProfessorReview removeProfessorReview(ProfessorReview review) {
 
-		String sql = "DELETE FROM " + REVIEW_PROFESSOR_TABLE + " WHERE course_id = ? LIMIT 1";
+		String sql = "DELETE FROM " + REVIEW_PROFESSOR_TABLE + " WHERE student_course_id = ? LIMIT 1";
 
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setLong(1, review.getCourse_id());
+			ps.setLong(1, review.getStudent_course_id());
 			// Runs query
 			ps.execute();
+			
+			StudentInCourseDao sDao = DaoManager.getInstance().getStudentInCourseDao();
+			
 			// marks course not reviewed
-			setCourseNotReviewed(review);
+			sDao.setCourseNotReviewed(review);
 
 			return review;
 		} catch (Exception e) {
@@ -499,20 +501,20 @@ public class ProfessorReviewDao {
 	 * 
 	 * @param review
 	 */
-	public void setCourseNotReviewed(ProfessorReview review) {
-		// Declare SQL template query
-		String sql = "UPDATE " + COURSES_TABLE + " SET course_reviewed = 0 WHERE course_id = ? LIMIT 1";
-		try {
-			// Create Prepared Statement from query
-			PreparedStatement ps = conn.prepareStatement(sql);
-			// Fill in the ? with the parameters you want
-			ps.setLong(1, review.getCourse_id());
-			// Runs query
-			ps.execute();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	public void setCourseNotReviewed(ProfessorReview review) {
+//		// Declare SQL template query
+//		String sql = "UPDATE " + COURSES_TABLE + " SET course_reviewed = 0 WHERE course_id = ? LIMIT 1";
+//		try {
+//			// Create Prepared Statement from query
+//			PreparedStatement ps = conn.prepareStatement(sql);
+//			// Fill in the ? with the parameters you want
+//			ps.setLong(1, review.getCourse_id());
+//			// Runs query
+//			ps.execute();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	/**
 	 * Flags a potentially offensive comment for admin to see
@@ -521,12 +523,12 @@ public class ProfessorReviewDao {
 	 */
 	public void setCommentFlagged(ProfessorReview review) {
 		// Declare SQL template query
-		String sql = "UPDATE " + REVIEW_PROFESSOR_TABLE + " SET comment_flagged = 1 WHERE course_id = ? LIMIT 1";
+		String sql = "UPDATE " + REVIEW_PROFESSOR_TABLE + " SET comment_flagged = 1 WHERE student_course_id = ? LIMIT 1";
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
-			ps.setLong(1, review.getCourse_id());
+			ps.setLong(1, review.getStudent_course_id());
 			// Runs query
 			ps.execute();
 		} catch (Exception e) {
@@ -596,12 +598,12 @@ public class ProfessorReviewDao {
 	public void setCommentRemoved(ProfessorReview review) {
 		// Declare SQL template query
 
-		String sql = "UPDATE " + REVIEW_PROFESSOR_TABLE + " SET comment_removed = 1 WHERE course_id = ? LIMIT 1";
+		String sql = "UPDATE " + REVIEW_PROFESSOR_TABLE + " SET comment_removed = 1 WHERE student_course_id = ? LIMIT 1";
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
-			ps.setLong(1, review.getCourse_id());
+			ps.setLong(1, review.getStudent_course_id());
 			// Runs query
 			ps.execute();
 		} catch (Exception e) {
@@ -617,12 +619,12 @@ public class ProfessorReviewDao {
 	public void setCommentNotFlagged(ProfessorReview review) {
 		// Declare SQL template query
 
-		String sql = "UPDATE " + REVIEW_PROFESSOR_TABLE + " SET comment_flagged = 0 WHERE course_id = ? LIMIT 1";
+		String sql = "UPDATE " + REVIEW_PROFESSOR_TABLE + " SET comment_flagged = 0 WHERE student_course_id = ? LIMIT 1";
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
-			ps.setLong(1, review.getCourse_id());
+			ps.setLong(1, review.getStudent_course_id());
 			// Runs query
 			ps.execute();
 		} catch (Exception e) {
@@ -638,12 +640,12 @@ public class ProfessorReviewDao {
 	public void setCommentApproved(ProfessorReview review) {
 		// Declare SQL template query
 
-		String sql = "UPDATE " + REVIEW_PROFESSOR_TABLE + " SET comment_approved = 1 WHERE course_id = ? LIMIT 1";
+		String sql = "UPDATE " + REVIEW_PROFESSOR_TABLE + " SET comment_approved = 1 WHERE student_course_id = ? LIMIT 1";
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
-			ps.setLong(1, review.getCourse_id());
+			ps.setLong(1, review.getStudent_course_id());
 			// Runs query
 			ps.execute();
 		} catch (Exception e) {
@@ -657,42 +659,42 @@ public class ProfessorReviewDao {
 	 * 
 	 * @param course
 	 */
-	public void disableEditReview(CoursesToReview course) {
-		// Declare SQL template query
-
-		String sql = "UPDATE " + COURSES_TABLE + " SET disable_edit = 1 WHERE course_id = ? LIMIT 1";
-		try {
-			// Create Prepared Statement from query
-			PreparedStatement ps = conn.prepareStatement(sql);
-			// Fill in the ? with the parameters you want
-			ps.setLong(1, course.getCourse_id());
-			// Runs query
-			ps.execute();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	public void disableEditReview(CoursesToReview course) {
+//		// Declare SQL template query
+//
+//		String sql = "UPDATE " + COURSES_TABLE + " SET disable_edit = 1 WHERE course_id = ? LIMIT 1";
+//		try {
+//			// Create Prepared Statement from query
+//			PreparedStatement ps = conn.prepareStatement(sql);
+//			// Fill in the ? with the parameters you want
+//			ps.setLong(1, course.getCourse_id());
+//			// Runs query
+//			ps.execute();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	/**
 	 * Flips a flag that a course occurred in a previous semester
 	 * 
 	 * @param course
 	 */
-	public void setSemesterPast(CoursesToReview course) {
-		// Declare SQL template query
-
-		String sql = "UPDATE " + COURSES_TABLE + " SET semester_past = 1 WHERE course_id = ? LIMIT 1";
-		try {
-			// Create Prepared Statement from query
-			PreparedStatement ps = conn.prepareStatement(sql);
-			// Fill in the ? with the parameters you want
-			ps.setLong(1, course.getCourse_id());
-			// Runs query
-			ps.execute();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	public void setSemesterPast(CoursesToReview course) {
+//		// Declare SQL template query
+//
+//		String sql = "UPDATE " + COURSES_TABLE + " SET semester_past = 1 WHERE course_id = ? LIMIT 1";
+//		try {
+//			// Create Prepared Statement from query
+//			PreparedStatement ps = conn.prepareStatement(sql);
+//			// Fill in the ? with the parameters you want
+//			ps.setLong(1, course.getCourse_id());
+//			// Runs query
+//			ps.execute();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	/**
 	 * Returns average rating from a specific category
@@ -794,33 +796,33 @@ public class ProfessorReviewDao {
 		return uniqueCourses;
 	}
 
-	public List<String> listCourses(String course) {
+//	public List<String> listCourses(String course) {
+//
+//		final String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE course = " + course;
+//		List<String> uniqueCourses = null;
+//
+//		try {
+//			PreparedStatement ps = conn.prepareStatement(sql);
+//			uniqueCourses = new ArrayList<String>();
+//			try {
+//				ResultSet rs = ps.executeQuery();
+//				while (rs.next()) {
+//					uniqueCourses.add(rs.getString("course"));
+//				}
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//			return uniqueCourses;
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return uniqueCourses;
+//	}
 
-		final String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE course = " + course;
-		List<String> uniqueCourses = null;
-
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
-			uniqueCourses = new ArrayList<String>();
-			try {
-				ResultSet rs = ps.executeQuery();
-				while (rs.next()) {
-					uniqueCourses.add(rs.getString("course"));
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			return uniqueCourses;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return uniqueCourses;
-	}
-
-	public List<ProfessorReview> allReviewsForCourse(long course, String name) {
+	public List<ProfessorReview> allReviewsForCourse(long student_course_id, String name) {
 		// final String SELECT = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + "
 		// WHERE course_id = " + course;
-		final String SELECT = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE course_id = " + course;
+		final String SELECT = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE student_course_id = " + student_course_id;
 
 		List<ProfessorReview> reviews = null;
 		try {

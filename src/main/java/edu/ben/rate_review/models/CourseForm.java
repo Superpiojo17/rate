@@ -9,8 +9,9 @@ public class CourseForm {
 	private long professor_id;
 	private String professor_name;
 	private String subject;
-	private String term;
+	private String semester;
 	private long course_number;
+	private int year;
 
 	public CourseForm() {
 		super();
@@ -22,7 +23,8 @@ public class CourseForm {
 		this.setCourse_number(course.getCourse_number());
 		this.setProfessor_id(course.getProfessor_id());
 		this.setSubject(course.getSubject());
-		this.setTerm(course.getTerm());
+		this.setTerm(course.getSemester());
+		this.setYear(course.getYear());
 	}
 
 	public long getId() {
@@ -57,12 +59,12 @@ public class CourseForm {
 		this.professor_id = professor_id;
 	}
 
-	public String getTerm() {
-		return term;
+	public String getSemester() {
+		return semester;
 	}
 
-	public void setTerm(String term) {
-		this.term = term;
+	public void setTerm(String semester) {
+		this.semester = semester;
 	}
 
 	public String getProfessor_name() {
@@ -82,6 +84,14 @@ public class CourseForm {
 
 	public void setCourse_number(long course_number) {
 		this.course_number = course_number;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
 	}
 
 }

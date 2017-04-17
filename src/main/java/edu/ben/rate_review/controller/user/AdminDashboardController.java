@@ -12,13 +12,14 @@ import edu.ben.rate_review.authorization.AuthException;
 import edu.ben.rate_review.daos.AnnouncementDao;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.ProfessorReviewDao;
+import edu.ben.rate_review.daos.StudentInCourseDao;
 import edu.ben.rate_review.daos.TutorDao;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.formatTime.FormatTimeAndDate;
 import edu.ben.rate_review.massRegistration.MassRegistration;
 import edu.ben.rate_review.models.Announcement;
-import edu.ben.rate_review.models.CoursesToReview;
 import edu.ben.rate_review.models.ProfessorReview;
+import edu.ben.rate_review.models.StudentInCourse;
 import edu.ben.rate_review.models.Tutor;
 import edu.ben.rate_review.models.TutorAppointment;
 import edu.ben.rate_review.models.TutorForm;
@@ -575,7 +576,10 @@ public class AdminDashboardController {
 	 * @return
 	 */
 	public String handleFlaggedComment(Request req, Response res) {
-		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
+		DaoManager dao = DaoManager.getInstance();
+		ProfessorReviewDao reviewDao = dao.getProfessorReviewDao();
+		StudentInCourseDao sDao = dao.getStudentInCourseDao();
+		
 
 		// grabs course id from review comment
 		String courseToRemoveString = req.queryParams("flagged_comment");
@@ -585,8 +589,8 @@ public class AdminDashboardController {
 			ProfessorReview review = reviewDao.findReview(courseID);
 			reviewDao.setCommentRemoved(review);
 			reviewDao.setCommentNotFlagged(review);
-			CoursesToReview course = reviewDao.findByCourseId(courseID);
-			reviewDao.disableEditReview(course);
+			StudentInCourse course = sDao.findByStudentCourseId(courseID);
+			sDao.disableEditReview(course);
 		} else {
 			courseID *= -1;
 			ProfessorReview review = reviewDao.findReview(courseID);

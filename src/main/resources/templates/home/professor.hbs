@@ -495,7 +495,7 @@
 											{{#unless comment_approved}}
 											{{#unless comment_flagged}}
 											<form style="margin: 0 0 0 0;" action="/professor/{{prof_id}}/{{display}}" method="post">
-											<button title="flag comment as inappropriate" class="btn btn-danger" type="submit" name="course_flagged" value="{{course_id}}"><span class="glyphicon glyphicon-flag"></span></button>
+											<button title="flag comment as inappropriate" class="btn btn-danger" type="submit" name="course_flagged" value="{{student_course_id}}"><span class="glyphicon glyphicon-flag"></span></button>
 											</form>
 											{{/unless}}
 											{{/unless}}

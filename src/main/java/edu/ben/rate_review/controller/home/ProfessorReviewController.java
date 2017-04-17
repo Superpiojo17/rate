@@ -6,11 +6,12 @@ import java.util.List;
 import edu.ben.rate_review.daos.AnnouncementDao;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.ProfessorReviewDao;
+import edu.ben.rate_review.daos.StudentInCourseDao;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.models.Announcement;
-import edu.ben.rate_review.models.CoursesToReview;
 import edu.ben.rate_review.models.PrePopulatedReviewButtons;
 import edu.ben.rate_review.models.ProfessorReview;
+import edu.ben.rate_review.models.StudentInCourse;
 import edu.ben.rate_review.models.User;
 import spark.ModelAndView;
 import spark.Request;
@@ -60,25 +61,28 @@ public class ProfessorReviewController {
 		}
 
 		// gets course_id from the URL
-		String idString = req.params("course_id");
-		long course_id = Long.parseLong(idString);
+		String idString = req.params("student_course_id");
+		long student_course_id = Long.parseLong(idString);
 
 		// gets the course object from the course_id
-		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
+		DaoManager dao = DaoManager.getInstance();
+		ProfessorReviewDao reviewDao = dao.getProfessorReviewDao();
 		UserDao userDao = DaoManager.getInstance().getUserDao();
-		CoursesToReview course = reviewDao.findByCourseId(course_id);
+		StudentInCourseDao sDao = dao.getStudentInCourseDao();
+		StudentInCourse course = sDao.findByStudentCourseId(student_course_id);
 
 		if (u != null) {
+		
 			// checks that the person accessing the page has access
-			if ((user_id != -1 && user_id == course.getStudent_id()) || (u.getRole() == 1)) {
-				if (reviewDao.findReview(course.getCourse_id()) == null) {
+			if ( (u.getRole() == 1) || (user_id != -1 && user_id == course.getStudent_id())) {
+				if (reviewDao.findReview(course.getStudent_course_id()) == null) {
 
 					// create the form object, put it into request
 					model.put("course", course);
 
-					model.put("deletekey", course.getCourse_id());
+					model.put("deletekey", course.getStudent_course_id());
 
-					ProfessorReview review = reviewDao.findReview(course_id);
+					ProfessorReview review = reviewDao.findReview(student_course_id);
 
 					// if user wants to edit a review, this will pre-populate
 					if (review != null) {
@@ -86,27 +90,27 @@ public class ProfessorReviewController {
 						handlePrePopulatedButtons(model, review);
 					}
 
-					DaoManager dao = DaoManager.getInstance();
+					//DaoManager dao = DaoManager.getInstance();
 					AnnouncementDao ad = dao.getAnnouncementDao();
 					List<Announcement> announcements = ad.all();
 					model.put("announcements", announcements);
 				} else {
-					if (reviewDao.findByCourseId(course.getCourse_id()).getDisable_edit()
-							|| reviewDao.findByCourseId(course.getCourse_id()).isSemester_past() || u.getRole() == 1) {
+					if (sDao.findByStudentCourseId(course.getStudent_course_id()).isDisable_edit()
+							|| sDao.findByStudentCourseId(course.getStudent_course_id()).isSemester_past() || u.getRole() == 1) {
 						model.put("edit_is_disabled", true);
-						ProfessorReview review = reviewDao.findReview(course_id);
+						ProfessorReview review = reviewDao.findReview(student_course_id);
 						String email = review.getProfessor_email();
 
 						User useremail = userDao.findByEmail(email);
 
 						String department = useremail.getMajor();
-						model.put("deletekey", course.getCourse_id());
+						model.put("deletekey", course.getStudent_course_id());
 						model.put("department", department);
 					} else {
 						model.put("edit_is_disabled", false);
 					}
 					model.put("course", course);
-					ProfessorReview review = reviewDao.findReview(course_id);
+					ProfessorReview review = reviewDao.findReview(student_course_id);
 
 					UserDao uDao = DaoManager.getInstance().getUserDao();
 					User professor = uDao.findByEmail(review.getProfessor_email());
@@ -118,7 +122,7 @@ public class ProfessorReviewController {
 						handlePrePopulatedButtons(model, review);
 					}
 
-					DaoManager dao = DaoManager.getInstance();
+//					DaoManager dao = DaoManager.getInstance();
 					AnnouncementDao ad = dao.getAnnouncementDao();
 					List<Announcement> announcements = ad.all();
 					model.put("announcements", announcements);
@@ -238,7 +242,7 @@ public class ProfessorReviewController {
 				&& req.queryParams("rate_assignments") != null && req.queryParams("rate_grade_fairly") != null
 				&& req.queryParams("rate_grade_time") != null && req.queryParams("rate_accessibility") != null
 				&& req.queryParams("rate_knowledge") != null && req.queryParams("rate_career_development") != null) {
-			Long professorID = createReview(Long.parseLong(req.params("course_id")), req.queryParams("comment"),
+			Long professorID = createReview(Long.parseLong(req.params("student_course_id")), req.queryParams("comment"),
 					Integer.parseInt(req.queryParams("rate_objectives")),
 					Integer.parseInt(req.queryParams("rate_organized")),
 					Integer.parseInt(req.queryParams("rate_challenging")),
@@ -254,7 +258,7 @@ public class ProfessorReviewController {
 			res.redirect("/professor/" + professorID + "/overview");
 		} else {
 			// comment too long
-			res.redirect("/reviewprofessor/" + req.params("course_id") + "/review");
+			res.redirect("/reviewprofessor/" + req.params("student_course_id") + "/review");
 		}
 
 		return "";
@@ -278,21 +282,23 @@ public class ProfessorReviewController {
 	 * @param rate_knowledge
 	 * @param rate_career_development
 	 */
-	private Long createReview(Long course_id, String comment, int rate_objectives, int rate_organized,
+	private Long createReview(Long student_course_id, String comment, int rate_objectives, int rate_organized,
 			int rate_challenging, int rate_outside_work, int rate_pace, int rate_assignments, int rate_grade_fairly,
 			int rate_grade_time, int rate_accessibility, int rate_knowledge, int rate_career_development) {
-		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
+		DaoManager dao = DaoManager.getInstance();
+		ProfessorReviewDao reviewDao = dao.getProfessorReviewDao();
+		StudentInCourseDao sDao = dao.getStudentInCourseDao();
 
 		ProfessorReview review = new ProfessorReview();
-		CoursesToReview course = new CoursesToReview();
+//		CoursesToReview course = new CoursesToReview();
 
-		course = reviewDao.findByCourseId(course_id);
+		StudentInCourse course = sDao.findByStudentCourseId(student_course_id);
 
-		review.setCourse_id(course.getCourse_id());
+		review.setStudent_course_id(course.getStudent_course_id());
 		review.setStudent_id(course.getStudent_id());
 		review.setProfessor_first_name(course.getProfessor_first_name());
 		review.setProfessor_last_name(course.getProfessor_last_name());
-		review.setCourse(course.getCourse_name());
+		review.setCourse(course.getCourse_subject_number());
 		review.setSemester(course.getSemester());
 		review.setYear(course.getYear());
 		review.setComment(comment);
@@ -315,7 +321,7 @@ public class ProfessorReviewController {
 		}
 
 		reviewDao.save(review);
-		reviewDao.setCourseReviewed(review);
+		sDao.setCourseReviewed(review);
 
 		UserDao uDao = DaoManager.getInstance().getUserDao();
 		User u = uDao.findByEmail(course.getProfessor_email());

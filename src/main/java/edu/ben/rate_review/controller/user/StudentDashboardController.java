@@ -11,6 +11,7 @@ import edu.ben.rate_review.daos.AnnouncementDao;
 import edu.ben.rate_review.daos.CourseDao;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.ProfessorReviewDao;
+import edu.ben.rate_review.daos.StudentInCourseDao;
 import edu.ben.rate_review.daos.TutorDao;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.email.Email;
@@ -18,8 +19,8 @@ import edu.ben.rate_review.formatTime.CheckIfExpired;
 import edu.ben.rate_review.formatTime.FormatTimeAndDate;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.Course;
-import edu.ben.rate_review.models.CoursesToReview;
 import edu.ben.rate_review.models.ProfessorReview;
+import edu.ben.rate_review.models.StudentInCourse;
 import edu.ben.rate_review.models.Tutor;
 import edu.ben.rate_review.models.TutorAppointment;
 import edu.ben.rate_review.models.User;
@@ -58,10 +59,11 @@ public class StudentDashboardController {
 
 		DaoManager dao = DaoManager.getInstance();
 		ProfessorReviewDao reviewDao = dao.getProfessorReviewDao();
-		flagPastCourses(reviewDao);
+		StudentInCourseDao sDao = dao.getStudentInCourseDao();
+		flagPastCourses(sDao);
 
-		List<CoursesToReview> coursesNotReviewed = reviewDao.allStudentCoursesNotReviewed(u);
-		List<CoursesToReview> coursesReviewed = reviewDao.allStudentCoursesReviewed(u);
+		List<StudentInCourse> coursesNotReviewed = sDao.allStudentCoursesNotReviewed(u);
+		List<StudentInCourse> coursesReviewed = sDao.allStudentCoursesReviewed(u);
 
 		// no classes listed in courses to review
 		boolean noCoursesToReview = false;
@@ -242,7 +244,7 @@ public class StudentDashboardController {
 
 		if (req.queryParams("appointment_id") == null) {
 			// enters if not for a tutor review
-			
+
 			// created to split the tutor's id from the tutor/professor
 			// relationship id
 			String[] splitTutorId = req.queryParams("tutor_id").split(",");
@@ -392,12 +394,12 @@ public class StudentDashboardController {
 	 * 
 	 * @param reviewDao
 	 */
-	private void flagPastCourses(ProfessorReviewDao reviewDao) {
-		List<CoursesToReview> courses = reviewDao.listAllCourses();
+	private void flagPastCourses(StudentInCourseDao sDao) {
+		List<StudentInCourse> courses = sDao.listAllCourses();
 		for (int i = 0; i < courses.size(); i++) {
 			if (!CheckIfExpired.checkSemesterCurrentOrUpcoming(courses.get(i).getSemester(),
 					courses.get(i).getYear())) {
-				reviewDao.setSemesterPast(courses.get(i));
+				sDao.setSemesterPast(courses.get(i));
 			}
 		}
 	}

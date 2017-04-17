@@ -231,7 +231,12 @@
 
 						<td class="shrink">{{major}}</td>
 
-<td class="shrink">{{overall}}</td>
+<td class="shrink">{{#if overall}} {{overall}} {{/if}}
+{{#unless overall}}
+No reviews.
+{{/unless}}
+
+</td>
 
 
 

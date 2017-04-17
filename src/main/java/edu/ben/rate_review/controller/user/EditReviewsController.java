@@ -85,7 +85,8 @@ public class EditReviewsController {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 
-		String course_id = req.params("courseid");
+		String student_course_id = req.params("student_course_id");
+		System.out.println(student_course_id);
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
@@ -105,9 +106,9 @@ public class EditReviewsController {
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
 
-		ProfessorReview review = reviewDao.findReview(Long.parseLong(course_id));
+		ProfessorReview review = reviewDao.findReview(Long.parseLong(student_course_id));
 
-		reviewDao.deleteReview(review.getCourse_id());
+		reviewDao.deleteReview(review.getStudent_course_id());
 
 		model.put("error", "You just deleted " + review.getStudentname() + "'s review for " + review.getCourse());
 

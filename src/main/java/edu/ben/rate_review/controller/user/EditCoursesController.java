@@ -222,7 +222,11 @@ public class EditCoursesController {
 			course.setCourse_name(req.queryParams("coursename"));
 			course.setCourse_number(Long.parseLong(req.queryParams("coursenumber")));
 			course.setSubject(department);
-			course.setTerm(req.queryParams("semester"));
+			String term = req.queryParams("semester");
+			System.out.println(term);
+			String[] lineArray = term.split(" ");
+			course.setSemester(lineArray[0]);
+			course.setYear(Integer.parseInt(lineArray[1]));
 			course.setProfessor_id(Long.parseLong(req.queryParams("professor_id")));
 			cDao.save(course);
 			String tempdepartment = req.params("department");
