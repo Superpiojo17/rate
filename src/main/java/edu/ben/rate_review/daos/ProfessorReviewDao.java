@@ -58,6 +58,44 @@ public class ProfessorReviewDao {
 		}
 		return courses;
 	}
+	
+	
+	
+	public List<ProfessorReview> search(String sType, String sText) throws SQLException {
+		String NAME_SQL = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_first_name LIKE '%" + sText + "%' OR professor_last_name LIKE '%" + sText
+				+ "%' OR course LIKE '%" + sText + "%' OR semester LIKE '%" + sText
+				+ "%'  OR year LIKE '%" + sText
+				+ "%'  OR professor_last_name LIKE '%" + sText
+				+ "%'";
+
+		List<ProfessorReview> reviews = null;
+
+		try {
+
+			PreparedStatement ps = conn.prepareStatement(NAME_SQL);
+			// both have 1 parameter
+			// ps.setString(1, sText);
+			//
+			// // Only name search has a second parameter
+			// if (sType.equals("name")) {
+			// ps.setString(2, sText);
+			// }
+			reviews = new ArrayList<ProfessorReview>();
+			try {
+				ResultSet rs = ps.executeQuery(NAME_SQL);
+				while (rs.next()) {
+					reviews.add(reviewMapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return reviews;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return reviews;
+	}
+
 
 	/**
 	 * Lists all courses the student has reviewed for current semester

@@ -1,5 +1,6 @@
 package edu.ben.rate_review.controller.user;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,7 +19,7 @@ import spark.Session;
 
 public class EditReviewsController {
 
-	public ModelAndView showDeptReviews(Request req, Response res) throws AuthException {
+	public ModelAndView showDeptReviews(Request req, Response res) throws AuthException, SQLException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 
@@ -40,10 +41,40 @@ public class EditReviewsController {
 		model.put("announcements", announcements);
 
 		ProfessorReviewDao pD = adao.getProfessorReviewDao();
+		
+		if (req.queryParams("search") != null) {
 
-		List<ProfessorReview> deptReviews = pD.allFromDept(department);
+			String searchType = "name";
+			String searchTxt = req.queryParams("search").toLowerCase();
 
-		model.put("deptreviews", deptReviews);
+			// Make sure you
+			if (searchType.equalsIgnoreCase("email") || searchType.equalsIgnoreCase("name") && searchTxt.length() > 0) {
+				// valid search, can proceed
+				List<ProfessorReview> tempReviews = pD.search(searchType, searchTxt);
+				if (tempReviews.size() > 0) {
+
+					model.put("deptreviews", tempReviews);
+				} else {
+					List<ProfessorReview> reviews = pD.search(searchType, searchTxt);
+					model.put("error", "No Results Found");
+					model.put("deptreviews", reviews);
+				}
+			} else {
+				List<ProfessorReview> deptReviews = pD.allFromDept(department);
+				model.put("error", "Cannot leave search bar blank");
+				model.put("deptreviews", deptReviews);
+			}
+		} else {
+			List<ProfessorReview> deptReviews = pD.allFromDept(department);
+			model.put("deptreviews", deptReviews);
+		}
+
+		model.put("current_user", u);
+		
+		
+
+		
+
 		model.put("department", department);
 
 		// Render the page
