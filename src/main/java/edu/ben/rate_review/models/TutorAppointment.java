@@ -163,7 +163,6 @@ public class TutorAppointment {
 	public String getCourse_name(){
 		TutorDao tDao = DaoManager.getInstance().getTutorDao();
 		Tutor t = tDao.findById(relationship_id);
-		System.out.println(t.getProfessor_name());
 		return t.getCourse_name();
 	}
 

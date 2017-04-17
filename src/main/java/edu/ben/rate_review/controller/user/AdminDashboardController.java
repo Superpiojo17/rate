@@ -301,13 +301,11 @@ public class AdminDashboardController {
 		User user = uDao.findById(Integer.parseInt(req.queryParams("selecttutor")));
 		Long userID = user.getId();
 		
-		System.out.println(req.queryParams("selecttutor"));
 
 		tempApt.setTutor_firstname(user.getFirst_name());
 		tempApt.setTutor_lastname(user.getLast_name());
 		tempApt.setTutor_id(userID);
 		tempApt.setAppointment_status(Boolean.parseBoolean(req.queryParams("status")));
-		System.out.println(tempApt.getAppointment_status());
 		
 		tempApt.setDate(FormatTimeAndDate.formatDate(tempApt.getDate()));
 	
