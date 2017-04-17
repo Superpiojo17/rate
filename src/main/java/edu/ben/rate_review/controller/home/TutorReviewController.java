@@ -43,25 +43,29 @@ public class TutorReviewController {
 			model.put("user_null", true);
 		}
 
-		// gets appointment id from url
-		long appointment_id = Long.parseLong(req.params("appointment_id"));
-		// gets instance of tutor dao
-		TutorDao tDao = DaoManager.getInstance().getTutorDao();
-		// finds tutor appointment
-		TutorAppointment appointment = tDao.findAppointmentByID(appointment_id);
+		if (u != null) {
+			// gets appointment id from url
+			long appointment_id = Long.parseLong(req.params("appointment_id"));
+			// gets instance of tutor dao
+			TutorDao tDao = DaoManager.getInstance().getTutorDao();
+			// finds tutor appointment
+			TutorAppointment appointment = tDao.findAppointmentByID(appointment_id);
 
-		if (u != null && appointment != null) {
-			if (!appointment.isAppointment_reviewed()) {
-				if (u.getId() == appointment.getStudent_id()) {
-					model.put("appointment", appointment);
+			if (u != null && appointment != null) {
+				if (!appointment.isAppointment_reviewed()) {
+					if (u.getId() == appointment.getStudent_id()) {
+						model.put("appointment", appointment);
+					} else {
+						res.redirect("/authorizationerror");
+					}
 				} else {
 					res.redirect("/authorizationerror");
 				}
 			} else {
+				// unauthorized user or student not enrolled
 				res.redirect("/authorizationerror");
 			}
 		} else {
-			// unauthorized user or student not enrolled
 			res.redirect("/authorizationerror");
 		}
 

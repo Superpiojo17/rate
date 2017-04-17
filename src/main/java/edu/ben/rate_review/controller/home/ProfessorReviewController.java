@@ -68,65 +68,68 @@ public class ProfessorReviewController {
 		UserDao userDao = DaoManager.getInstance().getUserDao();
 		CoursesToReview course = reviewDao.findByCourseId(course_id);
 
-		// checks that the person accessing the page has access
-		if ((user_id != -1 && user_id == course.getStudent_id()) || (u.getRole() == 1)) {
-			if (reviewDao.findReview(course.getCourse_id()) == null) {
+		if (u != null) {
+			// checks that the person accessing the page has access
+			if ((user_id != -1 && user_id == course.getStudent_id()) || (u.getRole() == 1)) {
+				if (reviewDao.findReview(course.getCourse_id()) == null) {
 
-				// create the form object, put it into request
-				model.put("course", course);
-				
-				model.put("deletekey", course.getCourse_id());
-				
+					// create the form object, put it into request
+					model.put("course", course);
 
-				ProfessorReview review = reviewDao.findReview(course_id);
-
-				// if user wants to edit a review, this will pre-populate
-				if (review != null) {
-					model.put("review", review);
-					handlePrePopulatedButtons(model, review);
-				}
-
-				DaoManager dao = DaoManager.getInstance();
-				AnnouncementDao ad = dao.getAnnouncementDao();
-				List<Announcement> announcements = ad.all();
-				model.put("announcements", announcements);
-			} else {
-				if (reviewDao.findByCourseId(course.getCourse_id()).getDisable_edit()
-						|| reviewDao.findByCourseId(course.getCourse_id()).isSemester_past() || u.getRole() == 1) {
-					model.put("edit_is_disabled", true);
-					ProfessorReview review = reviewDao.findReview(course_id);
-					String email = review.getProfessor_email();
-
-					User useremail = userDao.findByEmail(email);
-
-					String department = useremail.getMajor();
 					model.put("deletekey", course.getCourse_id());
-					model.put("department", department);
+
+					ProfessorReview review = reviewDao.findReview(course_id);
+
+					// if user wants to edit a review, this will pre-populate
+					if (review != null) {
+						model.put("review", review);
+						handlePrePopulatedButtons(model, review);
+					}
+
+					DaoManager dao = DaoManager.getInstance();
+					AnnouncementDao ad = dao.getAnnouncementDao();
+					List<Announcement> announcements = ad.all();
+					model.put("announcements", announcements);
 				} else {
-					model.put("edit_is_disabled", false);
+					if (reviewDao.findByCourseId(course.getCourse_id()).getDisable_edit()
+							|| reviewDao.findByCourseId(course.getCourse_id()).isSemester_past() || u.getRole() == 1) {
+						model.put("edit_is_disabled", true);
+						ProfessorReview review = reviewDao.findReview(course_id);
+						String email = review.getProfessor_email();
+
+						User useremail = userDao.findByEmail(email);
+
+						String department = useremail.getMajor();
+						model.put("deletekey", course.getCourse_id());
+						model.put("department", department);
+					} else {
+						model.put("edit_is_disabled", false);
+					}
+					model.put("course", course);
+					ProfessorReview review = reviewDao.findReview(course_id);
+
+					UserDao uDao = DaoManager.getInstance().getUserDao();
+					User professor = uDao.findByEmail(review.getProfessor_email());
+					model.put("professor_id", professor.getId());
+
+					// if user wants to edit a review, this will pre-populate
+					if (review != null) {
+						model.put("review", review);
+						handlePrePopulatedButtons(model, review);
+					}
+
+					DaoManager dao = DaoManager.getInstance();
+					AnnouncementDao ad = dao.getAnnouncementDao();
+					List<Announcement> announcements = ad.all();
+					model.put("announcements", announcements);
+
 				}
-				model.put("course", course);
-				ProfessorReview review = reviewDao.findReview(course_id);
+			} else
 
-				UserDao uDao = DaoManager.getInstance().getUserDao();
-				User professor = uDao.findByEmail(review.getProfessor_email());
-				model.put("professor_id", professor.getId());
-
-				// if user wants to edit a review, this will pre-populate
-				if (review != null) {
-					model.put("review", review);
-					handlePrePopulatedButtons(model, review);
-				}
-
-				DaoManager dao = DaoManager.getInstance();
-				AnnouncementDao ad = dao.getAnnouncementDao();
-				List<Announcement> announcements = ad.all();
-				model.put("announcements", announcements);
-
+			{
+				res.redirect("/authorizationerror");
 			}
-		} else
-
-		{
+		} else {
 			res.redirect("/authorizationerror");
 		}
 		// Tell the server to render the index page with the data in the model
