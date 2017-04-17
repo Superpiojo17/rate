@@ -91,7 +91,7 @@ public class Tutor {
 		DaoManager dao = DaoManager.getInstance();
 		UserDao ud = dao.getUserDao();
 		User user = ud.findById(professor_id);
-		String professor_name = user.getFirst_name() + ", " + user.getLast_name();
+		String professor_name = user.getFirst_name() + " " + user.getLast_name();
 		return professor_name;
 	}
 
