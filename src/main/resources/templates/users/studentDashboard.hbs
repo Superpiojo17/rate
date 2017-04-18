@@ -389,6 +389,7 @@
       <div class="panel-heading">
         <h4 class="panel-title">
           <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">Review Tutor Appointment</a>
+          {{#if num_of_appointments}} <span title="You have {{num_of_appointments}} appointment(s) waiting to be reviewed." class="glyphicon glyphicon-exclamation-sign" style="color:orange"></span>{{/if}}
         </h4>
       </div>
 		<div id="collapse5" class="panel-collapse collapse">

@@ -139,6 +139,7 @@ public class StudentDashboardController {
 			notReviewed.get(i).setTime(FormatTimeAndDate.formatTime(notReviewed.get(i).getTime()));
 			notReviewed.get(i).setDate(FormatTimeAndDate.formatDate(notReviewed.get(i).getDate()));
 		}
+		model.put("num_of_appointments", notReviewed.size());
 		model.put("appointments_not_reviewed", notReviewed);
 
 		// Tell the server to render the index page with the data in the model
