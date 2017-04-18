@@ -427,9 +427,10 @@ public class ProfessorReview {
 	}
 
 	public String getStudentname() {
-		UserDao udao = DaoManager.getInstance().getUserDao();
-		User user = udao.findById(student_id);
-		return user.getFirst_name() + " " + user.getLast_name();
+		return studentname;
 	}
 
+	public void setStudentName(String studentname) {
+		this.studentname = studentname;
+	}
 }

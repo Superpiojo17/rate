@@ -27,7 +27,8 @@ public class StudentInCourseDao {
 	}
 
 	private StudentInCourse mapRow(ResultSet rs) throws SQLException {
-
+		UserDao uDao = new UserDao(conn);
+		CourseDao cDao = new CourseDao(conn);
 		// Create user object and pass to array
 		StudentInCourse tmp = new StudentInCourse();
 		tmp.setStudent_course_id(rs.getLong("student_course_id"));
@@ -36,6 +37,13 @@ public class StudentInCourseDao {
 		tmp.setCourse_reviewed(rs.getBoolean("course_reviewed"));
 		tmp.setDisable_edit(rs.getBoolean("disable_edit"));
 		tmp.setSemester_past(rs.getBoolean("semester_past"));
+
+		tmp.setProfessor_first_name(uDao.findById(cDao.findById(tmp.getCourse_id()).getProfessor_id()).getFirst_name());
+		tmp.setProfessor_last_name(uDao.findById(cDao.findById(tmp.getCourse_id()).getProfessor_id()).getLast_name());
+		tmp.setSemester(cDao.findById(tmp.getCourse_id()).getSemester());
+		tmp.setYear(cDao.findById(tmp.getCourse_id()).getYear());
+		tmp.setCourse_subject_number(
+				cDao.findById(tmp.getCourse_id()).getSubject() + cDao.findById(tmp.getCourse_id()).getCourse_number());
 
 		return tmp;
 	}
@@ -148,7 +156,7 @@ public class StudentInCourseDao {
 		return null;
 
 	}
-	
+
 	public void disableEditReview(StudentInCourse course) {
 		// Declare SQL template query
 
@@ -164,7 +172,7 @@ public class StudentInCourseDao {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void setSemesterPast(StudentInCourse course) {
 		// Declare SQL template query
 
@@ -180,10 +188,11 @@ public class StudentInCourseDao {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void setCourseReviewed(ProfessorReview review) {
 		// Declare SQL template query
-		String sql = "UPDATE " + STUDENTINCOURSES_TABLE + " SET course_reviewed = 1 WHERE student_course_id = ? LIMIT 1";
+		String sql = "UPDATE " + STUDENTINCOURSES_TABLE
+				+ " SET course_reviewed = 1 WHERE student_course_id = ? LIMIT 1";
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -195,13 +204,11 @@ public class StudentInCourseDao {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
-	
+
 	public void setCourseNotReviewed(ProfessorReview review) {
 		// Declare SQL template query
-		String sql = "UPDATE " + STUDENTINCOURSES_TABLE + " SET course_reviewed = 0 WHERE student_course_id = ? LIMIT 1";
+		String sql = "UPDATE " + STUDENTINCOURSES_TABLE
+				+ " SET course_reviewed = 0 WHERE student_course_id = ? LIMIT 1";
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -213,6 +220,5 @@ public class StudentInCourseDao {
 			e.printStackTrace();
 		}
 	}
-	
 
 }

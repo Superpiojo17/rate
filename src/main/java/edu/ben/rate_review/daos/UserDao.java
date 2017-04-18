@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.ben.rate_review.controller.home.ProfessorController;
 import edu.ben.rate_review.encryption.SecurePassword;
 import edu.ben.rate_review.models.MassEditForm;
 import edu.ben.rate_review.models.RecoveringUser;
@@ -62,6 +63,8 @@ public class UserDao implements Dao<User> {
 		// tmp.setDepartment(rs.getString("department"));
 		tmp.setNickname(rs.getString("nickname"));
 		tmp.setPersonal_email(rs.getString("personal_email"));
+		tmp.setOverall(ProfessorController.getOverall(tmp));
+		
 		return tmp;
 	}
 

@@ -229,13 +229,17 @@ public class User implements AuthorizationUser {
 		}
 		return adminEditFlag;
 	}
+	
+	public void setProfilepic(String profilepic) {
+		this.profilepic = profilepic;
+	}
+
+	public void setOverall(double overall) {
+		this.overall = overall;
+	}
 
 	public double getOverall() {
-		DaoManager dao = DaoManager.getInstance();
-		UserDao ud = dao.getUserDao();
-		User user = ud.findById(id);
-		ProfessorController profController = new ProfessorController();
-		return profController.getOverall(user);
+		return overall;
 	}
 
 }

@@ -1,9 +1,11 @@
 package edu.ben.rate_review.daos;
 
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,18 +34,32 @@ public class TutorDao implements Dao<Tutor> {
 
 	private Tutor mapRow(ResultSet rs) throws SQLException {
 		UserDao udao = new UserDao(conn);
-
+		TutorDao tDao = new TutorDao(conn);
 		Tutor tmp = new Tutor();
 
 		tmp.setId(rs.getLong("tutor_relationship_id"));
 		tmp.setStudent_id(rs.getLong("user_id_student"));
 		tmp.setProfessor_id(rs.getLong("user_id_professor"));
 		tmp.setCourse_name(rs.getString("course_name"));
-
 		tmp.setTutor_email(udao.findById(rs.getLong("user_id_student")).getEmail());
 		tmp.setTutor_first_name(udao.findById(rs.getLong("user_id_student")).getFirst_name());
 		tmp.setTutor_last_name(udao.findById(rs.getLong("user_id_student")).getLast_name());
-
+		tmp.setSubject(udao.findById(tmp.getProfessor_id()).getMajor());
+		tmp.setProfessor_name(udao.findById(tmp.getProfessor_id()).getFirst_name() + " "
+				+ udao.findById(tmp.getProfessor_id()).getLast_name());
+		
+		int numOfReviews = tDao.listTutorReviewsByTutor(tmp.getStudent_id()).size();
+		float sumOfReviews = tDao.getTutorAverageRating(tmp.getStudent_id());
+		DecimalFormat df = new DecimalFormat("#.#");
+		df.setRoundingMode(RoundingMode.DOWN);
+		float overall;
+		if (numOfReviews != 0) {
+			overall = Float.parseFloat(df.format((float) sumOfReviews / (6 * numOfReviews)));
+		} else {
+			overall = 0;
+		}
+		tmp.setOverall(overall);
+		
 		return tmp;
 	}
 

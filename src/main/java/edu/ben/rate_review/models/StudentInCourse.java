@@ -18,19 +18,19 @@ public class StudentInCourse {
 	private int year;
 	private String course_subject_number;
 
-	User user = null;
-	UserDao uDao = null;
-	CourseDao cDao = null;
-	DaoManager dao = null;
-
-	public StudentInCourse() {
-		super();
-		dao = DaoManager.getInstance();
-		cDao = dao.getCourseDao();
-		uDao = dao.getUserDao();
-		
-
-	}
+//	User user = null;
+//	UserDao uDao = null;
+//	CourseDao cDao = null;
+//	DaoManager dao = null;
+//
+//	public StudentInCourse() {
+//		super();
+//		dao = DaoManager.getInstance();
+//		cDao = dao.getCourseDao();
+//		uDao = dao.getUserDao();
+//		
+//
+//	}
 
 	public long getStudent_course_id() {
 		return student_course_id;
@@ -81,10 +81,7 @@ public class StudentInCourse {
 	}
 
 	public String getProfessor_first_name() {
-		Course course = cDao.findById(course_id);
-		user = uDao.findById(course.getProfessor_id());
-
-		return user.getFirst_name();
+		return professor_first_name;
 	}
 
 	public void setProfessor_first_name(String professor_first_name) {
@@ -92,10 +89,7 @@ public class StudentInCourse {
 	}
 	
 	public String getProfessor_last_name() {
-		Course course = cDao.findById(course_id);
-		user = uDao.findById(course.getProfessor_id());
-
-		return user.getLast_name();
+		return professor_last_name;
 	}
 
 	public void setProfessor_last_name(String professor_last_name) {
@@ -103,7 +97,7 @@ public class StudentInCourse {
 	}
 
 	public String getProfessor_email() {
-		return user.getEmail();
+		return professor_email;
 	}
 
 	public void setProfessor_email(String professor_email) {
@@ -111,8 +105,7 @@ public class StudentInCourse {
 	}
 
 	public String getSemester() {
-		Course course = cDao.findById(course_id);
-		return course.getSemester();
+		return semester;
 	}
 
 	public void setSemester(String semester) {
@@ -120,8 +113,7 @@ public class StudentInCourse {
 	}
 
 	public int getYear() {
-		Course course = cDao.findById(course_id);
-		return course.getYear();
+		return year;
 	}
 
 	public void setYear(int year) {
@@ -129,8 +121,7 @@ public class StudentInCourse {
 	}
 
 	public String getCourse_subject_number() {
-		Course course = cDao.findById(course_id);
-		return course.getSubject() + course.getCourse_number();
+		return course_subject_number;
 	}
 
 	public void setCourse_subject_number(String course_subject_number) {

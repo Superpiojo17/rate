@@ -17,8 +17,8 @@ public class Tutor {
 	private String tutor_last_name;
 	private String tutor_email;
 	private float overall;
-	// private String subject;
-	// private String professor_name;
+	private String subject;
+	private String professor_name;
 
 	public Tutor() {
 		super();
@@ -80,18 +80,24 @@ public class Tutor {
 		this.tutor_email = tutor_email;
 	}
 
+	
+	public void setOverall(float overall) {
+		this.overall = overall;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public void setProfessor_name(String professor_name) {
+		this.professor_name = professor_name;
+	}
+
 	public String getSubject() {
-		DaoManager dao = DaoManager.getInstance();
-		UserDao ud = dao.getUserDao();
-		User user = ud.findById(professor_id);
-		return user.getMajor();
+		return subject;
 	}
 
 	public String getProfessor_name() {
-		DaoManager dao = DaoManager.getInstance();
-		UserDao ud = dao.getUserDao();
-		User user = ud.findById(professor_id);
-		String professor_name = user.getFirst_name() + " " + user.getLast_name();
 		return professor_name;
 	}
 
@@ -101,17 +107,6 @@ public class Tutor {
 	 * @return
 	 */
 	public float getOverall() {
-		TutorDao tDao = DaoManager.getInstance().getTutorDao();
-		int numOfReviews = tDao.listTutorReviewsByTutor(student_id).size();
-		float sumOfReviews = tDao.getTutorAverageRating(student_id);
-		DecimalFormat df = new DecimalFormat("##.##");
-		df.setRoundingMode(RoundingMode.DOWN);
-		if (numOfReviews != 0) {
-			overall = Float.parseFloat(df.format((float) sumOfReviews / (6 * numOfReviews)));
-		} else {
-			overall = 0;
-		}
-
 		return overall;
 	}
 }
