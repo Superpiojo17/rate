@@ -13,7 +13,6 @@ import edu.ben.rate_review.email.Email;
 import edu.ben.rate_review.encryption.SecurePassword;
 import edu.ben.rate_review.formatTime.FormatTimeAndDate;
 import edu.ben.rate_review.models.Announcement;
-import edu.ben.rate_review.models.CoursesToReview;
 import edu.ben.rate_review.models.RecoveringUser;
 import edu.ben.rate_review.models.Tutor;
 import edu.ben.rate_review.models.TutorAppointment;

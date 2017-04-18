@@ -12,13 +12,14 @@ import edu.ben.rate_review.authorization.AuthException;
 import edu.ben.rate_review.daos.AnnouncementDao;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.ProfessorReviewDao;
+import edu.ben.rate_review.daos.StudentInCourseDao;
 import edu.ben.rate_review.daos.TutorDao;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.formatTime.FormatTimeAndDate;
 import edu.ben.rate_review.massRegistration.MassRegistration;
 import edu.ben.rate_review.models.Announcement;
-import edu.ben.rate_review.models.CoursesToReview;
 import edu.ben.rate_review.models.ProfessorReview;
+import edu.ben.rate_review.models.StudentInCourse;
 import edu.ben.rate_review.models.Tutor;
 import edu.ben.rate_review.models.TutorAppointment;
 import edu.ben.rate_review.models.TutorForm;
@@ -149,6 +150,198 @@ public class AdminDashboardController {
 		// Render the page
 		return new ModelAndView(model, "users/courseslanding.hbs");
 	}
+	
+	
+	public ModelAndView showManageReviewsLandingPage(Request req, Response res) throws AuthException {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+
+		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+		User u = (User) session.attribute("current_user");
+
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+
+		// Render the page
+		return new ModelAndView(model, "users/reviewslanding.hbs");
+	}
+	
+
+	public ModelAndView showEditApt(Request req, Response res) throws AuthException {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+		TutorDao tdao = DaoManager.getInstance().getTutorDao();
+
+		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+		User u = (User) session.attribute("current_user");
+
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+
+		AnnouncementDao ad = DaoManager.getInstance().getAnnouncementDao();
+		UserDao ud = DaoManager.getInstance().getUserDao();
+
+		// Get the :id from the url
+		String idString = req.params("id");
+		long id = Long.parseLong(idString);
+
+		TutorAppointment apt = tdao.findAppointmentByID(id);
+		apt.setTime(FormatTimeAndDate.formatTime(apt.getTime()));
+		apt.setDate(FormatTimeAndDate.formatDate(apt.getDate()));
+
+		User user = ud.findById(apt.getTutor_id());
+
+		model.put("department", user.getMajor());
+
+		model.put("depttutors", ud.allTutorsByMajor(user.getMajor()));
+
+		model.put("apt", apt);
+
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+
+		// Render the page
+		return new ModelAndView(model, "users/editappointment.hbs");
+	}
+	
+	
+	public ModelAndView adminDeleteApt(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+
+		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+		User u = (User) session.attribute("current_user");
+
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+
+		String idString = req.params("id");
+		long id = Long.parseLong(idString);
+
+		TutorDao tDao = DaoManager.getInstance().getTutorDao();
+		UserDao uDao = DaoManager.getInstance().getUserDao();
+
+		TutorAppointment tempApt = tDao.findAppointmentByID(id);
+
+		
+
+		User user = uDao.findById(tempApt.getTutor_id());
+	
+		
+		tDao.cancelTutorAppointment(tempApt.getAppointment_id());
+		
+		model.put("error", "You have deleted an appointment on " + tempApt.getDate());
+		
+		
+		List<TutorAppointment> appointments = tDao.listUpcomingAllApptByDept(user.getMajor());
+
+		for (int i = 0; i < appointments.size(); i++) {
+			appointments.get(i).setTime(FormatTimeAndDate.formatTime(appointments.get(i).getTime()));
+			appointments.get(i).setDate(FormatTimeAndDate.formatDate(appointments.get(i).getDate()));
+		}
+		model.put("upcomingappointments", appointments);
+		
+		List<TutorAppointment> pastAppointments = tDao.listPastAllApptByDept(user.getMajor());
+
+		for (int i = 0; i < pastAppointments.size(); i++) {
+			pastAppointments.get(i).setTime(FormatTimeAndDate.formatTime(pastAppointments.get(i).getTime()));
+			pastAppointments.get(i).setDate(FormatTimeAndDate.formatDate(pastAppointments.get(i).getDate()));
+		}
+		model.put("pastappointments", pastAppointments);
+		
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+		
+		model.put("department", user.getMajor());
+
+
+		tempApt.setAppointment_status(Boolean.parseBoolean(req.queryParams("status")));
+		return new ModelAndView(model, "users/appointments.hbs");
+	}
+
+	public ModelAndView adminUpdateApt(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+
+		Session session = req.session();
+		if (session.attribute("current_user") == null) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+		User u = (User) session.attribute("current_user");
+
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+
+		String idString = req.params("id");
+		long id = Long.parseLong(idString);
+
+		TutorDao tDao = DaoManager.getInstance().getTutorDao();
+		UserDao uDao = DaoManager.getInstance().getUserDao();
+
+		TutorAppointment tempApt = tDao.findAppointmentByID(id);
+
+		User user = uDao.findById(Integer.parseInt(req.queryParams("selecttutor")));
+		Long userID = user.getId();
+		
+
+		tempApt.setTutor_firstname(user.getFirst_name());
+		tempApt.setTutor_lastname(user.getLast_name());
+		tempApt.setTutor_id(userID);
+		tempApt.setAppointment_status(Boolean.parseBoolean(req.queryParams("status")));
+		
+		tempApt.setDate(FormatTimeAndDate.formatDate(tempApt.getDate()));
+	
+		
+		tDao.updateApt(tempApt);
+		
+		model.put("message", "You have edited an appointment on " + tempApt.getDate());
+		
+		
+		List<TutorAppointment> appointments = tDao.listUpcomingAllApptByDept(user.getMajor());
+
+		for (int i = 0; i < appointments.size(); i++) {
+			appointments.get(i).setTime(FormatTimeAndDate.formatTime(appointments.get(i).getTime()));
+			appointments.get(i).setDate(FormatTimeAndDate.formatDate(appointments.get(i).getDate()));
+		}
+		model.put("upcomingappointments", appointments);
+		
+		List<TutorAppointment> pastAppointments = tDao.listPastAllApptByDept(user.getMajor());
+
+		for (int i = 0; i < pastAppointments.size(); i++) {
+			pastAppointments.get(i).setTime(FormatTimeAndDate.formatTime(pastAppointments.get(i).getTime()));
+			pastAppointments.get(i).setDate(FormatTimeAndDate.formatDate(pastAppointments.get(i).getDate()));
+		}
+		model.put("pastappointments", pastAppointments);
+		
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
+		
+		model.put("department", user.getMajor());
+
+
+		tempApt.setAppointment_status(Boolean.parseBoolean(req.queryParams("status")));
+		return new ModelAndView(model, "users/appointments.hbs");
+	}
 
 	public ModelAndView showManageAptLandingPage(Request req, Response res) throws AuthException {
 		// Just a hash to pass data from the servlet to the page
@@ -203,38 +396,62 @@ public class AdminDashboardController {
 			// Make sure you
 			if (searchType.equalsIgnoreCase("email") || searchType.equalsIgnoreCase("name") && searchTxt.length() > 0) {
 				// valid search, can proceed
-				List<User> tempUsers = ud.search(searchType, searchTxt);
-				if (tempUsers.size() > 0) {
-
-					model.put("users", tempUsers);
+				List<TutorAppointment> tempApts = td.searchApt(searchType, searchTxt);
+				if (tempApts.size() > 0) {
+					
+					for (int i = 0; i < tempApts.size(); i++) {
+						tempApts.get(i).setTime(FormatTimeAndDate.formatTime(tempApts.get(i).getTime()));
+						tempApts.get(i).setDate(FormatTimeAndDate.formatDate(tempApts.get(i).getDate()));
+					}
+					model.put("upcomingappointments", tempApts);
 				} else {
-					List<User> users = ud.search(searchType, searchTxt);
+					List<TutorAppointment> apts = td.searchApt(searchType, searchTxt);
 					model.put("error", "No Results Found");
-					model.put("users", users);
+					
+					for (int i = 0; i < apts.size(); i++) {
+						apts.get(i).setTime(FormatTimeAndDate.formatTime(apts.get(i).getTime()));
+						apts.get(i).setDate(FormatTimeAndDate.formatDate(apts.get(i).getDate()));
+					}
+					
+					model.put("upcomingapointments", apts);
 				}
 			} else {
-				List<TutorAppointment> appointments = td.listUpcomingAllApptByDept(department);
+				List<TutorAppointment> apts = td.listUpcomingAllApptByDept(department);
 				model.put("error", "Cannot leave search bar blank");
-				model.put("appointments", appointments);
+				for (int i = 0; i < apts.size(); i++) {
+					apts.get(i).setTime(FormatTimeAndDate.formatTime(apts.get(i).getTime()));
+					apts.get(i).setDate(FormatTimeAndDate.formatDate(apts.get(i).getDate()));
+				}
+				model.put("upcomingappointments", apts);
+				
+				List<TutorAppointment> pastAppointments = td.listPastAllApptByDept(department);
+
+				for (int i = 0; i < pastAppointments.size(); i++) {
+					pastAppointments.get(i).setTime(FormatTimeAndDate.formatTime(pastAppointments.get(i).getTime()));
+					pastAppointments.get(i).setDate(FormatTimeAndDate.formatDate(pastAppointments.get(i).getDate()));
+				}
+				model.put("pastappointments", pastAppointments);
+				
 			}
 		} else {
-			System.out.println("OK");
 			List<TutorAppointment> appointments = td.listUpcomingAllApptByDept(department);
-			
+
 			for (int i = 0; i < appointments.size(); i++) {
 				appointments.get(i).setTime(FormatTimeAndDate.formatTime(appointments.get(i).getTime()));
 				appointments.get(i).setDate(FormatTimeAndDate.formatDate(appointments.get(i).getDate()));
 			}
 			model.put("upcomingappointments", appointments);
+			
+			List<TutorAppointment> pastAppointments = td.listPastAllApptByDept(department);
+
+			for (int i = 0; i < pastAppointments.size(); i++) {
+				pastAppointments.get(i).setTime(FormatTimeAndDate.formatTime(pastAppointments.get(i).getTime()));
+				pastAppointments.get(i).setDate(FormatTimeAndDate.formatDate(pastAppointments.get(i).getDate()));
+			}
+			model.put("pastappointments", pastAppointments);
 		}
 
-		List<TutorAppointment> pastAppointments = td.listPastAllApptByDept(department);
-
-		for (int i = 0; i < pastAppointments.size(); i++) {
-			pastAppointments.get(i).setTime(FormatTimeAndDate.formatTime(pastAppointments.get(i).getTime()));
-			pastAppointments.get(i).setDate(FormatTimeAndDate.formatDate(pastAppointments.get(i).getDate()));
-		}
-		model.put("pastappointments", pastAppointments);
+	
 
 		model.put("current_user", u);
 
@@ -357,7 +574,10 @@ public class AdminDashboardController {
 	 * @return
 	 */
 	public String handleFlaggedComment(Request req, Response res) {
-		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
+		DaoManager dao = DaoManager.getInstance();
+		ProfessorReviewDao reviewDao = dao.getProfessorReviewDao();
+		StudentInCourseDao sDao = dao.getStudentInCourseDao();
+		
 
 		// grabs course id from review comment
 		String courseToRemoveString = req.queryParams("flagged_comment");
@@ -367,8 +587,8 @@ public class AdminDashboardController {
 			ProfessorReview review = reviewDao.findReview(courseID);
 			reviewDao.setCommentRemoved(review);
 			reviewDao.setCommentNotFlagged(review);
-			CoursesToReview course = reviewDao.findByCourseId(courseID);
-			reviewDao.disableEditReview(course);
+			StudentInCourse course = sDao.findByStudentCourseId(courseID);
+			sDao.disableEditReview(course);
 		} else {
 			courseID *= -1;
 			ProfessorReview review = reviewDao.findReview(courseID);

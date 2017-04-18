@@ -11,6 +11,7 @@ import edu.ben.rate_review.daos.AnnouncementDao;
 import edu.ben.rate_review.daos.CourseDao;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.ProfessorReviewDao;
+import edu.ben.rate_review.daos.StudentInCourseDao;
 import edu.ben.rate_review.daos.TutorDao;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.email.Email;
@@ -18,8 +19,8 @@ import edu.ben.rate_review.formatTime.CheckIfExpired;
 import edu.ben.rate_review.formatTime.FormatTimeAndDate;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.Course;
-import edu.ben.rate_review.models.CoursesToReview;
 import edu.ben.rate_review.models.ProfessorReview;
+import edu.ben.rate_review.models.StudentInCourse;
 import edu.ben.rate_review.models.Tutor;
 import edu.ben.rate_review.models.TutorAppointment;
 import edu.ben.rate_review.models.User;
@@ -58,10 +59,11 @@ public class StudentDashboardController {
 
 		DaoManager dao = DaoManager.getInstance();
 		ProfessorReviewDao reviewDao = dao.getProfessorReviewDao();
-		flagPastCourses(reviewDao);
+		StudentInCourseDao sDao = dao.getStudentInCourseDao();
+		flagPastCourses(sDao);
 
-		List<CoursesToReview> coursesNotReviewed = reviewDao.allStudentCoursesNotReviewed(u);
-		List<CoursesToReview> coursesReviewed = reviewDao.allStudentCoursesReviewed(u);
+		List<StudentInCourse> coursesNotReviewed = sDao.allStudentCoursesNotReviewed(u);
+		List<StudentInCourse> coursesReviewed = sDao.allStudentCoursesReviewed(u);
 
 		// no classes listed in courses to review
 		boolean noCoursesToReview = false;
@@ -96,7 +98,17 @@ public class StudentDashboardController {
 
 		TutorDao tDao = dao.getTutorDao();
 		flagPastAppointments(tDao);
+
 		List<Tutor> tutors = tDao.listAllTutors();
+
+		// removes tutors outside of student's department
+		for (int i = 0; i < tutors.size(); i++) {
+			if (!tutors.get(i).getSubject().equalsIgnoreCase(u.getMajor())) {
+				tutors.remove(i);
+			}
+		}
+		// after courses rework, will show tutors in departments of any class
+		// student is currently enrolled in
 		model.put("tutors", tutors);
 
 		List<TutorAppointment> appointments = tDao.listAllStudentAppointments(u);
@@ -120,6 +132,14 @@ public class StudentDashboardController {
 			available_tutors = true;
 		}
 		model.put("available_tutors", available_tutors);
+
+		// lists appointments which have not been reviewed
+		List<TutorAppointment> notReviewed = tDao.listAllNotReviewedTutorAppointments(u);
+		for (int i = 0; i < notReviewed.size(); i++) {
+			notReviewed.get(i).setTime(FormatTimeAndDate.formatTime(notReviewed.get(i).getTime()));
+			notReviewed.get(i).setDate(FormatTimeAndDate.formatDate(notReviewed.get(i).getDate()));
+		}
+		model.put("appointments_not_reviewed", notReviewed);
 
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/studentDashboard.hbs");
@@ -222,48 +242,60 @@ public class StudentDashboardController {
 		TutorDao tDao = dao.getTutorDao();
 		UserDao uDao = dao.getUserDao();
 
-		// this check is for a student scheduling an appointment
-		if (Long.parseLong(req.queryParams("tutor_id")) > 0) {
-			User tutor = uDao.findById(Long.parseLong(req.queryParams("tutor_id")));
+		if (req.queryParams("appointment_id") == null) {
+			// enters if not for a tutor review
 
-			if (!req.queryParams("date").isEmpty() && !req.queryParams("time").isEmpty()) {
+			// created to split the tutor's id from the tutor/professor
+			// relationship id
+			String[] splitTutorId = req.queryParams("tutor_id").split(",");
 
-				// only allows appointments between 8AM and 8PM
-				if (FormatTimeAndDate.checkValidDateTime(req.queryParams("time"), req.queryParams("date"))) {
+			// this check is for a student scheduling an appointment
+			if (Long.parseLong(splitTutorId[0]) > 0) {
+				User tutor = uDao.findById(Long.parseLong(splitTutorId[0]));
 
-					TutorAppointment appointment = new TutorAppointment();
-					appointment.setStudent_id(u.getId());
-					appointment.setTutor_id(Long.parseLong(req.queryParams("tutor_id")));
-					appointment.setDate(req.queryParams("date"));
-					appointment.setTime(req.queryParams("time"));
-					appointment.setStudent_message(req.queryParams("student_message"));
-					appointment.setStudent_firstname(u.getFirst_name());
-					appointment.setStudent_lastname(u.getLast_name());
-					appointment.setTutor_firstname(tutor.getFirst_name());
-					appointment.setTutor_lastname(tutor.getLast_name());
+				if (!req.queryParams("date").isEmpty() && !req.queryParams("time").isEmpty()) {
 
-					if (appointment.getStudent_message().length() < 200) {
-						tDao.saveTutorAppointment(appointment);
-						emailAppointmentRequest(appointment, uDao);
+					// only allows appointments between 8AM and 8PM
+					if (FormatTimeAndDate.checkValidDateTime(req.queryParams("time"), req.queryParams("date"))) {
+
+						TutorAppointment appointment = new TutorAppointment();
+						appointment.setStudent_id(u.getId());
+						appointment.setTutor_id(Long.parseLong(splitTutorId[0]));
+						appointment.setDate(req.queryParams("date"));
+						appointment.setTime(req.queryParams("time"));
+						appointment.setStudent_message(req.queryParams("student_message"));
+						appointment.setStudent_firstname(u.getFirst_name());
+						appointment.setStudent_lastname(u.getLast_name());
+						appointment.setTutor_firstname(tutor.getFirst_name());
+						appointment.setTutor_lastname(tutor.getLast_name());
+						appointment.setRelationship_id(Long.parseLong(splitTutorId[1]));
+
+						if (appointment.getStudent_message().length() < 200) {
+							tDao.saveTutorAppointment(appointment);
+							emailAppointmentRequest(appointment, uDao);
+						} else {
+							// message - comment too long
+						}
 					} else {
-						// message - comment too long
+						// meeting time is outside of 8AM-8PM window
 					}
 				} else {
-					// meeting time is outside of 8AM-8PM window
+					// message - please set a date
 				}
 			} else {
-				// message - please set a date
+				// if tutor_id is negative, it is a student canceling an
+				// appointment, and the negative number is the appointment_id
+				long appointment_id = -1 * Long.parseLong(splitTutorId[0]);
+
+				// only sends email when approved appointment is canceled
+				if (tDao.findAppointmentByID(appointment_id).getAppointment_status()) {
+					emailCancelAppointment(appointment_id, uDao, tDao);
+				}
+				tDao.cancelTutorAppointment(appointment_id);
 			}
 		} else {
-			// if tutor_id is negative, it is a student canceling an
-			// appointment, and the negative number is the appointment_id
-			long appointment_id = -1 * Long.parseLong(req.queryParams("tutor_id"));
-
-			// only sends email when approved appointment is canceled
-			if (tDao.findAppointmentByID(appointment_id).getAppointment_status()) {
-				emailCancelAppointment(appointment_id, uDao, tDao);
-			}
-			tDao.cancelTutorAppointment(appointment_id);
+			// handles tutor review
+			System.out.println(req.queryParams("appointment_id"));
 		}
 		res.redirect(Application.STUDENTDASHBOARD_PATH);
 		return "";
@@ -343,7 +375,9 @@ public class StudentDashboardController {
 	private void flagPastAppointments(TutorDao tDao) {
 		List<TutorAppointment> appointments = tDao.listAllAppointments();
 		for (int i = 0; i < appointments.size(); i++) {
-			if (!CheckIfExpired.checkDateCurrentOrUpcoming(appointments.get(i).getDate())) {
+			if (!CheckIfExpired.checkDateCurrentOrUpcoming(appointments.get(i).getDate())
+					&& !appointments.get(i).isAppointment_past()) {
+
 				tDao.setAppointmentPast(appointments.get(i));
 
 				if (appointments.get(i).getAppointment_status() && appointments.get(i).isAppointment_past()) {
@@ -360,12 +394,12 @@ public class StudentDashboardController {
 	 * 
 	 * @param reviewDao
 	 */
-	private void flagPastCourses(ProfessorReviewDao reviewDao) {
-		List<CoursesToReview> courses = reviewDao.listAllCourses();
+	private void flagPastCourses(StudentInCourseDao sDao) {
+		List<StudentInCourse> courses = sDao.listAllCourses();
 		for (int i = 0; i < courses.size(); i++) {
 			if (!CheckIfExpired.checkSemesterCurrentOrUpcoming(courses.get(i).getSemester(),
 					courses.get(i).getYear())) {
-				reviewDao.setSemesterPast(courses.get(i));
+				sDao.setSemesterPast(courses.get(i));
 			}
 		}
 	}

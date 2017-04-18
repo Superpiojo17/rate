@@ -121,7 +121,7 @@
           {{#unless no_courses_to_review}} <span title="You have {{number_of_courses}} class(es) waiting to be reviewed." class="glyphicon glyphicon-exclamation-sign" style="color:orange"></span>{{/unless}}
         </h4>
       </div>
-      <div id="collapse4" class="panel-collapse in"> 
+      <div id="collapse4" class="panel-collapse {{#unless no_courses_to_review}}in{{/unless}}{{#if no_courses_to_review}}collapse{{/if}}"> 
       	{{#if no_courses_to_review}}You have no more courses to review.{{/if}}
 		{{#unless no_courses_to_review}}	
       	<div class="table-wrapper">
@@ -132,6 +132,7 @@
 											<th><br />Course</th>
 											<th><br />Semester</th>
 											<th><br />Year</th>
+											<th><br /></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -139,11 +140,10 @@
 									{{#unless semester_past}}
 										<tr>
 											<td>{{professor_first_name}} {{professor_last_name}}</td>
-											<td>
-											<a title="click here to review" href="/reviewprofessor/{{course_id}}/review">{{course_name}}</a>
-											</td>
+											<td>{{course_subject_number}}</td>
 											<td>{{semester}}</td>
 											<td>{{year}}</td>
+											<td class="shrink"><a title="click here to review" href="/reviewprofessor/{{student_course_id}}/review"><i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i></a></td>
 										</tr>
 									{{/unless}}
 									{{/each}}
@@ -164,7 +164,7 @@
           <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">My Recent Reviews</a>
         </h4>
       </div>
-      <div id="collapse3" class="panel-collapse collapse">
+      <div id="collapse3" class="panel-collapse {{#unless no_courses_to_review}}collapse{{/unless}}{{#if no_courses_to_review}}in{{/if}}">
     {{#if no_courses_reviewed}}You do not have any recent reviews.{{/if}}
 	{{#unless no_courses_reviewed}}
         <div class="table-wrapper">
@@ -180,26 +180,27 @@
 									</thead>
 									<tbody>
 									{{#each courses_reviewed}}
+									
 										<tr>
 											<td class="shrink" align="center">
 											{{#unless semester_past}}
 											{{#unless disable_edit}}
-											<a title="edit your review" href="/reviewprofessor/{{course_id}}/review" class="btn btn-info"><span class="glyphicon glyphicon-pencil fa-2x"></span></a>
+											<a title="edit your review" href="/reviewprofessor/{{student_course_id}}/review"><span class="glyphicon glyphicon-pencil fa-2x" style="color:blue"></span></a>
 											{{/unless}}
 											{{/unless}}
 											
 											{{#if semester_past}}
-												<a title="edit-disabled" href="/reviewprofessor/{{course_id}}/review" class="btn btn-primary"><i class="fa fa-eye fa-2x" aria-hidden="true"></i></a>
+												<a title="edit-disabled" href="/reviewprofessor/{{student_course_id}}/review"><i class="fa fa-eye fa-2x" aria-hidden="true" style="color:black"></i></a>
 											{{/if}}
 											{{#unless semester_past}}
 											{{#if disable_edit}}
-												<a title="edit disabled" href="/reviewprofessor/{{course_id}}/review" class="btn btn-primary"><i class="fa fa-eye fa-2x" aria-hidden="true"></i></a>
+												<a title="edit disabled" href="/reviewprofessor/{{student_course_id}}/review"><i class="fa fa-eye fa-2x" aria-hidden="true" style="color:black"></i></a>
 											{{/if}}
 											{{/unless}}
 											
 											</td>
 											<td>{{professor_first_name}} {{professor_last_name}}</td>
-											<td>{{course_name}}</td>
+											<td>{{course_subject_number}}</td>
 											<td>{{semester}}</td>
 											<td>{{year}}</td>
 										</tr>
@@ -233,7 +234,9 @@
 				<thead>
 					<tr>
 					<th><br />Tutor</th>
-					<th><br />Class</th>
+					<th><br />Subject</th>
+					<th><br />Specialty</th>
+					<th><br />Rating</th>
 					<th><br />Date</th>
 					<th><br />Time</th>
 					<th><br />Message (Size limit: 200)</th>
@@ -246,12 +249,14 @@
 							<tr>
 							<form action="/studentdashboard" method="post">
 							<td class="shrink">{{tutor_first_name}} {{tutor_last_name}}</td>
+							<td class="shrink">{{subject}}</td>
 							<td class="shrink">{{course_name}}</td>
+							<td class="shrink">{{#if overall}}{{overall}}/5{{/if}}{{#unless overall}}No Ratings{{/unless}}</td>
 							<td class="shrink"><input type="date" name="date" id="date" value="" placeholder="Date" /></td>
 							<td class="shrink"><input type="time" name="time" id="time" value="" placeholder="Time" /></td>
 							<td><input type="text" name="student_message" id="student_message" placeholder="Leave a message here." /></td>
 							<td class = "shrink">
-								<button title="send request" class="btn btn-primary" type="submit" name="tutor_id" value="{{student_id}}"><span class="glyphicon glyphicon-arrow-right"></span></button>
+								<button title="send request" class="btn btn-link" type="submit" name="tutor_id" value="{{student_id}},{{id}}"><i class="fa fa-arrow-right fa-2x" aria-hidden="true" style="color:gray"></i></button>
 							</td>
 							</form>
 							</tr>
@@ -266,7 +271,7 @@
 		</div>
 		</div>
 		
-		 <div class="panel panel-default">
+		<div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
           <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Appointment Responses</a>
@@ -282,20 +287,21 @@
 				<thead>
 					<tr>
 					<th><br />Tutor</th>
+					<th><br />Subject</th>
 					<th><br />Date</th>
 					<th><br />Time</th>
 					<th><br />Your Message</th>
 					<th><br />Tutor Response</th>
 					<th><br />Status</th>
-					<th><br />Cancel</th>
-					<th><br />Remove</th>
+					<th><br />Cancel / Remove</th>
 					</tr>
 				</thead>
 				<tbody>
 						{{#each upcoming_appointments}}
 							<tr>
-							<form action="/studentdashboard" method="post">
+								<form action="/studentdashboard" method="post">
 								<td class="shrink">{{tutor_firstname}} {{tutor_lastname}}</td>
+								<td class="shrink">{{course_name}}</td>
 								<td class="shrink">{{date}}</td>
 								<td class="shrink">{{time}}</td>
 								<td>{{student_message}}</td>
@@ -306,7 +312,7 @@
 										<span title="pending" class="glyphicon glyphicon-option-horizontal fa-2x"></span>
 									{{/unless}}
 									{{#if appointment_past}}
-										<i title="tutor did not respond" class="fa fa-eye-slash fa-2x" aria-hidden="true"></i>
+										<i title="tutor did not see request, and the date has passed" class="fa fa-eye-slash fa-2x" aria-hidden="true"></i>
 									{{/if}}
 									{{/unless}}
 									{{#if tutor_has_responded}} 
@@ -323,45 +329,47 @@
 										{{/if}}
 									{{/if}}
 								</td>
+								
 								<td class="shrink">
 									{{#if tutor_has_responded}}
 										{{#if appointment_status}}
 										{{#unless appointment_past}}
-											<button title="cancel appointment" class="btn" type="submit" name="tutor_id" value="-{{appointment_id}}"><span class="glyphicon glyphicon-remove"></span></button>
+											<button title="cancel appointment" class="btn btn-link" type="submit" name="tutor_id" value="-{{appointment_id}},0"><span class="glyphicon glyphicon-remove fa-2x" style="color:black"></span></button>
 										{{/unless}}
-										{{#if appointment_past}}
-											<button title="appointment past" class="btn disabled" type="button"><span class="glyphicon glyphicon-remove"></span></button>
+			<!--						{{#if appointment_past}}
+											<button class="btn btn-link disabled" type="button"><span class="glyphicon glyphicon-remove fa-2x" style="color:black"></span></button>
 										{{/if}}
+			-->
 										{{/if}}
-										{{#unless appointment_status}}
-											<button class="btn disabled" type="button"><span class="glyphicon glyphicon-remove"></span></button>
+			<!--						{{#unless appointment_status}}
+											<button class="btn btn-link disabled" type="button"><span class="glyphicon glyphicon-remove fa-2x" style="color:black"></span></button>
 										{{/unless}}
+			-->
 									{{/if}}
-									{{#unless tutor_has_responded}}
-										<button class="btn disabled" type="button"><span class="glyphicon glyphicon-remove"></span></button>
+			<!--					{{#unless tutor_has_responded}}
+										<button class="btn btn-link disabled" type="button"><span class="glyphicon glyphicon-remove fa-2x" style="color:black"></span></button>
 									{{/unless}}
-									
-								</td>
-								<td class="shrink">
+			-->
 									{{#if tutor_has_responded}}
 										{{#unless appointment_status}}
-											<button title="delete denied appointment" class="btn btn-danger" type="submit" name="tutor_id" value="-{{appointment_id}}"><span class="glyphicon glyphicon-trash"></span></button>
+											<button title="delete denied appointment" class="btn btn-link" type="submit" name="tutor_id" value="-{{appointment_id}},0"><span class="glyphicon glyphicon-trash fa-2x" style="color:red"></span></button>
 										{{/unless}}
 										{{#if appointment_status}}
-										{{#unless appointment_past}}
-											<button class="btn btn-danger disabled" type="button"><span class="glyphicon glyphicon-trash"></span></button>
+			<!--						{{#unless appointment_past}}
+											<button class="btn btn-link disabled" type="button"><span class="glyphicon glyphicon-trash fa-2x" style="color:red"></span></button>
 										{{/unless}}
+			-->
 										{{#if appointment_past}}
-											<button title="remove past appointment" class="btn btn-danger" type="submit" name="tutor_id" value="-{{appointment_id}}"><span class="glyphicon glyphicon-trash"></span></button>
+											<button title="remove past appointment" class="btn btn-link" type="submit" name="tutor_id" value="-{{appointment_id}},0"><span class="glyphicon glyphicon-trash fa-2x" style="color:red"></span></button>
 										{{/if}}
 										{{/if}}
 									{{/if}}
 									{{#unless tutor_has_responded}}
-										<button title="delete request" class="btn btn-danger" type="submit" name="tutor_id" value="-{{appointment_id}}"><span class="glyphicon glyphicon-trash"></span></button>
+										<button title="delete request" class="btn btn-link" type="submit" name="tutor_id" value="-{{appointment_id}},0"><span class="glyphicon glyphicon-trash fa-2x" style="color:red"></span></button>
 									{{/unless}}
 								</td>
-							<form action="/studentdashboard" method="post">
-							</tr>
+									<form action="/studentdashboard" method="post">
+								</tr>
 						{{/each}}
 				</tbody>
 					<tfoot>
@@ -374,6 +382,60 @@
       </div>
 	
     </div>
+    
+    
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">Review Tutor Appointment</a>
+        </h4>
+      </div>
+		<div id="collapse5" class="panel-collapse collapse">
+		
+		{{#unless appointments_not_reviewed}}No appointments to review.{{/unless}}
+		{{#if appointments_not_reviewed}}
+      	 <div class="table-wrapper">
+			<table class="alt">
+				<thead>
+					<tr>
+					<th><br />Tutor</th>
+					<th><br />Subject</th>
+					<th><br />Specialty</th>
+					<th><br />Date</th>
+					<th><br />Time</th>
+					<th></th>
+					</tr>
+				</thead>
+				<tbody>
+						{{#each appointments_not_reviewed}}
+						
+							<tr>
+							<form action="/studentdashboard" method="post">
+							<td>{{tutor_firstname}} {{tutor_lastname}}</td>
+							<td>{{department}}</td>
+							<td>{{course_name}}</td>
+							<td>{{date}}</td>
+							<td>{{time}}</td>
+							<td class="shrink">
+								<a title="click here to review" href="/tutorreview/{{appointment_id}}"><i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i></a>
+							</td>
+							</form>
+							</tr>
+						
+						{{/each}}
+				</tbody>
+					<tfoot>
+					</tfoot>
+				</table>
+			</div> 
+			{{/if}}
+		</div>
+		</div>
+    
+    
+    
+    
     </div>
     
     

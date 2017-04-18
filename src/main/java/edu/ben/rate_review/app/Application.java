@@ -28,6 +28,7 @@ import edu.ben.rate_review.controller.home.ProfessorReviewController;
 import edu.ben.rate_review.controller.home.RegisterController;
 //import edu.ben.rate_review.controller.home.TeacherAddTutorController;
 import edu.ben.rate_review.controller.home.TeacherController;
+import edu.ben.rate_review.controller.home.TutorReviewController;
 //import edu.ben.rate_review.controller.home.TutorAppointmentController;
 //import edu.ben.rate_review.controller.home.TutorsController;
 import edu.ben.rate_review.controller.session.SessionsController;
@@ -37,6 +38,7 @@ import edu.ben.rate_review.controller.user.AdminEditTutorController;
 import edu.ben.rate_review.controller.user.CalendarController;
 import edu.ben.rate_review.controller.user.EditAnnouncementController;
 import edu.ben.rate_review.controller.user.EditCoursesController;
+import edu.ben.rate_review.controller.user.EditReviewsController;
 import edu.ben.rate_review.controller.user.EditTutorController;
 import edu.ben.rate_review.controller.user.EditUserController;
 import edu.ben.rate_review.controller.user.FacultyDashboardController;
@@ -76,8 +78,10 @@ public class Application {
 	private static AdminController adminController = new AdminController();
 	private static EditCoursesController editcoursesController = new EditCoursesController();
 	private static AdminEditTutorController adminedittutorController = new AdminEditTutorController();
+	private static TutorReviewController tutorReviewController = new TutorReviewController();
 
 	private static FaqController faqController = new FaqController();
+	private static EditReviewsController editReviewController = new EditReviewsController();
 	// private static TutorAppointmentController tutorAppointmentController =
 	// new TutorAppointmentController();
 	// private static TeacherAddTutorController teacherAddTutorController = new
@@ -120,7 +124,7 @@ public class Application {
 	public static String TEST_PATH = "/test";
 	public static String TUTOR_PATH = "/tutor";
 	public static String PROFESSOR_PATH = "/professor/:professor_id/:display";
-	public static String REVIEWPROFESSOR_PATH = "/reviewprofessor/:course_id/review";
+	public static String REVIEWPROFESSOR_PATH = "/reviewprofessor/:student_course_id/review";
 	public static String SELECTTUTOR_PATH = "/selecttutors";
 	public static String ADDPROFESSOR_PATH = "/addprofessor";
 
@@ -167,7 +171,14 @@ public class Application {
 	public static String MYACCOUNT_PATH = "/myaccount";
 	public static String ADMINAPTLANDING_PATH = "/adminaptlanding";
 	public static String APPOINTMENTS_PATH = "/appointments/:department";
+	public static String EDITAPPOINTMENTS_PATH = "/appointment/:id/edit";
+	public static String UPDATEAPPOINTMENT_PATH = "/editapt/:id/edit";
 	public static String LOGOUT_PATH = "/logout";
+	public static String DELETEAPPOINTMENT_PATH = "/deleteapt/:id";
+	public static String TUTORREVIEW_PATH = "/tutorreview/:appointment_id";
+	public static String ADMINREVIEWLANDING_PATH = "/reviewlanding";
+	public static String DEPTREVIEWS_PATH = "/reviews/:department";
+	public static String DELETEREVIEW_PATH = "/deletereview/:student_course_id";
 
 	public static void main(String[] args) throws Exception {
 
@@ -225,10 +236,27 @@ public class Application {
 		// HandlebarsTemplateEngine());
 
 		//
-		
+
 		get(APPOINTMENTS_PATH, (req, res) -> admindashController.showAllDeptApt(req, res),
 				new HandlebarsTemplateEngine());
+
+		get(DEPTREVIEWS_PATH, (req, res) -> editReviewController.showDeptReviews(req, res),
+				new HandlebarsTemplateEngine());
+
+		get(ADMINREVIEWLANDING_PATH, (req, res) -> admindashController.showManageReviewsLandingPage(req, res),
+				new HandlebarsTemplateEngine());
+
+		get(EDITAPPOINTMENTS_PATH, (req, res) -> admindashController.showEditApt(req, res),
+				new HandlebarsTemplateEngine());
+
+		post(UPDATEAPPOINTMENT_PATH, (req, res) -> admindashController.adminUpdateApt(req, res),
+				new HandlebarsTemplateEngine());
 		
+		post(DELETEREVIEW_PATH, (req, res) -> editReviewController.deleteReview(req, res),
+				new HandlebarsTemplateEngine());
+
+		post(DELETEAPPOINTMENT_PATH, (req, res) -> admindashController.adminDeleteApt(req, res),
+				new HandlebarsTemplateEngine());
 
 		post(ADMINDELETETUTOR_PATH, (req, res) -> adminedittutorController.adminDeleteTutor(req, res),
 				new HandlebarsTemplateEngine());
@@ -374,6 +402,11 @@ public class Application {
 		post(REVIEWPROFESSOR_PATH, (req, res) -> professorReviewController.reviewProfessor(req, res));
 
 		put(REVIEWPROFESSOR_PATH, (req, res) -> professorReviewController.passCourse(req, res));
+
+		get(TUTORREVIEW_PATH, (req, res) -> tutorReviewController.showTutorReview(req, res),
+				new HandlebarsTemplateEngine());
+
+		post(TUTORREVIEW_PATH, (req, res) -> tutorReviewController.reviewTutor(req, res));
 
 		get(TEACHER_PATH, (req, res) -> teacherController.showTeacherPage(req, res), new HandlebarsTemplateEngine());
 

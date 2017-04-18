@@ -34,7 +34,8 @@ public class CourseDao {
 		tmp.setCourse_name(rs.getString("course_name"));
 		tmp.setProfessor_id(rs.getLong("course_professor_id"));
 		tmp.setSubject(rs.getString("course_subject"));
-		tmp.setTerm(rs.getString("course_term"));
+		tmp.setSemester(rs.getString("course_semester"));
+		tmp.setYear(rs.getInt("course_year"));
 		tmp.setProfessor_name(rs.getString("course_professor_id"));
 		tmp.setCourse_number(rs.getLong("course_number"));
 
@@ -63,14 +64,15 @@ public class CourseDao {
 
 	public Course save(Course course) {
 		final String sql = "INSERT INTO " + COURSES_TABLE
-				+ "(course_subject, course_number, course_name, course_professor_id, course_term) Values(?,?,?,?,?)";
+				+ "(course_subject, course_number, course_name, course_professor_id, course_semester, course_year) Values(?,?,?,?,?,?)";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, course.getSubject());
 			ps.setLong(2, course.getCourse_number());
 			ps.setString(3, course.getCourse_name());
 			ps.setLong(4, course.getProfessor_id());
-			ps.setString(5, course.getTerm());
+			ps.setString(5, course.getSemester());
+			ps.setInt(6, course.getYear());
 			;
 			ps.executeUpdate();
 			return course;

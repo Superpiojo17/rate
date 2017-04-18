@@ -3,6 +3,9 @@ package edu.ben.rate_review.models;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
+import edu.ben.rate_review.daos.DaoManager;
+import edu.ben.rate_review.daos.UserDao;
+
 /**
  * Model for the review of a professor
  * 
@@ -21,19 +24,19 @@ public class ProfessorReview {
 	 * 
 	 * @param course
 	 */
-	public ProfessorReview(CoursesToReview course) {
+	public ProfessorReview(StudentInCourse course) {
 		super();
-		this.course_id = course.getCourse_id();
+		this.student_course_id = course.getStudent_course_id();
 		this.student_id = course.getStudent_id();
 		this.professor_first_name = course.getProfessor_first_name();
 		this.professor_last_name = course.getProfessor_last_name();
-		this.course = course.getCourse_name();
+		this.course = course.getCourse_subject_number();
 		this.semester = course.getSemester();
 		this.year = course.getYear();
 		this.professor_email = course.getProfessor_email();
 	}
 
-	private long course_id;
+	private long student_course_id;
 	private long student_id;
 	private String professor_first_name;
 	private String professor_last_name;
@@ -45,7 +48,8 @@ public class ProfessorReview {
 	private boolean comment_flagged;
 	private boolean comment_removed;
 	private boolean comment_approved;
-	private float overall;
+	private String studentname;
+	// private float overall;
 
 	public boolean getComment_approved() {
 		return comment_approved;
@@ -102,12 +106,12 @@ public class ProfessorReview {
 	// I found this course was valuable for my career development:
 	private int rate_career_development;
 
-	public long getCourse_id() {
-		return course_id;
+	public long getStudent_course_id() {
+		return student_course_id;
 	}
 
-	public void setCourse_id(long course_id) {
-		this.course_id = course_id;
+	public void setStudent_course_id(long student_course_id) {
+		this.student_course_id = student_course_id;
 	}
 
 	/**
@@ -420,6 +424,12 @@ public class ProfessorReview {
 		return (df.format((float) (rate_objectives + rate_organized + rate_challenging + rate_outside_work + rate_pace
 				+ rate_assignments + rate_grade_fairly + rate_grade_time + rate_accessibility + rate_knowledge
 				+ rate_career_development) / 11));
+	}
+
+	public String getStudentname() {
+		UserDao udao = DaoManager.getInstance().getUserDao();
+		User user = udao.findById(student_id);
+		return user.getFirst_name() + " " + user.getLast_name();
 	}
 
 }

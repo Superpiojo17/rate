@@ -9,8 +9,10 @@ public class Course {
 	private long professor_id;
 	private String professor_name;
 	private String subject;
-	private String term;
+	private String semester;
+	private int year;
 	private long course_number;
+	
 
 	public long getId() {
 		return id;
@@ -45,12 +47,12 @@ public class Course {
 		this.professor_id = professor_id;
 	}
 
-	public String getTerm() {
-		return term;
+	public String getSemester() {
+		return semester;
 	}
 
-	public void setTerm(String term) {
-		this.term = term;
+	public void setSemester(String semester) {
+		this.semester = semester;
 	}
 
 	public String getProfessor_name() {
@@ -74,6 +76,14 @@ public class Course {
 
 	public void setCourse_number(long course_number) {
 		this.course_number = course_number;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
 	}
 
 }

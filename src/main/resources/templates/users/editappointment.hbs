@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Edit Course</title>
+		<title>Edit Appointment</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -22,19 +22,17 @@
 	
 	<body>
 
-	
-
-			
-		<!-- Header -->
+	<!-- Header -->
 			<header id="adminheader">
 				<h1>Administrator Dashboard</h1>
 			</header>
-	<!-- Nav -->
+
+				<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
 					<li><a href="/">Home</a></li>
 					<li><a href="/admindashboard">My Dashboard</a></li>
-					<li><a href="/register">My Account</a></li>
+					<li><a href="/myaccount">My Account</a></li>
 					<li><a href="/allusers">Manage Users</a></li>
 					{{#if completeProfile }}
 					<li><a href="/completeprofileprof/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
@@ -42,8 +40,8 @@
 					<li><a href="/courseslanding">Manage Courses</a></li>
 					<li><a href="/managetutorslanding">Manage Tutors</a></li>
 					<li><a href="/announcement">Announcements</a></li>
-					<li><a href="/aboutus">Manage Apointments</a></li>
-					<li><a href="/aboutus">Manage Reviews</a></li>
+					<li><a href="/adminaptlanding">Manage Appointments</a></li>
+					<li><a href="/reviewslanding">Manage Reviews</a></li>
 					<li><a href="/teacher">Browse Professors</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
 					<li><a href="/aboutus">About Us</a></li>
@@ -53,10 +51,13 @@
 					
 				</ul>
 			</nav>
+			
+			
 			<!-- Banner -->
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="adminDash">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="facultyDash">
 </div>
  <p> </p>
+
    
   
 <section id="main" class="wrapper">
@@ -101,52 +102,73 @@
 						
 							<div class="centercol"> 
 							&ensp;
-							<h2> Edit the course </h2>
+							<h2> Edit Appointment </h2>
 							
 							
 							
-  <p>Add this course to a professor</p>
+  <p>Fill out the form and click save to edit this appointment.</p>
   &ensp;
-   <div name="error">
+  <div name="error">
 						<p style='color: red'>{{error}}</p>
 					</div>
   
 							<!-- Form -->
 						<section>
-							<form action="/course/{{course_form.id}}/edit" method="post">
+							<form action="/editapt/{{apt.appointment_id}}/edit" method="post">
 							
 							<div class="table-wrapper">
 								<table class="alt">
 									<thead>
 										<tr>
-											<th><br>Course</th>
-											<th><br>Name</th>
-											<th><br>Professor</th>
-											<th><br>Term</th>
+											<th><br>Tutor</th>
+											<th><br>Student</th>
+											<th><br>Student Message</th>
+											<th><br>Tutor Message</th>
+											<th><br>Date</th>
+											<th><br>Time</th>
+											<th><br>Status</th>
+											
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
-											<td>{{course_form.subject}} {{course_form.course_number}} </td>
-											<td>{{course_form.course_name}} </td>
+										
+											<td>
+											<select name="selecttutor" id="selecttutor">
+											 <option value="{{apt.tutor_id}}">  {{apt.tutor_firstname}} {{apt.tutor_lastname}}</option>
+											{{#each depttutors}}
 											
-											
-											
-											<td> <select name="professor_id" id="professor_id">
-											 <option value="{{course_form.professor_id}}">  {{course_form.professor_name}}</option>
-											{{#each professors}}
-											
-  <option value="{{id}}">  {{first_name}} {{last_name}}</option>
+  <option value="{{id}}"> {{first_name}} {{last_name}}</option>
   {{/each}}
-</select></td>
-									
-									
-									
-									
-									
-									
-									
-										<td>{{course_form.semester}} {{course_form.year}} </td>
+</select>
+							
+											
+											</td>
+											<td>{{apt.student_firstname}} {{apt.student_lastname}}</td>
+											<td>{{apt.student_message}}
+											</td>
+											<td>{{apt.tutor_message}}
+											</td>
+											<td>{{apt.date}}
+											</td>
+											<td>{{apt.time}}
+											</td>
+											<td>
+										
+										<select name="status" id="status">
+											 <option value="{{apt.appointment_status}}">  {{#if apt.appointment_status}}
+											 Accepted
+											{{/if}}
+											{{#unless apt.appointment_status}}
+											Declined
+										{{/unless}}</option>
+											
+  <option value="true"> Accepted </option>
+  <option value="false"> Declined </option>
+</select>
+											
+											
+											</td>
 										</tr>
 									</tbody>
 									<tfoot>
@@ -163,8 +185,12 @@
 							
 							</form>
 						</section>
-						<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#myModal" > Remove Course
+						
+						
+											<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#myModal" > Remove Appointment
 											<span class="glyphicon glyphicon-remove"> </button>
+											<a href="/appointments/{{department}}" button type="submit" class="btn btn-info" data-toggle="modal"  > Back
+											</button></a>
 											
 											
 											<!-- Modal -->
@@ -178,9 +204,9 @@
           <h4 class="modal-title">Are you sure?</h4>
         </div>
         <div class="modal-body">
-          <p>Are you sure you would like to delete {{course_form.course_name}} from the course list? You cannot recover this information.</p>
+          <p>Are you sure you would like to remove this appointment? You cannot recover this information.</p>
         </div>
-        	<form action="/deletecourse/{{course_form.id}}" method="post">
+        	<form action="/deleteapt/{{apt.appointment_id}}" method="post">
         <div class="modal-footer">
         <ul class="actions">
           <button type="submit" class="btn btn-primary" data-dismiss="modal">Cancel</button>
@@ -194,8 +220,6 @@
       </div>
       
     </div>
-						
-	
   </div>
 										</ul>
 									</div>

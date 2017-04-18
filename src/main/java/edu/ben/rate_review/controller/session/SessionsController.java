@@ -22,16 +22,16 @@ public class SessionsController {
 
 	public ModelAndView showRegister(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
-		
+
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
-		
-		if (u != null){
-			if (u.getRole() == 1){
+
+		if (u != null) {
+			if (u.getRole() == 1) {
 				model.put("user_admin", true);
-			} else if (u.getRole() == 2){
+			} else if (u.getRole() == 2) {
 				model.put("user_professor", true);
-			} else if (u.getRole() == 3){
+			} else if (u.getRole() == 3) {
 				model.put("user_tutor", true);
 			} else {
 				model.put("user_student", true);
@@ -266,6 +266,13 @@ public class SessionsController {
 		return validateEmail(email);
 	}
 
+	/**
+	 * Logs user out of website
+	 * 
+	 * @param req
+	 * @param res
+	 * @return
+	 */
 	public ModelAndView logout(Request req, Response res) {
 
 		// Just a hash to pass data from the servlet to the page
@@ -273,6 +280,7 @@ public class SessionsController {
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 		req.session().removeAttribute("current_user");
+		res.redirect(Application.HOME_PATH);
 		return new ModelAndView(model, "home/home.hbs");
 
 	}

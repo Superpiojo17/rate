@@ -28,17 +28,21 @@
 				<h1>Administrator Dashboard</h1>
 			</header>
 
-			<!-- Nav -->
+					<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
 					<li><a href="/">Home</a></li>
 					<li><a href="/admindashboard">My Dashboard</a></li>
-					<li><a href="/register">My Account</a></li>
+					<li><a href="/myaccount">My Account</a></li>
+					<li><a href="/allusers">Manage Users</a></li>
 					{{#if completeProfile }}
 					<li><a href="/completeprofileprof/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
 					{{/if}}
-					<li><a href="/alltutors/{{current_user.id}}">Manage Tutors</a></li>
-					<li><a href="/professor/{{current_user.id}}/overview">View Reviews</a></li>
+					<li><a href="/courseslanding">Manage Courses</a></li>
+					<li><a href="/managetutorslanding">Manage Tutors</a></li>
+					<li><a href="/announcement">Announcements</a></li>
+					<li><a href="/adminaptlanding">Manage Appointments</a></li>
+					<li><a href="/aboutus">Manage Reviews</a></li>
 					<li><a href="/teacher">Browse Professors</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
 					<li><a href="/aboutus">About Us</a></li>
@@ -105,10 +109,10 @@
 							
   <p>View all upcoming and past appointments. .</p>
   &ensp;
-    <form action="/allusers" method="GET">
+    <form action="/reviews/{{department}}" method="GET">
   &nbsp;&nbsp;
   <div>
-    <input type="text" name="search" placeholder="Search Users..." />
+    <input type="text" name="search" placeholder="Search by student or tutor..." />
   </div>
 
 </form>
@@ -117,6 +121,9 @@
   <div name="error">
 						<p style='color: red'>{{error}}</p>
 					</div>
+<div name="message">
+						<p style='color: green'>{{message}}</p>
+					</div>					
   
 
   
@@ -131,11 +138,11 @@
 											<th></th>
 											
 											
-											<th class=" shrink text-left"><a href="javascript:SortTable(1,'T');" class="btn btn-default">Tutor Name</button></a></th>
-										<th class="shrink text-left"><a href="javascript:SortTable(2,'T');" class="btn btn-default" >Student Name</button></a></th>
-<th class="shrink text-left"><a href="javascript:SortTable(3,'T');" class="btn btn-default" >Date</button></a></th>
-<th class="text-left"><a href="javascript:SortTable(4,'T');" class="btn btn-default" >Time</button></a></th>
-<th class="text-left"><a href="javascript:SortTable(5,'T');" class="btn btn-default" >Status</button></a></th>
+											<th class=" shrink text-left"><a href="javascript:SortTable(1,'T');" class="btn btn-link" style="color:black">Tutor Name <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
+										<th class="shrink text-left"><a href="javascript:SortTable(2,'T');" class="btn btn-link" style="color:black" >Student Name <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
+<th class="shrink text-left"><a href="javascript:SortTable(3,'T');" class="btn btn-link" style="color:black" >Date <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
+<th class="text-left"><a href="javascript:SortTable(4,'T');" class="btn btn-link" style="color:black" >Time <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
+<th class="text-left"><a href="javascript:SortTable(5,'T');" class="btn btn-link" style="color:black" >Status <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
 
 											
 										</tr>
@@ -146,7 +153,7 @@
 										<tr>
 											
 											
-											<td class="shrink" align="center"><a href="/appointment/{{id}}/edit"  class="btn btn-info">Edit<span class="glyphicon glyphicon-pencil"></span></a></td>
+											<td class="shrink" align="center"><a href="/appointment/{{appointment_id}}/edit"  class="btn btn-info">Edit<span class="glyphicon glyphicon-pencil"></span></a></td>
 											<td class="shrink">{{tutor_firstname}}  {{tutor_lastname}}</td>
 											<td class="shrink"> {{student_firstname}} {{student_lastname}}</td>
 											<td class="shrink">{{date}}</td>
@@ -214,7 +221,7 @@
 							 
 						</section>
 						
-						<a href="/allusers"  class="btn btn-info"> View All
+						<a href="/appointments/{{department}}"  class="btn btn-info"> View All
 											</a>
 											<br/><br/><br/>
 						
