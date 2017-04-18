@@ -93,18 +93,19 @@ public class AnalysisDao {
 	}
 
 	/**
-	 * Finds all reviews for a specific professor
+	 * Finds all reviews for a specific department but there is no department category for professors.
 	 * 
 	 * @param prof
 	 * @return
 	 */
 	public List<ProfessorReview> listRecentCoursesByProfessorEmail(User prof) {
 
-		final String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ? LIMIT 3";
+		final String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE department = CMSC";
 		List<ProfessorReview> reviews = null;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, prof.getEmail());
+			//ps.setString(1, prof.getEmail());
+			ps.setString(1, prof.getDepartment());/////////////////
 			reviews = new ArrayList<ProfessorReview>();
 			try {
 				ResultSet rs = ps.executeQuery();
@@ -121,74 +122,7 @@ public class AnalysisDao {
 		return reviews;
 	}
 
-	/**
-	 * Finds all reviews for a specific professor
-	 * 
-	 * @param prof
-	 * @return
-	 */
-	public List<ProfessorReview> listCoursesByProfessorEmail(User prof, String display) {
-
-		String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ?";
-		List<ProfessorReview> reviews = null;
-
-		if (!display.equalsIgnoreCase("overview")) {
-			sql = sql + " AND course = ?";
-		}
-
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, prof.getEmail());
-			if (!display.equalsIgnoreCase("overview")) {
-				ps.setString(2, display);
-			}
-			reviews = new ArrayList<ProfessorReview>();
-			try {
-				ResultSet rs = ps.executeQuery();
-				while (rs.next()) {
-					reviews.add(reviewMapRow(rs));
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			return reviews;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return reviews;
-	}
-
-	/**
-	 * Finds and returns a specific ProfessorReview
-	 * 
-	 * @param email
-	 * @return
-	 */
-	public CoursesToReview findByCourseId(long course_id) {
-		// Declare SQL template query
-		String sql = "SELECT * FROM " + COURSES_TABLE + " WHERE course_id = ? LIMIT 1";
-		try {
-			// Create Prepared Statement from query
-			PreparedStatement q = conn.prepareStatement(sql);
-			// Fill in the ? with the parameters you want
-			q.setLong(1, course_id);
-
-			// Runs query
-			ResultSet rs = q.executeQuery();
-			if (rs.next()) {
-				return courseMapRow(rs);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		// If you don't find a model
-		return null;
-
-	}
-
-
-
+	
 	/**
 	 * Returns average rating from a specific category
 	 * 
@@ -257,36 +191,6 @@ public class AnalysisDao {
 			e.printStackTrace();
 		}
 		return 0;
-	}
-
-	/**
-	 * Lists all courses taught by a professor
-	 * 
-	 * @param prof
-	 * @return
-	 */
-	public List<String> listUniqueCourses(User prof) {
-
-		final String sql = "SELECT DISTINCT course FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ?";
-		List<String> uniqueCourses = null;
-
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, prof.getEmail());
-			uniqueCourses = new ArrayList<String>();
-			try {
-				ResultSet rs = ps.executeQuery();
-				while (rs.next()) {
-					uniqueCourses.add(rs.getString("course"));
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			return uniqueCourses;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return uniqueCourses;
 	}
 
 	/**

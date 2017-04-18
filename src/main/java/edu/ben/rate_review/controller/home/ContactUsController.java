@@ -2,6 +2,7 @@ package edu.ben.rate_review.controller.home;
 
 import java.util.HashMap;
 
+import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.email.Email;
 import edu.ben.rate_review.models.User;
 import spark.ModelAndView;
@@ -69,13 +70,14 @@ public class ContactUsController {
 	 * @param role_id
 	 */
 	private static void contactUs(String name, String email, String message) {
-//	  
 
 		String subject = "Rate&Review from: " + name;
-		String messageBody = "Sent from:\n " + email + "\r\n\n\r   " + message;
+		String header = "Sent from:\n " + email;
+		
+		String messageBody = "<p>"+ message+"</p>";
+		String finalMessage = header + messageBody ;
 
-		Email.deliverEmail(name, "ratereviewsite@gmail.com", subject, messageBody);
-	//	return "";
+		Email.deliverEmail(name, "ratereviewsite@gmail.com", subject, finalMessage);
 
 	}
 

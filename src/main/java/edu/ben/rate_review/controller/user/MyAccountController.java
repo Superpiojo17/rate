@@ -80,11 +80,11 @@ public class MyAccountController {
 
 		User user = new User();
 
-		user.setMajor(req.queryParams("department"));
+		user.setNickname(req.queryParams("nickname"));
 		user.setId(id);
-		user.setSchool_year(Integer.parseInt(req.queryParams("year")));
+		user.setPersonal_email(req.queryParams("personal_email"));
 
-		uDao.completeProfile(user);
+		uDao.completeProfile2(user);
 
 		res.redirect(Application.STUDENTDASHBOARD_PATH);
 		return "";

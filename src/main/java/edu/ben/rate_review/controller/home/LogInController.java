@@ -57,7 +57,12 @@ public class LogInController {
 
 			if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()) {
 				if (login(req, res) == "error") {
+					
 					model.put("error", "Invalid Username or Password Entries: " + wrongCount + "/3");
+					
+				}
+				if(wrongCount == 0){
+					model.put("error", "Account has been LOCKED");
 				}
 			} else {
 				model.put("error", "error");
@@ -104,8 +109,11 @@ public class LogInController {
 					res.redirect("/admindashboard");
 
 				}
+				
+				wrongCount = 0;
+				checkEmail = "";
 			} else {
-				if (checkEmail.equalsIgnoreCase("")) {
+				if (checkEmail.equalsIgnoreCase("") ) {
 					System.out.println("set new email");
 					checkEmail = req.queryParams("email");
 					wrongCount++;
@@ -113,17 +121,23 @@ public class LogInController {
 					if (checkEmail.equalsIgnoreCase(req.queryParams("email"))) {
 						wrongCount++;
 					}
+					//else if (!checkEmail.equalsIgnoreCase(req.queryParams("email"))) {
+					else{
+						System.out.println("email did not match must be new sp SET new email");
+						wrongCount = 0;
+						checkEmail = "";
+						checkEmail = req.queryParams("email");
+						wrongCount++;
+					}
 					// if count increases 3 times generate a temp password and
 					// replace the users password
 					if (wrongCount == 3) {
-						model.put("error", "Too many wrong entries Account Locked");
+						System.out.println("Account is now locked");
 						enterEmailRecoverAccount(req, res);
 						wrongCount = 0;
 						checkEmail = "";
 					}
 				}
-				// if email is not found in the system, outputs message
-
 				// showLoginPage(req, res);
 				// model.put("error", error)
 				return "error";
@@ -230,13 +244,25 @@ public class LogInController {
 				String tempPass = passwordRecoveryEmail(user);
 				// checks to see if user already has request in table
 				rUser = userDao.recoveryFindByEmail(user.getEmail());
+				
+				
+				//changes the users passwords with the temp generated password
+				// assigns new password to user
+				user.setPassword(SecurePassword.getHashPassword(req.queryParams(tempPass)));
+				// updates user's password
+				userDao.updatePassword(user);
+				// removes requested temporary password
+//				userDao.removeRecoveryRequest(user);
+//				res.redirect(Application.LOGIN_PATH);
+				
+				
 				if (rUser != null) {
 					// if previous request in table, deletes
 					userDao.removeRecoveryRequest(user);
 				}
 				// creates entry for user attempted to recover account
 				userDao.storeTempPassword(user, tempPass);
-				res.redirect(Application.NEWINFO_PATH);
+			//	res.redirect(Application.NEWINFO_PATH);
 			} else {
 				// user not found
 				res.redirect(Application.ACCOUNTRECOVERY_PATH);

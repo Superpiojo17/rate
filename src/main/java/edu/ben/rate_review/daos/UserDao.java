@@ -60,6 +60,8 @@ public class UserDao implements Dao<User> {
 		tmp.setMajor(rs.getString("major"));
 		tmp.setYear_string(rs.getString("school_year"));
 		// tmp.setDepartment(rs.getString("department"));
+		tmp.setNickname(rs.getString("nickname"));
+		tmp.setPersonal_email(rs.getString("personal_email"));
 		return tmp;
 	}
 
@@ -246,6 +248,34 @@ public class UserDao implements Dao<User> {
 		return null;
 
 	}
+	/**
+	 * method will update the users nickname and personal email
+	 * @param user
+	 * @return
+	 */
+	public User completeProfile2(User user) {
+		// Declare SQL template query
+		String sql = "UPDATE " + USER_TABLE + " SET nickname = ?, personal_email = ? WHERE user_id= ? LIMIT 1";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			// Fill in the ? with the parameters you want
+			ps.setString(1, user.getNickname());
+			ps.setString(2, user.getPersonal_email());
+			ps.setLong(3, user.getId());
+			// Runs query
+			ps.execute();
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// If you don't find a model
+		return null;
+
+	}
+	
+	
 
 	/**
 	 * Method which will deactivate an active account

@@ -18,10 +18,8 @@ import spark.Response;
 import spark.Session;
 
 /**
- * Controller for the professor page
+ * Controller for the analysis
  * 
- * @author Mike
- * @version 3-3-2017
  */
 public class AnalysisController {
 	

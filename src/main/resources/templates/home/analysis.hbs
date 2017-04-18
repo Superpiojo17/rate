@@ -66,20 +66,33 @@
 
 function draw_prof_by_rating() {
 
-      var data = google.visualization.arrayToDataTable([
-        ['Rating', 'Average ratings', { role: 'style' }],
-        ['Freshamn', 4.2, 'blue'],
-        ['Sophomore', 4.8, 'orange'],
-        ['Junior', 3, 'red'],
-        ['Senior', 4.12,'green']]);
-
+ var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Rating');
+        data.addColumn('number', 'Average Ratings');
+        data.addRows([
+       
+        ['Freshamn', 4.2],
+        ['Sophomore', 4.8],
+        ['Junior', 3],
+        ['Senior', 4.12]]);
+<!--
+//      var data = new google.visualization.DataTable();
+//        data.addColumn('string', 'Rating');
+//        data.addColumn('number', 'Average Ratings');
+//        data.addRows([
+//        ['Rating', 'Average ratings', { role: 'style' }],
+//        ['Freshamn', 4.2, 'blue'],
+//        ['Sophomore', 4.8, 'orange'],
+//        ['Junior', 3, 'red'],
+//        ['Senior', 4.12,'green']]);
+-->
       var options = {
         title: 'Professor rating - by year',
         chartArea: {width: '50%'},
         
          'width':600,
-                       'height':300,
-                     <!--  colors: ['#3B3EAC'],-->
+         'height':300,
+         colors: ['#3B3EAC'],
         
         hAxis: {
        title: 'Average Student Ratings',
@@ -96,15 +109,16 @@ function draw_prof_by_rating() {
     }
     
      function draw_overall_professors_rating() {
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Appointments Per Tutor'],
-          ['Rating Average Achieved',     4.03],
-          ['Total Rating', (5-4.03)],
-          
-        ]);
+     
+       var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Ratings');
+        data.addColumn('number', '# of ratings completed');
+        data.addRows([
+          ['Ratings submitted', 13],
+          ['Total Ratings available', (16 -13)] ]);
 
         var options = {
-          title: 'Percentage of appointments per tutor',
+          title: '# of Ratings Submitted',
           pieHole: 0.4,
          'width':700,
          'height':300,
@@ -118,12 +132,16 @@ function draw_prof_by_rating() {
     
     function draw_dep_rating() {
 
-      var data = google.visualization.arrayToDataTable([
-        ['Rating', '# of ratings', { role: 'style' }],
-        ['Computer Science', 4, '#76A7FA'],
-        ['Biology', 10, 'gold'],
-        ['Chemistry', 6, 'purple'],
-        ['Physics', 2,'silver'],
+
+       var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Ratings');
+        data.addColumn('number', '# of ratings');
+        data.addRows([
+        
+        ['Computer Science', 4],
+        ['Biology', 10],
+        ['Chemistry', 6],
+        ['Physics', 2],
       
       ]);
 
@@ -133,7 +151,7 @@ function draw_prof_by_rating() {
         
          'width':600,
          'height':300,
-               
+               colors: ['gold'],
         
         hAxis: {
        title: '# Of Completed Ratings',
@@ -151,18 +169,23 @@ function draw_prof_by_rating() {
    
       
      function draw_dep_avg() {
-        var data = new google.visualization.arrayToDataTable([
-          ['Department', 'Average Rating', { role: "style" }],
-          ["Computer Science", 4.4, "#76A7FA"],
-          ["Biology", 4, "gold"],
-          ["Chemistry", 4.5, "purple"],
-          ["Physics", 2, "silver"],
+     
+      var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Department');
+        data.addColumn('number', 'Average Rating');
+        data.addRows([
+       
+          ["Computer Science", 4.4],
+          ["Biology", 4],
+          ["Chemistry", 4.5],
+          ["Physics", 2],
         ]);
 
         var options = {
           title: 'Average rating per department',
           width: 500,
            'height':300,
+            
           legend: { position: 'none' },
           
           axes: {
@@ -180,12 +203,15 @@ function draw_prof_by_rating() {
     
       function draw_appointment_rate() {
 
-      var data = google.visualization.arrayToDataTable([
-        ['Rating', '# of appointments', { role: 'style' }],
-        ['Approved', 23, '#00FF00'],
-        ['Denied', 19, '#FF0000'],
-        ['Cancelled', 11, 'silver'],
-        ['Rescheduled', 16,'#00FFFF'],
+ var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Rating');
+        data.addColumn('number', '# of appointments');
+        data.addRows([
+
+        ['Approved', 23],
+        ['Denied', 19],
+        ['Cancelled', 11],
+        ['Rescheduled', 16],
       
       ]);
 
@@ -195,7 +221,7 @@ function draw_prof_by_rating() {
         
          'width':600,
          'height':300,
-                   
+           colors: ['#00FF00'],         
         
         hAxis: {
        title: 'Status Ratings',
@@ -212,8 +238,13 @@ function draw_prof_by_rating() {
     }
     
      function draw_app_per_tutor() {
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Appointments Per Tutor'],
+     
+      var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Task');
+        data.addColumn('number', 'Appointments Per Tutor');
+        data.addRows([
+     
+       
           ['Joel Sandoval', 11],
           ['Mike Webb',      9],
           ['Frank Rooks',  6],

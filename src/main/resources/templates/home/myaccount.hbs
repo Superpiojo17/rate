@@ -27,6 +27,11 @@
 <link rel='stylesheet prefetch' href='http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css'>
 
       <link rel="stylesheet" href="myaccountcss/css/style.css">
+      
+      
+  <-- my account list css below -->
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   
   	<style>
   #banner {
@@ -40,8 +45,9 @@
 	text-align: center;
 	color: #07090c;
 }
+
 #header > h1 a {
-    font-size: .7em;
+    font-size: 0.50em;
 }
 
 #banner h1, #banner h2, #banner h3, #banner h4, #banner h5, #banner h6 {
@@ -66,7 +72,7 @@
     min-height: 20px;
     padding: 19px;
     margin-bottom: 20px;
-    background-color: rgba(144, 144, 144, 0.68);
+    background-color: rgba(255, 255, 255, 0);
     border: 1px solid rgba(0,0,0,.075);
     border-radius: 4px;
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
@@ -76,6 +82,18 @@
 
 #banner input, #banner select, #banner textarea {
     color: #333;
+}
+
+input[type="text"], input[type="password"], input[type="email"], select, textarea {
+    background-color: rgb(255, 255, 255);
+    border-color: rgba(144, 144, 144, 0.25);
+    color: inherit;
+}
+
+table {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 	</style>
@@ -150,9 +168,9 @@
 			<!-- Banner -->
 	<section id="banner">
 
-		<h2>
-		<i class=""fa fa-address-book-o""></i>
-		</h2>
+	<!--
+		<i class="icon fa-address-book"></i>
+	-->
 
 		<!-- <i class="icon fa-diamond"></i> -->
 		<h1>My Account</h1>
@@ -165,50 +183,126 @@
 			
 	 <div class="container">
 
-    <form class="well form-horizontal" action="/completeprofilestudent/{{current_user.id}}" method="post"> <!-- id="contact_form">-->
+    <form class="well form-horizontal" action="/{{current_user.id}}" method="post"> <!-- id="contact_form">-->
 <fieldset>
+
+<!-- LIST OF USER INFO -->
+
+ <table class="w3-table-all w3-card-4" align="center" style="width:40%" >
+   
+    <tr>
+      <td>
+        <i class="glyphicon glyphicon-user " ></i> First Name: 
+      </td>
+     <td>
+     <label> {{current_user.first_name}}</label>
+     </td>
+     
+    </tr>
+   <tr>
+      <td>
+        <i class="glyphicon glyphicon-user " ></i> Last Name:
+      </td>
+       <td>
+     <label> {{current_user.last_name}}</label>
+     </td>
+    </tr>
+    
+     <tr>
+      <td>
+        <i class="glyphicon glyphicon-user " ></i> Nickname:
+      </td>
+       <td>
+        <input name="nickname" placeholder="{{current_user.nickname}}" class="form-control"  type="text">
+     </td>
+    </tr>
+    
+     <tr>
+      <td>
+       <i class="glyphicon glyphicon-envelope " ></i> Email: 
+      </td>
+     <td>
+      <label>{{current_user.email}}</label>
+      </td>
+    </tr>
+ <!-- Personal Email -->
+     <tr>
+      <td>
+       <i class="glyphicon glyphicon-envelope " ></i> Personal Email: 
+      </td>
+     <td>
+   <input name="personal_email" placeholder="{{current_user.personal_email}}" class="form-control"  type="text">
+      </td>
+    </tr>
+     <tr>
+      <td>
+        <i class="glyphicon glyphicon-briefcase " ></i> Role: 
+      </td>
+      
+     <td>
+    <!-- <label>{{current_user.role}}</label>  -->
+    <label name="role_id" placeholder="Role ID"  >{{current_user.role_string}}</label> 
+     </td>
+     
+    </tr>
+     <tr>
+      <td>
+        <i class="glyphicon glyphicon-list " ></i> Major: 
+      </td>
+      <td>
+      <label>{{current_user.major}}</label>
+      </td>
+     
+    </tr>
+    	<td>
+    	     <i class="glyphicon glyphicon-list " ></i> School Year: 
+    	</td>
+    	<td>
+    	 <label name="school_year" placeholder="Freshamn"> {{current_user.school_year}}</label>
+    	 </td>
+  </table>
+
+
 
 <!-- Form Name -->
 <legend>Profile information</legend>
 
 
 
+<!-- Nickname Text input-->
+<!--
 <div class="form-group">
-  <label class="col-md-4 control-label">User ID</label>  
+  <label class="col-md-4 control-label">Nickname</label>  
   <div class="col-md-4 inputGroupContainer">
   <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-  <label  name="user_id" placeholder="User ID" class="form-control"  >{{current_user.id}}</label>
+  <input  name="nickname" placeholder="{{current_user.nickname}}" class="form-control" type="text">
     </div>
   </div>
 </div>
+-->
 
 
-<!-- Text input-->
 
-<div class="form-group">
-  <label class="col-md-4 control-label">First Name</label>  
-  <div class="col-md-4 inputGroupContainer">
-  <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-  <label  name="first_name" placeholder="First Name" class="form-control">{{current_user.first_name}}</label>
-    </div>
-  </div>
-</div>
 
-<!-- Text input-->
-
-<div class="form-group">
-  <label class="col-md-4 control-label" >Last Name</label> 
+<!-- Personal Email Text input-->
+<!--
+       <div class="form-group">
+  <label class="col-md-4 control-label">Personal E-Mail</label>  
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-  <label name="last_name" placeholder="Last Name" class="form-control">{{current_user.last_name}}</label>
+        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+  <input name="personal_email" placeholder="{{current_user.personal_email}}" class="form-control"  type="text">
     </div>
   </div>
 </div>
+-->
+
+
+
 
 <!-- Text input-->
+<!--
        <div class="form-group">
   <label class="col-md-4 control-label">E-Mail</label>  
     <div class="col-md-4 inputGroupContainer">
@@ -218,176 +312,11 @@
     </div>
   </div>
 </div>
-
-
-<!-- Text input-->
-       
-
-
-<div class="form-group">
-  <label class="col-md-4 control-label">Role</label>  
-    <div class="col-md-4 inputGroupContainer">
-    <div class="input-group">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-  <label name="role_id" placeholder="Role ID" class="form-control" >{{current_user.role_string}}</label> 
-    </div>
-  </div>
-</div>
-
-<!--
-<script>
-    var role ="blahhh";
-    var rolenum = {{current_user.role_string}};
-    if(rolenum == 1){
-    role = "Admin";
-    document.getElementById("role").innerHTML = role;
-    }else if(rolenum == 2){
-     role = "Teacher";
-    document.getElementById("role").innerHTML = role;
-    }else if(rolenum == 3){
-     role = "Tutor";
-    document.getElementById("role").innerHTML = role;
-    }else if(rolenum == 4){
-     role = "Student";
-    document.getElementById("role").innerHTML = role;
-    }
-  -->  
-   
-</script>
-
-<!-- Text input-->
-     <!-- 
-<div class="form-group">
-
-  <label class="col-md-4 control-label">Major</label>  
-    <div class="col-md-4 inputGroupContainer">
-    <div class="input-group">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-  <label name="major" placeholder="Computer Science" class="form-control">{{current_user.major}}</label>
-    </div>
-  </div>
-</div>
-	-->
-	
-	<!-- Select Basic -->
-   
-<div class="form-group"> 
-  <label class="col-md-4 control-label">Major</label>
-    <div class="col-md-4 selectContainer">
-    <div class="input-group">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-    <select name="department" id="department"class="form-control selectpicker" > 
-      <option value=null><p id="major"> </p></option>              <!--<p id="major"></p></option>  -->
-      <option value="CMSC">CMSC</option>
-      <option value="Economics">Economics</option>
-      <option value="Math">Math</option>
-      <option value="Music">Music</option>
-     
-    </select>
-  </div>
-</div>
-</div>
-
-<script>
-    var role ="major";
-    var rolenum = {{current_user.major}};
-    
-    if(rolenum == ""){
-    role = "N/A";
-    document.getElementById("major").innerHTML = role;
-    }else if(rolenum =="CMSC"){
-     role = "CMSC";
-    document.getElementById("major").innerHTML = role;
-    }else if(rolenum == "Economics"){
-     role = "Economics";
-    document.getElementById("major").innerHTML = role;
-    }  else if(rolenum == "Math"){
-     role = "Math";
-    document.getElementById("major").innerHTML = role;
-    }  else if(rolenum == "Music"){
-     role = "Music";
-    document.getElementById("major").innerHTML = role;
-    }        
-   
-</script>
-
-
-
-<!-- Text input-->
- <!--
-<div class="form-group">
-  <label class="col-md-4 control-label">School Year</label>  
-    <div class="col-md-4 inputGroupContainer">
-    <div class="input-group">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-  <label name="school_year" placeholder="Freshamn" class="form-control"> <p id="demo"></p> </label
-    </div>
-  </div>
-</div>
-
-<script>
-    var role ="blahhh";
-    var rolenum = {{current_user.school_year}};
-    
-    if(rolenum== 0){
-    role = "N/A";
-    document.getElementById("demo").innerHTML = role;
-    }else if(rolenum == 1){
-     role = "Freshman";
-    document.getElementById("demo").innerHTML = role;
-    }else if(rolenum == 2){
-     role = "Sophomore";
-    document.getElementById("demo").innerHTML = role;
-    }else if(rolenum == 3){
-     role = "Junior";
-    document.getElementById("demo").innerHTML = role;
-    }else if(rolenum == 4){
-     role = "Senior";
-    document.getElementById("demo").innerHTML = role;
-    }
-</script>
-
 -->
-  
-<div class="form-group"> 
-  <label class="col-md-4 control-label">Year</label>
-    <div class="col-md-4 selectContainer">
-    <div class="input-group">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-    <select name="year" id="year" class="form-control selectpicker" >
-      <option value="0" placeholder=" Select Your Major"><p id="years"></p></option>
-      <option value="1">Freshman</option>
-      <option value="2">Sophomore</option>
-      <option value="3">Junior</option>
-      <option value="4">Senior</option>
-     
-    </select>
-  </div>
-</div>
-</div>
 
-<script>
-    var role ="blahhh";
-    var rolenum = {{current_user.school_year}};
-    
-    if(rolenum== 0){
-    role = "N/A";
-    document.getElementById("years").innerHTML = role;
-    }else if(rolenum == 1){
-     role = "Freshman";
-    document.getElementById("years").innerHTML = role;
-    }else if(rolenum == 2){
-     role = "Sophomore";
-    document.getElementById("years").innerHTML = role;
-    }else if(rolenum == 3){
-     role = "Junior";
-    document.getElementById("years").innerHTML = role;
-    }else if(rolenum == 4){
-     role = "Senior";
-    document.getElementById("years").innerHTML = role;
-    }
-    
-</script>
+
+
+
 <!-- Button -->
  <!--
 <div class="form-group">

@@ -25,6 +25,24 @@ public class User implements AuthorizationUser {
 	private String profilepic;
 	private double overall;
 	private boolean adminEditFlag;
+	private String nickname;
+	private String personal_email;
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public String getPersonal_email() {
+		return personal_email;
+	}
+
+	public void setPersonal_email(String personal_email) {
+		this.personal_email = personal_email;
+	}
 
 	public Long getId() {
 		return id;
