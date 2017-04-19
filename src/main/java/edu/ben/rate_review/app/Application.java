@@ -183,7 +183,7 @@ public class Application {
 	public static void main(String[] args) throws Exception {
 
 		// Set what port you want to run on
-		port(3000);
+		port(80);
 
 		// Configure your Asset folder so that your JS, CSS, Images are
 		// available from the server endpoint
