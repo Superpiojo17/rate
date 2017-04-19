@@ -99,16 +99,8 @@ public class StudentDashboardController {
 		TutorDao tDao = dao.getTutorDao();
 		flagPastAppointments(tDao);
 
-		List<Tutor> tutors = tDao.listAllTutors();
+		List<Tutor> tutors = tDao.listAllTutorsByMajor(u);
 
-		// removes tutors outside of student's department
-		for (int i = 0; i < tutors.size(); i++) {
-			if (!tutors.get(i).getSubject().equalsIgnoreCase(u.getMajor())) {
-				tutors.remove(i);
-			}
-		}
-		// after courses rework, will show tutors in departments of any class
-		// student is currently enrolled in
 		model.put("tutors", tutors);
 
 		List<TutorAppointment> appointments = tDao.listAllStudentAppointments(u);

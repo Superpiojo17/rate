@@ -47,7 +47,7 @@ public class TutorDao implements Dao<Tutor> {
 		tmp.setSubject(udao.findById(tmp.getProfessor_id()).getMajor());
 		tmp.setProfessor_name(udao.findById(tmp.getProfessor_id()).getFirst_name() + " "
 				+ udao.findById(tmp.getProfessor_id()).getLast_name());
-		
+
 		int numOfReviews = tDao.listTutorReviewsByTutor(tmp.getStudent_id()).size();
 		float sumOfReviews = tDao.getTutorAverageRating(tmp.getStudent_id());
 		DecimalFormat df = new DecimalFormat("#.#");
@@ -59,7 +59,7 @@ public class TutorDao implements Dao<Tutor> {
 			overall = 0;
 		}
 		tmp.setOverall(overall);
-		
+
 		return tmp;
 	}
 
@@ -600,6 +600,34 @@ public class TutorDao implements Dao<Tutor> {
 	 */
 	public List<Tutor> listAllTutors() {
 		final String SELECT = "SELECT * FROM " + TUTOR_TABLE + " ORDER BY user_id_student DESC";
+
+		List<Tutor> tutors = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			tutors = new ArrayList<Tutor>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					tutors.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return tutors;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return tutors;
+	}
+
+	/**
+	 * Lists tutors by major
+	 * 
+	 * @return
+	 */
+	public List<Tutor> listAllTutorsByMajor(User user) {
+		final String SELECT = "SELECT * FROM " + TUTOR_TABLE + " WHERE user_id_student "
+				+ "IN (SELECT user_id FROM users WHERE role_id = 3 AND major = '" + user.getMajor() + "')";
 
 		List<Tutor> tutors = null;
 		try {
