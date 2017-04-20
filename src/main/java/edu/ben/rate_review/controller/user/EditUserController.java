@@ -1,6 +1,6 @@
 package edu.ben.rate_review.controller.user;
 
-import static spark.Spark.get;
+//import static spark.Spark.get;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,22 +12,21 @@ import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.MassEditForm;
-import edu.ben.rate_review.models.RecoveringUser;
+//import edu.ben.rate_review.models.RecoveringUser;
 import edu.ben.rate_review.models.User;
 import edu.ben.rate_review.models.UserForm;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.Session;
-import spark.Spark;
-import spark.template.handlebars.HandlebarsTemplateEngine;
+//import spark.Spark;
+//import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class EditUserController {
 
 	public ModelAndView showEditUserPage(Request req, Response res) throws AuthException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
-		UserDao user = DaoManager.getInstance().getUserDao();
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
 			return new ModelAndView(model, "home/notauthorized.hbs");
@@ -51,6 +50,7 @@ public class EditUserController {
 		// /user/uh-oh/edit for example
 		long id = Long.parseLong(idString);
 
+		UserDao user = DaoManager.getInstance().getUserDao();
 		// Get user if ID is valid
 		User u = user.findById(id);
 		boolean role_flag = true;
@@ -71,6 +71,8 @@ public class EditUserController {
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
 
+		user.close();
+		ad.close();
 		// Render the page
 		return new ModelAndView(model, "users/edituser.hbs");
 	}
@@ -87,9 +89,9 @@ public class EditUserController {
 
 		model.put("error", "You mass updated the email confirmation status of all users");
 
-		DaoManager dao = DaoManager.getInstance();
-		UserDao ud = dao.getUserDao();
-		List<User> users = ud.sortbyRole();
+		// DaoManager dao = DaoManager.getInstance();
+		// UserDao ud = dao.getUserDao();
+		List<User> users = userDao.sortbyRole();
 		model.put("users", users);
 
 		DaoManager adao = DaoManager.getInstance();
@@ -97,6 +99,8 @@ public class EditUserController {
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
 
+		userDao.close();
+		ad.close();
 		return new ModelAndView(model, "users/allusers.hbs");
 
 	}
@@ -104,25 +108,24 @@ public class EditUserController {
 	public ModelAndView massEditYear(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
 
-		UserDao userDao = DaoManager.getInstance().getUserDao();
+		UserDao ud = DaoManager.getInstance().getUserDao();
 
 		MassEditForm massedit = new MassEditForm();
 		massedit.setBefore(Integer.parseInt(req.queryParams("yearbefore")));
 		massedit.setAfter(Integer.parseInt(req.queryParams("yearafter")));
-		userDao.massEditYear(massedit);
+		ud.massEditYear(massedit);
 
 		model.put("error", "You mass updated the school year of all users");
 
-		DaoManager dao = DaoManager.getInstance();
-		UserDao ud = dao.getUserDao();
 		List<User> users = ud.sortbyRole();
 		model.put("users", users);
 
-		DaoManager adao = DaoManager.getInstance();
-		AnnouncementDao ad = adao.getAnnouncementDao();
+		AnnouncementDao ad = DaoManager.getInstance().getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
 
+		ud.close();
+		ad.close();
 		return new ModelAndView(model, "users/allusers.hbs");
 
 	}
@@ -130,17 +133,15 @@ public class EditUserController {
 	public ModelAndView massEditRole(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
 
-		UserDao userDao = DaoManager.getInstance().getUserDao();
+		UserDao ud = DaoManager.getInstance().getUserDao();
 
 		MassEditForm massedit = new MassEditForm();
 		massedit.setBefore(Integer.parseInt(req.queryParams("rolebefore")));
 		massedit.setAfter(Integer.parseInt(req.queryParams("roleafter")));
-		userDao.massEditRole(massedit);
+		ud.massEditRole(massedit);
 
 		model.put("error", "You mass updated the role of all users");
 
-		DaoManager dao = DaoManager.getInstance();
-		UserDao ud = dao.getUserDao();
 		List<User> users = ud.sortbyRole();
 		model.put("users", users);
 
@@ -149,6 +150,8 @@ public class EditUserController {
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
 
+		ud.close();
+		ad.close();
 		return new ModelAndView(model, "users/allusers.hbs");
 
 	}
@@ -157,17 +160,15 @@ public class EditUserController {
 
 		HashMap<String, Object> model = new HashMap<>();
 
-		UserDao userDao = DaoManager.getInstance().getUserDao();
+		UserDao ud = DaoManager.getInstance().getUserDao();
 
 		MassEditForm massedit = new MassEditForm();
 		massedit.setBefore(Integer.parseInt(req.queryParams("activebefore")));
 		massedit.setAfter(Integer.parseInt(req.queryParams("activeafter")));
-		userDao.massEditActive(massedit);
+		ud.massEditActive(massedit);
 
 		model.put("error", "You mass updated the account status of all users");
 
-		DaoManager dao = DaoManager.getInstance();
-		UserDao ud = dao.getUserDao();
 		List<User> users = ud.sortbyRole();
 		model.put("users", users);
 
@@ -176,6 +177,8 @@ public class EditUserController {
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
 
+		ud.close();
+		ad.close();
 		return new ModelAndView(model, "users/allusers.hbs");
 
 	}
@@ -185,7 +188,7 @@ public class EditUserController {
 
 		String idString = req.params("id");
 		long id = Long.parseLong(idString);
-		UserDao userDao = DaoManager.getInstance().getUserDao();
+		UserDao ud = DaoManager.getInstance().getUserDao();
 		UserForm user = new UserForm();
 		user.setFirst_name(req.queryParams("first_name"));
 		user.setLast_name(req.queryParams("last_name"));
@@ -194,11 +197,10 @@ public class EditUserController {
 		user.setMajor(req.queryParams("major"));
 		user.setSchool_year(Integer.parseInt(req.queryParams("year")));
 		user.setId(id);
-		userDao.updateUser(user);
+		ud.updateUser(user);
 
-		UserDao userD = DaoManager.getInstance().getUserDao();
 		// Get user if ID is valid
-		User u = userD.findById(id);
+		User u = ud.findById(id);
 
 		model.put("error", "You updated " + user.getFirst_name() + " " + user.getLast_name() + "'s account");
 
@@ -210,6 +212,8 @@ public class EditUserController {
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
 
+		ud.close();
+		ad.close();
 		return new ModelAndView(model, "users/edituser.hbs");
 
 	}
@@ -220,6 +224,7 @@ public class EditUserController {
 		UserDao userDao = DaoManager.getInstance().getUserDao();
 		userDao.deleteUser(id);
 
+		userDao.close();
 		res.redirect(Application.ALLUSERS_PATH);
 		return " ";
 

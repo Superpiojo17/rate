@@ -134,6 +134,10 @@ public class StudentDashboardController {
 		model.put("num_of_appointments", notReviewed.size());
 		model.put("appointments_not_reviewed", notReviewed);
 
+		reviewDao.close();
+		sDao.close();
+		tDao.close();
+		ad.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/studentDashboard.hbs");
 	}
@@ -158,24 +162,25 @@ public class StudentDashboardController {
 
 		// AuthPolicyManager.getInstance().getUserPolicy().showFacultyDashboardPage();
 
-		DaoManager adao = DaoManager.getInstance();
-		DaoManager cdao = DaoManager.getInstance();
-
-		AnnouncementDao ad = adao.getAnnouncementDao();
+		DaoManager dao = DaoManager.getInstance();
+		AnnouncementDao ad = dao.getAnnouncementDao();
 
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
-		CourseDao cd = cdao.getCourseDao();
+		CourseDao cd = dao.getCourseDao();
 		List<Course> courses = cd.allByProfessor(u.getId());
 		model.put("courses", courses);
 
-		DaoManager tdao = DaoManager.getInstance();
-		TutorDao td = tdao.getTutorDao();
+		TutorDao td = dao.getTutorDao();
 		List<Tutor> tutors = td.all(u.getId());
 
 		model.put("tutors", tutors);
 
 		model.put("current_user", u);
+
+		ad.close();
+		cd.close();
+		td.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "home/completeprofilestudent.hbs");
 	}
@@ -290,6 +295,8 @@ public class StudentDashboardController {
 			// handles tutor review
 			System.out.println(req.queryParams("appointment_id"));
 		}
+		tDao.close();
+		uDao.close();
 		res.redirect(Application.STUDENTDASHBOARD_PATH);
 		return "";
 	}
@@ -356,6 +363,7 @@ public class StudentDashboardController {
 
 		uDao.completeProfile(user);
 
+		uDao.close();
 		res.redirect(Application.STUDENTDASHBOARD_PATH);
 		return "";
 	}
@@ -424,9 +432,8 @@ public class StudentDashboardController {
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
 
-		DaoManager udao = DaoManager.getInstance();
-		UserDao ud = udao.getUserDao();
-		TutorDao tDao = udao.getTutorDao();
+		UserDao ud = dao.getUserDao();
+		TutorDao tDao = dao.getTutorDao();
 
 		model.put("current_user", u);
 
@@ -438,6 +445,9 @@ public class StudentDashboardController {
 
 		model.put("tutors", tutors);
 
+		ad.close();
+		ud.close();
+		tDao.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/majortutors.hbs");
 	}
@@ -469,13 +479,12 @@ public class StudentDashboardController {
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
 
-		DaoManager udao = DaoManager.getInstance();
-		UserDao ud = udao.getUserDao();
+		UserDao ud = dao.getUserDao();
 
 		model.put("current_user", u);
 
-		ProfessorReviewDao pDao = udao.getProfessorReviewDao();
-		CourseDao cDao = udao.getCourseDao();
+		ProfessorReviewDao pDao = dao.getProfessorReviewDao();
+		CourseDao cDao = dao.getCourseDao();
 
 		List<String> courses = cDao.allCoursesString();
 		List<Course> courses2 = cDao.allCourses();
@@ -489,7 +498,8 @@ public class StudentDashboardController {
 
 		if (courseName != null && !courseName.equalsIgnoreCase("select course")) {
 
-			List<ProfessorReview> temp = pDao.listReviewsByCourse(courseName);
+			// List<ProfessorReview> temp =
+			// pDao.listReviewsByCourse(courseName);
 			long courseID = 0;
 			String name = "";
 
@@ -503,6 +513,10 @@ public class StudentDashboardController {
 
 			List<ProfessorReview> currentReviews = pDao.allReviewsForCourse(courseID, name);
 
+			ad.close();
+			ud.close();
+			cDao.close();
+			pDao.close();
 			model.put("current_reviews", currentReviews);
 
 		}

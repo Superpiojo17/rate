@@ -66,7 +66,7 @@ public class CalendarController {
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
-
+		ad.close();
 		// model.put("title", title);
 		// model.put("date", date);
 
@@ -105,7 +105,7 @@ public class CalendarController {
 			List<TutorAppointment> appointments = tDao.listAllTutorAppointments(u.getId());
 			model.put("appointments", appointments);
 		}
-
+		tDao.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/calendar.hbs");
 	}

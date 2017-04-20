@@ -1051,4 +1051,12 @@ public class TutorDao implements Dao<Tutor> {
 
 		return 0;
 	}
+	
+	public void close() {
+		try {
+			this.conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -39,9 +39,9 @@ public class EditReviewsController {
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
-
+		ad.close();
 		ProfessorReviewDao pD = adao.getProfessorReviewDao();
-		
+
 		if (req.queryParams("search") != null) {
 
 			String searchType = "name";
@@ -70,13 +70,9 @@ public class EditReviewsController {
 		}
 
 		model.put("current_user", u);
-		
-		
-
-		
-
 		model.put("department", department);
 
+		pD.close();
 		// Render the page
 		return new ModelAndView(model, "users/reviews.hbs");
 	}
@@ -125,7 +121,9 @@ public class EditReviewsController {
 
 		model.put("deptreviews", deptReviews);
 		model.put("department", department);
-
+		ad.close();
+		reviewDao.close();
+		userDao.close();
 		// Render the page
 		return new ModelAndView(model, "users/reviews.hbs");
 	}

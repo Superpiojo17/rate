@@ -62,9 +62,11 @@ public class AdminAptController {
 
 		model.put("current_user", u);
 
-		DaoManager adao = DaoManager.getInstance();
-		AnnouncementDao ad = adao.getAnnouncementDao();
+		//DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = dao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
+		ud.close();
+		ad.close();
 		model.put("announcements", announcements);
 
 		// Tell the server to render the index page with the data in the model

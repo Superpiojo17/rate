@@ -100,6 +100,7 @@ public class AccountRecoveryController {
 							userDao.updatePassword(user);
 							// removes requested temporary password
 							userDao.removeRecoveryRequest(user);
+							userDao.close();
 							res.redirect(Application.LOGIN_PATH);
 
 						} else {
@@ -135,12 +136,11 @@ public class AccountRecoveryController {
 	 * @return
 	 */
 	public String enterEmailRecoverAccount(Request req, Response res) {
-
-		UserDao userDao = DaoManager.getInstance().getUserDao();
-		User user = new User();
-		RecoveringUser rUser = new RecoveringUser();
 		
 		if (!req.queryParams("email").isEmpty()) {
+			UserDao userDao = DaoManager.getInstance().getUserDao();
+			User user = new User();
+			RecoveringUser rUser = new RecoveringUser();
 			user = userDao.findByEmail(req.queryParams("email"));
 			if (user != null) {
 				String tempPass = sendRecoveryEmail(user);
@@ -152,6 +152,7 @@ public class AccountRecoveryController {
 				}
 				// creates entry for user attempted to recover account
 				userDao.storeTempPassword(user, tempPass);
+				userDao.close();
 				res.redirect(Application.NEWINFO_PATH);
 			} else {
 				// user not found

@@ -109,6 +109,8 @@ public class AdminEditTutorController {
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
+		td.close();
+		ad.close();
 		model.put("announcements", announcements);
 
 		// Tell the server to render the index page with the data in the model
@@ -158,6 +160,10 @@ public class AdminEditTutorController {
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
+		
+		user.close();
+		tutor.close();
+		ad.close();
 		model.put("announcements", announcements);
 
 		// Render the page
@@ -206,9 +212,9 @@ public class AdminEditTutorController {
 		}
 
 		DaoManager dao = DaoManager.getInstance();
-		TutorDao td = dao.getTutorDao();
+		//TutorDao td = dao.getTutorDao();
 		List<Tutor> tutors = new ArrayList<Tutor>();
-		List<Tutor> Temptutors = td.listAllTutors();
+		List<Tutor> Temptutors = tDao.listAllTutors();
 		for (int i = 0; i < Temptutors.size(); i++) {
 
 			if (Temptutors.get(i).getSubject().equalsIgnoreCase(department)) {
@@ -229,6 +235,10 @@ public class AdminEditTutorController {
 				+ tempTutor.getCourse_name());
 
 		model.put("current_user", u);
+		
+		tDao.close();
+		ad.close();
+		uDao.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/tutors.hbs");
 
@@ -260,7 +270,8 @@ public class AdminEditTutorController {
 
 		List<Course> courses = cDao.allByDept(department);
 		model.put("courses", courses);
-
+		cDao.close();
+		ad.close();
 		// Render the page
 		return new ModelAndView(model, "users/addtutorlanding.hbs");
 	}
@@ -305,7 +316,10 @@ public class AdminEditTutorController {
 		model.put("deptstudents", deptstudents);
 
 		model.put("course", course);
-
+		cDao.close();
+		user.close();
+		tutor.close();
+		ad.close();
 		// Render the page
 		return new ModelAndView(model, "users/adminaddtutor.hbs");
 	}
@@ -350,9 +364,9 @@ public class AdminEditTutorController {
 		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
 
 		DaoManager dao = DaoManager.getInstance();
-		TutorDao td = dao.getTutorDao();
+		//TutorDao td = dao.getTutorDao();
 		List<Tutor> tutors = new ArrayList<Tutor>();
-		List<Tutor> Temptutors = td.listAllTutors();
+		List<Tutor> Temptutors = tDao.listAllTutors();
 		for (int i = 0; i < Temptutors.size(); i++) {
 
 			if (Temptutors.get(i).getSubject().equalsIgnoreCase(department)) {
@@ -368,6 +382,10 @@ public class AdminEditTutorController {
 
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
+		cDao.close();
+		tDao.close();
+		uDao.close();
+		ad.close();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
 
@@ -400,9 +418,9 @@ public class AdminEditTutorController {
 		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
 
 		DaoManager dao = DaoManager.getInstance();
-		TutorDao td = dao.getTutorDao();
+		//TutorDao td = dao.getTutorDao();
 		List<Tutor> tutors = new ArrayList<Tutor>();
-		List<Tutor> Temptutors = td.listAllTutors();
+		List<Tutor> Temptutors = tutorDao.listAllTutors();
 		for (int i = 0; i < Temptutors.size(); i++) {
 
 			if (Temptutors.get(i).getSubject().equalsIgnoreCase(department)) {
@@ -424,6 +442,8 @@ public class AdminEditTutorController {
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
 
+		tutorDao.close();
+		ad.close();
 		return new ModelAndView(model, "users/tutors.hbs");
 
 	}

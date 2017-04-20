@@ -4,17 +4,17 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
-import edu.ben.rate_review.app.Application;
+//import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.authorization.AuthException;
 import edu.ben.rate_review.daos.AnnouncementDao;
 import edu.ben.rate_review.daos.CourseDao;
 import edu.ben.rate_review.daos.DaoManager;
-import edu.ben.rate_review.daos.TutorDao;
+//import edu.ben.rate_review.daos.TutorDao;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.Course;
 import edu.ben.rate_review.models.CourseForm;
-import edu.ben.rate_review.models.TutorForm;
+//import edu.ben.rate_review.models.TutorForm;
 import edu.ben.rate_review.models.User;
 import spark.ModelAndView;
 import spark.Request;
@@ -82,7 +82,8 @@ public class EditCoursesController {
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
-
+		cd.close();
+		ad.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/courses.hbs");
 	}
@@ -90,7 +91,6 @@ public class EditCoursesController {
 	public ModelAndView showEditCoursesPage(Request req, Response res) throws AuthException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
-		CourseDao course = DaoManager.getInstance().getCourseDao();
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
@@ -109,7 +109,8 @@ public class EditCoursesController {
 		// /user/uh-oh/edit for example
 		long id = Long.parseLong(idString);
 
-		Course c = course.findById(id);
+		CourseDao cd = DaoManager.getInstance().getCourseDao();
+		Course c = cd.findById(id);
 
 		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
 
@@ -124,7 +125,9 @@ public class EditCoursesController {
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
-
+		cd.close();
+		ud.close();
+		ad.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/editcourse.hbs");
 	}
@@ -132,7 +135,6 @@ public class EditCoursesController {
 	public ModelAndView showAddCoursesPage(Request req, Response res) throws AuthException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
-		CourseDao course = DaoManager.getInstance().getCourseDao();
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
@@ -160,6 +162,8 @@ public class EditCoursesController {
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
 
+		ud.close();
+		ad.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/addCourse.hbs");
 	}
@@ -167,8 +171,8 @@ public class EditCoursesController {
 	public ModelAndView updateCourse(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
 
-		Session session = req.session();
-		User u = (User) session.attribute("current_user");
+		// Session session = req.session();
+		// User u = (User) session.attribute("current_user");
 		CourseDao courseDao = DaoManager.getInstance().getCourseDao();
 
 		String idString = req.params("id");
@@ -187,21 +191,22 @@ public class EditCoursesController {
 		Course c = courseDao.findById(id);
 		cDao.updateCourse(course);
 
-		DaoManager dao = DaoManager.getInstance();
-		CourseDao cd = dao.getCourseDao();
+		// DaoManager dao = DaoManager.getInstance();
+		// CourseDao cd = dao.getCourseDao();
 
 		// Get the :id from the url
 		String department = c.getSubject();
 		System.out.println(department);
 		model.put("department", department);
 
-		List<Course> courses = cd.allByDept(c.getSubject());
+		List<Course> courses = courseDao.allByDept(c.getSubject());
 
 		model.put("courses", courses);
 
 		model.put("error",
 				"You just edited " + c.getSubject() + " " + " " + c.getCourse_number() + " " + c.getCourse_name());
-
+		courseDao.close();
+		ad.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/courses.hbs");
 
@@ -210,12 +215,11 @@ public class EditCoursesController {
 	public ModelAndView addCourse(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
 
-		Session session = req.session();
-		User u = (User) session.attribute("current_user");
-		CourseDao courseDao = DaoManager.getInstance().getCourseDao();
+		// Session session = req.session();
+		// User u = (User) session.attribute("current_user");
+		CourseDao cd = DaoManager.getInstance().getCourseDao();
 
 		String department = req.params("department");
-		CourseDao cDao = DaoManager.getInstance().getCourseDao();
 		Course course = new Course();
 		if (!req.queryParams("coursename").isEmpty()) {
 			// tutor.setCourse(req.queryParams("course"));
@@ -228,7 +232,7 @@ public class EditCoursesController {
 			course.setSemester(lineArray[0]);
 			course.setYear(Integer.parseInt(lineArray[1]));
 			course.setProfessor_id(Long.parseLong(req.queryParams("professor_id")));
-			cDao.save(course);
+			cd.save(course);
 			String tempdepartment = req.params("department");
 			model.put("department", tempdepartment);
 		} else {
@@ -249,15 +253,14 @@ public class EditCoursesController {
 			model.put("announcements", announcements);
 
 			model.put("error", "You may not leave field blank");
+			ud.close();
+			cd.close();
 			return new ModelAndView(model, "users/addcourse.hbs");
 		}
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
-
-		DaoManager dao = DaoManager.getInstance();
-		CourseDao cd = dao.getCourseDao();
 
 		List<Course> courses = cd.allByDept(course.getSubject());
 
@@ -266,6 +269,8 @@ public class EditCoursesController {
 		model.put("error", "You just added " + course.getSubject() + " " + " " + course.getCourse_number() + " "
 				+ course.getCourse_name() + " to " + course.getProfessor_name());
 
+		cd.close();
+		ad.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/courses.hbs");
 
@@ -274,21 +279,18 @@ public class EditCoursesController {
 	public ModelAndView deleteCourse(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
 
-		Session session = req.session();
-		User u = (User) session.attribute("current_user");
+		// Session session = req.session();
+		// User u = (User) session.attribute("current_user");
 		String idString = req.params("id");
 		long id = Long.parseLong(idString);
-		CourseDao courseDao = DaoManager.getInstance().getCourseDao();
-		Course c = courseDao.findById(id);
-		courseDao.deleteCourse(id);
+		CourseDao cd = DaoManager.getInstance().getCourseDao();
+		Course c = cd.findById(id);
+		cd.deleteCourse(id);
 
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
-
-		DaoManager dao = DaoManager.getInstance();
-		CourseDao cd = dao.getCourseDao();
 
 		List<Course> courses = cd.allByDept(c.getSubject());
 
@@ -301,7 +303,8 @@ public class EditCoursesController {
 
 		model.put("error", "You just deleted " + c.getSubject() + " " + " " + c.getCourse_number() + " "
 				+ c.getCourse_name() + " taught by " + c.getProfessor_name());
-
+		cd.close();
+		ad.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/courses.hbs");
 

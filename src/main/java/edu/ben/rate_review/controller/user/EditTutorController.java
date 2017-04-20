@@ -29,7 +29,7 @@ public class EditTutorController {
 	public ModelAndView showEditTutorPage(Request req, Response res) throws AuthException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
-		UserDao user = DaoManager.getInstance().getUserDao();
+		// UserDao user = DaoManager.getInstance().getUserDao();
 		TutorDao tutor = DaoManager.getInstance().getTutorDao();
 		CourseDao cd = DaoManager.getInstance().getCourseDao();
 
@@ -48,33 +48,38 @@ public class EditTutorController {
 			}
 		}
 
-	model.put("current_user",u);
+		model.put("current_user", u);
 
-	List<Course> courses = cd.allByProfessor(u.getId());model.put("courses",courses);
+		List<Course> courses = cd.allByProfessor(u.getId());
+		model.put("courses", courses);
 
-	// Get the :id from the url
-	String idString = req.params("id");
+		// Get the :id from the url
+		String idString = req.params("id");
 
-	// Convert to Long
-	// /user/uh-oh/edit for example
-	long id = Long.parseLong(idString);
+		// Convert to Long
+		// /user/uh-oh/edit for example
+		long id = Long.parseLong(idString);
 
-	Tutor t = tutor.findById(id);
+		Tutor t = tutor.findById(id);
 
-	model.put("tutor_form",new TutorForm(t));
+		model.put("tutor_form", new TutorForm(t));
 
-	// Authorize that the user can edit the user selected
-	// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+		// Authorize that the user can edit the user selected
+		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
 
-	// create the form object, put it into request
-	// model.put("tutor_form", new TutorForm(u));
+		// create the form object, put it into request
+		// model.put("tutor_form", new TutorForm(u));
 
-	DaoManager adao = DaoManager.getInstance();
-	AnnouncementDao ad = adao.getAnnouncementDao();
-	List<Announcement> announcements = ad.all();model.put("announcements",announcements);
+		DaoManager adao = DaoManager.getInstance();
+		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
 
-	// Render the page
-	return new ModelAndView(model,"users/edittutor.hbs");
+		ad.close();
+		cd.close();
+		tutor.close();
+		// Render the page
+		return new ModelAndView(model, "users/edittutor.hbs");
 	}
 
 	public ModelAndView updateTutor(Request req, Response res) {
@@ -101,8 +106,8 @@ public class EditTutorController {
 		model.put("announcements", announcements);
 
 		DaoManager tdao = DaoManager.getInstance();
-		TutorDao td = tdao.getTutorDao();
-		List<Tutor> tutors = td.all(u.getId());
+		// TutorDao td = tdao.getTutorDao();
+		List<Tutor> tutors = tDao.all(u.getId());
 
 		model.put("tutors", tutors);
 
@@ -110,6 +115,9 @@ public class EditTutorController {
 				+ tempTutor.getTutor_last_name());
 
 		model.put("current_user", u);
+
+		tDao.close();
+		ad.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/alltutors.hbs");
 
@@ -122,19 +130,17 @@ public class EditTutorController {
 		User u = (User) session.attribute("current_user");
 		String idString = req.params("id");
 		long id = Long.parseLong(idString);
-		TutorDao tutorDao = DaoManager.getInstance().getTutorDao();
-		Long studentID = tutorDao.getStudentId(id);
-		Tutor tempTutor = tutorDao.findById(id);
+		TutorDao td = DaoManager.getInstance().getTutorDao();
+		Long studentID = td.getStudentId(id);
+		Tutor tempTutor = td.findById(id);
 
-		tutorDao.deleteTutor(id);
+		td.deleteTutor(id);
 
-		if (tutorDao.findByStudentId(studentID) == null) {
-			tutorDao.changeTutorRole(studentID);
+		if (td.findByStudentId(studentID) == null) {
+			td.changeTutorRole(studentID);
 
 		}
 
-		DaoManager tdao = DaoManager.getInstance();
-		TutorDao td = tdao.getTutorDao();
 		List<Tutor> tutors = td.all(u.getId());
 
 		model.put("tutors", tutors);
@@ -142,6 +148,7 @@ public class EditTutorController {
 		model.put("error", "You have removed " + tempTutor.getCourse_name() + " from " + tempTutor.getTutor_first_name()
 				+ " " + tempTutor.getTutor_last_name());
 
+		td.close();
 		return new ModelAndView(model, "users/alltutors.hbs");
 
 	}

@@ -62,7 +62,9 @@ public class AdminDashboardController {
 		if (!flagged.isEmpty()) {
 			unseen_flagged_comments = true;
 		}
-
+		
+		ad.close();
+		reviewDao.close();
 		// list of flagged comments
 		model.put("flagged", flagged);
 		// count of unreviewed flagged comments
@@ -122,6 +124,8 @@ public class AdminDashboardController {
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
+		ad.close();
+		ud.close();
 		model.put("announcements", announcements);
 
 		// Tell the server to render the index page with the data in the model
@@ -145,6 +149,7 @@ public class AdminDashboardController {
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
+		ad.close();
 		model.put("announcements", announcements);
 
 		// Render the page
@@ -170,7 +175,7 @@ public class AdminDashboardController {
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
-
+		ad.close();
 		// Render the page
 		return new ModelAndView(model, "users/reviewslanding.hbs");
 	}
@@ -179,7 +184,6 @@ public class AdminDashboardController {
 	public ModelAndView showEditApt(Request req, Response res) throws AuthException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
-		TutorDao tdao = DaoManager.getInstance().getTutorDao();
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
@@ -197,7 +201,8 @@ public class AdminDashboardController {
 		// Get the :id from the url
 		String idString = req.params("id");
 		long id = Long.parseLong(idString);
-
+		
+		TutorDao tdao = DaoManager.getInstance().getTutorDao();
 		TutorAppointment apt = tdao.findAppointmentByID(id);
 		apt.setTime(FormatTimeAndDate.formatTime(apt.getTime()));
 		apt.setDate(FormatTimeAndDate.formatDate(apt.getDate()));
@@ -213,6 +218,9 @@ public class AdminDashboardController {
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
 
+		ud.close();
+		ad.close();
+		tdao.close();
 		// Render the page
 		return new ModelAndView(model, "users/editappointment.hbs");
 	}
@@ -265,11 +273,14 @@ public class AdminDashboardController {
 		}
 		model.put("pastappointments", pastAppointments);
 		
-		DaoManager adao = DaoManager.getInstance();
-		AnnouncementDao ad = adao.getAnnouncementDao();
+		AnnouncementDao ad = DaoManager.getInstance().getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
-		model.put("announcements", announcements);
 		
+		ad.close();
+		tDao.close();
+		uDao.close();
+		
+		model.put("announcements", announcements);
 		model.put("department", user.getMajor());
 
 
@@ -340,6 +351,10 @@ public class AdminDashboardController {
 
 
 		tempApt.setAppointment_status(Boolean.parseBoolean(req.queryParams("status")));
+		
+		tDao.close();
+		uDao.close();
+		ad.close();
 		return new ModelAndView(model, "users/appointments.hbs");
 	}
 
@@ -362,6 +377,7 @@ public class AdminDashboardController {
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
 
+		ad.close();
 		// Render the page
 		return new ModelAndView(model, "users/adminaptlanding.hbs");
 	}
@@ -460,6 +476,9 @@ public class AdminDashboardController {
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
 
+		ud.close();
+		td.close();
+		ad.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/appointments.hbs");
 	}
@@ -481,6 +500,7 @@ public class AdminDashboardController {
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
+		ad.close();
 		model.put("announcements", announcements);
 
 		// Render the page
@@ -505,7 +525,7 @@ public class AdminDashboardController {
 		AnnouncementDao ad = dao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
-
+		ad.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/announcement.hbs");
 	}
@@ -525,7 +545,7 @@ public class AdminDashboardController {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 
-		AnnouncementDao announceDao = DaoManager.getInstance().getAnnouncementDao();
+		AnnouncementDao ad = DaoManager.getInstance().getAnnouncementDao();
 		Announcement announcement = new Announcement();
 
 		SimpleDateFormat fromUser = new SimpleDateFormat("yyyy-MM-dd");
@@ -541,13 +561,13 @@ public class AdminDashboardController {
 
 		announcement.setAnnouncement_content(req.queryParams("message"));
 
-		announceDao.save(announcement);
+		ad.save(announcement);
 
 		DaoManager dao = DaoManager.getInstance();
-		AnnouncementDao ad = dao.getAnnouncementDao();
+		//AnnouncementDao ad = dao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
-
+		ad.close();
 		model.put("error", "You have added an event for " + announcement.getDate());
 
 		// Tell the server to render the index page with the data in the model
@@ -560,7 +580,7 @@ public class AdminDashboardController {
 		DaoManager dao = DaoManager.getInstance();
 		UserDao ud = dao.getUserDao();
 		ud.sortByLastName();
-
+		ud.close();
 		res.redirect("/allusers");
 		return "";
 
@@ -595,7 +615,8 @@ public class AdminDashboardController {
 			reviewDao.setCommentNotFlagged(review);
 			reviewDao.setCommentApproved(review);
 		}
-
+		reviewDao.close();
+		sDao.close();
 		// redirects back to dashboard
 		res.redirect(Application.ADMINDASHBOARD_PATH);
 		return "";

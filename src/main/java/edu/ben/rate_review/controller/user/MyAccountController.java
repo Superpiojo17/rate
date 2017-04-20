@@ -26,7 +26,7 @@ import spark.Session;
  * Account Recovery controller
  * 
  * @author Dex
- * @version 
+ * @version
  */
 public class MyAccountController {
 	/**
@@ -43,12 +43,12 @@ public class MyAccountController {
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 
-		if (u != null){
-			if (u.getRole() == 1){
+		if (u != null) {
+			if (u.getRole() == 1) {
 				model.put("user_admin", true);
-			} else if (u.getRole() == 2){
+			} else if (u.getRole() == 2) {
 				model.put("user_professor", true);
-			} else if (u.getRole() == 3){
+			} else if (u.getRole() == 3) {
 				model.put("user_tutor", true);
 			} else {
 				model.put("user_student", true);
@@ -58,19 +58,19 @@ public class MyAccountController {
 		}
 		// AuthPolicyManager.getInstance().getUserPolicy().showStudentDashboardPage();
 
-		//DaoManager dao = DaoManager.getInstance();
+		// DaoManager dao = DaoManager.getInstance();
 
-		//DaoManager adao = DaoManager.getInstance();
+		// DaoManager adao = DaoManager.getInstance();
 
 		model.put("current_user", u);
-		
+
 		// Tell the server to render the my account page.
 		return new ModelAndView(model, "home/myaccount.hbs");
 	}
-	
+
 	/*
-	 * Complete profile 
-	 * Utilizing the code one of the other guys made to update the fields
+	 * Complete profile Utilizing the code one of the other guys made to update
+	 * the fields
 	 */
 	public String completeProfile(Request req, Response res) {
 		UserDao uDao = DaoManager.getInstance().getUserDao();
@@ -85,10 +85,9 @@ public class MyAccountController {
 
 		uDao.completeProfile2(user);
 
+		uDao.close();
 		res.redirect(Application.STUDENTDASHBOARD_PATH);
 		return "";
 	}
 
-
-	
 }

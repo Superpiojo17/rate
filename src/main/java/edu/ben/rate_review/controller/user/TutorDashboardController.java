@@ -18,7 +18,7 @@ import edu.ben.rate_review.models.Course;
 import edu.ben.rate_review.models.Tutor;
 import edu.ben.rate_review.models.TutorAppointment;
 import edu.ben.rate_review.models.User;
-import edu.ben.rate_review.policy.AuthPolicyManager;
+//import edu.ben.rate_review.policy.AuthPolicyManager;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -46,12 +46,12 @@ public class TutorDashboardController {
 			model.put("completeProfile", true);
 		}
 
-		DaoManager adao = DaoManager.getInstance();
-		AnnouncementDao ad = adao.getAnnouncementDao();
+		DaoManager dao = DaoManager.getInstance();
+		AnnouncementDao ad = dao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
 
-		TutorDao tDao = adao.getTutorDao();
+		TutorDao tDao = dao.getTutorDao();
 		flagPastAppointments(tDao);
 
 		List<TutorAppointment> appointments = tDao.listAllTutorAppointments(u.getId());
@@ -87,6 +87,8 @@ public class TutorDashboardController {
 		// count of appointment requests that need a response
 		model.put("number_of_requests", unviewed_appointments.size());
 
+		tDao.close();
+		ad.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/tutorDashboard.hbs");
 	}
@@ -131,24 +133,26 @@ public class TutorDashboardController {
 
 		// AuthPolicyManager.getInstance().getUserPolicy().showFacultyDashboardPage();
 
-		DaoManager adao = DaoManager.getInstance();
-		DaoManager cdao = DaoManager.getInstance();
+		DaoManager dao = DaoManager.getInstance();
 
-		AnnouncementDao ad = adao.getAnnouncementDao();
+		AnnouncementDao ad = dao.getAnnouncementDao();
 
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
-		CourseDao cd = cdao.getCourseDao();
+		CourseDao cd = dao.getCourseDao();
 		List<Course> courses = cd.allByProfessor(u.getId());
 		model.put("courses", courses);
 
-		DaoManager tdao = DaoManager.getInstance();
-		TutorDao td = tdao.getTutorDao();
+		TutorDao td = dao.getTutorDao();
 		List<Tutor> tutors = td.all(u.getId());
 
 		model.put("tutors", tutors);
 
 		model.put("current_user", u);
+
+		ad.close();
+		cd.close();
+		td.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "home/completeprofiletutor.hbs");
 	}
@@ -230,6 +234,7 @@ public class TutorDashboardController {
 			}
 		}
 
+		tDao.close();
 		res.redirect(Application.TUTORDASHBOARD_PATH);
 		return "";
 	}
@@ -251,6 +256,7 @@ public class TutorDashboardController {
 		String messageFooter = "<br /><p>Sincerely,</p><p>The Rate&Review Team</p>";
 		String message = messageHeader + messageBody + messageFooter;
 
+		uDao.close();
 		Email.deliverEmail(student.getFirst_name(), student.getEmail(), subject, message);
 
 	}
@@ -274,6 +280,7 @@ public class TutorDashboardController {
 		String messageFooter = "<br /><p>Sincerely,</p><p>The Rate&Review Team</p>";
 		String message = messageHeader + messageBody + messageFooter;
 
+		uDao.close();
 		Email.deliverEmail(student.getFirst_name(), student.getEmail(), subject, message);
 
 	}
@@ -292,6 +299,7 @@ public class TutorDashboardController {
 		String messageFooter = "<br /><p>Sincerely,</p><p>The Rate&Review Team</p>";
 		String message = messageHeader + messageBody + messageFooter;
 
+		uDao.close();
 		Email.deliverEmail(student.getFirst_name(), student.getEmail(), subject, message);
 
 	}
@@ -311,7 +319,7 @@ public class TutorDashboardController {
 		user.setSchool_year(Integer.parseInt(req.queryParams("year")));
 
 		uDao.completeProfile(user);
-
+		uDao.close();
 		res.redirect(Application.TUTORDASHBOARD_PATH);
 		return "";
 	}
