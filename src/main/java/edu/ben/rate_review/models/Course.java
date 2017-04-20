@@ -7,7 +7,7 @@ public class Course {
 	private long id;
 	private String course_name;
 	private long professor_id;
-	private String professor_name;
+//	private String professor_name;
 	private String subject;
 	private String semester;
 	private int year;
@@ -66,9 +66,9 @@ public class Course {
 		}
 	}
 
-	public void setProfessor_name(String professor_name) {
-		this.professor_name = professor_name;
-	}
+	// public void setProfessor_name(String professor_name) {
+	// this.professor_name = professor_name;
+	// }
 
 	public long getCourse_number() {
 		return course_number;

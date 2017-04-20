@@ -3,7 +3,7 @@ package edu.ben.rate_review.controller.user;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+//import java.util.HashSet;
 import java.util.List;
 
 import edu.ben.rate_review.authorization.AuthException;
@@ -160,7 +160,7 @@ public class AdminEditTutorController {
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
-		
+
 		user.close();
 		tutor.close();
 		ad.close();
@@ -211,8 +211,8 @@ public class AdminEditTutorController {
 					"You have turned " + user.getFirst_name() + " " + user.getLast_name() + " into a tutor");
 		}
 
-		DaoManager dao = DaoManager.getInstance();
-		//TutorDao td = dao.getTutorDao();
+		// DaoManager dao = DaoManager.getInstance();
+		// TutorDao td = dao.getTutorDao();
 		List<Tutor> tutors = new ArrayList<Tutor>();
 		List<Tutor> Temptutors = tDao.listAllTutors();
 		for (int i = 0; i < Temptutors.size(); i++) {
@@ -235,7 +235,7 @@ public class AdminEditTutorController {
 				+ tempTutor.getCourse_name());
 
 		model.put("current_user", u);
-		
+
 		tDao.close();
 		ad.close();
 		uDao.close();
@@ -359,12 +359,12 @@ public class AdminEditTutorController {
 
 		String department = course.getSubject();
 
-		Session session = req.session();
-		User u = (User) session.attribute("current_user");
+		// Session session = req.session();
+		// User u = (User) session.attribute("current_user");
 		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
 
-		DaoManager dao = DaoManager.getInstance();
-		//TutorDao td = dao.getTutorDao();
+		// DaoManager dao = DaoManager.getInstance();
+		// TutorDao td = dao.getTutorDao();
 		List<Tutor> tutors = new ArrayList<Tutor>();
 		List<Tutor> Temptutors = tDao.listAllTutors();
 		for (int i = 0; i < Temptutors.size(); i++) {
@@ -399,8 +399,8 @@ public class AdminEditTutorController {
 	public ModelAndView adminDeleteTutor(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
 
-		Session session = req.session();
-		User u = (User) session.attribute("current_user");
+		// Session session = req.session();
+		// User u = (User) session.attribute("current_user");
 		String idString = req.params("id");
 		long id = Long.parseLong(idString);
 		TutorDao tutorDao = DaoManager.getInstance().getTutorDao();
@@ -417,8 +417,8 @@ public class AdminEditTutorController {
 
 		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
 
-		DaoManager dao = DaoManager.getInstance();
-		//TutorDao td = dao.getTutorDao();
+		// DaoManager dao = DaoManager.getInstance();
+		// TutorDao td = dao.getTutorDao();
 		List<Tutor> tutors = new ArrayList<Tutor>();
 		List<Tutor> Temptutors = tutorDao.listAllTutors();
 		for (int i = 0; i < Temptutors.size(); i++) {

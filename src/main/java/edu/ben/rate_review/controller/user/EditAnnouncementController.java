@@ -5,15 +5,15 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
-import edu.ben.rate_review.app.Application;
+//import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.authorization.AuthException;
 import edu.ben.rate_review.daos.AnnouncementDao;
 import edu.ben.rate_review.daos.DaoManager;
-import edu.ben.rate_review.daos.UserDao;
+//import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.AnnouncementForm;
 import edu.ben.rate_review.models.User;
-import edu.ben.rate_review.models.UserForm;
+//import edu.ben.rate_review.models.UserForm;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -61,7 +61,7 @@ public class EditAnnouncementController {
 		// create the form object, put it into request
 		model.put("announcement_form", new AnnouncementForm(a));
 
-		DaoManager dao = DaoManager.getInstance();
+//		DaoManager dao = DaoManager.getInstance();
 		// AnnouncementDao ad = dao.getAnnouncementDao();
 		List<Announcement> announcements = announcement.all();
 		model.put("announcements", announcements);
@@ -86,7 +86,7 @@ public class EditAnnouncementController {
 		// Authorize that the user can edit the user selected
 		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
 
-		DaoManager dao = DaoManager.getInstance();
+//		DaoManager dao = DaoManager.getInstance();
 		// AnnouncementDao ad = dao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
@@ -109,7 +109,6 @@ public class EditAnnouncementController {
 			String formatteddate = myFormat.format(fromUser.parse(req.queryParams("date")));
 			announcement.setDate(formatteddate);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -118,7 +117,7 @@ public class EditAnnouncementController {
 
 		aDao.updateAnnouncement(announcement);
 
-		DaoManager dao = DaoManager.getInstance();
+//		DaoManager dao = DaoManager.getInstance();
 		// AnnouncementDao ad = dao.getAnnouncementDao();
 		List<Announcement> announcements = aDao.all();
 		model.put("announcements", announcements);
@@ -151,7 +150,7 @@ public class EditAnnouncementController {
 
 		announceDao.save(announcement);
 
-		DaoManager dao = DaoManager.getInstance();
+//		DaoManager dao = DaoManager.getInstance();
 		// AnnouncementDao ad = dao.getAnnouncementDao();
 		List<Announcement> announcements = announceDao.all();
 		model.put("announcements", announcements);
@@ -173,7 +172,7 @@ public class EditAnnouncementController {
 		model.put("error", "You have deleted an event");
 
 		ad.deletAnnouncement(id);
-		DaoManager dao = DaoManager.getInstance();
+//		DaoManager dao = DaoManager.getInstance();
 		// AnnouncementDao ad = dao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);

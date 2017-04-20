@@ -3,8 +3,8 @@ package edu.ben.rate_review.controller.user;
 import java.util.HashMap;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.authorization.AuthException;
@@ -23,7 +23,8 @@ import spark.Session;
  */
 public class UsersController implements BaseController {
 
-	private static Logger logger = LoggerFactory.getLogger(UsersController.class);
+	// private static Logger logger =
+	// LoggerFactory.getLogger(UsersController.class);
 
 	/**
 	 * Show page to list all Users

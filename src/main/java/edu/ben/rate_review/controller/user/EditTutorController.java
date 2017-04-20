@@ -1,24 +1,24 @@
 package edu.ben.rate_review.controller.user;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+//import java.text.ParseException;
+//import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
-import edu.ben.rate_review.app.Application;
+//import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.authorization.AuthException;
 import edu.ben.rate_review.daos.AnnouncementDao;
 import edu.ben.rate_review.daos.CourseDao;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.TutorDao;
-import edu.ben.rate_review.daos.UserDao;
+//import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.models.Announcement;
-import edu.ben.rate_review.models.AnnouncementForm;
+//import edu.ben.rate_review.models.AnnouncementForm;
 import edu.ben.rate_review.models.Course;
 import edu.ben.rate_review.models.Tutor;
 import edu.ben.rate_review.models.TutorForm;
 import edu.ben.rate_review.models.User;
-import edu.ben.rate_review.models.UserForm;
+//import edu.ben.rate_review.models.UserForm;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -105,7 +105,7 @@ public class EditTutorController {
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
 
-		DaoManager tdao = DaoManager.getInstance();
+		// DaoManager tdao = DaoManager.getInstance();
 		// TutorDao td = tdao.getTutorDao();
 		List<Tutor> tutors = tDao.all(u.getId());
 

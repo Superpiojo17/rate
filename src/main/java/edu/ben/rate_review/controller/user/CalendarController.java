@@ -1,28 +1,28 @@
 package edu.ben.rate_review.controller.user;
 
-import java.io.IOException;
+//import java.io.IOException;
 import java.sql.Connection;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+//import java.text.ParseException;
+//import java.text.SimpleDateFormat;
+//import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.google.gson.Gson;
+//import javax.servlet.http.HttpServletRequest;
+//import javax.servlet.http.HttpServletResponse;
+//
+//import com.google.gson.Gson;
 
 import edu.ben.rate_review.authorization.AuthException;
 import edu.ben.rate_review.daos.AnnouncementDao;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.TutorDao;
-import edu.ben.rate_review.formatTime.FormatTimeAndDate;
+//import edu.ben.rate_review.formatTime.FormatTimeAndDate;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.Calendar;
 import edu.ben.rate_review.models.TutorAppointment;
 import edu.ben.rate_review.models.User;
-import edu.ben.rate_review.policy.AuthPolicyManager;
+//import edu.ben.rate_review.policy.AuthPolicyManager;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -33,7 +33,7 @@ public class CalendarController {
 	String USER_TABLE = "users";
 	Connection conn = null;
 
-	private static final String APPOINTMENT_TABLE = "tutor_appointment";
+	// private static final String APPOINTMENT_TABLE = "tutor_appointment";
 
 	public ModelAndView showCalendarPage(Request req, Response res) throws AuthException {
 

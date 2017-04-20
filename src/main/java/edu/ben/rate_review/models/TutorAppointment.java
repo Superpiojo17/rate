@@ -29,8 +29,8 @@ public class TutorAppointment {
 	private String tutor_firstname;
 	private String tutor_lastname;
 	// these are derived
-	private String course_name;
-	private String department;
+	// private String course_name;
+	// private String department;
 
 	public long getRelationship_id() {
 		return relationship_id;

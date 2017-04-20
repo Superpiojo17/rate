@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.ben.rate_review.models.Course;
+//import edu.ben.rate_review.models.Course;
 import edu.ben.rate_review.models.ProfessorReview;
 import edu.ben.rate_review.models.StudentInCourse;
 import edu.ben.rate_review.models.User;

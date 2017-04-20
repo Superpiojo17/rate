@@ -1007,7 +1007,7 @@ public class TutorDao implements Dao<Tutor> {
 	 * @throws SQLException
 	 */
 	private TutorReview reviewMapRow(ResultSet rs) throws SQLException {
-		UserDao udao = new UserDao(conn);
+		// UserDao udao = new UserDao(conn);
 
 		TutorReview tmp = new TutorReview();
 
@@ -1051,7 +1051,7 @@ public class TutorDao implements Dao<Tutor> {
 
 		return 0;
 	}
-	
+
 	public void close() {
 		try {
 			this.conn.close();

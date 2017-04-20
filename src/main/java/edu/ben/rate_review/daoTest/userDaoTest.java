@@ -1,15 +1,15 @@
 package edu.ben.rate_review.daoTest;
 
-import static org.junit.Assert.assertEquals;
-
-import java.sql.Connection;
+//import static org.junit.Assert.assertEquals;
+//
+//import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.junit.Test;
 
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.UserDao;
-import edu.ben.rate_review.models.User;
+//import edu.ben.rate_review.models.User;
 
 public class userDaoTest {
 

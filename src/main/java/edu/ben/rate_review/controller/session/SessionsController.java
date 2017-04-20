@@ -278,8 +278,8 @@ public class SessionsController {
 
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
-		Session session = req.session();
-		User u = (User) session.attribute("current_user");
+		// Session session = req.session();
+		// User u = (User) session.attribute("current_user");
 		req.session().removeAttribute("current_user");
 		res.redirect(Application.HOME_PATH);
 		return new ModelAndView(model, "home/home.hbs");

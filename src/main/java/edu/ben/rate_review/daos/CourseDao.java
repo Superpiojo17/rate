@@ -36,7 +36,7 @@ public class CourseDao {
 		tmp.setSubject(rs.getString("course_subject"));
 		tmp.setSemester(rs.getString("course_semester"));
 		tmp.setYear(rs.getInt("course_year"));
-		tmp.setProfessor_name(rs.getString("course_professor_id"));
+		// tmp.setProfessor_name(("course_professor_id"));
 		tmp.setCourse_number(rs.getLong("course_number"));
 
 		return tmp;
@@ -270,7 +270,7 @@ public class CourseDao {
 		}
 		return courses;
 	}
-	
+
 	public void close() {
 		try {
 			this.conn.close();

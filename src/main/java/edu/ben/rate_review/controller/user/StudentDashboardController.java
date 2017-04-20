@@ -6,7 +6,7 @@ import java.util.List;
 
 import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.authorization.AuthException;
-import edu.ben.rate_review.controller.home.LogInController;
+//import edu.ben.rate_review.controller.home.LogInController;
 import edu.ben.rate_review.daos.AnnouncementDao;
 import edu.ben.rate_review.daos.CourseDao;
 import edu.ben.rate_review.daos.DaoManager;
@@ -24,7 +24,7 @@ import edu.ben.rate_review.models.StudentInCourse;
 import edu.ben.rate_review.models.Tutor;
 import edu.ben.rate_review.models.TutorAppointment;
 import edu.ben.rate_review.models.User;
-import edu.ben.rate_review.policy.AuthPolicyManager;
+//import edu.ben.rate_review.policy.AuthPolicyManager;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;

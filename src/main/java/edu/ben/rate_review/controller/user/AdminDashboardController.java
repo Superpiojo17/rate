@@ -20,11 +20,11 @@ import edu.ben.rate_review.massRegistration.MassRegistration;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.ProfessorReview;
 import edu.ben.rate_review.models.StudentInCourse;
-import edu.ben.rate_review.models.Tutor;
+//import edu.ben.rate_review.models.Tutor;
 import edu.ben.rate_review.models.TutorAppointment;
-import edu.ben.rate_review.models.TutorForm;
+//import edu.ben.rate_review.models.TutorForm;
 import edu.ben.rate_review.models.User;
-import edu.ben.rate_review.policy.AuthPolicyManager;
+//import edu.ben.rate_review.policy.AuthPolicyManager;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -62,7 +62,7 @@ public class AdminDashboardController {
 		if (!flagged.isEmpty()) {
 			unseen_flagged_comments = true;
 		}
-		
+
 		ad.close();
 		reviewDao.close();
 		// list of flagged comments
@@ -155,8 +155,7 @@ public class AdminDashboardController {
 		// Render the page
 		return new ModelAndView(model, "users/courseslanding.hbs");
 	}
-	
-	
+
 	public ModelAndView showManageReviewsLandingPage(Request req, Response res) throws AuthException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
@@ -179,7 +178,6 @@ public class AdminDashboardController {
 		// Render the page
 		return new ModelAndView(model, "users/reviewslanding.hbs");
 	}
-	
 
 	public ModelAndView showEditApt(Request req, Response res) throws AuthException {
 		// Just a hash to pass data from the servlet to the page
@@ -201,7 +199,7 @@ public class AdminDashboardController {
 		// Get the :id from the url
 		String idString = req.params("id");
 		long id = Long.parseLong(idString);
-		
+
 		TutorDao tdao = DaoManager.getInstance().getTutorDao();
 		TutorAppointment apt = tdao.findAppointmentByID(id);
 		apt.setTime(FormatTimeAndDate.formatTime(apt.getTime()));
@@ -224,8 +222,7 @@ public class AdminDashboardController {
 		// Render the page
 		return new ModelAndView(model, "users/editappointment.hbs");
 	}
-	
-	
+
 	public ModelAndView adminDeleteApt(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
 
@@ -247,16 +244,12 @@ public class AdminDashboardController {
 
 		TutorAppointment tempApt = tDao.findAppointmentByID(id);
 
-		
-
 		User user = uDao.findById(tempApt.getTutor_id());
-	
-		
+
 		tDao.cancelTutorAppointment(tempApt.getAppointment_id());
-		
+
 		model.put("error", "You have deleted an appointment on " + tempApt.getDate());
-		
-		
+
 		List<TutorAppointment> appointments = tDao.listUpcomingAllApptByDept(user.getMajor());
 
 		for (int i = 0; i < appointments.size(); i++) {
@@ -264,7 +257,7 @@ public class AdminDashboardController {
 			appointments.get(i).setDate(FormatTimeAndDate.formatDate(appointments.get(i).getDate()));
 		}
 		model.put("upcomingappointments", appointments);
-		
+
 		List<TutorAppointment> pastAppointments = tDao.listPastAllApptByDept(user.getMajor());
 
 		for (int i = 0; i < pastAppointments.size(); i++) {
@@ -272,17 +265,16 @@ public class AdminDashboardController {
 			pastAppointments.get(i).setDate(FormatTimeAndDate.formatDate(pastAppointments.get(i).getDate()));
 		}
 		model.put("pastappointments", pastAppointments);
-		
+
 		AnnouncementDao ad = DaoManager.getInstance().getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
-		
+
 		ad.close();
 		tDao.close();
 		uDao.close();
-		
+
 		model.put("announcements", announcements);
 		model.put("department", user.getMajor());
-
 
 		tempApt.setAppointment_status(Boolean.parseBoolean(req.queryParams("status")));
 		return new ModelAndView(model, "users/appointments.hbs");
@@ -311,21 +303,18 @@ public class AdminDashboardController {
 
 		User user = uDao.findById(Integer.parseInt(req.queryParams("selecttutor")));
 		Long userID = user.getId();
-		
 
 		tempApt.setTutor_firstname(user.getFirst_name());
 		tempApt.setTutor_lastname(user.getLast_name());
 		tempApt.setTutor_id(userID);
 		tempApt.setAppointment_status(Boolean.parseBoolean(req.queryParams("status")));
-		
+
 		tempApt.setDate(FormatTimeAndDate.formatDate(tempApt.getDate()));
-	
-		
+
 		tDao.updateApt(tempApt);
-		
+
 		model.put("message", "You have edited an appointment on " + tempApt.getDate());
-		
-		
+
 		List<TutorAppointment> appointments = tDao.listUpcomingAllApptByDept(user.getMajor());
 
 		for (int i = 0; i < appointments.size(); i++) {
@@ -333,7 +322,7 @@ public class AdminDashboardController {
 			appointments.get(i).setDate(FormatTimeAndDate.formatDate(appointments.get(i).getDate()));
 		}
 		model.put("upcomingappointments", appointments);
-		
+
 		List<TutorAppointment> pastAppointments = tDao.listPastAllApptByDept(user.getMajor());
 
 		for (int i = 0; i < pastAppointments.size(); i++) {
@@ -341,17 +330,16 @@ public class AdminDashboardController {
 			pastAppointments.get(i).setDate(FormatTimeAndDate.formatDate(pastAppointments.get(i).getDate()));
 		}
 		model.put("pastappointments", pastAppointments);
-		
+
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
-		
+
 		model.put("department", user.getMajor());
 
-
 		tempApt.setAppointment_status(Boolean.parseBoolean(req.queryParams("status")));
-		
+
 		tDao.close();
 		uDao.close();
 		ad.close();
@@ -414,7 +402,7 @@ public class AdminDashboardController {
 				// valid search, can proceed
 				List<TutorAppointment> tempApts = td.searchApt(searchType, searchTxt);
 				if (tempApts.size() > 0) {
-					
+
 					for (int i = 0; i < tempApts.size(); i++) {
 						tempApts.get(i).setTime(FormatTimeAndDate.formatTime(tempApts.get(i).getTime()));
 						tempApts.get(i).setDate(FormatTimeAndDate.formatDate(tempApts.get(i).getDate()));
@@ -423,12 +411,12 @@ public class AdminDashboardController {
 				} else {
 					List<TutorAppointment> apts = td.searchApt(searchType, searchTxt);
 					model.put("error", "No Results Found");
-					
+
 					for (int i = 0; i < apts.size(); i++) {
 						apts.get(i).setTime(FormatTimeAndDate.formatTime(apts.get(i).getTime()));
 						apts.get(i).setDate(FormatTimeAndDate.formatDate(apts.get(i).getDate()));
 					}
-					
+
 					model.put("upcomingapointments", apts);
 				}
 			} else {
@@ -439,7 +427,7 @@ public class AdminDashboardController {
 					apts.get(i).setDate(FormatTimeAndDate.formatDate(apts.get(i).getDate()));
 				}
 				model.put("upcomingappointments", apts);
-				
+
 				List<TutorAppointment> pastAppointments = td.listPastAllApptByDept(department);
 
 				for (int i = 0; i < pastAppointments.size(); i++) {
@@ -447,7 +435,7 @@ public class AdminDashboardController {
 					pastAppointments.get(i).setDate(FormatTimeAndDate.formatDate(pastAppointments.get(i).getDate()));
 				}
 				model.put("pastappointments", pastAppointments);
-				
+
 			}
 		} else {
 			List<TutorAppointment> appointments = td.listUpcomingAllApptByDept(department);
@@ -457,7 +445,7 @@ public class AdminDashboardController {
 				appointments.get(i).setDate(FormatTimeAndDate.formatDate(appointments.get(i).getDate()));
 			}
 			model.put("upcomingappointments", appointments);
-			
+
 			List<TutorAppointment> pastAppointments = td.listPastAllApptByDept(department);
 
 			for (int i = 0; i < pastAppointments.size(); i++) {
@@ -466,8 +454,6 @@ public class AdminDashboardController {
 			}
 			model.put("pastappointments", pastAppointments);
 		}
-
-	
 
 		model.put("current_user", u);
 
@@ -533,7 +519,7 @@ public class AdminDashboardController {
 	public String massRegister(Request req, Response res)
 			throws FileNotFoundException, NoSuchMethodException, SecurityException {
 		// Just a hash to pass data from the servlet to the page
-		HashMap<String, Object> model = new HashMap<>();
+		// HashMap<String, Object> model = new HashMap<>();
 		MassRegistration.massRegisterUsers();
 		res.redirect("/allusers");
 		// Tell the server to render the index page with the data in the model
@@ -555,7 +541,6 @@ public class AdminDashboardController {
 			String formatteddate = myFormat.format(fromUser.parse(req.queryParams("date")));
 			announcement.setDate(formatteddate);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -563,8 +548,8 @@ public class AdminDashboardController {
 
 		ad.save(announcement);
 
-		DaoManager dao = DaoManager.getInstance();
-		//AnnouncementDao ad = dao.getAnnouncementDao();
+		// DaoManager dao = DaoManager.getInstance();
+		// AnnouncementDao ad = dao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
 		ad.close();
@@ -597,7 +582,6 @@ public class AdminDashboardController {
 		DaoManager dao = DaoManager.getInstance();
 		ProfessorReviewDao reviewDao = dao.getProfessorReviewDao();
 		StudentInCourseDao sDao = dao.getStudentInCourseDao();
-		
 
 		// grabs course id from review comment
 		String courseToRemoveString = req.queryParams("flagged_comment");
