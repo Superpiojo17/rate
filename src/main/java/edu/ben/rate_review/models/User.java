@@ -1,7 +1,7 @@
 package edu.ben.rate_review.models;
 
 import edu.ben.rate_review.authorization.AuthorizationUser;
-import edu.ben.rate_review.controller.home.ProfessorController;
+//import edu.ben.rate_review.controller.home.ProfessorController;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.encryption.SecurePassword;
@@ -218,6 +218,7 @@ public class User implements AuthorizationUser {
 		if (ud.getPicString(id) != null) {
 			return ud.getPicString(id);
 		}
+		ud.close();
 		return "logo";
 	}
 
@@ -229,7 +230,7 @@ public class User implements AuthorizationUser {
 		}
 		return adminEditFlag;
 	}
-	
+
 	public void setProfilepic(String profilepic) {
 		this.profilepic = profilepic;
 	}

@@ -3,8 +3,8 @@ package edu.ben.rate_review.models;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
-import edu.ben.rate_review.daos.DaoManager;
-import edu.ben.rate_review.daos.UserDao;
+//import edu.ben.rate_review.daos.DaoManager;
+//import edu.ben.rate_review.daos.UserDao;
 
 /**
  * Model for the review of a professor

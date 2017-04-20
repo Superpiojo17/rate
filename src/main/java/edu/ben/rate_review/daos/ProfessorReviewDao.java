@@ -490,7 +490,7 @@ public class ProfessorReviewDao {
 
 			// marks course not reviewed
 			sDao.setCourseNotReviewed(review);
-
+			sDao.close();
 			return review;
 		} catch (Exception e) {
 			e.printStackTrace();

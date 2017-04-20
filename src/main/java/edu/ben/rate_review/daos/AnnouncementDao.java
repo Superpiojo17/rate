@@ -10,8 +10,8 @@ import java.util.List;
 
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.AnnouncementForm;
-import edu.ben.rate_review.models.User;
-import edu.ben.rate_review.models.UserForm;
+//import edu.ben.rate_review.models.User;
+//import edu.ben.rate_review.models.UserForm;
 
 public class AnnouncementDao {
 

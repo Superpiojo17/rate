@@ -70,6 +70,7 @@ public class CourseForm {
 	public String getProfessor_name() {
 		UserDao user = DaoManager.getInstance().getUserDao();
 		User u = user.findById(professor_id);
+		user.close();
 		return u.getFirst_name() + " " + u.getLast_name()  ;
 
 	}

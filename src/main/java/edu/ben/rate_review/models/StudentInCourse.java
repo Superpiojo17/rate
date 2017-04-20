@@ -1,9 +1,5 @@
 package edu.ben.rate_review.models;
 
-import edu.ben.rate_review.daos.CourseDao;
-import edu.ben.rate_review.daos.DaoManager;
-import edu.ben.rate_review.daos.UserDao;
-
 public class StudentInCourse {
 	private long student_course_id;
 	private long course_id;
@@ -17,20 +13,6 @@ public class StudentInCourse {
 	private String semester;
 	private int year;
 	private String course_subject_number;
-
-//	User user = null;
-//	UserDao uDao = null;
-//	CourseDao cDao = null;
-//	DaoManager dao = null;
-//
-//	public StudentInCourse() {
-//		super();
-//		dao = DaoManager.getInstance();
-//		cDao = dao.getCourseDao();
-//		uDao = dao.getUserDao();
-//		
-//
-//	}
 
 	public long getStudent_course_id() {
 		return student_course_id;
@@ -87,7 +69,7 @@ public class StudentInCourse {
 	public void setProfessor_first_name(String professor_first_name) {
 		this.professor_first_name = professor_first_name;
 	}
-	
+
 	public String getProfessor_last_name() {
 		return professor_last_name;
 	}

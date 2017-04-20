@@ -14,7 +14,8 @@ import edu.ben.rate_review.models.User;
 public class userDaoTest {
 
 	public userDaoTest() throws Exception {
-		// This "hack" runs the public constructor which is what does yoru DB setup and makes the instance().
+		// This "hack" runs the public constructor which is what does yoru DB
+		// setup and makes the instance().
 		new DaoManager();
 	}
 
@@ -23,6 +24,7 @@ public class userDaoTest {
 		// Use normally
 		UserDao ud = DaoManager.getInstance().getUserDao();
 		ud.findById(6);
+		ud.close();
 	}
 
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 import edu.ben.rate_review.models.Course;
 import edu.ben.rate_review.models.CourseForm;
-import edu.ben.rate_review.models.User;
+//import edu.ben.rate_review.models.User;
 
 public class CourseDao {
 

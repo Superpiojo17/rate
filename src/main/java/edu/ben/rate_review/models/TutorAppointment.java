@@ -8,10 +8,10 @@ import edu.ben.rate_review.daos.UserDao;
  * Object which stores a tutor appointment
  * 
  * @author Mike
- *@version 3-15-2017
+ * @version 3-15-2017
  */
 public class TutorAppointment {
-	
+
 	private long appointment_id;
 	private long student_id;
 	private long tutor_id;
@@ -31,7 +31,7 @@ public class TutorAppointment {
 	// these are derived
 	private String course_name;
 	private String department;
-	
+
 	public long getRelationship_id() {
 		return relationship_id;
 	}
@@ -159,10 +159,11 @@ public class TutorAppointment {
 	public void setTutor_lastname(String tutor_lastname) {
 		this.tutor_lastname = tutor_lastname;
 	}
-	
-	public String getCourse_name(){
+
+	public String getCourse_name() {
 		TutorDao tDao = DaoManager.getInstance().getTutorDao();
 		Tutor t = tDao.findById(relationship_id);
+		tDao.close();
 		return t.getCourse_name();
 	}
 
@@ -172,7 +173,9 @@ public class TutorAppointment {
 		UserDao uDao = dao.getUserDao();
 		Tutor tutor = tDao.findById(relationship_id);
 		User tutor_account = uDao.findById(tutor.getProfessor_id());
+		tDao.close();
+		uDao.close();
 		return tutor_account.getMajor();
 	}
-	
+
 }

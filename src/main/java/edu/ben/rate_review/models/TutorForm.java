@@ -13,8 +13,7 @@ public class TutorForm {
 	private String tutor_email;
 	private String subject;
 	private String professor_name;
-	
-	
+
 	public TutorForm() {
 		super();
 	}
@@ -28,7 +27,7 @@ public class TutorForm {
 		this.setTutor_first_name(tutor.getTutor_first_name());
 		this.setTutor_last_name(tutor.getTutor_last_name());
 	}
-	
+
 	public Tutor build() {
 		Tutor tutor = new Tutor();
 
@@ -90,11 +89,12 @@ public class TutorForm {
 	public void setTutor_email(String tutor_email) {
 		this.tutor_email = tutor_email;
 	}
-	
+
 	public String getSubject() {
 		DaoManager dao = DaoManager.getInstance();
 		UserDao ud = dao.getUserDao();
 		User user = ud.findById(professor_id);
+		ud.close();
 		return user.getMajor();
 	}
 
@@ -103,6 +103,7 @@ public class TutorForm {
 		UserDao ud = dao.getUserDao();
 		User user = ud.findById(professor_id);
 		String professor_name = user.getFirst_name() + ", " + user.getLast_name();
+		ud.close();
 		return professor_name;
 	}
 

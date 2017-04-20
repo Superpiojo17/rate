@@ -12,7 +12,6 @@ public class Course {
 	private String semester;
 	private int year;
 	private long course_number;
-	
 
 	public long getId() {
 		return id;
@@ -62,6 +61,7 @@ public class Course {
 
 			UserDao user = DaoManager.getInstance().getUserDao();
 			User u = user.findById(professor_id);
+			user.close();
 			return u.getLast_name() + ", " + u.getFirst_name();
 		}
 	}

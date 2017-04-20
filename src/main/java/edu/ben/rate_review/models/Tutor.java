@@ -1,12 +1,5 @@
 package edu.ben.rate_review.models;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-
-import edu.ben.rate_review.daos.DaoManager;
-import edu.ben.rate_review.daos.TutorDao;
-import edu.ben.rate_review.daos.UserDao;
-
 public class Tutor {
 
 	private Long id;
@@ -80,7 +73,6 @@ public class Tutor {
 		this.tutor_email = tutor_email;
 	}
 
-	
 	public void setOverall(float overall) {
 		this.overall = overall;
 	}

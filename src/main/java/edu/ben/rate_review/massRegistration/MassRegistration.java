@@ -2,12 +2,12 @@ package edu.ben.rate_review.massRegistration;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Method;
+//import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import edu.ben.rate_review.controller.session.SessionsController;
+//import edu.ben.rate_review.controller.session.SessionsController;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.models.User;
@@ -17,7 +17,8 @@ public class MassRegistration {
 	private static final char DEFAULT_SEPARATOR = ',';
 	private static final char DEFAULT_QUOTE = '"';
 
-	private static SessionsController sessionsController = new SessionsController();
+	// private static SessionsController sessionsController = new
+	// SessionsController();
 
 	public static void main(String[] args) throws Exception {
 		massRegisterUsers();
@@ -55,9 +56,9 @@ public class MassRegistration {
 			newUser.setConfirmed(confirmed);
 			newUser.setActive(active);
 
-			User u = user.save(newUser);
-			
+			// User u = user.save(newUser);
 
+			user.close();
 			System.out.println(tmp.getFirst_name() + " " + tmp.getLast_name() + " " + tmp.getEmail() + " "
 					+ tmp.getEncryptedPassword() + " " + tmp.getRole());
 		}
@@ -79,7 +80,7 @@ public class MassRegistration {
 		List<String> result = new ArrayList<>();
 
 		// if empty, return!
-		if (cvsLine == null && cvsLine.isEmpty()) {
+		if (cvsLine == null || cvsLine.isEmpty()) {
 			return result;
 		}
 

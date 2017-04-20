@@ -1,3 +1,4 @@
+package edu.ben.rate_review.deprecated;
 //package edu.ben.rate_review.models;
 //
 //import edu.ben.rate_review.daos.DaoManager;

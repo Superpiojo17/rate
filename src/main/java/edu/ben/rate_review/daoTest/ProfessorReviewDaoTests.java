@@ -16,13 +16,13 @@ import edu.ben.rate_review.models.User;
  */
 public class ProfessorReviewDaoTests {
 
-	static ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
 	static User testUser = new User();
 
 	/**
 	 * Tests listCoursesByProfessorEmail method in the ProfessorReviewDao
 	 */
 	public static void listCoursesByProfessorEmailTest() {
+		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
 		testUser.setEmail("fprofessor@ben.edu");
 		List<ProfessorReview> testReviews = reviewDao.listCoursesByProfessorEmail(testUser, "overview");
 		int count = 0;
@@ -35,12 +35,14 @@ public class ProfessorReviewDaoTests {
 		} else {
 			System.out.println("fail");
 		}
+		reviewDao.close();
 	}
 
 	/**
 	 * Tests avgRate method in the ProfessorReviewDao
 	 */
 	public static void avgRateTest() {
+		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
 		testUser.setEmail("fprofessor@ben.edu");
 		String column = "rate_pace";
 		double avg = reviewDao.avgRate(testUser, column, "overview");
@@ -50,12 +52,14 @@ public class ProfessorReviewDaoTests {
 		} else {
 			System.out.println("fail");
 		}
+		reviewDao.close();
 	}
 
 	/**
 	 * Tests allRatings method in the ProfessorReviewDao
 	 */
 	public static void allRatingsTest() {
+		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
 		testUser.setEmail("fprofessor@ben.edu");
 		String column = "rate_pace";
 		int score = 5;
@@ -65,5 +69,6 @@ public class ProfessorReviewDaoTests {
 		} else {
 			System.out.println("fail");
 		}
+		reviewDao.close();
 	}
 }

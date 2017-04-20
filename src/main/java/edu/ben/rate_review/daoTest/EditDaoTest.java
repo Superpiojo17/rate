@@ -1,8 +1,8 @@
 package edu.ben.rate_review.daoTest;
 
-import static org.junit.Assert.assertEquals;
-
-import java.sql.Connection;
+//import static org.junit.Assert.assertEquals;
+//
+//import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -11,7 +11,7 @@ import org.junit.Test;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.models.User;
-import edu.ben.rate_review.models.UserForm;
+//import edu.ben.rate_review.models.UserForm;
 
 public class EditDaoTest {
 
@@ -42,13 +42,12 @@ public class EditDaoTest {
 	// assertEquals(expected, actual);
 	//
 	// }
-	
-	
+
 	@Test
 	public void test() throws SQLException {
-		
-		User us = new User();
-		UserForm user1 = new UserForm();
+
+		// User us = new User();
+		// UserForm user1 = new UserForm();
 		// Use normally
 		UserDao ud = DaoManager.getInstance().getUserDao();
 		// us.setEmail("test4@gmail.com");
@@ -62,11 +61,10 @@ public class EditDaoTest {
 		// ud.accountConfirmed(us);
 		// ud.save(us);
 		List<User> so = ud.all();
-		
-		for(int i = 0; i < so.size(); i++)
-		{
+		ud.close();
+		for (int i = 0; i < so.size(); i++) {
 			User temp = so.get(i);
-			
+
 			System.out.println(temp.getEmail());
 		}
 
