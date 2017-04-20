@@ -2,7 +2,7 @@ package edu.ben.rate_review.controller.home;
 
 import java.util.HashMap;
 
-import edu.ben.rate_review.app.Application;
+//import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.email.Email;
 import edu.ben.rate_review.models.User;
 import spark.ModelAndView;

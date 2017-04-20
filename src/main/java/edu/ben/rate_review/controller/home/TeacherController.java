@@ -6,7 +6,7 @@ import java.util.List;
 
 import edu.ben.rate_review.daos.AnnouncementDao;
 import edu.ben.rate_review.daos.DaoManager;
-import edu.ben.rate_review.daos.TutorDao;
+//import edu.ben.rate_review.daos.TutorDao;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.User;
@@ -47,8 +47,7 @@ public class TeacherController {
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
 
-		DaoManager udao = DaoManager.getInstance();
-		UserDao ud = udao.getUserDao();
+		UserDao ud = dao.getUserDao();
 
 		if (req.queryParams("search") != null) {
 
@@ -79,6 +78,8 @@ public class TeacherController {
 
 		model.put("current_user", u);
 
+		ad.close();
+		ud.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "home/teacher.hbs");
 	}

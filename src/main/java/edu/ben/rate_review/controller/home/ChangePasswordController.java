@@ -89,6 +89,7 @@ public class ChangePasswordController {
 			userDao.updatePassword(user);
 			sendConfirmChangePasswordEmail(user);
 		}
+		userDao.close();
 	}
 
 	/**

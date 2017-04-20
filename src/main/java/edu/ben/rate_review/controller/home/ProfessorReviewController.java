@@ -67,14 +67,14 @@ public class ProfessorReviewController {
 		// gets the course object from the course_id
 		DaoManager dao = DaoManager.getInstance();
 		ProfessorReviewDao reviewDao = dao.getProfessorReviewDao();
-		UserDao userDao = DaoManager.getInstance().getUserDao();
+		UserDao userDao = dao.getUserDao();
 		StudentInCourseDao sDao = dao.getStudentInCourseDao();
 		StudentInCourse course = sDao.findByStudentCourseId(student_course_id);
 
 		if (u != null) {
-		
+
 			// checks that the person accessing the page has access
-			if ( (u.getRole() == 1) || (user_id != -1 && user_id == course.getStudent_id())) {
+			if ((u.getRole() == 1) || (user_id != -1 && user_id == course.getStudent_id())) {
 				if (reviewDao.findReview(course.getStudent_course_id()) == null) {
 
 					// create the form object, put it into request
@@ -90,13 +90,15 @@ public class ProfessorReviewController {
 						handlePrePopulatedButtons(model, review);
 					}
 
-					//DaoManager dao = DaoManager.getInstance();
+					// DaoManager dao = DaoManager.getInstance();
 					AnnouncementDao ad = dao.getAnnouncementDao();
 					List<Announcement> announcements = ad.all();
 					model.put("announcements", announcements);
+					ad.close();
 				} else {
 					if (sDao.findByStudentCourseId(course.getStudent_course_id()).isDisable_edit()
-							|| sDao.findByStudentCourseId(course.getStudent_course_id()).isSemester_past() || u.getRole() == 1) {
+							|| sDao.findByStudentCourseId(course.getStudent_course_id()).isSemester_past()
+							|| u.getRole() == 1) {
 						model.put("edit_is_disabled", true);
 						ProfessorReview review = reviewDao.findReview(student_course_id);
 						String email = review.getProfessor_email();
@@ -122,7 +124,7 @@ public class ProfessorReviewController {
 						handlePrePopulatedButtons(model, review);
 					}
 
-//					DaoManager dao = DaoManager.getInstance();
+					// DaoManager dao = DaoManager.getInstance();
 					AnnouncementDao ad = dao.getAnnouncementDao();
 					List<Announcement> announcements = ad.all();
 					model.put("announcements", announcements);
@@ -131,11 +133,20 @@ public class ProfessorReviewController {
 			} else
 
 			{
+				userDao.close();
+				reviewDao.close();
+				sDao.close();
 				res.redirect("/authorizationerror");
 			}
 		} else {
+			userDao.close();
+			reviewDao.close();
+			sDao.close();
 			res.redirect("/authorizationerror");
 		}
+		userDao.close();
+		reviewDao.close();
+		sDao.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "home/reviewprofessor.hbs");
 	}
@@ -290,7 +301,7 @@ public class ProfessorReviewController {
 		StudentInCourseDao sDao = dao.getStudentInCourseDao();
 
 		ProfessorReview review = new ProfessorReview();
-//		CoursesToReview course = new CoursesToReview();
+		// CoursesToReview course = new CoursesToReview();
 
 		StudentInCourse course = sDao.findByStudentCourseId(student_course_id);
 
@@ -325,6 +336,10 @@ public class ProfessorReviewController {
 
 		UserDao uDao = DaoManager.getInstance().getUserDao();
 		User u = uDao.findByEmail(course.getProfessor_email());
+
+		uDao.close();
+		reviewDao.close();
+		sDao.close();
 		return u.getId();
 	}
 

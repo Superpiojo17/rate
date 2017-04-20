@@ -50,7 +50,7 @@ public class TutorReviewController {
 			TutorDao tDao = DaoManager.getInstance().getTutorDao();
 			// finds tutor appointment
 			TutorAppointment appointment = tDao.findAppointmentByID(appointment_id);
-
+			tDao.close();
 			if (u != null && appointment != null) {
 				if (!appointment.isAppointment_reviewed()) {
 					if (u.getId() == appointment.getStudent_id()) {
@@ -120,6 +120,6 @@ public class TutorReviewController {
 
 		tDao.saveTutorReview(review);
 		tDao.setAppointmentReviewed(appointment);
-		;
+		tDao.close();
 	}
 }

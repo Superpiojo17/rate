@@ -31,13 +31,13 @@ public class ProfessorController {
 
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
-		
-		if (u != null){
-			if (u.getRole() == 1){
+
+		if (u != null) {
+			if (u.getRole() == 1) {
 				model.put("user_admin", true);
-			} else if (u.getRole() == 2){
+			} else if (u.getRole() == 2) {
 				model.put("user_professor", true);
-			} else if (u.getRole() == 3){
+			} else if (u.getRole() == 3) {
 				model.put("user_tutor", true);
 			} else {
 				model.put("user_student", true);
@@ -46,23 +46,24 @@ public class ProfessorController {
 			model.put("user_null", true);
 		}
 		// gets instance of review dao
-		ProfessorReviewDao reviewDao = DaoManager.getInstance().getProfessorReviewDao();
+		DaoManager dao = DaoManager.getInstance();
 
 		// gets professor id from url, finds professor in user table
 		String idString = req.params("professor_id");
 		long id = Long.parseLong(idString);
 		UserDao uDao = DaoManager.getInstance().getUserDao();
 		User prof = uDao.findById(id);
-
+		uDao.close();
 		// if user attempts to access using a non-professor's ID
 		if (prof == null || prof.getRole() != 2) {
 			res.redirect("/authorizationerror");
 		} else {
+			ProfessorReviewDao reviewDao = dao.getProfessorReviewDao();
 			// gets a list of all unique courses a given professor teaches
 			List<String> uniqueCourses = reviewDao.listUniqueCourses(prof);
 			// adds overview option and initial SELECT COURSE
 			uniqueCourses.add(0, "Overview");
-			//uniqueCourses.add(0, "SELECT COURSE");
+			// uniqueCourses.add(0, "SELECT COURSE");
 			// lists unique courses for top of page
 			model.put("unique_courses", uniqueCourses);
 
@@ -98,6 +99,8 @@ public class ProfessorController {
 			// puts announcements on the page
 			AnnouncementDao ad = DaoManager.getInstance().getAnnouncementDao();
 			List<Announcement> announcements = ad.all();
+			reviewDao.close();
+			ad.close();
 			model.put("announcements", announcements);
 		}
 
@@ -139,6 +142,7 @@ public class ProfessorController {
 		ProfessorReview review = reviewDao.findReview(id);
 		reviewDao.setCommentFlagged(review);
 		// redirects back to same professor page
+		reviewDao.close();
 		res.redirect("/professor/" + req.params("professor_id") + "/" + display);
 		return "";
 	}
@@ -292,6 +296,7 @@ public class ProfessorController {
 			double overall = ((objectives + organized + challenging + outside + pace + assignments + grade_fairly
 					+ grade_time + accessibility + knowledge + career) / 11);
 
+			reviewDao.close();
 			return Double.parseDouble(df.format(overall));
 		} else {
 			return 0;

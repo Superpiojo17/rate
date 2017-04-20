@@ -21,16 +21,16 @@ public class ConfirmationController {
 	public ModelAndView showConfirmationPage(Request req, Response res) {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
-		
+
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
-		
-		if (u != null){
-			if (u.getRole() == 1){
+
+		if (u != null) {
+			if (u.getRole() == 1) {
 				model.put("user_admin", true);
-			} else if (u.getRole() == 2){
+			} else if (u.getRole() == 2) {
 				model.put("user_professor", true);
-			} else if (u.getRole() == 3){
+			} else if (u.getRole() == 3) {
 				model.put("user_tutor", true);
 			} else {
 				model.put("user_student", true);
@@ -50,7 +50,7 @@ public class ConfirmationController {
 	 * @return
 	 */
 	public String confirm(Request req, Response res) {
-		boolean activated = false;
+		// boolean activated = false;
 		// checks the email and password fields are filled out
 		if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()) {
 			if (LogInController.confirmRegistered(req.queryParams("email"), req.queryParams("password"))) {
@@ -82,6 +82,8 @@ public class ConfirmationController {
 		if (user != null) {
 			userDao.accountConfirmed(user);
 		}
+
+		userDao.close();
 	}
 
 }

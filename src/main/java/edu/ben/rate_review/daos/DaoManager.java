@@ -5,9 +5,6 @@ import java.sql.SQLException;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import javax.sql.DataSource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class DaoManager {
 	private final String HOST = "jdbc:mysql://localhost:3306";
 	private final String DATABASE_NAME = "rate";
@@ -18,7 +15,7 @@ public class DaoManager {
 	private DataSource src;
 	private Connection con;
 	private static DaoManager instance = null;
-	private static Logger logger = LoggerFactory.getLogger(DaoManager.class);
+	// private static Logger logger = LoggerFactory.getLogger(DaoManager.class);
 
 	/**
 	 * Constructor that will create the singleton instance if it doesn't exist

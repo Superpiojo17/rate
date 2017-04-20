@@ -18,16 +18,16 @@ public class ActivationController {
 	public ModelAndView showActivationPage(Request req, Response res) {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
-		
+
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
-		
-		if (u != null){
-			if (u.getRole() == 1){
+
+		if (u != null) {
+			if (u.getRole() == 1) {
 				model.put("user_admin", true);
-			} else if (u.getRole() == 2){
+			} else if (u.getRole() == 2) {
 				model.put("user_professor", true);
-			} else if (u.getRole() == 3){
+			} else if (u.getRole() == 3) {
 				model.put("user_tutor", true);
 			} else {
 				model.put("user_student", true);
@@ -45,16 +45,16 @@ public class ActivationController {
 	public ModelAndView showDeActivationPage(Request req, Response res) {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
-		
+
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
-		
-		if (u != null){
-			if (u.getRole() == 1){
+
+		if (u != null) {
+			if (u.getRole() == 1) {
 				model.put("user_admin", true);
-			} else if (u.getRole() == 2){
+			} else if (u.getRole() == 2) {
 				model.put("user_professor", true);
-			} else if (u.getRole() == 3){
+			} else if (u.getRole() == 3) {
 				model.put("user_tutor", true);
 			} else {
 				model.put("user_student", true);
@@ -90,7 +90,7 @@ public class ActivationController {
 		}
 		return "";
 	}
-	
+
 	/**
 	 * Deactivates an active account
 	 * 
@@ -127,8 +127,8 @@ public class ActivationController {
 	 */
 	public static void processActiveState(String email, String password, boolean currentActivity) {
 		UserDao userDao = DaoManager.getInstance().getUserDao();
-		User user = new User();
-		user = userDao.findByEmail(email);
+
+		User user = userDao.findByEmail(email);
 
 		if (user != null) {
 			if (user.isActive() && currentActivity) {
@@ -137,6 +137,7 @@ public class ActivationController {
 				userDao.activateAccount(user);
 			}
 		}
+		userDao.close();
 	}
 
 }

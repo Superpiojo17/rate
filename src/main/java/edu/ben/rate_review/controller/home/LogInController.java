@@ -3,7 +3,7 @@ package edu.ben.rate_review.controller.home;
 import java.util.HashMap;
 
 import edu.ben.rate_review.app.Application;
-import edu.ben.rate_review.controller.user.AccountRecoveryController;
+//import edu.ben.rate_review.controller.user.AccountRecoveryController;
 //import java.util.ArrayList;
 //import java.util.HashMap;
 import edu.ben.rate_review.daos.DaoManager;
@@ -12,12 +12,12 @@ import edu.ben.rate_review.email.Email;
 import edu.ben.rate_review.encryption.SecurePassword;
 import edu.ben.rate_review.models.RecoveringUser;
 import edu.ben.rate_review.models.User;
-import edu.ben.rate_review.policy.AuthPolicyManager;
+//import edu.ben.rate_review.policy.AuthPolicyManager;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.Session;
-import spark.template.handlebars.HandlebarsTemplateEngine;
+//import spark.template.handlebars.HandlebarsTemplateEngine;
 
 /**
  * Login controller
@@ -35,16 +35,16 @@ public class LogInController {
 	public ModelAndView showLoginPage(Request req, Response res) {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
-		
+
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
-		
-		if (u != null){
-			if (u.getRole() == 1){
+
+		if (u != null) {
+			if (u.getRole() == 1) {
 				model.put("user_admin", true);
-			} else if (u.getRole() == 2){
+			} else if (u.getRole() == 2) {
 				model.put("user_professor", true);
-			} else if (u.getRole() == 3){
+			} else if (u.getRole() == 3) {
 				model.put("user_tutor", true);
 			} else {
 				model.put("user_student", true);
@@ -52,16 +52,16 @@ public class LogInController {
 		} else {
 			model.put("user_null", true);
 		}
-		
+
 		if (req.queryParams("email") != null && req.queryParams("password") != null) {
 
 			if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()) {
 				if (login(req, res) == "error") {
-					
+
 					model.put("error", "Invalid Username or Password Entries: " + wrongCount + "/3");
-					
+
 				}
-				if(wrongCount == 0){
+				if (wrongCount == 0) {
 					model.put("error", "Account has been LOCKED");
 				}
 			} else {
@@ -83,7 +83,7 @@ public class LogInController {
 	 * @return
 	 */
 	public String login(Request req, Response res) {
-		HashMap<String, Object> model = new HashMap<>();
+		// HashMap<String, Object> model = new HashMap<>();
 
 		// checks the email and password fields are filled out
 		if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()) {
@@ -92,11 +92,12 @@ public class LogInController {
 			if (confirmRegistered(req.queryParams("email"), req.queryParams("password"))
 					&& accountConfirmed(req.queryParams("email")) && accountActive(req.queryParams("email"))) {
 				// determines role of user
-				int role = getAccountType(req.queryParams("email"), req.queryParams("password"));
+				// int role = getAccountType(req.queryParams("email"),
+				// req.queryParams("password"));
 				// directs user to correct dashboard
 				Session session = req.session();
-				UserDao user = DaoManager.getInstance().getUserDao();
-				User u = user.findByEmail(req.queryParams("email"));
+				UserDao ud = DaoManager.getInstance().getUserDao();
+				User u = ud.findByEmail(req.queryParams("email"));
 				session.attribute("current_user", u);
 
 				if (u.getRole() == 4) {
@@ -109,11 +110,12 @@ public class LogInController {
 					res.redirect("/admindashboard");
 
 				}
-				
+
 				wrongCount = 0;
 				checkEmail = "";
+				ud.close();
 			} else {
-				if (checkEmail.equalsIgnoreCase("") ) {
+				if (checkEmail.equalsIgnoreCase("")) {
 					System.out.println("set new email");
 					checkEmail = req.queryParams("email");
 					wrongCount++;
@@ -121,8 +123,10 @@ public class LogInController {
 					if (checkEmail.equalsIgnoreCase(req.queryParams("email"))) {
 						wrongCount++;
 					}
-					//else if (!checkEmail.equalsIgnoreCase(req.queryParams("email"))) {
-					else{
+					// else if
+					// (!checkEmail.equalsIgnoreCase(req.queryParams("email")))
+					// {
+					else {
 						System.out.println("email did not match must be new sp SET new email");
 						wrongCount = 0;
 						checkEmail = "";
@@ -164,8 +168,10 @@ public class LogInController {
 		user = userDao.findByEmail(email);
 
 		if (user != null && user.isActive()) {
+			userDao.close();
 			return true;
 		}
+		userDao.close();
 		return false;
 	}
 
@@ -182,8 +188,10 @@ public class LogInController {
 		user = userDao.findByEmail(email);
 
 		if (user != null && user.isConfirmed()) {
+			userDao.close();
 			return true;
 		}
+		userDao.close();
 		return false;
 	}
 
@@ -201,9 +209,11 @@ public class LogInController {
 
 		if (u != null) {
 			if (SecurePassword.getCheckPassword(password, u.getEncryptedPassword())) {
+				userDao.close();
 				return true;
 			}
 		}
+		userDao.close();
 		return false;
 	}
 
@@ -219,6 +229,7 @@ public class LogInController {
 		User u = new User();
 		u = userDao.findByEmail(email);
 
+		userDao.close();
 		return u.getRole();
 	}
 
@@ -244,34 +255,35 @@ public class LogInController {
 				String tempPass = passwordRecoveryEmail(user);
 				// checks to see if user already has request in table
 				rUser = userDao.recoveryFindByEmail(user.getEmail());
-				
-				
-				//changes the users passwords with the temp generated password
+
+				// changes the users passwords with the temp generated password
 				// assigns new password to user
 				user.setPassword(SecurePassword.getHashPassword(req.queryParams(tempPass)));
 				// updates user's password
 				userDao.updatePassword(user);
 				// removes requested temporary password
-//				userDao.removeRecoveryRequest(user);
-//				res.redirect(Application.LOGIN_PATH);
-				
-				
+				// userDao.removeRecoveryRequest(user);
+				// res.redirect(Application.LOGIN_PATH);
+
 				if (rUser != null) {
 					// if previous request in table, deletes
 					userDao.removeRecoveryRequest(user);
 				}
 				// creates entry for user attempted to recover account
 				userDao.storeTempPassword(user, tempPass);
-			//	res.redirect(Application.NEWINFO_PATH);
+				// res.redirect(Application.NEWINFO_PATH);
 			} else {
 				// user not found
+				userDao.close();
 				res.redirect(Application.ACCOUNTRECOVERY_PATH);
 			}
 		} else {
 			// one or more fields was empty
+			userDao.close();
 			res.redirect(Application.ACCOUNTRECOVERY_PATH);
 		}
 
+		userDao.close();
 		return "";
 	}
 

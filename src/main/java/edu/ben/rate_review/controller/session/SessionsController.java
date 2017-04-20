@@ -47,20 +47,20 @@ public class SessionsController {
 		UserDao userDao = DaoManager.getInstance().getUserDao();
 		// variables to keep track of empty field
 		boolean emptyField = false;
-		String emptyFieldName = "";
+		// String emptyFieldName = "";
 
 		// Checks to see if each field is filled out.
 		if (req.queryParams("first_name").isEmpty()) {
-			emptyFieldName = "First name";
+			// emptyFieldName = "First name";
 			emptyField = true;
 		} else if (req.queryParams("last_name").isEmpty()) {
-			emptyFieldName = "Last name";
+			// emptyFieldName = "Last name";
 			emptyField = true;
 		} else if (req.queryParams("email").isEmpty()) {
-			emptyFieldName = "Email";
+			// emptyFieldName = "Email";
 			emptyField = true;
 		} else if (req.queryParams("password").isEmpty()) {
-			emptyFieldName = "Password";
+			// emptyFieldName = "Password";
 			emptyField = true;
 		}
 
@@ -69,6 +69,7 @@ public class SessionsController {
 		// left empty.
 		if (emptyField) {
 			// error message here - emptyFieldMessage(emptyFieldName)
+			userDao.close();
 			res.redirect("/register");
 		}
 
@@ -109,14 +110,12 @@ public class SessionsController {
 				System.out.println("right before check");
 				System.out.println(tmp.getFirst_name());
 
-				if (tmp == null) {
-					res.redirect("/register");
-				} else {
-					res.redirect("/login");
-					return "";
-				}
+				userDao.close();
+				res.redirect("/login");
+				return "";
 
 			} else {
+				userDao.close();
 				// "This email is already in use."
 				res.redirect("/register");
 			}
@@ -134,10 +133,11 @@ public class SessionsController {
 	 * @param field
 	 * @return
 	 */
-	private String emptyFieldMessage(String field) {
-		String firstEmptyField = "You are missing one or more fields starting with: ";
-		return firstEmptyField + field;
-	}
+	// private String emptyFieldMessage(String field) {
+	// String firstEmptyField = "You are missing one or more fields starting
+	// with: ";
+	// return firstEmptyField + field;
+	// }
 
 	/**
 	 * Validates that the user's name is a valid length and only contains
@@ -208,6 +208,7 @@ public class SessionsController {
 		if (u != null) {
 			confirmRegistration(newUser);
 		}
+		user.close();
 		return u;
 	}
 

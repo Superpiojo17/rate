@@ -3,7 +3,7 @@ package edu.ben.rate_review.controller.home;
 import java.util.HashMap;
 
 import edu.ben.rate_review.models.User;
-import edu.ben.rate_review.policy.AuthPolicyManager;
+//import edu.ben.rate_review.policy.AuthPolicyManager;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
