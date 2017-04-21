@@ -9,11 +9,14 @@ import edu.ben.rate_review.authorization.AuthException;
 import edu.ben.rate_review.daos.AnnouncementDao;
 import edu.ben.rate_review.daos.CourseDao;
 import edu.ben.rate_review.daos.DaoManager;
+//import edu.ben.rate_review.daos.ProfessorReviewDao;
+import edu.ben.rate_review.daos.StudentInCourseDao;
 //import edu.ben.rate_review.daos.TutorDao;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.Course;
 import edu.ben.rate_review.models.CourseForm;
+//import edu.ben.rate_review.models.ProfessorReview;
 //import edu.ben.rate_review.models.TutorForm;
 import edu.ben.rate_review.models.User;
 import spark.ModelAndView;
@@ -308,6 +311,72 @@ public class EditCoursesController {
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/courses.hbs");
 
+	}
+
+	/**
+	 * Displays the add students page
+	 * 
+	 * @param req
+	 * @param res
+	 * @return
+	 * @throws AuthException
+	 */
+	public ModelAndView showAddStudentCoursePage(Request req, Response res) throws AuthException {
+
+		HashMap<String, Object> model = new HashMap<>();
+
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
+
+		if (u == null || u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+
+		String idString = req.params("id");
+		long course_id = Long.parseLong(idString);
+
+		DaoManager dao = DaoManager.getInstance();
+		CourseDao cDao = dao.getCourseDao();
+		UserDao uDao = dao.getUserDao();
+		AnnouncementDao aDao = dao.getAnnouncementDao();
+
+		Course course = cDao.findById(course_id);
+		model.put("course", course);
+
+		List<Announcement> announcements = aDao.all();
+		model.put("announcements", announcements);
+
+		cDao.close();
+		uDao.close();
+		aDao.close();
+		return new ModelAndView(model, "users/addstudent.hbs");
+	}
+
+	/**
+	 * Post method to add a student to the course
+	 * 
+	 * @param req
+	 * @param res
+	 * @return
+	 */
+	public String addStudentToCourse(Request req, Response res) {
+		String idString = req.params("id");
+		Long course_id = Long.parseLong(idString);
+
+		DaoManager dao = DaoManager.getInstance();
+		CourseDao cDao = dao.getCourseDao();
+		StudentInCourseDao sDao = dao.getStudentInCourseDao();
+		UserDao uDao = dao.getUserDao();
+		Course course = cDao.findById(course_id);
+		
+		// grab student id from the form
+		// make student_in_course object using course and student id
+		
+		cDao.close();
+		sDao.close();
+		uDao.close();
+		res.redirect("/course/" + req.params("id") + "/addstudent");
+		return "";
 	}
 
 }

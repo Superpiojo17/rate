@@ -179,6 +179,7 @@ public class Application {
 	public static String ADMINREVIEWLANDING_PATH = "/reviewlanding";
 	public static String DEPTREVIEWS_PATH = "/reviews/:department";
 	public static String DELETEREVIEW_PATH = "/deletereview/:student_course_id";
+	public static String ADD_STUDENT_COURSE = "/course/:id/addstudent";
 
 	public static void main(String[] args) throws Exception {
 
@@ -522,6 +523,10 @@ public class Application {
 				new HandlebarsTemplateEngine());
 		post(CONTACTUS_PATH, (req, res) -> ContactUsController.contact(req, res));
 
+		get(ADD_STUDENT_COURSE, (req, res) -> editcoursesController.showAddStudentCoursePage(req, res),
+				new HandlebarsTemplateEngine());
+		
+		post(ADD_STUDENT_COURSE, (req, res) -> editcoursesController.addStudentToCourse(req, res));
 		// my account
 		// get(MYACCOUNT_PATH, (req, res) ->
 		// myAccountController.showMyAccountPage(req, res),
