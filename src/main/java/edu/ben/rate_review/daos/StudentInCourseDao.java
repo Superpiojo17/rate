@@ -68,6 +68,27 @@ public class StudentInCourseDao {
 
 	}
 
+	/**
+	 * Inserts a student into a course
+	 * 
+	 * @param studentInCourse
+	 * @return
+	 */
+	public StudentInCourse enrollStudent(StudentInCourse studentInCourse) {
+		final String sql = "INSERT INTO " + STUDENTINCOURSES_TABLE + "(course_id, student_id) Values(?,?)";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setLong(1, studentInCourse.getCourse_id());
+			ps.setLong(2, studentInCourse.getStudent_id());
+			ps.executeUpdate();
+			return studentInCourse;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+
 	public List<StudentInCourse> allStudentCoursesNotReviewed(User user) {
 		final String SELECT = "SELECT * FROM " + STUDENTINCOURSES_TABLE + " WHERE student_id = " + user.getId()
 				+ " AND course_reviewed = 0 AND semester_past = 0";
@@ -227,5 +248,38 @@ public class StudentInCourseDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Checks to see if a student is already enrolled in a course
+	 * 
+	 * @param student
+	 * @return
+	 */
+	public boolean isStudentInCourse(StudentInCourse student) {
+		final String SELECT = "SELECT * FROM " + STUDENTINCOURSES_TABLE + " WHERE student_id = "
+				+ student.getStudent_id() + " AND course_id = " + student.getCourse_id();
+		List<StudentInCourse> studentInCourses = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			studentInCourses = new ArrayList<StudentInCourse>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					studentInCourses.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			if (studentInCourses.size() > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

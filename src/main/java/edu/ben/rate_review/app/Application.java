@@ -332,6 +332,8 @@ public class Application {
 
 		get(COURSELANDING_PATH, (req, res) -> admindashController.showManageCoursesLandingPage(req, res),
 				new HandlebarsTemplateEngine());
+		
+		post(COURSELANDING_PATH, (req, res) -> admindashController.massEnrollStudents(req, res));
 
 		get(FAQ_PATH, (req, res) -> faqController.showFaqPage(req, res), new HandlebarsTemplateEngine());
 

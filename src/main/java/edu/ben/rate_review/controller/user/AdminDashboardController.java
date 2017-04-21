@@ -16,6 +16,7 @@ import edu.ben.rate_review.daos.StudentInCourseDao;
 import edu.ben.rate_review.daos.TutorDao;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.formatTime.FormatTimeAndDate;
+import edu.ben.rate_review.massRegistration.MassEnroll;
 import edu.ben.rate_review.massRegistration.MassRegistration;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.ProfessorReview;
@@ -603,6 +604,22 @@ public class AdminDashboardController {
 		sDao.close();
 		// redirects back to dashboard
 		res.redirect(Application.ADMINDASHBOARD_PATH);
+		return "";
+	}
+
+	/**
+	 * Calls method which enrolls students in mass
+	 * 
+	 * @param req
+	 * @param res
+	 * @return
+	 */
+	public String massEnrollStudents(Request req, Response res) {
+		//DaoManager dao = DaoManager.getInstance();
+
+		MassEnroll.enrollStudents();
+		
+		res.redirect(Application.COURSELANDING_PATH);
 		return "";
 	}
 
