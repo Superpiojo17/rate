@@ -421,7 +421,7 @@
 									</b>
 								</h4>
 								
-									<select style="max-width:20%; min-width:20%;" name="course_name" id="course_name" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+									<select style="max-width:15%; min-width:15%;" name="course_name" id="course_name" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
 										<option selected="selected">--- Select Course ---</option>
 										{{#each unique_courses}}
 										<option value="{{domain}}/professor/{{prof_id}}/{{this}}">{{this}}</option>

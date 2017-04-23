@@ -4,11 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 
 import edu.ben.rate_review.daos.AnnouncementDao;
+import edu.ben.rate_review.daos.CourseDao;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.ProfessorReviewDao;
 import edu.ben.rate_review.daos.StudentInCourseDao;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.models.Announcement;
+import edu.ben.rate_review.models.Course;
 import edu.ben.rate_review.models.PrePopulatedReviewButtons;
 import edu.ben.rate_review.models.ProfessorReview;
 import edu.ben.rate_review.models.StudentInCourse;
@@ -299,11 +301,14 @@ public class ProfessorReviewController {
 		DaoManager dao = DaoManager.getInstance();
 		ProfessorReviewDao reviewDao = dao.getProfessorReviewDao();
 		StudentInCourseDao sDao = dao.getStudentInCourseDao();
+		CourseDao cDao = dao.getCourseDao();
+		UserDao uDao = DaoManager.getInstance().getUserDao();
 
 		ProfessorReview review = new ProfessorReview();
 		// CoursesToReview course = new CoursesToReview();
 
 		StudentInCourse course = sDao.findByStudentCourseId(student_course_id);
+		Course c = cDao.findById(course.getCourse_id());
 
 		review.setStudent_course_id(course.getStudent_course_id());
 		review.setStudent_id(course.getStudent_id());
@@ -324,7 +329,7 @@ public class ProfessorReviewController {
 		review.setRate_accessibility(rate_accessibility);
 		review.setRate_knowledge(rate_knowledge);
 		review.setRate_career_development(rate_career_development);
-		review.setProfessor_email(course.getProfessor_email());
+		review.setProfessor_email(uDao.findById(c.getProfessor_id()).getEmail());
 
 		// if review already exists, this will remove previous review
 		if (reviewDao.findReview(course.getCourse_id()) != null) {
@@ -334,13 +339,13 @@ public class ProfessorReviewController {
 		reviewDao.save(review);
 		sDao.setCourseReviewed(review);
 
-		UserDao uDao = DaoManager.getInstance().getUserDao();
-		User u = uDao.findByEmail(course.getProfessor_email());
+		User professor = uDao.findByEmail(review.getProfessor_email());
 
+		cDao.close();
 		uDao.close();
 		reviewDao.close();
 		sDao.close();
-		return u.getId();
+		return professor.getId();
 	}
 
 	public ModelAndView passCourse(Request req, Response res) {
