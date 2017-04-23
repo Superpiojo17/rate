@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.daos.AnnouncementDao;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.ProfessorReviewDao;
@@ -32,6 +33,8 @@ public class ProfessorController {
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 
+		model.put("domain", Application.DOMAIN);
+		
 		if (u != null) {
 			if (u.getRole() == 1) {
 				model.put("user_admin", true);
