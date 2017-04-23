@@ -52,6 +52,18 @@ public class LogInController {
 		} else {
 			model.put("user_null", true);
 		}
+		
+		if (u != null) {
+			if (u.getRole() == 1) {
+				res.redirect(Application.ADMINDASHBOARD_PATH);
+			} else if (u.getRole() == 2) {
+				res.redirect(Application.PROFESSOR_PATH);
+			} else if (u.getRole() == 3) {
+				res.redirect(Application.TUTOR_PATH);
+			} else {
+				res.redirect(Application.STUDENTDASHBOARD_PATH);
+			}
+		}
 
 		if (req.queryParams("email") != null && req.queryParams("password") != null) {
 

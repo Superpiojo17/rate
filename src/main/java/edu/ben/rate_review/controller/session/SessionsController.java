@@ -39,6 +39,18 @@ public class SessionsController {
 		} else {
 			model.put("user_null", true);
 		}
+		
+		if (u != null) {
+			if (u.getRole() == 1) {
+				res.redirect(Application.ADMINDASHBOARD_PATH);
+			} else if (u.getRole() == 2) {
+				res.redirect(Application.PROFESSOR_PATH);
+			} else if (u.getRole() == 3) {
+				res.redirect(Application.TUTOR_PATH);
+			} else {
+				res.redirect(Application.STUDENTDASHBOARD_PATH);
+			}
+		}
 
 		return new ModelAndView(null, "sessions/register.hbs");
 	}
@@ -70,7 +82,7 @@ public class SessionsController {
 		if (emptyField) {
 			// error message here - emptyFieldMessage(emptyFieldName)
 			userDao.close();
-			res.redirect("/register");
+			res.redirect(Application.REGISTER_PATH);
 		}
 
 		// Checks that the user's first and last name are valid. They must each
@@ -78,17 +90,17 @@ public class SessionsController {
 		if (!validateName(req.queryParams("first_name"), req.queryParams("last_name"))) {
 			// error message - "First and last name must be at least 2
 			// characters long and only contain letters."
-			res.redirect("/register");
+			res.redirect(Application.REGISTER_PATH);
 		}
 		// Checks that the password and verify password fields match.
 		else if (!req.queryParams("password").equals(req.queryParams("verify_password"))) {
 			// "Passwords do not match."
-			res.redirect("/register");
+			res.redirect(Application.REGISTER_PATH);
 		}
 		// Checks that a Benedictine email is being used to register.
 		else if (!validateEmail(req.queryParams("email"))) {
 			// "You must use a Benedictine e-mail to register."
-			res.redirect("/register");
+			res.redirect(Application.REGISTER_PATH);
 		}
 
 		// check to see if the role was valid
@@ -111,13 +123,13 @@ public class SessionsController {
 				System.out.println(tmp.getFirst_name());
 
 				userDao.close();
-				res.redirect("/login");
+				res.redirect(Application.LOGIN_PATH);
 				return "";
 
 			} else {
 				userDao.close();
 				// "This email is already in use."
-				res.redirect("/register");
+				res.redirect(Application.REGISTER_PATH);
 			}
 
 		}
