@@ -29,6 +29,7 @@ import edu.ben.rate_review.controller.home.RegisterController;
 //import edu.ben.rate_review.controller.home.TeacherAddTutorController;
 import edu.ben.rate_review.controller.home.TeacherController;
 import edu.ben.rate_review.controller.home.TutorReviewController;
+import edu.ben.rate_review.controller.session.Login2Controller;
 //import edu.ben.rate_review.controller.home.TutorAppointmentController;
 //import edu.ben.rate_review.controller.home.TutorsController;
 import edu.ben.rate_review.controller.session.SessionsController;
@@ -95,6 +96,9 @@ public class Application {
 
 	private static AnalysisController analysisController = new AnalysisController();
 	private static MyAccountController myAccountController = new MyAccountController();
+	////////////////////////////////////////////////////////////////////////////////
+	private static Login2Controller login2Controller = new Login2Controller();
+	////////////////////////////////////////////////////////////////////////////////
 
 	// match up paths
 	public static String DOMAIN = "http://localhost";
@@ -180,6 +184,9 @@ public class Application {
 	public static String DEPTREVIEWS_PATH = "/reviews/:department";
 	public static String DELETEREVIEW_PATH = "/deletereview/:student_course_id";
 	public static String ADD_STUDENT_COURSE = "/course/:id/addstudent";
+	/////////////////////////////////////////////////////////////////
+	public static String LOGIN2_PATH = "/login2";
+	/////////////////////////////////////////////////////////////////
 
 	public static void main(String[] args) throws Exception {
 
@@ -503,6 +510,10 @@ public class Application {
 		get(LOGIN_PATH, (req, res) -> loginController.showLoginPage(req, res), new HandlebarsTemplateEngine());
 		post(LOGIN_PATH, (req, res) -> loginController.login(req, res));
 
+		///////////////////////////////////////////////////////////////////////////////////////////////////
+		get(LOGIN2_PATH, (req, res) -> login2Controller.showLogin2Page(req, res), new HandlebarsTemplateEngine());
+		post(LOGIN2_PATH, (req, res) -> login2Controller.login(req, res));
+		///////////////////////////////////////////////////////////////////////////////////////////////////
 		// User Routes
 		// List all Users
 		get(USERS_PATH, (req, res) -> usersController.index(req, res), new HandlebarsTemplateEngine());
