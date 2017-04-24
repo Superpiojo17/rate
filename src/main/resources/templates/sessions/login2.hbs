@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE HTML>
 <!--
 	Retrospect by TEMPLATED
@@ -10,7 +11,7 @@
 
 <meta charset="UTF-8">
 
-<title>Login</title>
+<title>Login2</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -68,7 +69,7 @@
 					{{/if}}
 					
 					{{#if user_null}}
-						<li><a href="/login">Log In</a></li>
+						<li><a href="/login2">Log In</a></li>
 						<li><a href="/register">Register</a></li>
 						<li><a href="/activation">Activate Account</a></li>
 						<li><a href="/accountrecovery">Forgot Password?</a></li>
@@ -96,16 +97,16 @@
 			<div class="form">
 
 				<ul class="tab-group">
-					<li class="tab active"><a href="#login">Log In</a></li>
+					<li class="tab active"><a href="#login2">Log In</a></li>
 					<li class="tab"><a href="#signup">Sign Up</a></li>
 				</ul>
 
 				<div class="tab-content">
 			
-					<div id="login">
+					<div id="login2">
 						<h1>Welcome Back!</h1>
 
-						<form action="/login2" method="post">
+						<form action="/login2" method="get">
 
 							<div class="field-wrap">
 								<label> Email Address<span class="req">*</span>

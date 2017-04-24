@@ -3,23 +3,27 @@ package edu.ben.rate_review.controller.session;
 import java.util.HashMap;
 
 import edu.ben.rate_review.app.Application;
+//import edu.ben.rate_review.controller.user.AccountRecoveryController;
+//import java.util.ArrayList;
+//import java.util.HashMap;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.email.Email;
 import edu.ben.rate_review.encryption.SecurePassword;
 import edu.ben.rate_review.models.RecoveringUser;
 import edu.ben.rate_review.models.User;
+//import edu.ben.rate_review.policy.AuthPolicyManager;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.Session;
+//import spark.template.handlebars.HandlebarsTemplateEngine;
 
 /**
- * Use LOGIN2 to login on the site on the jar until the issue on the login page
- * is fixed
+ * Login controller
  * 
  * @author Mike
- *
+ * @version 2-2-2017
  */
 public class Login2Controller {
 	private static int wrongCount = 0;
@@ -29,12 +33,13 @@ public class Login2Controller {
 	 * Show log in page
 	 */
 	public ModelAndView showLogin2Page(Request req, Response res) {
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
-
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
-
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		if (u != null) {
 			if (u.getRole() == 1) {
 				model.put("user_admin", true);
@@ -48,7 +53,7 @@ public class Login2Controller {
 		} else {
 			model.put("user_null", true);
 		}
-
+		
 		if (u != null) {
 			if (u.getRole() == 1) {
 				res.redirect(Application.ADMINDASHBOARD_PATH);
@@ -60,7 +65,7 @@ public class Login2Controller {
 				res.redirect(Application.STUDENTDASHBOARD_PATH);
 			}
 		}
-
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		if (req.queryParams("email") != null && req.queryParams("password") != null) {
 
 			if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()) {
@@ -76,6 +81,7 @@ public class Login2Controller {
 				model.put("error", "error");
 			}
 		}
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "sessions/login2.hbs");
 	}
@@ -152,14 +158,13 @@ public class Login2Controller {
 				}
 				// showLoginPage(req, res);
 				// model.put("error", error)
-				res.redirect(Application.LOGIN2_PATH);
 				return "error";
 				// res.redirect("/login");
 
 				// "Incorrect E-mail or Password. Please try again."
 			}
 		} else {
-			res.redirect(Application.LOGIN2_PATH);
+			res.redirect("/login2");
 		}
 		return "";
 	}
