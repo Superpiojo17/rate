@@ -1,13 +1,6 @@
 package edu.ben.rate_review.app;
 
-import static spark.Spark.before;
-import static spark.Spark.delete;
-import static spark.Spark.exception;
-import static spark.Spark.get;
-import static spark.Spark.port;
-import static spark.Spark.post;
-import static spark.Spark.put;
-import static spark.Spark.staticFiles;
+import static spark.Spark.*;
 
 import java.util.HashMap;
 
@@ -97,7 +90,8 @@ public class Application {
 	private static AnalysisController analysisController = new AnalysisController();
 	private static MyAccountController myAccountController = new MyAccountController();
 	////////////////////////////////////////////////////////////////////////////////
-//	private static Login2Controller login2Controller = new Login2Controller();
+	// private static Login2Controller login2Controller = new
+	// Login2Controller();
 	////////////////////////////////////////////////////////////////////////////////
 
 	// match up paths
@@ -105,7 +99,7 @@ public class Application {
 	public static String HOME_PATH = "/";
 	public static String USERS_PATH = "/users";
 	public static String USER_PATH = "/user";
-	public static String LOGIN_PATH = "/login";
+	public static String LOGIN_PATH = "/signin";
 	public static String ABOUTUS_PATH = "/aboutus";
 	public static String REGISTER_PATH = "/register";
 	public static String CONTACTUS_PATH = "/contactus";
@@ -222,6 +216,10 @@ public class Application {
 				session.attribute("current_user", u);
 			}
 		});
+		
+		after((request, response) -> {
+		    response.header("Content-Encoding", "gzip");
+		});
 
 		exception(AuthException.class, (exception, request, response) -> {
 			System.out.println(exception.getMessage());
@@ -259,7 +257,7 @@ public class Application {
 
 		post(UPDATEAPPOINTMENT_PATH, (req, res) -> admindashController.adminUpdateApt(req, res),
 				new HandlebarsTemplateEngine());
-		
+
 		post(DELETEREVIEW_PATH, (req, res) -> editReviewController.deleteReview(req, res),
 				new HandlebarsTemplateEngine());
 
@@ -339,7 +337,7 @@ public class Application {
 
 		get(COURSELANDING_PATH, (req, res) -> admindashController.showManageCoursesLandingPage(req, res),
 				new HandlebarsTemplateEngine());
-		
+
 		post(COURSELANDING_PATH, (req, res) -> admindashController.massEnrollStudents(req, res));
 
 		get(FAQ_PATH, (req, res) -> faqController.showFaqPage(req, res), new HandlebarsTemplateEngine());
@@ -511,8 +509,9 @@ public class Application {
 		post(LOGIN_PATH, (req, res) -> loginController.login(req, res));
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////
-//		get(LOGIN2_PATH, (req, res) -> login2Controller.showLogin2Page(req, res), new HandlebarsTemplateEngine());
-//		post(LOGIN2_PATH, (req, res) -> login2Controller.login(req, res));
+		// get(LOGIN2_PATH, (req, res) -> login2Controller.showLogin2Page(req,
+		// res), new HandlebarsTemplateEngine());
+		// post(LOGIN2_PATH, (req, res) -> login2Controller.login(req, res));
 		///////////////////////////////////////////////////////////////////////////////////////////////////
 		// User Routes
 		// List all Users
@@ -538,7 +537,7 @@ public class Application {
 
 		get(ADD_STUDENT_COURSE, (req, res) -> editcoursesController.showAddStudentCoursePage(req, res),
 				new HandlebarsTemplateEngine());
-		
+
 		post(ADD_STUDENT_COURSE, (req, res) -> editcoursesController.addStudentToCourse(req, res));
 		// my account
 		// get(MYACCOUNT_PATH, (req, res) ->
