@@ -30,12 +30,32 @@
 						<a class="image"><img src="/images/entrance.jpg" alt="" /></a>
 						<a class="image"><img src="/images/labHome.jpg" alt="" /></a>
 						<a class="image"><img src="/images/kindlonHome.jpg" alt="" /></a>
-						<a class="image"><img src="/images/eaglewalkHome.jpg" alt="" /></a>
+						<a class="image"><img src="/images/eagleWalkHome.jpg" alt="" /></a>
 						<a class="image"><img src="/images/basketballHome.jpg" alt="" /></a>
 						<a class="image"><img src="/images/BHome.jpg" alt="" /></a>
 					</div>
 					<ul class="actions">
+					
 						<li><a href="/signin" class="button big alt">Go to Log In</a></li>
+	<!--					
+						{{#if user_null}}
+							<li><a href="/signin" class="button big alt">Go to Log In</a></li>
+						{{/if}}
+						{{#unless user_null}}
+							{{#if user_student}}
+								<li><a href="/studentdashboard" class="button big alt">Return to Dashboard</a></li>
+							{{/if}}
+							{{#if user_tutor}}
+								<li><a href="/tutordashboard" class="button big alt">Return to Dashboard</a></li>
+							{{/if}}
+							{{#if user_professor}}
+								<li><a href="/facultydashboard" class="button big alt">Return to Dashboard</a></li>
+							{{/if}}
+							{{#if user_admin}}
+								<li><a href="/admindashboard" class="button big alt">Return to Dashboard</a></li>
+							{{/if}}
+						{{/unless}}
+	-->
 					</ul>
 				</div>
 			</section>

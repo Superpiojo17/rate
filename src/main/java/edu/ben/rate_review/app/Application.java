@@ -373,7 +373,7 @@ public class Application {
 		get(ALLTUTORS_PATH, (req, res) -> facultydashController.showAllTutorsPage(req, res),
 				new HandlebarsTemplateEngine());
 
-		get(AUTHORIZATIONERROR_PATH, (req, res) -> unauthorizedController.showNotAuthorizedc(req, res),
+		get(AUTHORIZATIONERROR_PATH, (req, res) -> unauthorizedController.showNotAuthorized(req, res),
 				new HandlebarsTemplateEngine());
 
 		get(NOTLOGGEDIN_PATH, (req, res) -> unauthorizedController.showNotLoggedIn(req, res),
