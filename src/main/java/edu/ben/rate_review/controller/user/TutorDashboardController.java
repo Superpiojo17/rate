@@ -95,7 +95,7 @@ public class TutorDashboardController {
 			ad.close();
 		}
 		// Tell the server to render the index page with the data in the model
-		return new ModelAndView(model, "users/tutorDashboard.hbs");
+		return new ModelAndView(model, "users/tutordashboard.hbs");
 	}
 
 	/**

@@ -97,7 +97,7 @@ public class FacultyDashboardController {
 			pdao.close();
 		}
 		// Tell the server to render the index page with the data in the model
-		return new ModelAndView(model, "users/facultyDashboard.hbs");
+		return new ModelAndView(model, "users/facultydashboard.hbs");
 	}
 
 	public ModelAndView showCompleteProfileProfPage(Request req, Response res) throws AuthException {

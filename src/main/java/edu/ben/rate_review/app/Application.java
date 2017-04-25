@@ -248,14 +248,12 @@ public class Application {
 		get(ADDTOCLASSLIST_PATH, (req, res) -> editcoursesController.showAddToClassListPage(req, res),
 				new HandlebarsTemplateEngine());
 
-		post(ADDTOCLASSLIST_PATH, (req, res) -> editcoursesController.removeStudentFromCourse(req, res),
-				new HandlebarsTemplateEngine());
+		post(ADDTOCLASSLIST_PATH, (req, res) -> editcoursesController.addStudentToCourse(req, res));
 
 		get(REMOVEFROMCLASSLIST_PATH, (req, res) -> editcoursesController.showRemoveFromClassListPage(req, res),
 				new HandlebarsTemplateEngine());
 
-		post(REMOVEFROMCLASSLIST_PATH, (req, res) -> editcoursesController.removeStudentFromCourse(req, res),
-				new HandlebarsTemplateEngine());
+		post(REMOVEFROMCLASSLIST_PATH, (req, res) -> editcoursesController.removeStudentFromCourse(req, res));
 
 		get(APPOINTMENTS_PATH, (req, res) -> admindashController.showAllDeptApt(req, res),
 				new HandlebarsTemplateEngine());

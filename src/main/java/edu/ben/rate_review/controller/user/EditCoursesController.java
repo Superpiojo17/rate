@@ -18,6 +18,7 @@ import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.Course;
 import edu.ben.rate_review.models.CourseForm;
+import edu.ben.rate_review.models.StudentInCourse;
 //import edu.ben.rate_review.models.ProfessorReview;
 //import edu.ben.rate_review.models.TutorForm;
 import edu.ben.rate_review.models.User;
@@ -35,20 +36,20 @@ public class EditCoursesController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			// return new ModelAndView(model, "home/notauthorized.hbs");
-			res.redirect(Application.AUTHORIZATIONERROR_PATH);
-		} else {
-			User u = (User) session.attribute("current_user");
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+		User u = (User) session.attribute("current_user");
 
-			if (u.getRole() != 1) {
-				// return new ModelAndView(model, "home/notauthorized.hbs");
-				res.redirect(Application.AUTHORIZATIONERROR_PATH);
-			} else {
-				model.put("user_admin", true);
-			}
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
 		}
 		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
 
+		if (u != null) {
+			if (u.getRole() == 1) {
+				model.put("user_admin", true);
+			}
+		}
 		DaoManager dao = DaoManager.getInstance();
 		CourseDao cd = dao.getCourseDao();
 		if (req.queryParams("search") != null) {
@@ -99,16 +100,14 @@ public class EditCoursesController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			// return new ModelAndView(model, "home/notauthorized.hbs");
-			res.redirect(Application.AUTHORIZATIONERROR_PATH);
-		} else {
-			User u = (User) session.attribute("current_user");
-
-			if (u.getRole() != 1) {
-				// return new ModelAndView(model, "home/notauthorized.hbs");
-				res.redirect(Application.AUTHORIZATIONERROR_PATH);
-			}
+			return new ModelAndView(model, "home/notauthorized.hbs");
 		}
+		User u = (User) session.attribute("current_user");
+
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+
 		// Get the :id from the url
 		String idString = req.params("id");
 
@@ -145,15 +144,12 @@ public class EditCoursesController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			// return new ModelAndView(model, "home/notauthorized.hbs");
-			res.redirect(Application.AUTHORIZATIONERROR_PATH);
-		} else {
-			User u = (User) session.attribute("current_user");
+			return new ModelAndView(model, "home/notauthorized.hbs");
+		}
+		User u = (User) session.attribute("current_user");
 
-			if (u.getRole() != 1) {
-				// return new ModelAndView(model, "home/notauthorized.hbs");
-				res.redirect(Application.AUTHORIZATIONERROR_PATH);
-			}
+		if (u.getRole() != 1) {
+			return new ModelAndView(model, "home/notauthorized.hbs");
 		}
 
 		// Get the :id from the url
@@ -332,8 +328,8 @@ public class EditCoursesController {
 
 		HashMap<String, Object> model = new HashMap<>();
 
-		// Session session = req.session();
-		// User u = (User) session.attribute("current_user");
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
 
 		// if (u == null || u.getRole() != 1) {
 		// return new ModelAndView(model, "home/notauthorized.hbs");
@@ -368,8 +364,8 @@ public class EditCoursesController {
 
 		HashMap<String, Object> model = new HashMap<>();
 
-		// Session session = req.session();
-		// User u = (User) session.attribute("current_user");
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
 
 		// if (u == null || u.getRole() != 1) {
 		// return new ModelAndView(model, "home/notauthorized.hbs");
@@ -402,8 +398,8 @@ public class EditCoursesController {
 
 		HashMap<String, Object> model = new HashMap<>();
 
-		// Session session = req.session();
-		// User u = (User) session.attribute("current_user");
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
 
 		// if (u == null || u.getRole() != 1) {
 		// return new ModelAndView(model, "home/notauthorized.hbs");
@@ -429,6 +425,7 @@ public class EditCoursesController {
 		cDao.close();
 		uDao.close();
 		aDao.close();
+
 		return new ModelAndView(model, "users/addtoclasslist.hbs");
 	}
 
@@ -440,14 +437,45 @@ public class EditCoursesController {
 	 * @return
 	 */
 	public String addStudentToCourse(Request req, Response res) {
-		// String idString = req.params("id");
-		// Long course_id = Long.parseLong(idString);
+		HashMap<String, Object> model = new HashMap<>();
+
+		String idString = req.params("id");
+		Long course_id = Long.parseLong(idString);
 
 		DaoManager dao = DaoManager.getInstance();
 		CourseDao cDao = dao.getCourseDao();
 		StudentInCourseDao sDao = dao.getStudentInCourseDao();
 		UserDao uDao = dao.getUserDao();
-		// Course course = cDao.findById(course_id);
+		AnnouncementDao aDao = dao.getAnnouncementDao();
+		Course course = cDao.findById(course_id);
+
+		List<Long> ids = new ArrayList<>();
+
+		List<User> classlist = uDao.CourseList(course_id);
+
+		for (int i = 0; i < classlist.size(); i++) {
+			ids.add(classlist.get(i).getId());
+		}
+
+		String[] results = req.queryParamsValues("s1_t1");
+
+		if (results != null && results.length > 0) {
+			for (int i = 0; i < results.length; i++) {
+				StudentInCourse student = new StudentInCourse();
+				student.setCourse_id(course_id);
+				student.setStudent_id(Long.parseLong(results[i]));
+				sDao.enrollStudent(student);
+			}
+		}
+
+		model.put("course", course);
+
+		model.put("id", course_id);
+
+		model.put("classlist", classlist);
+
+		List<Announcement> announcements = aDao.all();
+		model.put("announcements", announcements);
 
 		// grab student id from the form
 		// make student_in_course object using course and student id
@@ -455,7 +483,7 @@ public class EditCoursesController {
 		cDao.close();
 		sDao.close();
 		uDao.close();
-		res.redirect("/course/" + req.params("id") + "/addstudent");
+		res.redirect("/course/" + course_id + "/classlist");
 		return "";
 	}
 
@@ -466,7 +494,7 @@ public class EditCoursesController {
 	 * @param res
 	 * @return
 	 */
-	public ModelAndView removeStudentFromCourse(Request req, Response res) {
+	public String removeStudentFromCourse(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
 
 		String idString = req.params("id");
@@ -508,8 +536,8 @@ public class EditCoursesController {
 		sDao.close();
 		uDao.close();
 		aDao.close();
-
-		return new ModelAndView(model, "users/removefromclasslist.hbs");
+		res.redirect("/course/" + course_id + "/classlist");
+		return "";
 	}
 
 }

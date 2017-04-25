@@ -142,7 +142,7 @@ public class StudentDashboardController {
 			ad.close();
 		}
 		// Tell the server to render the index page with the data in the model
-		return new ModelAndView(model, "users/studentDashboard.hbs");
+		return new ModelAndView(model, "users/studentdashboard.hbs");
 	}
 
 	public ModelAndView showCompleteProfileStudentPage(Request req, Response res) throws AuthException {
