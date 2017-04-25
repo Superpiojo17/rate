@@ -523,33 +523,34 @@ public class UserDao implements Dao<User> {
 		return users;
 	}
 
-//	/**
-//	 * 
-//	 * @return all users from the database.
-//	 */
-//
-//	public List<Integer> StudentIDCourseList(long courseID) {
-//		final String SELECT = "Select * from users where user_id  in (Select student_id from student_in_course where course_id = "
-//				+ courseID + ")";
-//
-//		List> users = null;
-//		try {
-//			PreparedStatement ps = conn.prepareStatement(SELECT);
-//			users = new ArrayList<User>();
-//			try {
-//				ResultSet rs = ps.executeQuery(SELECT);
-//				while (rs.next()) {
-//					users.add(mapRow(rs));
-//				}
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//			return users;
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return users;
-//	}
+	// /**
+	// *
+	// * @return all users from the database.
+	// */
+	//
+	// public List<Integer> StudentIDCourseList(long courseID) {
+	// final String SELECT = "Select * from users where user_id in (Select
+	// student_id from student_in_course where course_id = "
+	// + courseID + ")";
+	//
+	// List> users = null;
+	// try {
+	// PreparedStatement ps = conn.prepareStatement(SELECT);
+	// users = new ArrayList<User>();
+	// try {
+	// ResultSet rs = ps.executeQuery(SELECT);
+	// while (rs.next()) {
+	// users.add(mapRow(rs));
+	// }
+	// } catch (SQLException e) {
+	// e.printStackTrace();
+	// }
+	// return users;
+	// } catch (SQLException e) {
+	// e.printStackTrace();
+	// }
+	// return users;
+	// }
 
 	public List<User> allByMajor(String Major) {
 		final String SELECT = "SELECT * FROM " + USER_TABLE + " WHERE major = '" + Major
@@ -580,6 +581,32 @@ public class UserDao implements Dao<User> {
 	 */
 	public List<User> allStudentsByMajor(String Major) {
 		final String SELECT = "SELECT * FROM " + USER_TABLE + " WHERE major = '" + Major + "' AND role_id = 4";
+
+		List<User> users = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			users = new ArrayList<User>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					users.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return users;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+
+	/**
+	 * 
+	 * @return all users from the database.
+	 */
+	public List<User> allStudents() {
+		final String SELECT = "SELECT * FROM " + USER_TABLE + " WHERE role_id = 4";
 
 		List<User> users = null;
 		try {

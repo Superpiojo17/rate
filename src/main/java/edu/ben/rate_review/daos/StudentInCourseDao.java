@@ -69,6 +69,29 @@ public class StudentInCourseDao {
 	}
 
 	/**
+	 * Removes recovery requests that have expired
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public String removeFromCourse(long student_id, long course_id) {
+
+		String sql = "DELETE FROM " + STUDENTINCOURSES_TABLE + " WHERE student_id = ? and course_id = ? LIMIT 1";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setLong(1, student_id);
+			ps.setLong(2, course_id);
+			// Runs query
+			ps.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return " ";
+	}
+
+	/**
 	 * Inserts a student into a course
 	 * 
 	 * @param studentInCourse
