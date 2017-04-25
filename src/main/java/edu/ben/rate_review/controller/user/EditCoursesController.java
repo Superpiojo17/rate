@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.ben.rate_review.app.Application;
 //import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.authorization.AuthException;
 import edu.ben.rate_review.daos.AnnouncementDao;
@@ -34,20 +35,20 @@ public class EditCoursesController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User u = (User) session.attribute("current_user");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
 
-		if (u.getRole() != 1) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
-
-		if (u != null) {
-			if (u.getRole() == 1) {
+			if (u.getRole() != 1) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			} else {
 				model.put("user_admin", true);
 			}
 		}
+		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+
 		DaoManager dao = DaoManager.getInstance();
 		CourseDao cd = dao.getCourseDao();
 		if (req.queryParams("search") != null) {
@@ -98,14 +99,16 @@ public class EditCoursesController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User u = (User) session.attribute("current_user");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
 
-		if (u.getRole() != 1) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			if (u.getRole() != 1) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			}
 		}
-
 		// Get the :id from the url
 		String idString = req.params("id");
 
@@ -142,12 +145,15 @@ public class EditCoursesController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User u = (User) session.attribute("current_user");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
 
-		if (u.getRole() != 1) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			if (u.getRole() != 1) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			}
 		}
 
 		// Get the :id from the url
@@ -326,8 +332,8 @@ public class EditCoursesController {
 
 		HashMap<String, Object> model = new HashMap<>();
 
-		Session session = req.session();
-		User u = (User) session.attribute("current_user");
+		// Session session = req.session();
+		// User u = (User) session.attribute("current_user");
 
 		// if (u == null || u.getRole() != 1) {
 		// return new ModelAndView(model, "home/notauthorized.hbs");
@@ -362,8 +368,8 @@ public class EditCoursesController {
 
 		HashMap<String, Object> model = new HashMap<>();
 
-		Session session = req.session();
-		User u = (User) session.attribute("current_user");
+		// Session session = req.session();
+		// User u = (User) session.attribute("current_user");
 
 		// if (u == null || u.getRole() != 1) {
 		// return new ModelAndView(model, "home/notauthorized.hbs");
@@ -396,8 +402,8 @@ public class EditCoursesController {
 
 		HashMap<String, Object> model = new HashMap<>();
 
-		Session session = req.session();
-		User u = (User) session.attribute("current_user");
+		// Session session = req.session();
+		// User u = (User) session.attribute("current_user");
 
 		// if (u == null || u.getRole() != 1) {
 		// return new ModelAndView(model, "home/notauthorized.hbs");
@@ -434,14 +440,14 @@ public class EditCoursesController {
 	 * @return
 	 */
 	public String addStudentToCourse(Request req, Response res) {
-		String idString = req.params("id");
-		Long course_id = Long.parseLong(idString);
+		// String idString = req.params("id");
+		// Long course_id = Long.parseLong(idString);
 
 		DaoManager dao = DaoManager.getInstance();
 		CourseDao cDao = dao.getCourseDao();
 		StudentInCourseDao sDao = dao.getStudentInCourseDao();
 		UserDao uDao = dao.getUserDao();
-		Course course = cDao.findById(course_id);
+		// Course course = cDao.findById(course_id);
 
 		// grab student id from the form
 		// make student_in_course object using course and student id

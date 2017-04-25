@@ -32,63 +32,68 @@ public class TutorDashboardController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
+
+			if (u.getRole() != 3) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			}
+
+			model.put("current_user", u);
+
+			if (u.getMajor() == null) {
+				model.put("completeProfile", true);
+			}
+
+			DaoManager dao = DaoManager.getInstance();
+			AnnouncementDao ad = dao.getAnnouncementDao();
+			List<Announcement> announcements = ad.all();
+			model.put("announcements", announcements);
+
+			TutorDao tDao = dao.getTutorDao();
+			flagPastAppointments(tDao);
+
+			List<TutorAppointment> appointments = tDao.listAllTutorAppointments(u.getId());
+			List<TutorAppointment> unviewed_appointments = tDao.listAllUnviewedTutorAppointments(u.getId());
+			List<TutorAppointment> approved_appointments = tDao.listAllApprovedTutorAppointments(u.getId());
+
+			for (int i = 0; i < approved_appointments.size(); i++) {
+				approved_appointments.get(i)
+						.setTime(FormatTimeAndDate.formatTime(approved_appointments.get(i).getTime()));
+				approved_appointments.get(i)
+						.setDate(FormatTimeAndDate.formatDate(approved_appointments.get(i).getDate()));
+			}
+			for (int i = 0; i < appointments.size(); i++) {
+				appointments.get(i).setTime(FormatTimeAndDate.formatTime(appointments.get(i).getTime()));
+				appointments.get(i).setDate(FormatTimeAndDate.formatDate(appointments.get(i).getDate()));
+			}
+
+			boolean appointments_requested = false;
+			if (!unviewed_appointments.isEmpty()) {
+				appointments_requested = true;
+			}
+			boolean upcoming_appointments = false;
+			if (!approved_appointments.isEmpty()) {
+				upcoming_appointments = true;
+			}
+
+			// booleans for whether or not to display table/icon
+			model.put("appointments_requested", appointments_requested);
+			model.put("upcoming_appointments", upcoming_appointments);
+
+			// lists of appointments/requested appointments
+			model.put("appointments", appointments);
+			model.put("approved_appointments", approved_appointments);
+
+			// count of appointment requests that need a response
+			model.put("number_of_requests", unviewed_appointments.size());
+
+			tDao.close();
+			ad.close();
 		}
-		User u = (User) session.attribute("current_user");
-
-		if (u.getRole() != 3) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-
-		model.put("current_user", u);
-
-		if (u.getMajor() == null) {
-			model.put("completeProfile", true);
-		}
-
-		DaoManager dao = DaoManager.getInstance();
-		AnnouncementDao ad = dao.getAnnouncementDao();
-		List<Announcement> announcements = ad.all();
-		model.put("announcements", announcements);
-
-		TutorDao tDao = dao.getTutorDao();
-		flagPastAppointments(tDao);
-
-		List<TutorAppointment> appointments = tDao.listAllTutorAppointments(u.getId());
-		List<TutorAppointment> unviewed_appointments = tDao.listAllUnviewedTutorAppointments(u.getId());
-		List<TutorAppointment> approved_appointments = tDao.listAllApprovedTutorAppointments(u.getId());
-
-		for (int i = 0; i < approved_appointments.size(); i++) {
-			approved_appointments.get(i).setTime(FormatTimeAndDate.formatTime(approved_appointments.get(i).getTime()));
-			approved_appointments.get(i).setDate(FormatTimeAndDate.formatDate(approved_appointments.get(i).getDate()));
-		}
-		for (int i = 0; i < appointments.size(); i++) {
-			appointments.get(i).setTime(FormatTimeAndDate.formatTime(appointments.get(i).getTime()));
-			appointments.get(i).setDate(FormatTimeAndDate.formatDate(appointments.get(i).getDate()));
-		}
-
-		boolean appointments_requested = false;
-		if (!unviewed_appointments.isEmpty()) {
-			appointments_requested = true;
-		}
-		boolean upcoming_appointments = false;
-		if (!approved_appointments.isEmpty()) {
-			upcoming_appointments = true;
-		}
-
-		// booleans for whether or not to display table/icon
-		model.put("appointments_requested", appointments_requested);
-		model.put("upcoming_appointments", upcoming_appointments);
-
-		// lists of appointments/requested appointments
-		model.put("appointments", appointments);
-		model.put("approved_appointments", approved_appointments);
-
-		// count of appointment requests that need a response
-		model.put("number_of_requests", unviewed_appointments.size());
-
-		tDao.close();
-		ad.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/tutorDashboard.hbs");
 	}
@@ -119,40 +124,43 @@ public class TutorDashboardController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
+
+			if (u.getRole() != 3) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			}
+
+			if (u.getMajor() == null) {
+				model.put("completeProfile", true);
+			}
+
+			// AuthPolicyManager.getInstance().getUserPolicy().showFacultyDashboardPage();
+
+			DaoManager dao = DaoManager.getInstance();
+
+			AnnouncementDao ad = dao.getAnnouncementDao();
+
+			List<Announcement> announcements = ad.all();
+			model.put("announcements", announcements);
+			CourseDao cd = dao.getCourseDao();
+			List<Course> courses = cd.allByProfessor(u.getId());
+			model.put("courses", courses);
+
+			TutorDao td = dao.getTutorDao();
+			List<Tutor> tutors = td.all(u.getId());
+
+			model.put("tutors", tutors);
+
+			model.put("current_user", u);
+
+			ad.close();
+			cd.close();
+			td.close();
 		}
-		User u = (User) session.attribute("current_user");
-
-		if (u.getRole() != 3) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-
-		if (u.getMajor() == null) {
-			model.put("completeProfile", true);
-		}
-
-		// AuthPolicyManager.getInstance().getUserPolicy().showFacultyDashboardPage();
-
-		DaoManager dao = DaoManager.getInstance();
-
-		AnnouncementDao ad = dao.getAnnouncementDao();
-
-		List<Announcement> announcements = ad.all();
-		model.put("announcements", announcements);
-		CourseDao cd = dao.getCourseDao();
-		List<Course> courses = cd.allByProfessor(u.getId());
-		model.put("courses", courses);
-
-		TutorDao td = dao.getTutorDao();
-		List<Tutor> tutors = td.all(u.getId());
-
-		model.put("tutors", tutors);
-
-		model.put("current_user", u);
-
-		ad.close();
-		cd.close();
-		td.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "home/completeprofiletutor.hbs");
 	}
