@@ -1,8 +1,5 @@
 package edu.ben.rate_review.models;
 
-//import java.text.ParseException;
-//import java.text.SimpleDateFormat;
-
 public class Announcement {
 	private String announcement_content;
 	private String date;

@@ -3,9 +3,6 @@ package edu.ben.rate_review.models;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
-//import edu.ben.rate_review.daos.DaoManager;
-//import edu.ben.rate_review.daos.UserDao;
-
 /**
  * Model for the review of a professor
  * 
@@ -49,7 +46,29 @@ public class ProfessorReview {
 	private boolean comment_removed;
 	private boolean comment_approved;
 	private String studentname;
-	// private float overall;
+
+	// The course objectives were met:
+	private int rate_objectives;
+	// The course material was presented in an organized manner:
+	private int rate_organized;
+	// I found the course material to be challenging:
+	private int rate_challenging;
+	// Amount of work I performed outside scheduled class time:
+	private int rate_outside_work;
+	// Course material was presented at a good pace:
+	private int rate_pace;
+	// Assignments contributed effectively to my learning experience:
+	private int rate_assignments;
+	// Homework and exams were graded fairly:
+	private int rate_grade_fairly;
+	// Homework and exams were graded in reasonable time:
+	private int rate_grade_time;
+	// Accessibility of the instructor outside of scheduled class time:
+	private int rate_accessibility;
+	// The instructor's knowledge of the subject was relevant and up-to-date:
+	private int rate_knowledge;
+	// I found this course was valuable for my career development:
+	private int rate_career_development;
 
 	public boolean getComment_approved() {
 		return comment_approved;
@@ -82,29 +101,6 @@ public class ProfessorReview {
 	public void setProfessor_email(String professor_email) {
 		this.professor_email = professor_email;
 	}
-
-	// The course objectives were met:
-	private int rate_objectives;
-	// The course material was presented in an organized manner:
-	private int rate_organized;
-	// I found the course material to be challenging:
-	private int rate_challenging;
-	// Amount of work I performed outside scheduled class time:
-	private int rate_outside_work;
-	// Course material was presented at a good pace:
-	private int rate_pace;
-	// Assignments contributed effectively to my learning experience:
-	private int rate_assignments;
-	// Homework and exams were graded fairly:
-	private int rate_grade_fairly;
-	// Homework and exams were graded in reasonable time:
-	private int rate_grade_time;
-	// Accessibility of the instructor outside of scheduled class time:
-	private int rate_accessibility;
-	// The instructor's knowledge of the subject was relevant and up-to-date:
-	private int rate_knowledge;
-	// I found this course was valuable for my career development:
-	private int rate_career_development;
 
 	public long getStudent_course_id() {
 		return student_course_id;

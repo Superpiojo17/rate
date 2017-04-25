@@ -60,7 +60,6 @@ public class AnnouncementForm {
 		try {
 			formatdate = myFormat.format(fromUser.parse(date));
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

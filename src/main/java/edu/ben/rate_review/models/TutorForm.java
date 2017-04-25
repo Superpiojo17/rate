@@ -11,8 +11,6 @@ public class TutorForm {
 	private String tutor_first_name;
 	private String tutor_last_name;
 	private String tutor_email;
-	// private String subject;
-	// private String professor_name;
 
 	public TutorForm() {
 		super();
