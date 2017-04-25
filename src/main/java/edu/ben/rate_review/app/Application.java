@@ -244,12 +244,13 @@ public class Application {
 		// HandlebarsTemplateEngine());
 
 		//
-		
+
 		get(ADDTOCLASSLIST_PATH, (req, res) -> editcoursesController.showAddToClassListPage(req, res),
 				new HandlebarsTemplateEngine());
-		
-		
-		
+
+		post(ADDTOCLASSLIST_PATH, (req, res) -> editcoursesController.removeStudentFromCourse(req, res),
+				new HandlebarsTemplateEngine());
+
 		get(REMOVEFROMCLASSLIST_PATH, (req, res) -> editcoursesController.showRemoveFromClassListPage(req, res),
 				new HandlebarsTemplateEngine());
 
