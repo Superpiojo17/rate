@@ -502,7 +502,7 @@ public class UserDao implements Dao<User> {
 
 	public List<User> CourseList(long courseID) {
 		final String SELECT = "Select * from users where user_id  in (Select student_id from student_in_course where course_id = "
-				+ courseID + ")";
+				+ courseID + ") ORDER BY last_name ASC";
 
 		List<User> users = null;
 		try {
@@ -608,7 +608,7 @@ public class UserDao implements Dao<User> {
 	public List<User> allStudentsNotAlreadyInCourse(Long courseID) {
 		final String SELECT = "SELECT * FROM " + USER_TABLE
 				+ " WHERE role_id = 4 AND ( user_id NOT IN (SELECT student_id from student_in_course where course_id = "
-				+ courseID + "))";
+				+ courseID + ")) ORDER BY last_name ASC";
 
 		List<User> users = null;
 		try {

@@ -482,7 +482,7 @@ public class EditCoursesController {
 	 * @param res
 	 * @return
 	 */
-	public String addStudentToCourse(Request req, Response res) {
+	public ModelAndView addStudentToCourse(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
 
 		String idString = req.params("id");
@@ -496,7 +496,6 @@ public class EditCoursesController {
 		Course course = cDao.findById(course_id);
 
 		List<Long> ids = new ArrayList<>();
-
 		List<User> classlist = uDao.CourseList(course_id);
 
 		for (int i = 0; i < classlist.size(); i++) {
@@ -518,7 +517,10 @@ public class EditCoursesController {
 
 		model.put("id", course_id);
 
-		model.put("classlist", classlist);
+		List<User> classlistNew = uDao.CourseList(course_id);
+		model.put("classlist", classlistNew);
+
+		model.put("message", "You have sucessfully added a student to this course");
 
 		List<Announcement> announcements = aDao.all();
 		model.put("announcements", announcements);
@@ -529,8 +531,7 @@ public class EditCoursesController {
 		cDao.close();
 		sDao.close();
 		uDao.close();
-		res.redirect("/course/" + course_id + "/classlist");
-		return "";
+		return new ModelAndView(model, "users/classlist.hbs");
 	}
 
 	/**
@@ -540,7 +541,7 @@ public class EditCoursesController {
 	 * @param res
 	 * @return
 	 */
-	public String removeStudentFromCourse(Request req, Response res) {
+	public ModelAndView removeStudentFromCourse(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
 
 		String idString = req.params("id");
@@ -573,7 +574,8 @@ public class EditCoursesController {
 
 		model.put("id", course_id);
 
-		model.put("classlist", classlist);
+		List<User> classlistNew = uDao.CourseList(course_id);
+		model.put("classlist", classlistNew);
 
 		List<Announcement> announcements = aDao.all();
 		model.put("announcements", announcements);
@@ -582,8 +584,8 @@ public class EditCoursesController {
 		sDao.close();
 		uDao.close();
 		aDao.close();
-		res.redirect("/course/" + course_id + "/classlist");
-		return "";
+		model.put("error", "You have removed a student to this course");
+		return new ModelAndView(model, "users/classlist.hbs");
 	}
 
 }
