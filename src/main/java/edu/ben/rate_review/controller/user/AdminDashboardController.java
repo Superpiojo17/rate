@@ -58,7 +58,7 @@ public class AdminDashboardController {
 		ProfessorReviewDao reviewDao = dao.getProfessorReviewDao();
 		List<ProfessorReview> flagged = reviewDao.listAllFlaggedComments();
 
-		List<ProfessorReview> allComments = reviewDao.listAllComments();
+		List<ProfessorReview> allComments = reviewDao.listAllReviews();
 		model.put("all_comments", allComments);
 
 		boolean unseen_flagged_comments = false;

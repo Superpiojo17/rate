@@ -545,7 +545,7 @@ public class ProfessorReviewDao {
 	 * 
 	 * @return
 	 */
-	public List<ProfessorReview> listAllComments() {
+	public List<ProfessorReview> listAllReviews() {
 
 		final String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE;
 		List<ProfessorReview> reviews = null;
@@ -661,51 +661,6 @@ public class ProfessorReviewDao {
 	}
 
 	/**
-	 * If a student has their comment deleted, they are not allowed to edit
-	 * their review.
-	 * 
-	 * @param course
-	 */
-	// public void disableEditReview(CoursesToReview course) {
-	// // Declare SQL template query
-	//
-	// String sql = "UPDATE " + COURSES_TABLE + " SET disable_edit = 1 WHERE
-	// course_id = ? LIMIT 1";
-	// try {
-	// // Create Prepared Statement from query
-	// PreparedStatement ps = conn.prepareStatement(sql);
-	// // Fill in the ? with the parameters you want
-	// ps.setLong(1, course.getCourse_id());
-	// // Runs query
-	// ps.execute();
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// }
-
-	/**
-	 * Flips a flag that a course occurred in a previous semester
-	 * 
-	 * @param course
-	 */
-	// public void setSemesterPast(CoursesToReview course) {
-	// // Declare SQL template query
-	//
-	// String sql = "UPDATE " + COURSES_TABLE + " SET semester_past = 1 WHERE
-	// course_id = ? LIMIT 1";
-	// try {
-	// // Create Prepared Statement from query
-	// PreparedStatement ps = conn.prepareStatement(sql);
-	// // Fill in the ? with the parameters you want
-	// ps.setLong(1, course.getCourse_id());
-	// // Runs query
-	// ps.execute();
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// }
-
-	/**
 	 * Returns average rating from a specific category
 	 * 
 	 * @param prof
@@ -804,30 +759,6 @@ public class ProfessorReviewDao {
 		}
 		return uniqueCourses;
 	}
-
-	// public List<String> listCourses(String course) {
-	//
-	// final String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE
-	// course = " + course;
-	// List<String> uniqueCourses = null;
-	//
-	// try {
-	// PreparedStatement ps = conn.prepareStatement(sql);
-	// uniqueCourses = new ArrayList<String>();
-	// try {
-	// ResultSet rs = ps.executeQuery();
-	// while (rs.next()) {
-	// uniqueCourses.add(rs.getString("course"));
-	// }
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// }
-	// return uniqueCourses;
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// }
-	// return uniqueCourses;
-	// }
 
 	public List<ProfessorReview> allReviewsForCourse(long student_course_id, String name) {
 		// final String SELECT = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + "

@@ -44,30 +44,10 @@ public class AnalysisController {
 		} else {
 			model.put("user_null", true);
 		}
-		// Tell the server to render the index page with the data in the
-		// model
 
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "home/analysis.hbs");
 	}
-
-//	/**
-//	 * Put route method
-//	 * 
-//	 * @param req
-//	 * @param res
-//	 * @return
-//	 */
-//	public ModelAndView display(Request req, Response res) {
-//		HashMap<String, Object> model = new HashMap<>();
-//
-//		model.put("course_id", req.params("course_id"));
-//
-//		return new ModelAndView(model, "/analysis.hbs");
-//	}
-
-
-
 
 	
 }
