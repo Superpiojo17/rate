@@ -64,7 +64,7 @@ public class UserDao implements Dao<User> {
 		tmp.setNickname(rs.getString("nickname"));
 		tmp.setPersonal_email(rs.getString("personal_email"));
 		tmp.setOverall(ProfessorController.getOverall(tmp));
-		
+
 		return tmp;
 	}
 
@@ -251,8 +251,10 @@ public class UserDao implements Dao<User> {
 		return null;
 
 	}
+
 	/**
 	 * method will update the users nickname and personal email
+	 * 
 	 * @param user
 	 * @return
 	 */
@@ -277,8 +279,6 @@ public class UserDao implements Dao<User> {
 		return null;
 
 	}
-	
-	
 
 	/**
 	 * Method which will deactivate an active account
@@ -494,6 +494,62 @@ public class UserDao implements Dao<User> {
 		}
 		return users;
 	}
+
+	/**
+	 * 
+	 * @return all users from the database.
+	 */
+
+	public List<User> CourseList(long courseID) {
+		final String SELECT = "Select * from users where user_id  in (Select student_id from student_in_course where course_id = "
+				+ courseID + ")";
+
+		List<User> users = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			users = new ArrayList<User>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					users.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return users;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+
+//	/**
+//	 * 
+//	 * @return all users from the database.
+//	 */
+//
+//	public List<Integer> StudentIDCourseList(long courseID) {
+//		final String SELECT = "Select * from users where user_id  in (Select student_id from student_in_course where course_id = "
+//				+ courseID + ")";
+//
+//		List> users = null;
+//		try {
+//			PreparedStatement ps = conn.prepareStatement(SELECT);
+//			users = new ArrayList<User>();
+//			try {
+//				ResultSet rs = ps.executeQuery(SELECT);
+//				while (rs.next()) {
+//					users.add(mapRow(rs));
+//				}
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//			return users;
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return users;
+//	}
 
 	public List<User> allByMajor(String Major) {
 		final String SELECT = "SELECT * FROM " + USER_TABLE + " WHERE major = '" + Major

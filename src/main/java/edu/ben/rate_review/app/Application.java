@@ -177,7 +177,8 @@ public class Application {
 	public static String ADMINREVIEWLANDING_PATH = "/reviewlanding";
 	public static String DEPTREVIEWS_PATH = "/reviews/:department";
 	public static String DELETEREVIEW_PATH = "/deletereview/:student_course_id";
-	public static String ADD_STUDENT_COURSE = "/course/:id/addstudent";
+	public static String CLASSLIST_PATH = "/course/:id/classlist";
+	public static String REMOVEFROMCLASSLIST_PATH = "/classlistremove/:id";
 	/////////////////////////////////////////////////////////////////
 	public static String LOGIN2_PATH = "/login2";
 	/////////////////////////////////////////////////////////////////
@@ -216,9 +217,9 @@ public class Application {
 				session.attribute("current_user", u);
 			}
 		});
-		
+
 		after((request, response) -> {
-		    response.header("Content-Encoding", "gzip");
+			response.header("Content-Encoding", "gzip");
 		});
 
 		exception(AuthException.class, (exception, request, response) -> {
@@ -242,6 +243,12 @@ public class Application {
 		// HandlebarsTemplateEngine());
 
 		//
+
+		get(REMOVEFROMCLASSLIST_PATH, (req, res) -> editcoursesController.showRemoveFromClassListPage(req, res),
+				new HandlebarsTemplateEngine());
+
+		post(REMOVEFROMCLASSLIST_PATH, (req, res) -> editcoursesController.removeStudentFromCourse(req, res),
+				new HandlebarsTemplateEngine());
 
 		get(APPOINTMENTS_PATH, (req, res) -> admindashController.showAllDeptApt(req, res),
 				new HandlebarsTemplateEngine());
@@ -535,10 +542,10 @@ public class Application {
 				new HandlebarsTemplateEngine());
 		post(CONTACTUS_PATH, (req, res) -> ContactUsController.contact(req, res));
 
-		get(ADD_STUDENT_COURSE, (req, res) -> editcoursesController.showAddStudentCoursePage(req, res),
+		get(CLASSLIST_PATH, (req, res) -> editcoursesController.showClassListPage(req, res),
 				new HandlebarsTemplateEngine());
 
-		post(ADD_STUDENT_COURSE, (req, res) -> editcoursesController.addStudentToCourse(req, res));
+		post(CLASSLIST_PATH, (req, res) -> editcoursesController.showClassListPage(req, res));
 		// my account
 		// get(MYACCOUNT_PATH, (req, res) ->
 		// myAccountController.showMyAccountPage(req, res),

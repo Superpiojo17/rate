@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Edit Course</title>
+		<title>Remove Class List</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -101,11 +101,11 @@
 						
 							<div class="centercol"> 
 							&ensp;
-							<h2> Add a student </h2>
+							<h2>{{course.course_name}} {{course.course_number}} Class List </h2>
 							
 							
 							
-  <p>Add student to this course</p>
+  <p>Select which students you would like to remove from this course.</p>
   &ensp;
    <div name="error">
 						<p style='color: red'>{{error}}</p>
@@ -113,36 +113,41 @@
   
 							<!-- Form -->
 						<section>
-							<form action="/course/{{course.id}}/addstudent" method="post">
+							<form action="/classlistremove/{{course.id}}" method="post">
 							
 							<div class="table-wrapper">
-								<table class="alt">
+							&nbsp;&nbsp;
+								<table id = "indextable" class="indextable alt">
 									<thead>
 										<tr>
-											<th><br>Course</th>
-											<th><br>Name</th>
-											<th><br>Professor</th>
-											<th><br>Term</th>
-											<th><br>Student</th>
+										<th></th>
+											<th class=" shrink text-left"><a href="javascript:SortTable(1,'T');" class="btn btn-link" style="color:black">Student Name <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
+										<th class=" shrink text-left"><a href="javascript:SortTable(2,'N');" class="btn btn-link" style="color:black">Email <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
+										<th class="shrink text-left"><a href="javascript:SortTable(3,'T');" class="btn btn-link" style="color:black" >Major <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
+<th class="shrink text-left"><a href="javascript:SortTable(4,'T');" class="btn btn-link" style="color:black" >Year <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
+											
 										</tr>
 									</thead>
 									<tbody>
+									{{#each classlist}}
 										<tr>
-											<td>{{course.subject}}{{course.course_number}} </td>
-											<td>{{course.course_name}} </td>
-											<td>{{course.professor_name}}</td>
-											<td>{{course.semester}} {{course.year}} </td>
-											<td>STUDENT DROP DOWN</td>
+											<td><input type="checkbox" name={{id}} />&nbsp;</td>
+											<td>{{last_name}}, {{first_name}} </td>
+											<td>{{email}} </td>
+											<td>{{major}}</td>
+											<td>{{year_string}} </td>
 										</tr>
+										{{/each}}
 									</tbody>
 									<tfoot>
 									</tfoot>
 								</table>
 							</div>
-							<button type="submit" class="btn btn-info" name="student_id" value="PASS IN STUDENT ID"><span class="glyphicon glyphicon-floppy-saved"></button>
+							<button type="submit" class="btn btn-danger" > Remove Students  &nbsp; <span class="glyphicon glyphicon-minus"></button>
 						</form>
 					</section>
-											
+					
+
 
   </div>
   
@@ -152,7 +157,9 @@
 			<script src="/assets/js/jquery.min.js"></script>
 			<script src="/assets/js/skel.min.js"></script>
 			<script src="/assets/js/util.js"></script>
-			<script>
+			
+			<script type="text/javascript" src="/assets/js/sortColumns.js"  ></script>
+
 
 // d = new Date();
 
