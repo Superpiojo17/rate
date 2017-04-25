@@ -59,10 +59,6 @@
         google.charts.setOnLoadCallback(draw_app_per_tutor);
        google.charts.setOnLoadCallback(draw_overall_professors_rating);
         google.charts.setOnLoadCallback(draw_dep_avg);
-    
-    <!--
-    
--->
 
 function draw_prof_by_rating() {
 
@@ -71,23 +67,13 @@ function draw_prof_by_rating() {
         data.addColumn('number', 'Average Ratings');
         data.addRows([
        
-        ['Freshamn', 4.2],
-        ['Sophomore', 4.8],
-        ['Junior', 3],
-        ['Senior', 4.12]]);
-<!--
-//      var data = new google.visualization.DataTable();
-//        data.addColumn('string', 'Rating');
-//        data.addColumn('number', 'Average Ratings');
-//        data.addRows([
-//        ['Rating', 'Average ratings', { role: 'style' }],
-//        ['Freshman', 4.2, 'blue'],
-//        ['Sophomore', 4.8, 'orange'],
-//        ['Junior', 3, 'red'],
-//        ['Senior', 4.12,'green']]);
--->
+        ['Freshman', {{freshman_avg_rating}}],
+        ['Sophomore', {{sophomore_avg_rating}}],
+        ['Junior', {{junior_avg_rating}}],
+        ['Senior', {{senior_avg_rating}}]]);
+
       var options = {
-        title: 'Professor rating - by year',
+        title: 'Average Professor Rating by Year',
         chartArea: {width: '50%'},
         
          'width':600,
@@ -114,11 +100,14 @@ function draw_prof_by_rating() {
         data.addColumn('string', 'Ratings');
         data.addColumn('number', '# of ratings completed');
         data.addRows([
-          ['Ratings submitted', 13],
-          ['Total Ratings available', (16 -13)] ]);
+          ['Freshman', {{freshman_count}}],
+          ['Sophomore', {{sophomore_count}}],
+          ['Junior', {{junior_count}}],
+          ['Senior', {{senior_count}}],
+           ]);
 
         var options = {
-          title: '# of Ratings Submitted',
+          title: 'Count of Ratings by Year',
           pieHole: 0.4,
          'width':700,
          'height':300,
@@ -208,15 +197,14 @@ function draw_prof_by_rating() {
         data.addColumn('number', '# of appointments');
         data.addRows([
 
-        ['Approved', 23],
-        ['Denied', 19],
-        ['Cancelled', 11],
-        ['Rescheduled', 16],
-      
+        ['Approved', {{approved}}],
+        ['Denied', {{denied}}],
+        ['Past', {{past}}],
+        ['Missed by Tutor', {{missed}}],  
       ]);
 
       var options = {
-        title: 'Tutor Appointment Status Ratings',
+        title: 'Status of Tutor Appointments',
         chartArea: {width: '50%'},
         
          'width':600,
@@ -408,7 +396,7 @@ function draw_prof_by_rating() {
 									  	
 									  	<td><div id="chart_dep_avg" ></div> </td>
 									  </tr><tr>
-									  	<th><h3>Tutor Ratings</h3></th>
+									  	<th><h3>Tutor Statistics</h3></th>
 									  </tr><tr>
 									  	<td><div id="chart_app_rate" ></div></td>
 									
