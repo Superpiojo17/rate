@@ -605,8 +605,10 @@ public class UserDao implements Dao<User> {
 	 * 
 	 * @return all users from the database.
 	 */
-	public List<User> allStudents() {
-		final String SELECT = "SELECT * FROM " + USER_TABLE + " WHERE role_id = 4";
+	public List<User> allStudentsNotAlreadyInCourse(Long courseID) {
+		final String SELECT = "SELECT * FROM " + USER_TABLE
+				+ " WHERE role_id = 4 AND ( user_id NOT IN (SELECT student_id from student_in_course where course_id = "
+				+ courseID + "))";
 
 		List<User> users = null;
 		try {

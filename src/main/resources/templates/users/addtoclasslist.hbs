@@ -101,11 +101,11 @@
 						
 							<div class="centercol"> 
 							&ensp;
-							<h2>{{course.course_name}} {{course.course_number}} Class List </h2>
+							<h2>{{course.course_name}} {{course.course_number}} </h2>
 							
 							
 							
-  <p>Select which students you would like to add from this course.</p>
+  <p>Select which students you would like to add to this course.</p>
   &ensp;
    <div name="error">
 						<p style='color: red'>{{error}}</p>
@@ -146,6 +146,8 @@
 							<button type="submit" class="btn btn-info" > Add Students  &nbsp; <span class="glyphicon glyphicon-plus"></button>
 						</form>
 					</section>
+					<a href="/course/{{course.id}}/classlist"  class="btn btn-info"> Back
+											</a>
 					
 
 

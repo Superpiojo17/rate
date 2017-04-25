@@ -360,6 +360,50 @@ public class EditCoursesController {
 		return new ModelAndView(model, "users/classlist.hbs");
 	}
 
+	/**
+	 * Displays the add students page
+	 * 
+	 * @param req
+	 * @param res
+	 * @return
+	 * @throws AuthException
+	 */
+	public ModelAndView showProfClassListPage(Request req, Response res) throws AuthException {
+
+		HashMap<String, Object> model = new HashMap<>();
+
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
+
+		// if (u == null || u.getRole() != 1) {
+		// return new ModelAndView(model, "home/notauthorized.hbs");
+		// }
+
+		String idString = req.params("id");
+		long course_id = Long.parseLong(idString);
+
+		DaoManager dao = DaoManager.getInstance();
+		CourseDao cDao = dao.getCourseDao();
+		UserDao uDao = dao.getUserDao();
+		AnnouncementDao aDao = dao.getAnnouncementDao();
+
+		Course course = cDao.findById(course_id);
+		model.put("course", course);
+
+		model.put("id", course_id);
+
+		List<User> classlist = uDao.CourseList(course_id);
+		model.put("classlist", classlist);
+
+		List<Announcement> announcements = aDao.all();
+		model.put("announcements", announcements);
+
+		cDao.close();
+		uDao.close();
+		aDao.close();
+		return new ModelAndView(model, "users/profclasslist.hbs");
+	}
+
 	public ModelAndView showRemoveFromClassListPage(Request req, Response res) throws AuthException {
 
 		HashMap<String, Object> model = new HashMap<>();
@@ -416,7 +460,9 @@ public class EditCoursesController {
 		Course course = cDao.findById(course_id);
 		model.put("course", course);
 
-		List<User> classlist = uDao.allStudents();
+		model.put("department", course.getSubject());
+
+		List<User> classlist = uDao.allStudentsNotAlreadyInCourse(course_id);
 		model.put("classlist", classlist);
 
 		List<Announcement> announcements = aDao.all();

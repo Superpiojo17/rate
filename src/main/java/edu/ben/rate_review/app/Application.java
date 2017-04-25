@@ -178,6 +178,7 @@ public class Application {
 	public static String DEPTREVIEWS_PATH = "/reviews/:department";
 	public static String DELETEREVIEW_PATH = "/deletereview/:student_course_id";
 	public static String CLASSLIST_PATH = "/course/:id/classlist";
+	public static String PROFCLASSLIST_PATH = "/course/:id/profclasslist";
 	public static String REMOVEFROMCLASSLIST_PATH = "/classlistremove/:id";
 	public static String ADDTOCLASSLIST_PATH = "/classlistadd/:id";
 	/////////////////////////////////////////////////////////////////
@@ -548,6 +549,9 @@ public class Application {
 		post(CONTACTUS_PATH, (req, res) -> ContactUsController.contact(req, res));
 
 		get(CLASSLIST_PATH, (req, res) -> editcoursesController.showClassListPage(req, res),
+				new HandlebarsTemplateEngine());
+		
+		get(PROFCLASSLIST_PATH, (req, res) -> editcoursesController.showProfClassListPage(req, res),
 				new HandlebarsTemplateEngine());
 
 		post(CLASSLIST_PATH, (req, res) -> editcoursesController.showClassListPage(req, res));

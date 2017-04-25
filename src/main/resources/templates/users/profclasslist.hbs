@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Remove Class List</title>
+		<title>Course Class List</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -26,24 +26,20 @@
 
 			
 		<!-- Header -->
-			<header id="adminheader">
-				<h1>Administrator Dashboard</h1>
+			<header id="facultyheader">
+				<h1>Faculty Dashboard</h1>
 			</header>
 	<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
 					<li><a href="/">Home</a></li>
 					<li><a href="/admindashboard">My Dashboard</a></li>
-					<li><a href="/register">My Account</a></li>
-					<li><a href="/allusers">Manage Users</a></li>
+					<li><a href="/myaccount">My Account</a></li>
 					{{#if completeProfile }}
 					<li><a href="/completeprofileprof/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
 					{{/if}}
-					<li><a href="/courseslanding">Manage Courses</a></li>
-					<li><a href="/managetutorslanding">Manage Tutors</a></li>
-					<li><a href="/announcement">Announcements</a></li>
-					<li><a href="/aboutus">Manage Apointments</a></li>
-					<li><a href="/aboutus">Manage Reviews</a></li>
+					<li><a href="/alltutors/{{current_user.id}}">Manage Tutors</a></li>
+					<li><a href="/professor/{{current_user.id}}/overview">View Reviews</a></li>
 					<li><a href="/teacher">Browse Professors</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
 					<li><a href="/aboutus">About Us</a></li>
@@ -54,7 +50,7 @@
 				</ul>
 			</nav>
 			<!-- Banner -->
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="adminDash">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="facultyDash">
 </div>
  <p> </p>
    
@@ -101,11 +97,11 @@
 						
 							<div class="centercol"> 
 							&ensp;
-							<h2>{{course.course_name}} {{course.course_number}} Class List </h2>
+							<h2>{{course.subject}} {{course.course_number}} {{course.course_name}}</h2>
 							
 							
 							
-  <p>Select which students you would like to remove from this course.</p>
+  <p>View the class list for this course.</p>
   &ensp;
    <div name="error">
 						<p style='color: red'>{{error}}</p>
@@ -113,14 +109,13 @@
   
 							<!-- Form -->
 						<section>
-							<form action="/classlistremove/{{course.id}}" method="post">
+							<form action="/course/{{course.id}}/addstudent" method="post">
 							
 							<div class="table-wrapper">
 							&nbsp;&nbsp;
 								<table id = "indextable" class="indextable alt">
 									<thead>
 										<tr>
-										<th></th>
 											<th class=" shrink text-left"><a href="javascript:SortTable(1,'T');" class="btn btn-link" style="color:black">Student Name <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
 										<th class=" shrink text-left"><a href="javascript:SortTable(2,'N');" class="btn btn-link" style="color:black">Email <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
 										<th class="shrink text-left"><a href="javascript:SortTable(3,'T');" class="btn btn-link" style="color:black" >Major <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
@@ -131,7 +126,6 @@
 									<tbody>
 									{{#each classlist}}
 										<tr>
-											<td><input type="checkbox" name = "s1_t1" value = "{{id}}" />&nbsp;</td>
 											<td>{{last_name}}, {{first_name}} </td>
 											<td>{{email}} </td>
 											<td>{{major}}</td>
@@ -143,12 +137,8 @@
 									</tfoot>
 								</table>
 							</div>
-							<button type="submit" class="btn btn-danger" > Remove Students  &nbsp; <span class="glyphicon glyphicon-minus"></button>
 						</form>
 					</section>
-					
-					<a href="/course/{{course.id}}/classlist"  class="btn btn-info"> Back
-											</a>
 					
 
 
