@@ -2,6 +2,7 @@ package edu.ben.rate_review.controller.home;
 
 import java.util.HashMap;
 
+import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.TutorDao;
 import edu.ben.rate_review.models.TutorAppointment;
@@ -37,7 +38,7 @@ public class TutorReviewController {
 			if (u.getRole() == 4) {
 				model.put("user_student", true);
 			} else {
-				res.redirect("/authorizationerror");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
 			}
 		} else {
 			model.put("user_null", true);
@@ -56,17 +57,17 @@ public class TutorReviewController {
 					if (u.getId() == appointment.getStudent_id()) {
 						model.put("appointment", appointment);
 					} else {
-						res.redirect("/authorizationerror");
+						res.redirect(Application.AUTHORIZATIONERROR_PATH);
 					}
 				} else {
-					res.redirect("/authorizationerror");
+					res.redirect(Application.AUTHORIZATIONERROR_PATH);
 				}
 			} else {
 				// unauthorized user or student not enrolled
-				res.redirect("/authorizationerror");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
 			}
 		} else {
-			res.redirect("/authorizationerror");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
 		}
 
 		return new ModelAndView(model, "home/tutorreview.hbs");

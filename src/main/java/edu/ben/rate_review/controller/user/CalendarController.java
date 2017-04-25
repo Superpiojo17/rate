@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.ben.rate_review.app.Application;
+
 //import javax.servlet.http.HttpServletRequest;
 //import javax.servlet.http.HttpServletResponse;
 //
@@ -55,7 +57,8 @@ public class CalendarController {
 			}
 		} else {
 			model.put("user_null", true);
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			//return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
 		}
 
 		// AuthPolicyManager.getInstance().getUserPolicy().showCalendarPage();

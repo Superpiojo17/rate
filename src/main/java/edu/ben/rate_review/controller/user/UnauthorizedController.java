@@ -21,15 +21,7 @@ public class UnauthorizedController {
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 
-		if (u.getRole() == 1) {
-			model.put("user_admin", true);
-		} else if (u.getRole() == 2) {
-			model.put("user_professor", true);
-		} else if (u.getRole() == 3) {
-			model.put("user_tutor", true);
-		} else if (u.getRole() == 4) {
-			model.put("user_student", true);
-		} else {
+		if (u == null) {
 			model.put("user_null", true);
 		}
 		// Tell the server to render the index page with the data in the model
@@ -43,15 +35,7 @@ public class UnauthorizedController {
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 
-		if (u.getRole() == 1) {
-			model.put("user_admin", true);
-		} else if (u.getRole() == 2) {
-			model.put("user_professor", true);
-		} else if (u.getRole() == 3) {
-			model.put("user_tutor", true);
-		} else if (u.getRole() == 4) {
-			model.put("user_student", true);
-		} else {
+		if (u == null) {
 			model.put("user_null", true);
 		}
 

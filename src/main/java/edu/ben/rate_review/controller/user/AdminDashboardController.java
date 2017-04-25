@@ -38,15 +38,17 @@ public class AdminDashboardController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User u = (User) session.attribute("current_user");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
 
-		if (u.getRole() != 1) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			if (u.getRole() != 1) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			}
+			model.put("current_user", u);
 		}
-
-		model.put("current_user", u);
 
 		DaoManager dao = DaoManager.getInstance();
 		AnnouncementDao ad = dao.getAnnouncementDao();
@@ -83,52 +85,55 @@ public class AdminDashboardController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User u = (User) session.attribute("current_user");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
 
-		if (u.getRole() != 1) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
+			if (u.getRole() != 1) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			}
 
-		DaoManager dao = DaoManager.getInstance();
-		UserDao ud = dao.getUserDao();
-		if (req.queryParams("search") != null) {
+			DaoManager dao = DaoManager.getInstance();
+			UserDao ud = dao.getUserDao();
+			if (req.queryParams("search") != null) {
 
-			String searchType = "name";
-			String searchTxt = req.queryParams("search").toLowerCase();
+				String searchType = "name";
+				String searchTxt = req.queryParams("search").toLowerCase();
 
-			// Make sure you
-			if (searchType.equalsIgnoreCase("email") || searchType.equalsIgnoreCase("name") && searchTxt.length() > 0) {
-				// valid search, can proceed
-				List<User> tempUsers = ud.search(searchType, searchTxt);
-				if (tempUsers.size() > 0) {
+				// Make sure you
+				if (searchType.equalsIgnoreCase("email")
+						|| searchType.equalsIgnoreCase("name") && searchTxt.length() > 0) {
+					// valid search, can proceed
+					List<User> tempUsers = ud.search(searchType, searchTxt);
+					if (tempUsers.size() > 0) {
 
-					model.put("users", tempUsers);
+						model.put("users", tempUsers);
+					} else {
+						List<User> users = ud.search(searchType, searchTxt);
+						model.put("error", "No Results Found");
+						model.put("users", users);
+					}
 				} else {
-					List<User> users = ud.search(searchType, searchTxt);
-					model.put("error", "No Results Found");
+					List<User> users = ud.sortbyRole();
+					model.put("error", "Cannot leave search bar blank");
 					model.put("users", users);
 				}
 			} else {
 				List<User> users = ud.sortbyRole();
-				model.put("error", "Cannot leave search bar blank");
 				model.put("users", users);
 			}
-		} else {
-			List<User> users = ud.sortbyRole();
-			model.put("users", users);
+
+			model.put("current_user", u);
+
+			DaoManager adao = DaoManager.getInstance();
+			AnnouncementDao ad = adao.getAnnouncementDao();
+			List<Announcement> announcements = ad.all();
+			ad.close();
+			ud.close();
+			model.put("announcements", announcements);
 		}
-
-		model.put("current_user", u);
-
-		DaoManager adao = DaoManager.getInstance();
-		AnnouncementDao ad = adao.getAnnouncementDao();
-		List<Announcement> announcements = ad.all();
-		ad.close();
-		ud.close();
-		model.put("announcements", announcements);
-
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/allusers.hbs");
 	}
@@ -139,12 +144,15 @@ public class AdminDashboardController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User u = (User) session.attribute("current_user");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
 
-		if (u.getRole() != 1) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			if (u.getRole() != 1) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			}
 		}
 
 		DaoManager adao = DaoManager.getInstance();
@@ -163,12 +171,15 @@ public class AdminDashboardController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User u = (User) session.attribute("current_user");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
 
-		if (u.getRole() != 1) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			if (u.getRole() != 1) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			}
 		}
 
 		DaoManager adao = DaoManager.getInstance();
@@ -186,12 +197,15 @@ public class AdminDashboardController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User u = (User) session.attribute("current_user");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
 
-		if (u.getRole() != 1) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			if (u.getRole() != 1) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			}
 		}
 
 		AnnouncementDao ad = DaoManager.getInstance().getAnnouncementDao();
@@ -229,12 +243,15 @@ public class AdminDashboardController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User u = (User) session.attribute("current_user");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
 
-		if (u.getRole() != 1) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			if (u.getRole() != 1) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			}
 		}
 
 		String idString = req.params("id");
@@ -286,12 +303,15 @@ public class AdminDashboardController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User u = (User) session.attribute("current_user");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
 
-		if (u.getRole() != 1) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			if (u.getRole() != 1) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			}
 		}
 
 		String idString = req.params("id");
@@ -353,12 +373,15 @@ public class AdminDashboardController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User u = (User) session.attribute("current_user");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
 
-		if (u.getRole() != 1) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			if (u.getRole() != 1) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			}
 		}
 
 		DaoManager adao = DaoManager.getInstance();
@@ -377,12 +400,15 @@ public class AdminDashboardController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User u = (User) session.attribute("current_user");
-
-		if (u.getRole() != 1) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
+			model.put("current_user", u);
+			if (u.getRole() != 1) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			}
 		}
 
 		// Get the :id from the url
@@ -456,8 +482,6 @@ public class AdminDashboardController {
 			model.put("pastappointments", pastAppointments);
 		}
 
-		model.put("current_user", u);
-
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
@@ -476,12 +500,15 @@ public class AdminDashboardController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User u = (User) session.attribute("current_user");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
 
-		if (u.getRole() != 1) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			if (u.getRole() != 1) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			}
 		}
 
 		DaoManager adao = DaoManager.getInstance();
@@ -500,12 +527,15 @@ public class AdminDashboardController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User u = (User) session.attribute("current_user");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
 
-		if (u.getRole() != 1) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			if (u.getRole() != 1) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			}
 		}
 
 		DaoManager dao = DaoManager.getInstance();
@@ -615,10 +645,10 @@ public class AdminDashboardController {
 	 * @return
 	 */
 	public String massEnrollStudents(Request req, Response res) {
-		//DaoManager dao = DaoManager.getInstance();
+		// DaoManager dao = DaoManager.getInstance();
 
 		MassEnroll.enrollStudents();
-		
+
 		res.redirect(Application.COURSELANDING_PATH);
 		return "";
 	}

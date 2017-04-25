@@ -5,6 +5,7 @@ package edu.ben.rate_review.controller.user;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.ben.rate_review.app.Application;
 //import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.authorization.AuthException;
 import edu.ben.rate_review.daos.AnnouncementDao;
@@ -35,23 +36,27 @@ public class EditTutorController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User u = (User) session.attribute("current_user");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
 
-		if (u.getRole() != 2) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		if (u != null) {
-			if (u.getRole() == 2) {
-				model.put("user_professor", true);
+			if (u.getRole() != 2) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
 			}
+			if (u != null) {
+				if (u.getRole() == 2) {
+					model.put("user_professor", true);
+				}
+			}
+
+			model.put("current_user", u);
+
+			List<Course> courses = cd.allByProfessor(u.getId());
+
+			model.put("courses", courses);
 		}
-
-		model.put("current_user", u);
-
-		List<Course> courses = cd.allByProfessor(u.getId());
-		model.put("courses", courses);
 
 		// Get the :id from the url
 		String idString = req.params("id");

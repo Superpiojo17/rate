@@ -3,6 +3,7 @@ package edu.ben.rate_review.controller.home;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.daos.AnnouncementDao;
 import edu.ben.rate_review.daos.CourseDao;
 import edu.ben.rate_review.daos.DaoManager;
@@ -138,13 +139,13 @@ public class ProfessorReviewController {
 				userDao.close();
 				reviewDao.close();
 				sDao.close();
-				res.redirect("/authorizationerror");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
 			}
 		} else {
 			userDao.close();
 			reviewDao.close();
 			sDao.close();
-			res.redirect("/authorizationerror");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
 		}
 		userDao.close();
 		reviewDao.close();
