@@ -131,7 +131,7 @@ public class Application {
 	public static String TEACHERADDTUTOR_PATH = "/teacheraddtutor";
 
 	public static String NOTLOGGEDIN_PATH = "/notloggedinerror";
-	public static String AUTHORIZATIONERROR_PATH = "/authorizationerror";
+	public static String AUTHORIZATIONERROR_PATH = "/notauthorized";
 	public static String EDITUSER_PATH = "/user/:id/edit";
 	public static String DELETEUSER_PATH = "/deleteuser/:id";
 	public static String EDITANNOUNCEMENT_PATH = "/announcement/:id/edit";
