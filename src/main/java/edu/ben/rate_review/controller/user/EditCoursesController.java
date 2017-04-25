@@ -392,6 +392,40 @@ public class EditCoursesController {
 		return new ModelAndView(model, "users/removefromclasslist.hbs");
 	}
 
+	public ModelAndView showAddToClassListPage(Request req, Response res) throws AuthException {
+
+		HashMap<String, Object> model = new HashMap<>();
+
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
+
+		// if (u == null || u.getRole() != 1) {
+		// return new ModelAndView(model, "home/notauthorized.hbs");
+		// }
+
+		String idString = req.params("id");
+		long course_id = Long.parseLong(idString);
+
+		DaoManager dao = DaoManager.getInstance();
+		CourseDao cDao = dao.getCourseDao();
+		UserDao uDao = dao.getUserDao();
+		AnnouncementDao aDao = dao.getAnnouncementDao();
+
+		Course course = cDao.findById(course_id);
+		model.put("course", course);
+
+		List<User> classlist = uDao.allStudents();
+		model.put("classlist", classlist);
+
+		List<Announcement> announcements = aDao.all();
+		model.put("announcements", announcements);
+
+		cDao.close();
+		uDao.close();
+		aDao.close();
+		return new ModelAndView(model, "users/addtoclasslist.hbs");
+	}
+
 	/**
 	 * Post method to add a student to the course
 	 * 
@@ -436,6 +470,7 @@ public class EditCoursesController {
 		CourseDao cDao = dao.getCourseDao();
 		StudentInCourseDao sDao = dao.getStudentInCourseDao();
 		UserDao uDao = dao.getUserDao();
+		AnnouncementDao aDao = dao.getAnnouncementDao();
 		Course course = cDao.findById(course_id);
 
 		List<Long> ids = new ArrayList<>();
@@ -446,16 +481,29 @@ public class EditCoursesController {
 			ids.add(classlist.get(i).getId());
 		}
 
-		System.out.println(Integer.parseInt(req.queryParams("1")));
+		String[] results = req.queryParamsValues("s1_t1");
 
-		// grab student id from the form
-		// make student_in_course object using course and student id
+		if (results != null && results.length > 0) {
+			for (int i = 0; i < results.length; i++) {
+				sDao.removeFromCourse(Long.parseLong(results[i]), course_id);
+			}
+		}
+
+		model.put("course", course);
+
+		model.put("id", course_id);
+
+		model.put("classlist", classlist);
+
+		List<Announcement> announcements = aDao.all();
+		model.put("announcements", announcements);
 
 		cDao.close();
 		sDao.close();
 		uDao.close();
-		res.redirect("/course/" + req.params("id") + "/addstudent");
-		return new ModelAndView(model, "users/classlist.hbs");
+		aDao.close();
+
+		return new ModelAndView(model, "users/removefromclasslist.hbs");
 	}
 
 }

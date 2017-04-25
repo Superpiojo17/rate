@@ -22,7 +22,8 @@ public class User implements AuthorizationUser {
 	private boolean confirmed;
 	private boolean active;
 	private String department;
-//	private String profilepic;
+	private int checkbox;
+	// private String profilepic;
 	private double overall;
 	private boolean adminEditFlag;
 	private String nickname;

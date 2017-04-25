@@ -179,6 +179,7 @@ public class Application {
 	public static String DELETEREVIEW_PATH = "/deletereview/:student_course_id";
 	public static String CLASSLIST_PATH = "/course/:id/classlist";
 	public static String REMOVEFROMCLASSLIST_PATH = "/classlistremove/:id";
+	public static String ADDTOCLASSLIST_PATH = "/classlistadd/:id";
 	/////////////////////////////////////////////////////////////////
 	public static String LOGIN2_PATH = "/login2";
 	/////////////////////////////////////////////////////////////////
@@ -243,7 +244,12 @@ public class Application {
 		// HandlebarsTemplateEngine());
 
 		//
-
+		
+		get(ADDTOCLASSLIST_PATH, (req, res) -> editcoursesController.showAddToClassListPage(req, res),
+				new HandlebarsTemplateEngine());
+		
+		
+		
 		get(REMOVEFROMCLASSLIST_PATH, (req, res) -> editcoursesController.showRemoveFromClassListPage(req, res),
 				new HandlebarsTemplateEngine());
 
