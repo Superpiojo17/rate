@@ -43,101 +43,104 @@ public class StudentDashboardController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
+
+			if (u.getRole() != 4) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			}
+
+			if (u.getMajor() == null) {
+				model.put("completeProfile", true);
+			}
+
+			// AuthPolicyManager.getInstance().getUserPolicy().showStudentDashboardPage();
+
+			DaoManager dao = DaoManager.getInstance();
+			ProfessorReviewDao reviewDao = dao.getProfessorReviewDao();
+			StudentInCourseDao sDao = dao.getStudentInCourseDao();
+			flagPastCourses(sDao);
+
+			List<StudentInCourse> coursesNotReviewed = sDao.allStudentCoursesNotReviewed(u);
+			List<StudentInCourse> coursesReviewed = sDao.allStudentCoursesReviewed(u);
+
+			// no classes listed in courses to review
+			boolean noCoursesToReview = false;
+			// no classes listed in recent reviews
+			boolean noCoursesReviewed = false;
+
+			// checks if either lists are empty
+			if (coursesNotReviewed.isEmpty()) {
+				noCoursesToReview = true;
+			}
+			if (coursesReviewed.isEmpty()) {
+				noCoursesReviewed = true;
+			}
+
+			// booleans for whether or not to display table
+			model.put("no_courses_to_review", noCoursesToReview);
+			model.put("no_courses_reviewed", noCoursesReviewed);
+
+			DaoManager adao = DaoManager.getInstance();
+			AnnouncementDao ad = adao.getAnnouncementDao();
+			List<Announcement> announcements = ad.all();
+
+			model.put("announcements", announcements);
+
+			model.put("courses_not_reviewed", coursesNotReviewed);
+			model.put("courses_reviewed", coursesReviewed);
+
+			// count of courses not reviewed
+			model.put("number_of_courses", coursesNotReviewed.size());
+
+			model.put("current_user", u);
+
+			TutorDao tDao = dao.getTutorDao();
+			flagPastAppointments(tDao);
+
+			List<Tutor> tutors = tDao.listAllTutorsByMajor(u);
+
+			model.put("tutors", tutors);
+
+			List<TutorAppointment> appointments = tDao.listAllStudentAppointments(u);
+
+			for (int i = 0; i < appointments.size(); i++) {
+				appointments.get(i).setTime(FormatTimeAndDate.formatTime(appointments.get(i).getTime()));
+				appointments.get(i).setDate(FormatTimeAndDate.formatDate(appointments.get(i).getDate()));
+			}
+
+			model.put("upcoming_appointments", appointments);
+
+			// checks whether or not there are appointments scheduled
+			boolean upcoming_appointments_scheduled = false;
+			if (!appointments.isEmpty()) {
+				upcoming_appointments_scheduled = true;
+			}
+			model.put("upcoming_appointments_scheduled", upcoming_appointments_scheduled);
+
+			boolean available_tutors = false;
+			if (!tutors.isEmpty()) {
+				available_tutors = true;
+			}
+			model.put("available_tutors", available_tutors);
+
+			// lists appointments which have not been reviewed
+			List<TutorAppointment> notReviewed = tDao.listAllNotReviewedTutorAppointments(u);
+			for (int i = 0; i < notReviewed.size(); i++) {
+				notReviewed.get(i).setTime(FormatTimeAndDate.formatTime(notReviewed.get(i).getTime()));
+				notReviewed.get(i).setDate(FormatTimeAndDate.formatDate(notReviewed.get(i).getDate()));
+			}
+			model.put("num_of_appointments", notReviewed.size());
+			model.put("appointments_not_reviewed", notReviewed);
+
+			reviewDao.close();
+			sDao.close();
+			tDao.close();
+			ad.close();
 		}
-		User u = (User) session.attribute("current_user");
-
-		if (u.getRole() != 4) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-
-		if (u.getMajor() == null) {
-			model.put("completeProfile", true);
-		}
-
-		// AuthPolicyManager.getInstance().getUserPolicy().showStudentDashboardPage();
-
-		DaoManager dao = DaoManager.getInstance();
-		ProfessorReviewDao reviewDao = dao.getProfessorReviewDao();
-		StudentInCourseDao sDao = dao.getStudentInCourseDao();
-		flagPastCourses(sDao);
-
-		List<StudentInCourse> coursesNotReviewed = sDao.allStudentCoursesNotReviewed(u);
-		List<StudentInCourse> coursesReviewed = sDao.allStudentCoursesReviewed(u);
-
-		// no classes listed in courses to review
-		boolean noCoursesToReview = false;
-		// no classes listed in recent reviews
-		boolean noCoursesReviewed = false;
-
-		// checks if either lists are empty
-		if (coursesNotReviewed.isEmpty()) {
-			noCoursesToReview = true;
-		}
-		if (coursesReviewed.isEmpty()) {
-			noCoursesReviewed = true;
-		}
-
-		// booleans for whether or not to display table
-		model.put("no_courses_to_review", noCoursesToReview);
-		model.put("no_courses_reviewed", noCoursesReviewed);
-
-		DaoManager adao = DaoManager.getInstance();
-		AnnouncementDao ad = adao.getAnnouncementDao();
-		List<Announcement> announcements = ad.all();
-
-		model.put("announcements", announcements);
-
-		model.put("courses_not_reviewed", coursesNotReviewed);
-		model.put("courses_reviewed", coursesReviewed);
-
-		// count of courses not reviewed
-		model.put("number_of_courses", coursesNotReviewed.size());
-
-		model.put("current_user", u);
-
-		TutorDao tDao = dao.getTutorDao();
-		flagPastAppointments(tDao);
-
-		List<Tutor> tutors = tDao.listAllTutorsByMajor(u);
-
-		model.put("tutors", tutors);
-
-		List<TutorAppointment> appointments = tDao.listAllStudentAppointments(u);
-
-		for (int i = 0; i < appointments.size(); i++) {
-			appointments.get(i).setTime(FormatTimeAndDate.formatTime(appointments.get(i).getTime()));
-			appointments.get(i).setDate(FormatTimeAndDate.formatDate(appointments.get(i).getDate()));
-		}
-
-		model.put("upcoming_appointments", appointments);
-
-		// checks whether or not there are appointments scheduled
-		boolean upcoming_appointments_scheduled = false;
-		if (!appointments.isEmpty()) {
-			upcoming_appointments_scheduled = true;
-		}
-		model.put("upcoming_appointments_scheduled", upcoming_appointments_scheduled);
-
-		boolean available_tutors = false;
-		if (!tutors.isEmpty()) {
-			available_tutors = true;
-		}
-		model.put("available_tutors", available_tutors);
-
-		// lists appointments which have not been reviewed
-		List<TutorAppointment> notReviewed = tDao.listAllNotReviewedTutorAppointments(u);
-		for (int i = 0; i < notReviewed.size(); i++) {
-			notReviewed.get(i).setTime(FormatTimeAndDate.formatTime(notReviewed.get(i).getTime()));
-			notReviewed.get(i).setDate(FormatTimeAndDate.formatDate(notReviewed.get(i).getDate()));
-		}
-		model.put("num_of_appointments", notReviewed.size());
-		model.put("appointments_not_reviewed", notReviewed);
-
-		reviewDao.close();
-		sDao.close();
-		tDao.close();
-		ad.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/studentDashboard.hbs");
 	}
@@ -148,39 +151,42 @@ public class StudentDashboardController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
+
+			if (u.getRole() != 4) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			}
+
+			if (u.getMajor() == null) {
+				model.put("completeProfile", true);
+			}
+
+			// AuthPolicyManager.getInstance().getUserPolicy().showFacultyDashboardPage();
+
+			DaoManager dao = DaoManager.getInstance();
+			AnnouncementDao ad = dao.getAnnouncementDao();
+
+			List<Announcement> announcements = ad.all();
+			model.put("announcements", announcements);
+			CourseDao cd = dao.getCourseDao();
+			List<Course> courses = cd.allByProfessor(u.getId());
+			model.put("courses", courses);
+
+			TutorDao td = dao.getTutorDao();
+			List<Tutor> tutors = td.all(u.getId());
+
+			model.put("tutors", tutors);
+
+			model.put("current_user", u);
+
+			ad.close();
+			cd.close();
+			td.close();
 		}
-		User u = (User) session.attribute("current_user");
-
-		if (u.getRole() != 4) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-
-		if (u.getMajor() == null) {
-			model.put("completeProfile", true);
-		}
-
-		// AuthPolicyManager.getInstance().getUserPolicy().showFacultyDashboardPage();
-
-		DaoManager dao = DaoManager.getInstance();
-		AnnouncementDao ad = dao.getAnnouncementDao();
-
-		List<Announcement> announcements = ad.all();
-		model.put("announcements", announcements);
-		CourseDao cd = dao.getCourseDao();
-		List<Course> courses = cd.allByProfessor(u.getId());
-		model.put("courses", courses);
-
-		TutorDao td = dao.getTutorDao();
-		List<Tutor> tutors = td.all(u.getId());
-
-		model.put("tutors", tutors);
-
-		model.put("current_user", u);
-
-		ad.close();
-		cd.close();
-		td.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "home/completeprofilestudent.hbs");
 	}
@@ -424,7 +430,8 @@ public class StudentDashboardController {
 			}
 		} else {
 			model.put("user_null", true);
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
 		}
 
 		DaoManager dao = DaoManager.getInstance();
@@ -471,7 +478,8 @@ public class StudentDashboardController {
 			}
 		} else {
 			model.put("user_null", true);
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
 		}
 
 		DaoManager dao = DaoManager.getInstance();

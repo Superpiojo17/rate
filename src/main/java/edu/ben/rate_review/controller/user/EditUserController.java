@@ -29,16 +29,15 @@ public class EditUserController {
 		HashMap<String, Object> model = new HashMap<>();
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User us = (User) session.attribute("current_user");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User us = (User) session.attribute("current_user");
 
-		if (us.getRole() != 1) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-
-		if (us != null) {
-			if (us.getRole() == 1) {
+			if (us.getRole() != 1) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			} else {
 				model.put("user_admin", true);
 			}
 		}
