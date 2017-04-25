@@ -19,17 +19,12 @@ import edu.ben.rate_review.controller.home.LogInController;
 import edu.ben.rate_review.controller.home.ProfessorController;
 import edu.ben.rate_review.controller.home.ProfessorReviewController;
 import edu.ben.rate_review.controller.home.RegisterController;
-//import edu.ben.rate_review.controller.home.TeacherAddTutorController;
 import edu.ben.rate_review.controller.home.TeacherController;
 import edu.ben.rate_review.controller.home.TutorReviewController;
-//import edu.ben.rate_review.controller.session.Login2Controller;
-//import edu.ben.rate_review.controller.home.TutorAppointmentController;
-//import edu.ben.rate_review.controller.home.TutorsController;
 import edu.ben.rate_review.controller.session.SessionsController;
 import edu.ben.rate_review.controller.user.AccountRecoveryController;
 import edu.ben.rate_review.controller.user.AdminDashboardController;
 import edu.ben.rate_review.controller.user.AdminEditTutorController;
-import edu.ben.rate_review.controller.user.CalendarController;
 import edu.ben.rate_review.controller.user.EditAnnouncementController;
 import edu.ben.rate_review.controller.user.EditCoursesController;
 import edu.ben.rate_review.controller.user.EditReviewsController;
@@ -58,7 +53,6 @@ public class Application {
 	private static ContactUsController contactusController = new ContactUsController();
 	private static StudentDashboardController studentdashController = new StudentDashboardController();
 	private static DepartmentsController departmentsController = new DepartmentsController();
-	private static CalendarController calendarController = new CalendarController();
 	private static AdminDashboardController admindashController = new AdminDashboardController();
 	private static FacultyDashboardController facultydashController = new FacultyDashboardController();
 	private static TutorDashboardController tutordashController = new TutorDashboardController();
@@ -67,32 +61,21 @@ public class Application {
 	private static ConfirmationController confirmationController = new ConfirmationController();
 	private static AccountRecoveryController accountrecoveryController = new AccountRecoveryController();
 	private static ChangePasswordController changePasswordController = new ChangePasswordController();
-	// private static TutorsController tutorController = new TutorsController();
 	private static ProfessorController professorController = new ProfessorController();
 	private static AdminController adminController = new AdminController();
 	private static EditCoursesController editcoursesController = new EditCoursesController();
 	private static AdminEditTutorController adminedittutorController = new AdminEditTutorController();
 	private static TutorReviewController tutorReviewController = new TutorReviewController();
-
 	private static FaqController faqController = new FaqController();
 	private static EditReviewsController editReviewController = new EditReviewsController();
-	// private static TutorAppointmentController tutorAppointmentController =
-	// new TutorAppointmentController();
-	// private static TeacherAddTutorController teacherAddTutorController = new
-	// TeacherAddTutorController();
-
 	private static ProfessorReviewController professorReviewController = new ProfessorReviewController();
 	private static EditUserController edituserController = new EditUserController();
 	private static UnauthorizedController unauthorizedController = new UnauthorizedController();
 	private static EditAnnouncementController editannouncementController = new EditAnnouncementController();
 	private static EditTutorController edittutorController = new EditTutorController();
-
 	private static AnalysisController analysisController = new AnalysisController();
 	private static MyAccountController myAccountController = new MyAccountController();
-	////////////////////////////////////////////////////////////////////////////////
-	// private static Login2Controller login2Controller = new
-	// Login2Controller();
-	////////////////////////////////////////////////////////////////////////////////
+
 
 	// match up paths
 	public static String DOMAIN = "http://localhost";
@@ -181,9 +164,7 @@ public class Application {
 	public static String PROFCLASSLIST_PATH = "/course/:id/profclasslist";
 	public static String REMOVEFROMCLASSLIST_PATH = "/classlistremove/:id";
 	public static String ADDTOCLASSLIST_PATH = "/classlistadd/:id";
-	/////////////////////////////////////////////////////////////////
-	public static String LOGIN2_PATH = "/login2";
-	/////////////////////////////////////////////////////////////////
+
 
 	public static void main(String[] args) throws Exception {
 
@@ -236,15 +217,6 @@ public class Application {
 		exception(Exception.class, (exception, request, response) -> {
 			exception.printStackTrace();
 		});
-
-		// get(TEACHERADDTUTOR_PATH, (req, res) ->
-		// teacherAddTutorController.showTeacherAddTutorPage(req, res), new
-		// HandlebarsTemplateEngine());
-		// get(TUTORAPPOINTMENT_PATH, (req, res) ->
-		// tutorAppointmentController.showTutorAppointmentPage(req, res), new
-		// HandlebarsTemplateEngine());
-
-		//
 
 		get(ADDTOCLASSLIST_PATH, (req, res) -> editcoursesController.showAddToClassListPage(req, res),
 				new HandlebarsTemplateEngine());
@@ -435,8 +407,6 @@ public class Application {
 
 		get(DEPARTMENTS_PATH, (req, res) -> departmentsController.showDepartmentsPage(req, res),
 				new HandlebarsTemplateEngine());
-		// get(TUTORS_PATH, (req, res) -> tutorsController.showTutorsPage(req,
-		// res), new HandlebarsTemplateEngine());
 
 		get(ANNOUNCEMENTS_PATH, (req, res) -> admindashController.showEditAnnouncements(req, res),
 				new HandlebarsTemplateEngine());
@@ -470,21 +440,11 @@ public class Application {
 
 		get(DEPARTMENTS_PATH, (req, res) -> departmentsController.showDepartmentsPage(req, res),
 				new HandlebarsTemplateEngine());
-		// get(TUTORS_PATH, (req, res) -> tutorsController.showTutorsPage(req,
-		// res), new HandlebarsTemplateEngine());
+
 		post(TUTORDASHBOARD_PATH, (req, res) -> tutordashController.replyToRequest(req, res));
 		get(STUDENTDASHBOARD_PATH, (req, res) -> studentdashController.showStudentDashboardPage(req, res),
 				new HandlebarsTemplateEngine());
 		post(STUDENTDASHBOARD_PATH, (req, res) -> studentdashController.requestAppointment(req, res));
-		// get(APPOINTMENT_PATH, (req, res) ->
-		// tutorsController.showAppointmentPage(req, res),
-		// new HandlebarsTemplateEngine());
-		// get(MESSAGE_PATH, (req, res) -> tutorsController.showMessagePage(req,
-		// res), new HandlebarsTemplateEngine());
-		get(CALENDAR_PATH, (req, res) -> calendarController.showCalendarPage(req, res), new HandlebarsTemplateEngine());
-
-		post(CALENDAR_PATH, (req, res) -> calendarController.showCalendarPage(req, res),
-				new HandlebarsTemplateEngine());
 
 		// Change password paths
 		get(CHANGEPASSWORD_PATH, (req, res) -> changePasswordController.showChangePasswordPage(req, res),
@@ -523,11 +483,6 @@ public class Application {
 		get(LOGIN_PATH, (req, res) -> loginController.showLoginPage(req, res), new HandlebarsTemplateEngine());
 		post(LOGIN_PATH, (req, res) -> loginController.login(req, res));
 
-		///////////////////////////////////////////////////////////////////////////////////////////////////
-		// get(LOGIN2_PATH, (req, res) -> login2Controller.showLogin2Page(req,
-		// res), new HandlebarsTemplateEngine());
-		// post(LOGIN2_PATH, (req, res) -> login2Controller.login(req, res));
-		///////////////////////////////////////////////////////////////////////////////////////////////////
 		// User Routes
 		// List all Users
 		get(USERS_PATH, (req, res) -> usersController.index(req, res), new HandlebarsTemplateEngine());
@@ -558,9 +513,6 @@ public class Application {
 
 		post(CLASSLIST_PATH, (req, res) -> editcoursesController.showClassListPage(req, res));
 		// my account
-		// get(MYACCOUNT_PATH, (req, res) ->
-		// myAccountController.showMyAccountPage(req, res),
-		// new HandlebarsTemplateEngine());
 		get(MYACCOUNT_PATH, (req, res) -> myAccountController.showMyAccountPage(req, res),
 				new HandlebarsTemplateEngine());
 		post(MYACCOUNT_PATH, (req, res) -> myAccountController.completeProfile(req, res));
