@@ -584,7 +584,7 @@ public class EditCoursesController {
 		sDao.close();
 		uDao.close();
 		aDao.close();
-		model.put("error", "You have removed a student to this course");
+		model.put("error", "You have removed a student from this course");
 		return new ModelAndView(model, "users/classlist.hbs");
 	}
 
