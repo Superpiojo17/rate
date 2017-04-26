@@ -52,15 +52,29 @@
 
       // Set a callback to run when the Google Visualization API is loaded.
       
-      google.charts.setOnLoadCallback(draw_prof_by_rating);
+      google.charts.setOnLoadCallback(draw_avg_prof_rating_by_year);
+      
+      
+      google.charts.setOnLoadCallback(draw_TEST);
+      
+        google.charts.setOnLoadCallback(draw_TEST_2);
+      
+      
+      google.charts.setOnLoadCallback(draw_percentage_of_ratings_by_year);
+      
       
        google.charts.setOnLoadCallback(draw_dep_rating);
+       
+       
        google.charts.setOnLoadCallback(draw_appointment_rate);
+       
+       
         google.charts.setOnLoadCallback(draw_app_per_tutor);
-       google.charts.setOnLoadCallback(draw_overall_professors_rating);
+        
+
         google.charts.setOnLoadCallback(draw_dep_avg);
 
-function draw_prof_by_rating() {
+function draw_avg_prof_rating_by_year() {
 
  var data = new google.visualization.DataTable();
         data.addColumn('string', 'Rating');
@@ -94,7 +108,101 @@ function draw_prof_by_rating() {
       chart.draw(data, options);
     }
     
-     function draw_overall_professors_rating() {
+    
+    //STUFF IS HERE
+    
+    function draw_TEST() {
+
+ var data = new google.visualization.DataTable();
+         var data = new google.visualization.DataTable();
+      data.addColumn('timeofday', 'Time of Day');
+      data.addColumn('number', 'Motivation Level');
+      data.addColumn('number', 'Energy Level');
+
+      data.addRows([
+        [{v: [8, 0, 0], f: '8 am'}, 1, .25],
+        [{v: [9, 0, 0], f: '9 am'}, 2, .5],
+        [{v: [10, 0, 0], f:'10 am'}, 3, 1],
+        [{v: [11, 0, 0], f: '11 am'}, 4, 2.25],
+        [{v: [12, 0, 0], f: '12 pm'}, 5, 2.25],
+        [{v: [13, 0, 0], f: '1 pm'}, 6, 3],
+        [{v: [14, 0, 0], f: '2 pm'}, 7, 4],
+        [{v: [15, 0, 0], f: '3 pm'}, 8, 5.25],
+        [{v: [16, 0, 0], f: '4 pm'}, 9, 7.5],
+        [{v: [17, 0, 0], f: '5 pm'}, 10, 10],
+      ]);
+
+      var options = {
+        title: 'Motivation and Energy Level Throughout the Day',
+        isStacked: true,
+        hAxis: {
+          title: 'Time of Day',
+          format: 'h:mm a',
+          viewWindow: {
+            min: [7, 30, 0],
+            max: [17, 30, 0]
+          }
+        },
+        vAxis: {
+          title: 'Rating (scale of 1-10)'
+        }
+      };
+
+      var chart = new google.visualization.ColumnChart(document.getElementById('chart_TEST'));
+      chart.draw(data, options);
+    }
+    //MORE STUFF
+    
+    function draw_TEST_2() {
+    var data = new google.visualization.DataTable();
+      data.addColumn('timeofday', 'Time of Day');
+      data.addColumn('number', 'Motivation Level');
+      data.addColumn({type: 'string', role: 'annotation'});
+      data.addColumn('number', 'Energy Level');
+      data.addColumn({type: 'string', role: 'annotation'});
+
+      data.addRows([
+        [{v: [8, 0, 0], f: '8 am'},   1, '1',  .25, '.2'],
+        [{v: [9, 0, 0], f: '9 am'},   2, '2',   .5, '.5'],
+        [{v: [10, 0, 0], f:'10 am'},  3, '3',    1,  '1'],
+        [{v: [11, 0, 0], f: '11 am'}, 4, '4', 2.25,  '2'],
+        [{v: [12, 0, 0], f: '12 pm'}, 5, '5', 2.25,  '2'],
+        [{v: [13, 0, 0], f: '1 pm'},  6, '6',    3,  '3'],
+        [{v: [14, 0, 0], f: '2 pm'},  7, '7', 3.25,  '3'],
+        [{v: [15, 0, 0], f: '3 pm'},  8, '8',    5,  '5'],
+        [{v: [16, 0, 0], f: '4 pm'},  9, '9',  6.5,  '6'],
+        [{v: [17, 0, 0], f: '5 pm'}, 10, '10',  10, '10'],
+      ]);
+
+      var options = {
+        title: 'Motivation and Energy Level Throughout the Day',
+        annotations: {
+          alwaysOutside: true,
+          textStyle: {
+            fontSize: 14,
+            color: '#000',
+            auraColor: 'none'
+          }
+        },
+        hAxis: {
+          title: 'Time of Day',
+          format: 'h:mm a',
+          viewWindow: {
+            min: [7, 30, 0],
+            max: [17, 30, 0]
+          }
+        },
+        vAxis: {
+          title: 'Rating (scale of 1-10)'
+        }
+      };
+
+      var chart = new google.visualization.ColumnChart(document.getElementById('chart_TEST_2'));
+      chart.draw(data, options);
+      }
+
+    
+     function draw_percentage_of_ratings_by_year() {
      
        var data = new google.visualization.DataTable();
         data.addColumn('string', 'Ratings');
@@ -107,7 +215,7 @@ function draw_prof_by_rating() {
            ]);
 
         var options = {
-          title: 'Count of Ratings by Year',
+          title: 'Rating By Year Breakdown',
           pieHole: 0.4,
          'width':700,
          'height':300,
@@ -384,14 +492,24 @@ function draw_prof_by_rating() {
 									    <th><h3>Professor Rating - By Year</h3></th>
 									   
 									  </tr>
+									  
+									  
 									  <tr>
 									    <td><div id="chart_div"></div></td>
 									     <td><div id ="chart_overall_prof"></div></td>
+									     </tr> <tr>
+									   
 									  
-									  </tr><tr>
+									      <td><div id ="chart_TEST"></div></td>
+									      <td><div id ="chart_TEST_2"></div></td>
+									  </tr>
+									  <tr>
 									    <th><h3>Professor Rating - BY Department</h3></th>
 									  
-									  </tr><tr>
+									  </tr>
+									  	
+									  	
+									  <tr>
 									  	<td><div id="chart_dep" ></div> </td>
 									  	
 									  	<td><div id="chart_dep_avg" ></div> </td>

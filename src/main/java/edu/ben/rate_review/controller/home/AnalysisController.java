@@ -30,6 +30,10 @@ public class AnalysisController {
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 
+//		if (u == null || u.getRole() != 1) {
+//			return new ModelAndView(model, "home/notauthorized.hbs");
+//		}
+
 		if (u != null) {
 			if (u.getRole() == 1) {
 				model.put("user_admin", true);

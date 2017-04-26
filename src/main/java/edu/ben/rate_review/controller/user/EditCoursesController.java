@@ -331,9 +331,9 @@ public class EditCoursesController {
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 
-		// if (u == null || u.getRole() != 1) {
-		// return new ModelAndView(model, "home/notauthorized.hbs");
-		// }
+		 if (u == null || u.getRole() != 1) {
+		 return new ModelAndView(model, "home/notauthorized.hbs");
+		 }
 
 		String idString = req.params("id");
 		long course_id = Long.parseLong(idString);
@@ -375,9 +375,9 @@ public class EditCoursesController {
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 
-		// if (u == null || u.getRole() != 1) {
-		// return new ModelAndView(model, "home/notauthorized.hbs");
-		// }
+		 if (u == null || u.getRole() != 2) {
+		 return new ModelAndView(model, "home/notauthorized.hbs");
+		 }
 
 		String idString = req.params("id");
 		long course_id = Long.parseLong(idString);
@@ -411,9 +411,9 @@ public class EditCoursesController {
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 
-		// if (u == null || u.getRole() != 1) {
-		// return new ModelAndView(model, "home/notauthorized.hbs");
-		// }
+		 if (u == null || u.getRole() != 1) {
+		 return new ModelAndView(model, "home/notauthorized.hbs");
+		 }
 
 		String idString = req.params("id");
 		long course_id = Long.parseLong(idString);
@@ -445,9 +445,9 @@ public class EditCoursesController {
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 
-		// if (u == null || u.getRole() != 1) {
-		// return new ModelAndView(model, "home/notauthorized.hbs");
-		// }
+		 if (u == null || u.getRole() != 1) {
+		 return new ModelAndView(model, "home/notauthorized.hbs");
+		 }
 
 		String idString = req.params("id");
 		long course_id = Long.parseLong(idString);
