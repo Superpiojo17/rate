@@ -268,10 +268,6 @@ public class StudentDashboardController {
 						appointment.setDate(req.queryParams("date"));
 						appointment.setTime(req.queryParams("time"));
 						appointment.setStudent_message(req.queryParams("student_message"));
-						appointment.setStudent_firstname(u.getFirst_name());
-						appointment.setStudent_lastname(u.getLast_name());
-						appointment.setTutor_firstname(tutor.getFirst_name());
-						appointment.setTutor_lastname(tutor.getLast_name());
 						appointment.setRelationship_id(Long.parseLong(splitTutorId[1]));
 
 						if (appointment.getStudent_message().length() < 200) {

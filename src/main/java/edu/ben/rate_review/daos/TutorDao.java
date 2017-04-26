@@ -92,8 +92,8 @@ public class TutorDao implements Dao<Tutor> {
 	 */
 	public TutorAppointment saveTutorAppointment(TutorAppointment appointment) {
 		final String sql = "INSERT INTO " + APPOINTMENT_TABLE + "(student_id, tutor_id, date, time, student_message, "
-				+ "student_firstname, student_lastname, tutor_firstname, tutor_lastname, tutor_message, tutor_has_responded,"
-				+ " appointment_status, appointment_past, appointment_reviewed, relationship_id) Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "tutor_message, tutor_has_responded, appointment_status, appointment_past, appointment_reviewed, "
+				+ "relationship_id) Values(?,?,?,?,?,?,?,?,?,?,?)";
 
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -102,16 +102,12 @@ public class TutorDao implements Dao<Tutor> {
 			ps.setString(3, appointment.getDate());
 			ps.setString(4, appointment.getTime());
 			ps.setString(5, appointment.getStudent_message());
-			ps.setString(6, appointment.getStudent_firstname());
-			ps.setString(7, appointment.getStudent_lastname());
-			ps.setString(8, appointment.getTutor_firstname());
-			ps.setString(9, appointment.getTutor_lastname());
-			ps.setString(10, appointment.getTutor_message());
-			ps.setBoolean(11, appointment.getTutor_has_responded());
-			ps.setBoolean(12, appointment.getAppointment_status());
-			ps.setBoolean(13, appointment.isAppointment_past());
-			ps.setBoolean(14, appointment.isAppointment_reviewed());
-			ps.setLong(15, appointment.getRelationship_id());
+			ps.setString(6, appointment.getTutor_message());
+			ps.setBoolean(7, appointment.getTutor_has_responded());
+			ps.setBoolean(8, appointment.getAppointment_status());
+			ps.setBoolean(9, appointment.isAppointment_past());
+			ps.setBoolean(10, appointment.isAppointment_reviewed());
+			ps.setLong(11, appointment.getRelationship_id());
 			ps.executeUpdate();
 			return appointment;
 		} catch (SQLException e) {
@@ -158,6 +154,8 @@ public class TutorDao implements Dao<Tutor> {
 	 */
 	private TutorAppointment appointmentMapRow(ResultSet rs) throws SQLException {
 		// create student course object
+		UserDao uDao = new UserDao(conn);
+
 		TutorAppointment tmp = new TutorAppointment();
 		tmp.setAppointment_id(rs.getLong("appointment_id"));
 		tmp.setStudent_id(rs.getLong("student_id"));
@@ -170,10 +168,10 @@ public class TutorDao implements Dao<Tutor> {
 		tmp.setAppointment_status(rs.getBoolean("appointment_status"));
 		tmp.setAppointment_past(rs.getBoolean("appointment_past"));
 		tmp.setAppointment_reviewed(rs.getBoolean("appointment_reviewed"));
-		tmp.setStudent_firstname(rs.getString("student_firstname"));
-		tmp.setStudent_lastname(rs.getString("student_lastname"));
-		tmp.setTutor_firstname(rs.getString("tutor_firstname"));
-		tmp.setTutor_lastname(rs.getString("tutor_lastname"));
+		tmp.setStudent_firstname(uDao.findById(tmp.getStudent_id()).getFirst_name());
+		tmp.setStudent_lastname(uDao.findById(tmp.getStudent_id()).getLast_name());
+		tmp.setTutor_firstname(uDao.findById(tmp.getTutor_id()).getFirst_name());
+		tmp.setTutor_lastname(uDao.findById(tmp.getTutor_id()).getLast_name());
 		tmp.setRelationship_id(rs.getLong("relationship_id"));
 
 		return tmp;
@@ -237,17 +235,15 @@ public class TutorDao implements Dao<Tutor> {
 	 */
 	public TutorAppointment updateApt(TutorAppointment appointment) {
 		String sql = "UPDATE " + APPOINTMENT_TABLE
-				+ " SET tutor_id = ? , tutor_firstname = ? , tutor_lastname = ? , appointment_status = ? WHERE appointment_id = ?";
+				+ " SET tutor_id = ?, appointment_status = ? WHERE appointment_id = ?";
 
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
 			ps.setLong(1, appointment.getTutor_id());
-			ps.setString(2, appointment.getTutor_firstname());
-			ps.setString(3, appointment.getTutor_lastname());
-			ps.setBoolean(4, appointment.getAppointment_status());
-			ps.setLong(5, appointment.getAppointment_id());
+			ps.setBoolean(2, appointment.getAppointment_status());
+			ps.setLong(3, appointment.getAppointment_id());
 			// Runs query
 			ps.execute();
 			return appointment;
