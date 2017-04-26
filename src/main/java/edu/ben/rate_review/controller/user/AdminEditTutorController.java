@@ -204,7 +204,7 @@ public class AdminEditTutorController {
 
 		tutor.setStudent_id(Long.parseLong(req.queryParams("selecttutor")));
 		tutor.setId(id);
-		tutor.setCourse(tempTutor.getCourse_name());
+		tutor.setCourse_id(tempTutor.getCourse_id());
 
 		tDao.adminUpdateTutor(tutor);
 
@@ -350,7 +350,8 @@ public class AdminEditTutorController {
 
 		Tutor tutor = new Tutor();
 
-		tutor.setCourse_name(course.getCourse_name());
+		tutor.setCourse_id(course.getId());
+		tutor.setCourse_name(cDao.findById(course.getId()).getCourse_name());
 		tutor.setStudent_id(Long.parseLong(req.queryParams("selecttutor")));
 
 		User user = uDao.findById(Long.parseLong(req.queryParams("selecttutor")));
@@ -391,12 +392,13 @@ public class AdminEditTutorController {
 
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
 		cDao.close();
 		tDao.close();
 		uDao.close();
 		ad.close();
-		List<Announcement> announcements = ad.all();
-		model.put("announcements", announcements);
+		
 
 		model.put("error", "You have assigned " + user.getFirst_name() + " " + user.getLast_name() + " to "
 				+ tutor.getCourse_name());

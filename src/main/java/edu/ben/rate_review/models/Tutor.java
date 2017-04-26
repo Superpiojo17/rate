@@ -5,6 +5,7 @@ public class Tutor {
 	private Long id;
 	private Long student_id;
 	private Long professor_id;
+	private Long course_id;
 	private String course_name;
 	private String tutor_first_name;
 	private String tutor_last_name;
@@ -100,5 +101,13 @@ public class Tutor {
 	 */
 	public float getOverall() {
 		return overall;
+	}
+
+	public Long getCourse_id() {
+		return course_id;
+	}
+
+	public void setCourse_id(Long course_id) {
+		this.course_id = course_id;
 	}
 }

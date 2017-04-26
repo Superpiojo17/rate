@@ -35,12 +35,15 @@ public class TutorDao implements Dao<Tutor> {
 	private Tutor mapRow(ResultSet rs) throws SQLException {
 		UserDao udao = new UserDao(conn);
 		TutorDao tDao = new TutorDao(conn);
+		CourseDao cDao = new CourseDao(conn);
 		Tutor tmp = new Tutor();
 
 		tmp.setId(rs.getLong("tutor_relationship_id"));
 		tmp.setStudent_id(rs.getLong("user_id_student"));
 		tmp.setProfessor_id(rs.getLong("user_id_professor"));
-		tmp.setCourse_name(rs.getString("course_name"));
+		tmp.setCourse_id(rs.getLong("course_id"));
+
+		tmp.setCourse_name(cDao.findById(rs.getLong("course_id")).getCourse_name());
 		tmp.setTutor_email(udao.findById(rs.getLong("user_id_student")).getEmail());
 		tmp.setTutor_first_name(udao.findById(rs.getLong("user_id_student")).getFirst_name());
 		tmp.setTutor_last_name(udao.findById(rs.getLong("user_id_student")).getLast_name());
@@ -65,14 +68,13 @@ public class TutorDao implements Dao<Tutor> {
 
 	public Tutor save(Tutor tutor) {
 		final String sql = "INSERT INTO " + TUTOR_TABLE
-				+ "(user_id_student, user_id_professor, course_name) Values(?,?,?)";
+				+ "(user_id_student, user_id_professor, course_id) Values(?,?,?)";
 
 		try {
-			System.out.println("ADDED");
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setLong(1, tutor.getStudent_id());
 			ps.setLong(2, tutor.getProfessor_id());
-			ps.setString(3, tutor.getCourse_name());
+			ps.setLong(3, tutor.getCourse_id());
 			ps.executeUpdate();
 			return tutor;
 		} catch (SQLException e) {
@@ -548,8 +550,8 @@ public class TutorDao implements Dao<Tutor> {
 	 * @param course
 	 * @return
 	 */
-	public List<Tutor> getTutorByCourseName(String course, long student_id) {
-		final String SELECT = "SELECT * FROM " + TUTOR_TABLE + " WHERE course_name = " + course + " LIMIT 1";
+	public List<Tutor> getTutorByCourseName(Long course_id) {
+		final String SELECT = "SELECT * FROM " + TUTOR_TABLE + " WHERE course_id = " + course_id + " LIMIT 1";
 
 		List<Tutor> tutors = null;
 		try {
@@ -654,8 +656,8 @@ public class TutorDao implements Dao<Tutor> {
 	 * @param id
 	 * @return
 	 */
-	public List<Tutor> listAllCourseTutors(String course) {
-		final String SELECT = "SELECT * FROM " + TUTOR_TABLE + " WHERE course_name = '" + course + "'";
+	public List<Tutor> listAllCourseTutors(Long course_id) {
+		final String SELECT = "SELECT * FROM " + TUTOR_TABLE + " WHERE course_id = '" + course_id + "'";
 
 		List<Tutor> tutors = null;
 		try {
@@ -780,13 +782,13 @@ public class TutorDao implements Dao<Tutor> {
 	}
 
 	public TutorForm updateTutor(TutorForm tutor) {
-		String sql = "UPDATE " + TUTOR_TABLE + " SET course_name = ? WHERE tutor_relationship_id = ? LIMIT 1";
+		String sql = "UPDATE " + TUTOR_TABLE + " SET course_id = ? WHERE tutor_relationship_id = ? LIMIT 1";
 
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
-			ps.setString(1, tutor.getCourse());
+			ps.setLong(1, tutor.getCourse_id());
 			ps.setLong(2, tutor.getId());
 
 			// Runs query

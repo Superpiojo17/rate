@@ -96,12 +96,14 @@ public class EditTutorController {
 		String idString = req.params("id");
 		long id = Long.parseLong(idString);
 		TutorDao tDao = DaoManager.getInstance().getTutorDao();
+		CourseDao cDao = DaoManager.getInstance().getCourseDao();
 		TutorForm tutor = new TutorForm();
 
 		Tutor tempTutor = tDao.findById(id);
 
-		tutor.setCourse(req.queryParams("course"));
+		tutor.setCourse_id(Long.parseLong(req.queryParams("course")));
 		tutor.setId(id);
+		tutor.setCourse_name(cDao.findById(Long.parseLong(req.queryParams("course"))).getCourse_name());
 
 		tDao.updateTutor(tutor);
 
@@ -116,13 +118,14 @@ public class EditTutorController {
 
 		model.put("tutors", tutors);
 
-		model.put("error", "You have assigned " + tutor.getCourse() + " to " + tempTutor.getTutor_first_name() + " "
-				+ tempTutor.getTutor_last_name());
+		model.put("error", "You have assigned " + tutor.getCourse_name() + " to " + tempTutor.getTutor_first_name()
+				+ " " + tempTutor.getTutor_last_name());
 
 		model.put("current_user", u);
 
 		tDao.close();
 		ad.close();
+		cDao.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/alltutors.hbs");
 

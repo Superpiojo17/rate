@@ -123,10 +123,10 @@
 											<td>{{tutor_form.tutor_email}} </td>
 											<td>
 												<select name="course" id="course">
-											 <option value="{{tutor_form.course}}">  {{tutor_form.course}}</option>
+											 <option value="{{tutor_form.course_id}}">  {{tutor_form.course_name}}</option>
 											{{#each courses}}
 											
-  <option value="{{course_name}}"> {{subject}} {{course_number}}</option>
+  <option value="{{id}}"> {{subject}} {{course_number}}</option>
   {{/each}}
 </select>
 											</td>

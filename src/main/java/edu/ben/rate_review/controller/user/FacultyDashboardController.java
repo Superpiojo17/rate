@@ -361,13 +361,16 @@ public class FacultyDashboardController {
 		long id = Long.parseLong(idString);
 		TutorDao tDao = DaoManager.getInstance().getTutorDao();
 		UserDao uDao = DaoManager.getInstance().getUserDao();
+		CourseDao cDao = DaoManager.getInstance().getCourseDao();
 		if (uDao.findById(id).getRole() == 4) {
 			uDao.updateRole(uDao.findById(id), 3);
 		}
 
 		Tutor tutor = new Tutor();
 
-		tutor.setCourse_name(req.queryParams("course"));
+		tutor.setCourse_id(Long.parseLong(req.queryParams("course")));
+		
+		tutor.setCourse_name(cDao.findById(Long.parseLong(req.queryParams("course"))).getCourse_name());
 
 		tutor.setProfessor_id(u.getId());
 		tutor.setStudent_id(id);
@@ -391,47 +394,11 @@ public class FacultyDashboardController {
 		ad.close();
 		tDao.close();
 		uDao.close();
+		cDao.close();
 		return new ModelAndView(model, "users/alltutors.hbs");
 
 	}
 
-	public ModelAndView addStudentAsTutor(Request req, Response res) {
-		HashMap<String, Object> model = new HashMap<>();
 
-		Session session = req.session();
-		User u = (User) session.attribute("current_user");
-
-		String idString = req.params("id");
-		long id = Long.parseLong(idString);
-		TutorDao tDao = DaoManager.getInstance().getTutorDao();
-		UserDao uDao = DaoManager.getInstance().getUserDao();
-		Tutor tutor = new Tutor();
-
-		tutor.setCourse_name(req.queryParams("course"));
-
-		tutor.setProfessor_id(u.getId());
-		tutor.setStudent_id(id);
-
-		User tempTutor = uDao.findById(id);
-
-		tDao.save(tutor);
-
-		DaoManager adao = DaoManager.getInstance();
-		AnnouncementDao ad = adao.getAnnouncementDao();
-		List<Announcement> announcements = ad.all();
-		model.put("announcements", announcements);
-
-		List<Tutor> tutors = tDao.all(u.getId());
-
-		model.put("tutors", tutors);
-
-		model.put("error", "You have assigned " + tutor.getCourse_name() + " to " + tempTutor.getFirst_name() + " "
-				+ tempTutor.getLast_name());
-
-		tDao.close();
-		uDao.close();
-		return new ModelAndView(model, "users/alltutors.hbs");
-
-	}
 
 }
