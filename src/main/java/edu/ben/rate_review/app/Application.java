@@ -2,6 +2,10 @@ package edu.ben.rate_review.app;
 
 import static spark.Spark.*;
 
+/**
+ * This application class runs our entire project and is also where we configure the paths to get to all our pages
+ */
+
 import java.util.HashMap;
 
 import edu.ben.rate_review.authorization.AuthException;
@@ -76,7 +80,6 @@ public class Application {
 	private static AnalysisController analysisController = new AnalysisController();
 	private static MyAccountController myAccountController = new MyAccountController();
 
-
 	// match up paths
 	public static String DOMAIN = "http://localhost";
 	public static String HOME_PATH = "/";
@@ -108,11 +111,9 @@ public class Application {
 	public static String REVIEWPROFESSOR_PATH = "/reviewprofessor/:student_course_id/review";
 	public static String SELECTTUTOR_PATH = "/selecttutors";
 	public static String ADDPROFESSOR_PATH = "/addprofessor";
-
 	public static String FAQ_PATH = "/faq";
 	public static String TUTORAPPOINTMENT_PATH = "/tutorappointment";
 	public static String TEACHERADDTUTOR_PATH = "/teacheraddtutor";
-
 	public static String NOTLOGGEDIN_PATH = "/notloggedinerror";
 	public static String AUTHORIZATIONERROR_PATH = "/notauthorized";
 	public static String EDITUSER_PATH = "/user/:id/edit";
@@ -165,7 +166,7 @@ public class Application {
 	public static String REMOVEFROMCLASSLIST_PATH = "/classlistremove/:id";
 	public static String ADDTOCLASSLIST_PATH = "/classlistadd/:id";
 
-
+	// Main class
 	public static void main(String[] args) throws Exception {
 
 		// Set what port you want to run on
@@ -179,8 +180,7 @@ public class Application {
 	}
 
 	/**
-	 * Configures the routes based on URL path, you will want to be consistent
-	 * and use this structure when you can
+	 * Configures the routes based on URL path
 	 */
 	private static void configRoutes() {
 
@@ -218,166 +218,177 @@ public class Application {
 			exception.printStackTrace();
 		});
 
+		// paths for adding a student to a course
 		get(ADDTOCLASSLIST_PATH, (req, res) -> editcoursesController.showAddToClassListPage(req, res),
 				new HandlebarsTemplateEngine());
-
 		post(ADDTOCLASSLIST_PATH, (req, res) -> editcoursesController.addStudentToCourse(req, res),
 				new HandlebarsTemplateEngine());
 
+		// paths for removing a student for a course
 		get(REMOVEFROMCLASSLIST_PATH, (req, res) -> editcoursesController.showRemoveFromClassListPage(req, res),
 				new HandlebarsTemplateEngine());
-
 		post(REMOVEFROMCLASSLIST_PATH, (req, res) -> editcoursesController.removeStudentFromCourse(req, res),
 				new HandlebarsTemplateEngine());
 
+		// paths for admin viewing and editing appointments
 		get(APPOINTMENTS_PATH, (req, res) -> admindashController.showAllDeptApt(req, res),
 				new HandlebarsTemplateEngine());
-
-		get(DEPTREVIEWS_PATH, (req, res) -> editReviewController.showDeptReviews(req, res),
-				new HandlebarsTemplateEngine());
-
-		get(ADMINREVIEWLANDING_PATH, (req, res) -> admindashController.showManageReviewsLandingPage(req, res),
-				new HandlebarsTemplateEngine());
-
 		get(EDITAPPOINTMENTS_PATH, (req, res) -> admindashController.showEditApt(req, res),
 				new HandlebarsTemplateEngine());
 
+		// path to edit a review
+		get(DEPTREVIEWS_PATH, (req, res) -> editReviewController.showDeptReviews(req, res),
+				new HandlebarsTemplateEngine());
+
+		// path to show admin landing page
+		get(ADMINREVIEWLANDING_PATH, (req, res) -> admindashController.showManageReviewsLandingPage(req, res),
+				new HandlebarsTemplateEngine());
+
+		// path for admin to update an appointment
 		post(UPDATEAPPOINTMENT_PATH, (req, res) -> admindashController.adminUpdateApt(req, res),
 				new HandlebarsTemplateEngine());
 
+		// path to delete review
 		post(DELETEREVIEW_PATH, (req, res) -> editReviewController.deleteReview(req, res),
 				new HandlebarsTemplateEngine());
 
+		// path to delete an appointment
 		post(DELETEAPPOINTMENT_PATH, (req, res) -> admindashController.adminDeleteApt(req, res),
 				new HandlebarsTemplateEngine());
 
+		// path for admin to delete at tutor relationship
 		post(ADMINDELETETUTOR_PATH, (req, res) -> adminedittutorController.adminDeleteTutor(req, res),
 				new HandlebarsTemplateEngine());
 
+		// paths for admins to add tutors
+		get(TUTORLANDING_PATH, (req, res) -> admindashController.showManageTutorsLandingPage(req, res),
+				new HandlebarsTemplateEngine());
 		post(ADMINADDTUTOR_PATH, (req, res) -> adminedittutorController.adminAddTutor(req, res),
 				new HandlebarsTemplateEngine());
-
 		get(ADMINADDTUTOR_PATH, (req, res) -> adminedittutorController.showAddTutorsPage(req, res),
 				new HandlebarsTemplateEngine());
-
-		get(ADMINAPTLANDING_PATH, (req, res) -> admindashController.showManageAptLandingPage(req, res),
-				new HandlebarsTemplateEngine());
-
-		get(LOGOUT_PATH, (req, res) -> sessionsController.logout(req, res), new HandlebarsTemplateEngine());
-
 		get(ADMINADDTUTORLANDING_PATH, (req, res) -> adminedittutorController.showAddTutorsLandingPage(req, res),
 				new HandlebarsTemplateEngine());
 
+		// path for the landing page for admin managing tutors by department
+		get(ADMINAPTLANDING_PATH, (req, res) -> admindashController.showManageAptLandingPage(req, res),
+				new HandlebarsTemplateEngine());
+
+		// log out path
+		get(LOGOUT_PATH, (req, res) -> sessionsController.logout(req, res), new HandlebarsTemplateEngine());
+
+		// paths for admin editting tutors
 		get(ADMINTUTOREDIT_PATH, (req, res) -> adminedittutorController.showAdminEditTutorPage(req, res),
 				new HandlebarsTemplateEngine());
 		post(ADMINTUTOREDIT_PATH, (req, res) -> adminedittutorController.adminUpdateTutor(req, res),
 				new HandlebarsTemplateEngine());
-
-		post(COMPLETETUTOR_PATH, (req, res) -> tutordashController.completeProfile(req, res));
-
-		post(COMPLETEPROF_PATH, (req, res) -> facultydashController.completeProfile(req, res));
-
-		post(COMPLETESTUDENT_PATH, (req, res) -> studentdashController.completeProfile(req, res));
-
 		get(ADMINTUTOR_PATH, (req, res) -> adminedittutorController.showDeptTutorsPage(req, res),
 				new HandlebarsTemplateEngine());
 
-		get(TUTORLANDING_PATH, (req, res) -> admindashController.showManageTutorsLandingPage(req, res),
-				new HandlebarsTemplateEngine());
-
+		// paths for completing profiles for all roles
 		get(COMPLETETUTOR_PATH, (req, res) -> tutordashController.showCompleteProfileTutorPage(req, res),
 				new HandlebarsTemplateEngine());
-
 		get(COMPLETEPROF_PATH, (req, res) -> facultydashController.showCompleteProfileProfPage(req, res),
 				new HandlebarsTemplateEngine());
-
 		get(COMPLETESTUDENT_PATH, (req, res) -> studentdashController.showCompleteProfileStudentPage(req, res),
 				new HandlebarsTemplateEngine());
 
-		get(COURSESPROFESSOR_PATH, (req, res) -> studentdashController.showCourseAllProfessorsPage(req, res),
-				new HandlebarsTemplateEngine());
+		post(COMPLETETUTOR_PATH, (req, res) -> tutordashController.completeProfile(req, res));
+		post(COMPLETEPROF_PATH, (req, res) -> facultydashController.completeProfile(req, res));
+		post(COMPLETESTUDENT_PATH, (req, res) -> studentdashController.completeProfile(req, res));
 
-		post(COURSESPROFESSOR_PATH, (req, res) -> studentdashController.showCourseAllProfessorsPage(req, res),
-				new HandlebarsTemplateEngine());
+		// paths for an admin manage courses
 
-		get(MAJORTUTOR_PATH, (req, res) -> studentdashController.showMajorTutorsPage(req, res),
-				new HandlebarsTemplateEngine());
-		post(MAJORTUTOR_PATH, (req, res) -> studentdashController.showMajorTutorsPage(req, res),
-				new HandlebarsTemplateEngine());
-
+		// adding courses
 		get(ADDCOURSE_PATH, (req, res) -> editcoursesController.showAddCoursesPage(req, res),
 				new HandlebarsTemplateEngine());
 
 		post(ADDCOURSE_PATH, (req, res) -> editcoursesController.addCourse(req, res), new HandlebarsTemplateEngine());
 
+		// Deleting courses
 		post(DELETECOURSE_PATH, (req, res) -> editcoursesController.deleteCourse(req, res),
 				new HandlebarsTemplateEngine());
 
+		// editing course
 		get(EDITCOURSES_PATH, (req, res) -> editcoursesController.showEditCoursesPage(req, res),
 				new HandlebarsTemplateEngine());
-
 		post(EDITCOURSES_PATH, (req, res) -> editcoursesController.updateCourse(req, res),
 				new HandlebarsTemplateEngine());
 
+		// paths for admin to view courses
 		get(COURSES_PATH, (req, res) -> editcoursesController.showDeptCoursesPage(req, res),
 				new HandlebarsTemplateEngine());
 
 		get(COURSELANDING_PATH, (req, res) -> admindashController.showManageCoursesLandingPage(req, res),
 				new HandlebarsTemplateEngine());
 
+		// mass enroll students as an admin
 		post(COURSELANDING_PATH, (req, res) -> admindashController.massEnrollStudents(req, res));
 
+		// Faq path
 		get(FAQ_PATH, (req, res) -> faqController.showFaqPage(req, res), new HandlebarsTemplateEngine());
 
+		// path for faculty to add a tutor
 		get(ALLSTUDENTS_PATH, (req, res) -> facultydashController.showSelectStudentsPage(req, res),
 				new HandlebarsTemplateEngine());
-
-		get(ADDTUTOR_PATH, (req, res) -> facultydashController.showAddTutorPage(req, res),
-				new HandlebarsTemplateEngine());
-
-		post(ADDTUTOR_PATH, (req, res) -> facultydashController.addTutor(req, res), new HandlebarsTemplateEngine());
-
-		get(EDITTUTORS_PATH, (req, res) -> edittutorController.showEditTutorPage(req, res),
-				new HandlebarsTemplateEngine());
-
-		post(EDITTUTORS_PATH, (req, res) -> edittutorController.updateTutor(req, res), new HandlebarsTemplateEngine());
-
-		post(DELETETUTOR_PATH, (req, res) -> edittutorController.deleteTutor(req, res), new HandlebarsTemplateEngine());
-
 		get(ALLTUTORS_PATH, (req, res) -> facultydashController.showAllTutorsPage(req, res),
 				new HandlebarsTemplateEngine());
 
+		// paths for faculty to manage tutors
+
+		// path for landing page
+		get(SELECTTUTOR_PATH, (req, res) -> facultydashController.showSelectTutorsPage(req, res),
+				new HandlebarsTemplateEngine());
+
+		// adding a tutor
+		get(ADDTUTOR_PATH, (req, res) -> facultydashController.showAddTutorPage(req, res),
+				new HandlebarsTemplateEngine());
+		post(ADDTUTOR_PATH, (req, res) -> facultydashController.addTutor(req, res), new HandlebarsTemplateEngine());
+
+		// editing a tutor
+		get(EDITTUTORS_PATH, (req, res) -> edittutorController.showEditTutorPage(req, res),
+				new HandlebarsTemplateEngine());
+		post(EDITTUTORS_PATH, (req, res) -> edittutorController.updateTutor(req, res), new HandlebarsTemplateEngine());
+
+		// deleting a tutor
+		post(DELETETUTOR_PATH, (req, res) -> edittutorController.deleteTutor(req, res), new HandlebarsTemplateEngine());
+
+		// paths for 404 errors
 		get(AUTHORIZATIONERROR_PATH, (req, res) -> unauthorizedController.showNotAuthorized(req, res),
 				new HandlebarsTemplateEngine());
 
 		get(NOTLOGGEDIN_PATH, (req, res) -> unauthorizedController.showNotLoggedIn(req, res),
 				new HandlebarsTemplateEngine());
 
+		// paths for admin to edit a user
 		get(EDITUSER_PATH, (req, res) -> edituserController.showEditUserPage(req, res), new HandlebarsTemplateEngine());
+		post(EDITUSER_PATH, (req, res) -> edituserController.updateUser(req, res), new HandlebarsTemplateEngine());
+		post(DELETEUSER_PATH, (req, res) -> edituserController.deleteUser(req, res));
 
+		// paths for admin managing announcementsF
 		post(ADDANNOUNCEMENT_PATH, (req, res) -> editannouncementController.addAnnouncement(req, res),
 				new HandlebarsTemplateEngine());
-
 		get(ADDANNOUNCEMENT_PATH, (req, res) -> editannouncementController.showAddAnnouncementPage(req, res),
 				new HandlebarsTemplateEngine());
-
 		get(EDITANNOUNCEMENT_PATH, (req, res) -> editannouncementController.showEditAnnouncementPage(req, res),
 				new HandlebarsTemplateEngine());
-
 		post(EDITANNOUNCEMENT_PATH, (req, res) -> editannouncementController.updateAnnouncement(req, res),
 				new HandlebarsTemplateEngine());
+		post(DELETEANNOUNCEMENT_PATH, (req, res) -> editannouncementController.deleteAnnouncement(req, res),
+				new HandlebarsTemplateEngine());
+		get(ANNOUNCEMENTS_PATH, (req, res) -> admindashController.showEditAnnouncements(req, res),
+				new HandlebarsTemplateEngine());
+		post(ANNOUNCEMENTS_PATH, (req, res) -> admindashController.addAnnouncement(req, res),
+				new HandlebarsTemplateEngine());
 
-		post(EDITUSER_PATH, (req, res) -> edituserController.updateUser(req, res), new HandlebarsTemplateEngine());
-
-		// get(TUTOR_PATH, (req, res) -> tutorController.showTutorPage(req,
-		// res), new HandlebarsTemplateEngine());
-
+		// path for professor overview page
 		get(PROFESSOR_PATH, (req, res) -> professorController.showProfessorPage(req, res),
 				new HandlebarsTemplateEngine());
 		post(PROFESSOR_PATH, (req, res) -> professorController.flag(req, res));
 
 		put(PROFESSOR_PATH, (req, res) -> professorController.display(req, res));
 
+		// paths for mass editing all users from admin perspective
 		post(MASSEDITCONFIRMED_PATH, (req, res) -> edituserController.massEditConfirmed(req, res),
 				new HandlebarsTemplateEngine());
 		post(MASSEDITACTIVE_PATH, (req, res) -> edituserController.massEditActive(req, res),
@@ -387,64 +398,63 @@ public class Application {
 		post(MASSEDITROLE_PATH, (req, res) -> edituserController.massEditRole(req, res),
 				new HandlebarsTemplateEngine());
 
-		post(DELETEUSER_PATH, (req, res) -> edituserController.deleteUser(req, res));
-
-		post(DELETEANNOUNCEMENT_PATH, (req, res) -> editannouncementController.deleteAnnouncement(req, res),
-				new HandlebarsTemplateEngine());
-
+		// paths for reviewing a professor
 		get(REVIEWPROFESSOR_PATH, (req, res) -> professorReviewController.showReviewProfessorPage(req, res),
 				new HandlebarsTemplateEngine());
 		post(REVIEWPROFESSOR_PATH, (req, res) -> professorReviewController.reviewProfessor(req, res));
 
 		put(REVIEWPROFESSOR_PATH, (req, res) -> professorReviewController.passCourse(req, res));
 
+		// paths for revieing a tutor
 		get(TUTORREVIEW_PATH, (req, res) -> tutorReviewController.showTutorReview(req, res),
 				new HandlebarsTemplateEngine());
-
 		post(TUTORREVIEW_PATH, (req, res) -> tutorReviewController.reviewTutor(req, res));
 
+		// path for browse teacher path
 		get(TEACHER_PATH, (req, res) -> teacherController.showTeacherPage(req, res), new HandlebarsTemplateEngine());
 
 		get(DEPARTMENTS_PATH, (req, res) -> departmentsController.showDepartmentsPage(req, res),
 				new HandlebarsTemplateEngine());
 
-		get(ANNOUNCEMENTS_PATH, (req, res) -> admindashController.showEditAnnouncements(req, res),
+		// path for the home page
+		get(HOME_PATH, (req, res) -> homeController.showHomePage(req, res), new HandlebarsTemplateEngine());
+
+		// paths for the admin dash boards
+
+		get(ADMINDASHBOARD_PATH, (req, res) -> admindashController.showAdminDashboardPage(req, res),
 				new HandlebarsTemplateEngine());
-		post(ANNOUNCEMENTS_PATH, (req, res) -> admindashController.addAnnouncement(req, res),
+
+		post(ADMINDASHBOARD_PATH, (req, res) -> admindashController.handleFlaggedComment(req, res));
+
+		// paths for admin managing all users
+		get(ALLUSERS_PATH, (req, res) -> admindashController.showAllUsersPage(req, res),
 				new HandlebarsTemplateEngine());
 
 		post(SORTBYLASTNAME_PATH, (req, res) -> admindashController.sortByLastName(req, res));
 
-		get(HOME_PATH, (req, res) -> homeController.showHomePage(req, res), new HandlebarsTemplateEngine());
-
 		get(FACULTYDASHBOARD_PATH, (req, res) -> facultydashController.showFacultyDashboardPage(req, res),
 				new HandlebarsTemplateEngine());
 
-		get(ADMINDASHBOARD_PATH, (req, res) -> admindashController.showAdminDashboardPage(req, res),
+		// path for tutor dashboards
+		get(TUTORDASHBOARD_PATH, (req, res) -> tutordashController.showTutorDashboardPage(req, res),
 				new HandlebarsTemplateEngine());
-		post(ADMINDASHBOARD_PATH, (req, res) -> admindashController.handleFlaggedComment(req, res));
+		post(TUTORDASHBOARD_PATH, (req, res) -> tutordashController.replyToRequest(req, res));
+		post(TUTORDASHBOARD_PATH, (req, res) -> tutordashController.replyToRequest(req, res));
 
-		get(ALLUSERS_PATH, (req, res) -> admindashController.showAllUsersPage(req, res),
+		// paths for student dashboard
+		get(STUDENTDASHBOARD_PATH, (req, res) -> studentdashController.showStudentDashboardPage(req, res),
 				new HandlebarsTemplateEngine());
+		post(STUDENTDASHBOARD_PATH, (req, res) -> studentdashController.requestAppointment(req, res));
 
-		get(SELECTTUTOR_PATH, (req, res) -> facultydashController.showSelectTutorsPage(req, res),
-				new HandlebarsTemplateEngine());
-
+		// path for admin adding professor
 		get(ADDPROFESSOR_PATH, (req, res) -> adminController.showAddProfessorPage(req, res),
 				new HandlebarsTemplateEngine());
 
-		get(TUTORDASHBOARD_PATH, (req, res) -> tutordashController.showTutorDashboardPage(req, res),
-				new HandlebarsTemplateEngine());
-
+		// about us path
 		get(ABOUTUS_PATH, (req, res) -> aboutusController.showAboutUsPage(req, res), new HandlebarsTemplateEngine());
 
 		get(DEPARTMENTS_PATH, (req, res) -> departmentsController.showDepartmentsPage(req, res),
 				new HandlebarsTemplateEngine());
-
-		post(TUTORDASHBOARD_PATH, (req, res) -> tutordashController.replyToRequest(req, res));
-		get(STUDENTDASHBOARD_PATH, (req, res) -> studentdashController.showStudentDashboardPage(req, res),
-				new HandlebarsTemplateEngine());
-		post(STUDENTDASHBOARD_PATH, (req, res) -> studentdashController.requestAppointment(req, res));
 
 		// Change password paths
 		get(CHANGEPASSWORD_PATH, (req, res) -> changePasswordController.showChangePasswordPage(req, res),
@@ -465,17 +475,18 @@ public class Application {
 		post(DEACTIVATION_PATH, (req, res) -> activationController.deactivate(req, res));
 		post(ALLUSERS_PATH, (req, res) -> admindashController.massRegister(req, res));
 
-		// Account Recoveryso
 		// request recovery
 		get(ACCOUNTRECOVERY_PATH, (req, res) -> accountrecoveryController.showAccountRecoveryEmailPage(req, res),
 				new HandlebarsTemplateEngine());
 		post(ACCOUNTRECOVERY_PATH, (req, res) -> accountrecoveryController.enterEmailRecoverAccount(req, res));
+
 		// recover account with new info
 		get(NEWINFO_PATH, (req, res) -> accountrecoveryController.showAccountRecoveryNewInfoPage(req, res),
 				new HandlebarsTemplateEngine());
 		post(NEWINFO_PATH, (req, res) -> accountrecoveryController.recoverAccount(req, res));
 
 		// Session Routes
+
 		// register route
 		get(REGISTER_PATH, (req, res) -> registerController.showRegisterPage(req, res), new HandlebarsTemplateEngine());
 		post(REGISTER_PATH, (req, res) -> sessionsController.register(req, res));
@@ -484,6 +495,7 @@ public class Application {
 		post(LOGIN_PATH, (req, res) -> loginController.login(req, res));
 
 		// User Routes
+
 		// List all Users
 		get(USERS_PATH, (req, res) -> usersController.index(req, res), new HandlebarsTemplateEngine());
 		// New User form
@@ -500,11 +512,16 @@ public class Application {
 		// analysis page
 		get(ANALYSIS_PATH, (req, res) -> analysisController.showAnalysisPage(req, res), new HandlebarsTemplateEngine());
 
-		// contact US
+		// paths contact US
 		get(CONTACTUS_PATH, (req, res) -> contactusController.showContactUsPage(req, res),
 				new HandlebarsTemplateEngine());
 		post(CONTACTUS_PATH, (req, res) -> ContactUsController.contact(req, res));
 
+		get(STUDENTDASHBOARD_PATH, (req, res) -> studentdashController.showStudentDashboardPage(req, res),
+				new HandlebarsTemplateEngine());
+		post(STUDENTDASHBOARD_PATH, (req, res) -> studentdashController.requestAppointment(req, res));
+
+		// paths for classlist for both admin and professor
 		get(CLASSLIST_PATH, (req, res) -> editcoursesController.showClassListPage(req, res),
 				new HandlebarsTemplateEngine());
 
@@ -512,9 +529,22 @@ public class Application {
 				new HandlebarsTemplateEngine());
 
 		post(CLASSLIST_PATH, (req, res) -> editcoursesController.showClassListPage(req, res));
-		// my account
+
+		// paths my account
 		get(MYACCOUNT_PATH, (req, res) -> myAccountController.showMyAccountPage(req, res),
 				new HandlebarsTemplateEngine());
 		post(MYACCOUNT_PATH, (req, res) -> myAccountController.completeProfile(req, res));
+
+		// MAYBE DELETE???
+		get(COURSESPROFESSOR_PATH, (req, res) -> studentdashController.showCourseAllProfessorsPage(req, res),
+				new HandlebarsTemplateEngine());
+
+		post(COURSESPROFESSOR_PATH, (req, res) -> studentdashController.showCourseAllProfessorsPage(req, res),
+				new HandlebarsTemplateEngine());
+
+		get(MAJORTUTOR_PATH, (req, res) -> studentdashController.showMajorTutorsPage(req, res),
+				new HandlebarsTemplateEngine());
+		post(MAJORTUTOR_PATH, (req, res) -> studentdashController.showMajorTutorsPage(req, res),
+				new HandlebarsTemplateEngine());
 	}
 }
