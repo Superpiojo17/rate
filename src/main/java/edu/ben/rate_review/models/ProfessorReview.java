@@ -46,6 +46,7 @@ public class ProfessorReview {
 	private boolean comment_removed;
 	private boolean comment_approved;
 	private String studentname;
+	private float unformatted_overall;
 
 	// The course objectives were met:
 	private int rate_objectives;
@@ -420,6 +421,14 @@ public class ProfessorReview {
 		return (df.format((float) (rate_objectives + rate_organized + rate_challenging + rate_outside_work + rate_pace
 				+ rate_assignments + rate_grade_fairly + rate_grade_time + rate_accessibility + rate_knowledge
 				+ rate_career_development) / 11));
+	}
+	
+	public void setUnformattedOverall(float overall){
+		this.unformatted_overall = overall;
+	}
+	
+	public float getUnformattedOverall() {
+		return unformatted_overall;
 	}
 
 	public String getStudentname() {

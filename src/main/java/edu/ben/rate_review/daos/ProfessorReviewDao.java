@@ -42,7 +42,7 @@ public class ProfessorReviewDao {
 		try {
 
 			PreparedStatement ps = conn.prepareStatement(NAME_SQL);
-	
+
 			reviews = new ArrayList<ProfessorReview>();
 			try {
 				ResultSet rs = ps.executeQuery(NAME_SQL);
@@ -95,7 +95,11 @@ public class ProfessorReviewDao {
 		tmp.setComment_approved(rs.getBoolean("comment_approved"));
 		tmp.setStudentName(uDao.findById(tmp.getStudent_id()).getFirst_name() + " "
 				+ uDao.findById(tmp.getStudent_id()).getLast_name());
-		
+		tmp.setUnformattedOverall((float)(tmp.getRate_accessibility() + tmp.getRate_assignments()
+				+ tmp.getRate_career_development() + tmp.getRate_challenging() + tmp.getRate_grade_fairly()
+				+ tmp.getRate_grade_time() + tmp.getRate_knowledge() + tmp.getRate_objectives()
+				+ tmp.getRate_organized() + tmp.getRate_outside_work() + tmp.getRate_pace()) / 11);
+
 		return tmp;
 	}
 
