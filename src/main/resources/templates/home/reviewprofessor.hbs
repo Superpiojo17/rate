@@ -27,7 +27,7 @@
 
 			<!-- Header -->
 			<header id="header" class="skel-layers-fixed">
-				<h1><a href="/">RateAndReview</a></h1>
+				<h1><a href="/rateandreview">RateAndReview</a></h1>
 				<a href="#nav">Menu</a>
 			</header>
 
@@ -83,7 +83,7 @@
 
 					<!-- Text -->
 			{{#unless edit_is_disabled}}
-			<form action="/reviewprofessor/{{course.student_course_id}}/review" method="post">		
+			<form action="/rateandreview/reviewprofessor/{{course.student_course_id}}/review" method="post">		
 			{{/unless}}
 			<div class="table-wrapper">
 				<table class="alt">
@@ -419,7 +419,7 @@
 											<br/>
 											<br/>
 											
-											<a href="/reviews/{{department}}" button type="submit" class="btn btn-info" data-toggle="modal"  > Back
+											<a href="/rateandreview/reviews/{{department}}" button type="submit" class="btn btn-info" data-toggle="modal"  > Back
 											</button></a>
 											
 											
@@ -436,7 +436,7 @@
         <div class="modal-body">
           <p>Are you sure you would like to delete this review? You cannot recover this information.</p>
         </div>
-        	<form action="/deletereview/{{deletekey}}" method="post">
+        	<form action="/rateandreview/deletereview/{{deletekey}}" method="post">
         <div class="modal-footer">
         <ul class="actions">
           <button type="submit" class="btn btn-primary" data-dismiss="modal">Cancel</button>
