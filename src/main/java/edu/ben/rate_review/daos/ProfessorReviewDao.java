@@ -19,7 +19,6 @@ import edu.ben.rate_review.models.User;
 public class ProfessorReviewDao {
 
 	String REVIEW_PROFESSOR_TABLE = "professor_review";
-	// String COURSES_TABLE = "student_courses";
 	Connection conn = null;
 
 	/**
@@ -31,6 +30,14 @@ public class ProfessorReviewDao {
 		this.conn = conn;
 	}
 
+	/**
+	 * Search integration to search in DB and return a list of any results
+	 * 
+	 * @param sType
+	 * @param sText
+	 * @return
+	 * @throws SQLException
+	 */
 	public List<ProfessorReview> search(String sType, String sText) throws SQLException {
 		String NAME_SQL = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_first_name LIKE '%" + sText
 				+ "%' OR professor_last_name LIKE '%" + sText + "%' OR course LIKE '%" + sText
@@ -95,7 +102,7 @@ public class ProfessorReviewDao {
 		tmp.setComment_approved(rs.getBoolean("comment_approved"));
 		tmp.setStudentName(uDao.findById(tmp.getStudent_id()).getFirst_name() + " "
 				+ uDao.findById(tmp.getStudent_id()).getLast_name());
-		tmp.setUnformattedOverall((float)(tmp.getRate_accessibility() + tmp.getRate_assignments()
+		tmp.setUnformattedOverall((float) (tmp.getRate_accessibility() + tmp.getRate_assignments()
 				+ tmp.getRate_career_development() + tmp.getRate_challenging() + tmp.getRate_grade_fairly()
 				+ tmp.getRate_grade_time() + tmp.getRate_knowledge() + tmp.getRate_objectives()
 				+ tmp.getRate_organized() + tmp.getRate_outside_work() + tmp.getRate_pace()) / 11);
@@ -176,6 +183,12 @@ public class ProfessorReviewDao {
 
 	}
 
+	/**
+	 * deletes a specific review
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public String deleteReview(long id) {
 
 		String sql = "DELETE FROM " + REVIEW_PROFESSOR_TABLE + " WHERE student_course_id = ? LIMIT 1";
@@ -258,6 +271,12 @@ public class ProfessorReviewDao {
 		return reviews;
 	}
 
+	/**
+	 * list all the reviews of a specific course
+	 * 
+	 * @param course
+	 * @return
+	 */
 	public List<ProfessorReview> listReviewsByCourse(String course) {
 
 		String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE course = '" + course + "'";
@@ -282,6 +301,12 @@ public class ProfessorReviewDao {
 		return reviews;
 	}
 
+	/**
+	 * returns all the reviews from a specific departments
+	 * 
+	 * @param dept
+	 * @return
+	 */
 	public List<ProfessorReview> allFromDept(String dept) {
 
 		String sql = "SELECT * FROM professor_review WHERE professor_email IN (Select email from users where major = '"
@@ -577,9 +602,14 @@ public class ProfessorReviewDao {
 		return uniqueCourses;
 	}
 
+	/**
+	 * list all the reviews for a course
+	 * 
+	 * @param student_course_id
+	 * @param name
+	 * @return
+	 */
 	public List<ProfessorReview> allReviewsForCourse(long student_course_id, String name) {
-		// final String SELECT = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + "
-		// WHERE course_id = " + course;
 		final String SELECT = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE student_course_id = "
 				+ student_course_id;
 
