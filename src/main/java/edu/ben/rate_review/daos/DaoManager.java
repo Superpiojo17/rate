@@ -41,6 +41,11 @@ public class DaoManager {
 		}
 	}
 
+	/**
+	 * gets instance of user dao
+	 * 
+	 * @return
+	 */
 	public UserDao getUserDao() {
 		try {
 			return new UserDao(this.src.getConnection());
@@ -50,6 +55,11 @@ public class DaoManager {
 		return null;
 	}
 
+	/**
+	 * gets instance of course dao
+	 * 
+	 * @return
+	 */
 	public CourseDao getCourseDao() {
 		try {
 			return new CourseDao(this.src.getConnection());
@@ -59,6 +69,11 @@ public class DaoManager {
 		return null;
 	}
 
+	/**
+	 * gets instance of student in course dao
+	 * 
+	 * @return
+	 */
 	public StudentInCourseDao getStudentInCourseDao() {
 		try {
 			return new StudentInCourseDao(this.src.getConnection());
@@ -68,6 +83,11 @@ public class DaoManager {
 		return null;
 	}
 
+	/**
+	 * gets instance of announcement dao
+	 * 
+	 * @return
+	 */
 	public AnnouncementDao getAnnouncementDao() {
 		try {
 			return new AnnouncementDao(this.src.getConnection());
@@ -77,6 +97,11 @@ public class DaoManager {
 		return null;
 	}
 
+	/**
+	 * gets instance of tutor dao
+	 * 
+	 * @return
+	 */
 	public TutorDao getTutorDao() {
 		try {
 			return new TutorDao(this.src.getConnection());

@@ -10,8 +10,15 @@ import java.util.List;
 
 import edu.ben.rate_review.models.Course;
 import edu.ben.rate_review.models.CourseForm;
-//import edu.ben.rate_review.models.User;
 
+//import edu.ben.rate_review.models.User;
+/**
+ * This dao manages the courses table in the data base where the announcements
+ * on the left hand sides of many pages are found
+ * 
+ * @author Joel and Mike
+ *
+ */
 public class CourseDao {
 
 	String COURSES_TABLE = "courses";
@@ -25,6 +32,14 @@ public class CourseDao {
 	public CourseDao(Connection conn) {
 		this.conn = conn;
 	}
+
+	/**
+	 * creates courses from the database
+	 * 
+	 * @param rs
+	 * @return
+	 * @throws SQLException
+	 */
 
 	private Course mapRow(ResultSet rs) throws SQLException {
 
@@ -41,6 +56,13 @@ public class CourseDao {
 
 		return tmp;
 	}
+
+	/**
+	 * Updates a course thats in the database
+	 * 
+	 * @param course
+	 * @return the course that got deleted
+	 */
 
 	public CourseForm updateCourse(CourseForm course) {
 		String sql = "UPDATE " + COURSES_TABLE + " SET course_professor_id = ? WHERE course_id = ? LIMIT 1";
@@ -62,6 +84,13 @@ public class CourseDao {
 		return null;
 	}
 
+	/**
+	 * Saves (inserts) a course into the database
+	 * 
+	 * @param course
+	 *            course object that is getting inserted
+	 * @return the course that got inserted
+	 */
 	public Course save(Course course) {
 		final String sql = "INSERT INTO " + COURSES_TABLE
 				+ "(course_subject, course_number, course_name, course_professor_id, course_semester, course_year) Values(?,?,?,?,?,?)";
@@ -83,6 +112,13 @@ public class CourseDao {
 
 	}
 
+	/**
+	 * Finds a course by the id
+	 * 
+	 * @param id
+	 *            the id of the course
+	 * @return the course that is found
+	 */
 	public Course findById(long id) {
 		// Declare SQL template query
 		String sql = "SELECT * FROM " + COURSES_TABLE + " WHERE course_id = ? LIMIT 1";
@@ -106,6 +142,13 @@ public class CourseDao {
 
 	}
 
+	/**
+	 * Removes a course from the table
+	 * 
+	 * @param id
+	 *            id of the course
+	 * @return string
+	 */
 	public String deleteCourse(long id) {
 
 		String sql = "DELETE FROM " + COURSES_TABLE + " WHERE course_id = ? LIMIT 1";
@@ -124,8 +167,9 @@ public class CourseDao {
 
 	/**
 	 * 
-	 * @return all users from the database.
+	 * @return all courses of the subject that is getting passed in
 	 * @throws ParseException
+	 * @returns the list of the courses
 	 */
 
 	public List<Course> allByDept(String subject) {
@@ -149,6 +193,11 @@ public class CourseDao {
 		return courses;
 	}
 
+	/**
+	 * returns all the courses in the table
+	 * 
+	 * @return the list of courses
+	 */
 	public List<Course> allCourses() {
 		final String SELECT = "SELECT * FROM " + COURSES_TABLE;
 		List<Course> courses = null;
@@ -170,6 +219,11 @@ public class CourseDao {
 		return courses;
 	}
 
+	/**
+	 * returns the names of all the courses
+	 * 
+	 * @return
+	 */
 	public List<String> allCoursesString() {
 		final String SELECT = "SELECT * FROM " + COURSES_TABLE;
 		List<String> courses = null;
@@ -191,6 +245,12 @@ public class CourseDao {
 		return courses;
 	}
 
+	/**
+	 * returns returns the course by the ID passed in
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public List<Course> allCoursesByID(long id) {
 		final String SELECT = "SELECT * FROM " + COURSES_TABLE + " WHERE course_id = '" + id + "'";
 		List<Course> courses = null;
@@ -214,7 +274,7 @@ public class CourseDao {
 
 	/**
 	 * 
-	 * @return all users from the database.
+	 * @return all of a professors courses
 	 * @throws ParseException
 	 */
 
@@ -239,6 +299,14 @@ public class CourseDao {
 		return courses;
 	}
 
+	/**
+	 * search bar integration for front end
+	 * 
+	 * @param sType
+	 * @param sText
+	 * @return
+	 * @throws SQLException
+	 */
 	public List<Course> search(String sType, String sText) throws SQLException {
 		String NAME_SQL = "SELECT * FROM courses WHERE course_name LIKE '%" + sText + "%' OR course_number LIKE '%"
 				+ sText + "%'";
@@ -271,6 +339,9 @@ public class CourseDao {
 		return courses;
 	}
 
+	/**
+	 * closes connection
+	 */
 	public void close() {
 		try {
 			this.conn.close();
