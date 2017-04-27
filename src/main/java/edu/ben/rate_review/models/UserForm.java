@@ -10,6 +10,25 @@ public class UserForm {
 	private String major;
 	private int school_year;
 	private int role;
+	
+	private String nickname;
+	private String personal_email;
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public String getPersonal_email() {
+		return personal_email;
+	}
+
+	public void setPersonal_email(String personal_email) {
+		this.personal_email = personal_email;
+	}
 
 	public int getRole() {
 		return role;
@@ -34,10 +53,13 @@ public class UserForm {
 		this.id = user.getId();
 		this.role_string = user.getRole_string();
 		this.year_string = user.getYear_string();
+		
+		this.nickname = user.getNickname();
+		this.personal_email = user.getPersonal_email();
 	}
 
 	public UserForm(String first_name, String last_name, String email, String role_string, String year_string,
-			String major, int school_year, int role) {
+			String major, int school_year, int role, String nickname, String personal_email) {
 		super();
 		this.first_name = first_name;
 		this.last_name = last_name;
@@ -47,6 +69,9 @@ public class UserForm {
 		this.major = major;
 		this.school_year = school_year;
 		this.role = role;
+		
+		this.nickname = nickname;
+		this.personal_email = personal_email;
 	}
 
 	/**

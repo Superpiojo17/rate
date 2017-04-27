@@ -96,6 +96,29 @@ table {
     margin-right: auto;
 }
 
+#header {
+    background: #07090c;
+    color: rgba(255, 255, 255, 0.75);
+    cursor: default;
+    height: 3.80em;
+    left: 0;
+    line-height: 3.25em;
+    position: fixed;
+    text-align: right;
+    top: 0;
+    width: 100%;
+    z-index: 10001;
+}
+#nav > ul.links > li > a:not(.button) {
+    border: 0;
+    border-top: solid 1px transparent;
+    color: inherit;
+    display: block;
+    line-height: 3.5em;
+    text-decoration: none;
+    font-size: small;
+}
+
 	</style>
 	
 	
@@ -119,10 +142,6 @@ table {
 			<nav id="nav" class="visible">
 				<ul class="links">
 					<li><a href="/">Home</a></li>
-
-					<li><a href="/myaccount">My Account</a></li>
-					<li><a href="/studentdashboard">View Apointments</a></li>
-					<li><a href="/studentdashboard">View Reviews</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
 					<li><a href="/deactivation">De-Activate</a></li>
 					<li><a href="/login">Log Out</a></li>
@@ -183,12 +202,14 @@ table {
 			
 	 <div class="container">
 
-    <form class="well form-horizontal" action="/{{current_user.id}}" method="post"> <!-- id="contact_form">-->
+    <form class="well form-horizontal"  > <!-- id="contact_form">-->
 <fieldset>
+<!-- Form Name -->
+<legend>Profile information</legend>
 
 <!-- LIST OF USER INFO -->
 
- <table class="w3-table-all w3-card-4" align="center" style="width:40%" >
+ <table class="w3-table-all w3-card-4" align="center" style="width:40%" action="/myaccount/{{current_user.id}}" method="post" >
    
     <tr>
       <td>
@@ -213,7 +234,7 @@ table {
         <i class="glyphicon glyphicon-user " ></i> Nickname:
       </td>
        <td>
-        <input name="nickname" placeholder="{{current_user.nickname}}" class="form-control"  type="text">
+        <input name="nickname" id="nickname" placeholder="{{current_user.nickname}}" class="form-control"  type="text">
      </td>
     </tr>
     
@@ -231,7 +252,7 @@ table {
        <i class="glyphicon glyphicon-envelope " ></i> Personal Email: 
       </td>
      <td>
-   <input name="personal_email" placeholder="{{current_user.personal_email}}" class="form-control"  type="text">
+   <input name="personal_email" id="personal_email" placeholder="{{current_user.personal_email}}" class="form-control"  type="text">
       </td>
     </tr>
      <tr>
@@ -264,8 +285,7 @@ table {
 
 
 
-<!-- Form Name -->
-<legend>Profile information</legend>
+
 
 
 
@@ -330,7 +350,7 @@ table {
 		<ul class="actions">
 		<button type="submit" class="btn btn-info"> Save 
 		<span class="glyphicon glyphicon-floppy-saved"></button>
-		&emsp;&emsp;
+	<!--	&emsp;&emsp;  -->
 		</ul>
 </div>
 

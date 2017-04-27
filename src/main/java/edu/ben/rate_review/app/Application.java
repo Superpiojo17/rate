@@ -17,6 +17,7 @@ import edu.ben.rate_review.controller.home.ActivationController;
 import edu.ben.rate_review.controller.home.AdminController;
 import edu.ben.rate_review.controller.home.AnalysisController;
 import edu.ben.rate_review.controller.home.ChangePasswordController;
+import edu.ben.rate_review.controller.home.CompareController;
 import edu.ben.rate_review.controller.home.ConfirmationController;
 import edu.ben.rate_review.controller.home.ContactUsController;
 import edu.ben.rate_review.controller.home.DepartmentsController;
@@ -99,7 +100,8 @@ public class Application {
 	////////////////////////////////////////////////////////////////////////////////
 	private static Login2Controller login2Controller = new Login2Controller();
 	////////////////////////////////////////////////////////////////////////////////
-
+	private static CompareController compareController = new CompareController();
+	
 	// match up paths
 	public static String DOMAIN = "http://localhost";
 	public static String HOME_PATH = "/";
@@ -187,6 +189,7 @@ public class Application {
 	/////////////////////////////////////////////////////////////////
 	public static String LOGIN2_PATH = "/login2";
 	/////////////////////////////////////////////////////////////////
+	public static String COMPARE_PATH = "/compare";
 
 	public static void main(String[] args) throws Exception {
 
@@ -547,5 +550,10 @@ public class Application {
 		get(MYACCOUNT_PATH, (req, res) -> myAccountController.showMyAccountPage(req, res),
 				new HandlebarsTemplateEngine());
 		post(MYACCOUNT_PATH, (req, res) -> myAccountController.completeProfile(req, res));
+		
+		// Compare/ Find page
+		get(COMPARE_PATH, (req, res) -> compareController.showComparePage(req, res),
+				new HandlebarsTemplateEngine());
+		//post(COMPARE_PATH, (req, res) -> compareController.completeProfile(req, res));
 	}
 }

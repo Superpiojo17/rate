@@ -32,12 +32,12 @@
 
 <style>
 #banner {
-	padding: 5em 0 1em 0;
+	padding: 15em 0 10em 0;
 	background-color: #1E2832;
 	color: rgba(255, 255, 255, 0.75);
 	background-attachment: fixed;
 	background-image: url(images/education.jpg),
-		url(../../images/education.jpg);
+		url(../../images/lib.jpg);
 	background-size: cover;
 	text-align: center;
 	color: #07090c;
@@ -63,6 +63,49 @@ header {
     line-height: 180px;
     text-align: center;
     background-color: #1e2832;
+}
+#header > h1 a {
+    font-size: large;
+    font-weight: bold;
+}
+
+section { 
+<!--    float:left;  -->
+}
+
+
+@media only screen and (min-width: 768px)
+style.css:243
+.cd-faq-items {
+    position: static;
+    height: auto;
+    width: 78%;
+    float: left;
+    overflow: visible;
+    -webkit-transform: translateZ(0) translateX(0);
+    -moz-transform: translateZ(0) translateX(0);
+    -ms-transform: translateZ(0) translateX(0);
+    -o-transform: translateZ(0) translateX(0);
+    transform: translateZ(0) translateX(0);
+    padding: 0;
+    background: transparent;
+}
+.cd-faq-group .cd-faq-title h2 {
+    text-transform: uppercase;
+    font-size: 12px;
+    font-size: 1.50rem;
+    font-weight: 700;
+    color: #bbbbc7;
+}
+
+#nav > ul.links > li > a:not(.button) {
+    border: 0;
+    border-top: solid 1px transparent;
+    color: inherit;
+    display: block;
+    line-height: 3.5em;
+    text-decoration: none;
+    font-size: small;
 }
 </style>
 <body>
@@ -125,37 +168,33 @@ header {
 
 		<!-- <i class="icon fa-diamond"></i> -->
 		<h2>F.A.Q</h2>
-		<p>Here to answer the questions you might have</p>
 		<!--
+		<p>Here to answer the questions you might have</p>
+		
 		<ul class="actions">
 			<li><a href="#" class="button big special">Learn More Below</a></li>
 		</ul>
 		-->
 	</section>
-
-	<section class="cd-faq">
-	<!--
+	
+	<section id="cd-faq" class="cd-faq" >
+	
 		<ul class="cd-faq-categories">
+		
+		<!--
 			<li><a class="selected" href="#basics">Basics</a></li>
 			<li><a href="#account">Account</a></li>
 			<li><a href="#privacy">Privacy</a></li>
-			<li><a href="#contact">Contact Us</a></li>
+			
 	-->
+	
 		</ul>
 		<!-- cd-faq-categories -->
 
-		<div class="cd-faq-items">
+		<div class="cd-faq-items" >
 			<ul id="basics" class="cd-faq-group">
 				<li class="cd-faq-title"><h2>Basics</h2></li>
-<!--
-				<li><a class="cd-faq-trigger" href="#0">How do I change my
-						password?</a>
-					<div class="cd-faq-content">
-						<p>On the Login/Sign Up page there is a link that states "
-							forgot my password ". If you follow the link you will recieve an
-							email that will allow you to reset your password.</p>
-					</div>
---> 
+
 					<!-- cd-faq-content --></li>
 
 				<li><a class="cd-faq-trigger" href="#0">How do I sign up?</a>
@@ -202,14 +241,6 @@ header {
 						account, you can do so by choosing 'active account' on the home screen</p>
 					</div> <!-- cd-faq-content --></li>
 <!--
-				<li><a class="cd-faq-trigger" href="#0">How do I change my
-						account settings?</a>
-					<div class="cd-faq-content">
-						<p>The user would be able to manage their own profile settings
-							via the user dashboard or by contacting the site admin.</p>
-					</div>--><!-- cd-faq-content --></li>
-
-<!--
 				<li><a class="cd-faq-trigger" href="#0">I forgot my
 						password. How do I reset it?</a>
 					<div class="cd-faq-content">
@@ -251,39 +282,9 @@ header {
 			<!-- cd-faq-items -->
 			<a href="#0" class="cd-close-panel">Close</a>
 	</section>
+	
 
 
-
-<!-- REMOVED - ALREADY CONTACT US FORM
-	Four
-	<section id="four" class="wrapper style2 special">
-		<div class="inner">
-			<header class="major narrow">
-				<h2>Get in touch</h2>
-				<p>Please contact us with any other questions</p>
-			</header>
-			<form action="#" method="POST">
-				<div class="container 75%">
-					<div class="row uniform 50%">
-						<div class="6u 12u$(xsmall)">
-							<input name="name" placeholder="Name" type="text" />
-						</div>
-						<div class="6u$ 12u$(xsmall)">
-							<input name="email" placeholder="Email" type="email" />
-						</div>
-						<div class="12u$">
-							<textarea name="message" placeholder="Message" rows="4"></textarea>
-						</div>
-					</div>
-				</div>
-				<ul class="actions">
-					<li><input type="submit" class="special" value="Submit" /></li>
-					<li><input type="reset" class="alt" value="Reset" /></li>
-				</ul>
-			</form>
-		</div>
-	</section>
--->
 	<!-- cd-faq -->
 	<script src="faq-template/js/jquery-2.1.1.js"></script>
 	<script src="faq-template/js/jquery.mobile.custom.min.js"></script>

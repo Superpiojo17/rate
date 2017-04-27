@@ -17,6 +17,7 @@ import edu.ben.rate_review.daos.UserDao;
 //import edu.ben.rate_review.models.Tutor;
 //import edu.ben.rate_review.models.TutorAppointment;
 import edu.ben.rate_review.models.User;
+import edu.ben.rate_review.models.UserForm;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -77,14 +78,16 @@ public class MyAccountController {
 		String idString = req.params("id");
 		long id = Long.parseLong(idString);
 
+		//UserForm user = new UserForm();
 		User user = new User();
 
+		
 		user.setNickname(req.queryParams("nickname"));
 		user.setId(id);
 		user.setPersonal_email(req.queryParams("personal_email"));
-
+		
 		uDao.completeProfile2(user);
-
+//uDao.updateUser(user);
 		uDao.close();
 		res.redirect(Application.STUDENTDASHBOARD_PATH);
 		return "";
