@@ -111,13 +111,13 @@ public class LogInController {
 				session.attribute("current_user", u);
 
 				if (u.getRole() == 4) {
-					res.redirect("/studentdashboard");
+					res.redirect(Application.STUDENTDASHBOARD_PATH);
 				} else if (u.getRole() == 3) {
-					res.redirect("/tutordashboard");
+					res.redirect(Application.TUTOR_PATH);
 				} else if (u.getRole() == 2) {
-					res.redirect("/facultydashboard");
+					res.redirect(Application.FACULTYDASHBOARD_PATH);
 				} else if (u.getRole() == 1) {
-					res.redirect("/admindashboard");
+					res.redirect(Application.ADMINDASHBOARD_PATH);
 
 				}
 
@@ -160,7 +160,7 @@ public class LogInController {
 				// "Incorrect E-mail or Password. Please try again."
 			}
 		} else {
-			res.redirect("/login");
+			res.redirect(Application.LOGIN_PATH);
 		}
 		return "";
 	}

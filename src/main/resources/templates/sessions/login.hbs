@@ -15,7 +15,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-<link rel="stylesheet" href="assets/css/main.css" />
+<link rel="stylesheet" href="/assets/css/main.css" />
 <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 
@@ -27,7 +27,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
 
-<link rel="stylesheet" href="assets/login/css/style.css">
+<link rel="stylesheet" href="/assets/login/css/style.css">
 
 
 </head>
@@ -59,35 +59,35 @@ body {
 					<li><a href="/">Home</a></li>
 					
 					{{#if user_admin}}
-						<li><a href="/admindashboard">My Dashboard</a></li>
+						<li><a href="/rateandreview/admindashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_professor}}
-						<li><a href="/facultydashboard">My Dashboard</a></li>
+						<li><a href="/rateandreview/facultydashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_tutor}}
-						<li><a href="/tutordashboard">My Dashboard</a></li>
+						<li><a href="/rateandreview/tutordashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_student}}
-						<li><a href="/studentdashboard">My Dashboard</a></li>
+						<li><a href="/rateandreview/studentdashboard">My Dashboard</a></li>
 					{{/if}}
 					
 					{{#if user_null}}
-						<li><a href="/signin">Log In</a></li>
-						<li><a href="/register">Register</a></li>
-						<li><a href="/activation">Activate Account</a></li>
-						<li><a href="/accountrecovery">Forgot Password?</a></li>
+						<li><a href="/rateandreview/signin">Log In</a></li>
+						<li><a href="/rateandreview/register">Register</a></li>
+						<li><a href="/rateandreview/activation">Activate Account</a></li>
+						<li><a href="/rateandreview/accountrecovery">Forgot Password?</a></li>
 					{{/if}}
 					
-						<li><a href="/teacher">Browse Professors</a></li>
+						<li><a href="/rateandreview/teacher">Browse Professors</a></li>
 					
 					{{#unless user_admin}}
-						<li><a href="/contactus">Contact Us</a></li>
+						<li><a href="/rateandreview/contactus">Contact Us</a></li>
 					{{/unless}}
-						<li><a href="/aboutus">About Us</a></li>
-						<li><a href="/faq">FAQ</a></li>
+						<li><a href="/rateandreview/aboutus">About Us</a></li>
+						<li><a href="/rateandreview/faq">FAQ</a></li>
 					
 					{{#unless user_null}}
-						<li><a href="/logout">Log Out</a></li>
+						<li><a href="/rateandreview/logout">Log Out</a></li>
 					{{/unless}}
 				</ul>
 			</nav>
@@ -109,7 +109,7 @@ body {
 					<div id="login">
 						<h1>Welcome Back!</h1>
 
-						<form action="/signin" method="get">
+						<form action="/rateandreview/signin" method="get">
 
 							<div class="field-wrap">
 								<label> Email Address<span class="req">*</span>
@@ -164,7 +164,7 @@ body {
 							<div id="signup">
 						<h1>Sign Up for Free</h1>
 
-						<form action="/register" method="post">
+						<form action="/rateandreview/register" method="post">
 
 							<div class="top-row">
 								<div class="field-wrap">
@@ -250,14 +250,14 @@ body {
 	<script
 		src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
-	<script src="assets/login/js/index.js"></script>
+	<script src="/assets/login/js/index.js"></script>
 
 
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/skel.min.js"></script>
+	<script src="/assets/js/jquery.min.js"></script>
+	<script src="/assets/js/skel.min.js"></script>
 	<script src="assets/js/util.js"></script>
-	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-	<script src="assets/js/main.js"></script>
+	<!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js"></script><![endif]-->
+	<script src="/assets/js/main.js"></script>
 
 </body>
 </html>
