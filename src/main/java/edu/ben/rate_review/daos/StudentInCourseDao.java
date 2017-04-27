@@ -48,6 +48,13 @@ public class StudentInCourseDao {
 		return tmp;
 	}
 
+	/**
+	 * inserts a student into a course
+	 * 
+	 * @param studentInCourse
+	 * @return
+	 */
+
 	public StudentInCourse save(StudentInCourse studentInCourse) {
 		final String sql = "INSERT INTO " + STUDENTINCOURSES_TABLE
 				+ "(course_id, student_id, course_reviewed, disable_edit, semester_past) Values(?,?,?,?,?)";
@@ -66,6 +73,29 @@ public class StudentInCourseDao {
 		}
 		return null;
 
+	}
+
+	/**
+	 * Removes recovery requests that have expired
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public String removeFromCourse(long student_id, long course_id) {
+
+		String sql = "DELETE FROM " + STUDENTINCOURSES_TABLE + " WHERE student_id = ? and course_id = ? LIMIT 1";
+
+		try {
+			// Create Prepared Statement from query
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setLong(1, student_id);
+			ps.setLong(2, course_id);
+			// Runs query
+			ps.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return " ";
 	}
 
 	/**
@@ -88,6 +118,13 @@ public class StudentInCourseDao {
 		return null;
 
 	}
+
+	/**
+	 * gets all the students that havent reviewed a course
+	 * 
+	 * @param user
+	 * @return
+	 */
 
 	public List<StudentInCourse> allStudentCoursesNotReviewed(User user) {
 		final String SELECT = "SELECT * FROM " + STUDENTINCOURSES_TABLE + " WHERE student_id = " + user.getId()

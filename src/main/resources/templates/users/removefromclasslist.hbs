@@ -6,14 +6,13 @@
 -->
 <html>
 	<head>
-		<title>Faculty Dashboard</title>
+		<title>Remove Class List</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-		  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -23,22 +22,29 @@
 	
 	<body>
 
-		<!-- Header -->
-			<header id="facultyheader">
-				<h1>Faculty Dashboard</h1>
-			</header>
+	
 
-			<!-- Nav -->
+			
+		<!-- Header -->
+			<header id="adminheader">
+				<h1>Administrator Dashboard</h1>
+			</header>
+	<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
 					<li><a href="/">Home</a></li>
 					<li><a href="/admindashboard">My Dashboard</a></li>
 					<li><a href="/myaccount">My Account</a></li>
+					<li><a href="/allusers">Manage Users</a></li>
 					{{#if completeProfile }}
 					<li><a href="/completeprofileprof/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
 					{{/if}}
-					<li><a href="/alltutors/{{current_user.id}}">Manage Tutors</a></li>
-					<li><a href="/professor/{{current_user.id}}/overview">View Reviews</a></li>
+					<li><a href="/courseslanding">Manage Courses</a></li>
+					<li><a href="/managetutorslanding">Manage Tutors</a></li>
+					<li><a href="/announcement">Announcements</a></li>
+					<li><a href="/adminaptlanding">Manage Appointments</a></li>
+					<li><a href="/reviewlanding">Manage Reviews</a></li>
+					<li><a href="/analysis">Data Analysis</a></li>
 					<li><a href="/teacher">Browse Professors</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
 					<li><a href="/aboutus">About Us</a></li>
@@ -48,12 +54,10 @@
 					
 				</ul>
 			</nav>
-			
 			<!-- Banner -->
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="facultyDash">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="adminDash">
 </div>
  <p> </p>
-
    
   
 <section id="main" class="wrapper">
@@ -67,6 +71,7 @@
       <a href="#announcement" class="btn btn-info" data-toggle="collapse">Announcements</a>
   <div id="announcement" class="collapse">
   &nbsp;
+  
 							<div class="table-wrapper">
 								<table class="alt">
 									<thead>
@@ -94,162 +99,72 @@
 							
 							
 						</section>
+						
 							<div class="centercol"> 
 							&ensp;
-							<h2> Welcome {{current_user.first_name}}</h2> 
-							<h6> You are logged in as a Faculty member</h6>
-							&ensp;
+							<h2>{{course.course_name}} {{course.course_number}} Class List </h2>
 							
-  <p>Click on the headings below to view your relevant information.</p>
-  <div class="panel-group" id="accordion">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">My Tutors</a>
-        </h4>
-     
-      </div>
-      <div id="collapse1" class="panel-collapse collapse in">
-        <div class="panel-body">
-        {{#if tutorFlag}}
-        	<div class="table-wrapper">
-								<table class="alt">
+							
+							
+  <p>Select which students you would like to remove from this course.</p>
+  &ensp;
+   <div name="error">
+						<p style='color: red'>{{error}}</p>
+					</div>
+  
+							<!-- Form -->
+						<section>
+							<form action="/classlistremove/{{course.id}}" method="post">
+							
+							<div class="table-wrapper">
+							&nbsp;&nbsp;
+								<table id = "indextable" class="indextable alt">
 									<thead>
 										<tr>
-											<th><br>Tutor </th>
-											<th><br>Email</th>
-											<th><br>Course</th>
+										<th></th>
+											<th class=" shrink text-left"><a href="javascript:SortTable(1,'T');" class="btn btn-link" style="color:black">Student Name <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
+										<th class=" shrink text-left"><a href="javascript:SortTable(2,'N');" class="btn btn-link" style="color:black">Email <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
+										<th class="shrink text-left"><a href="javascript:SortTable(3,'T');" class="btn btn-link" style="color:black" >Major <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
+<th class="shrink text-left"><a href="javascript:SortTable(4,'T');" class="btn btn-link" style="color:black" >Year <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
+											
 										</tr>
 									</thead>
 									<tbody>
-									{{#each tutors}}
+									{{#each classlist}}
 										<tr>
-											<td>{{tutor_last_name}}, {{tutor_first_name}} </td>
-											<td>{{tutor_email}} </td>
-											<td>{{course_name}}</td>
+											<td><input type="checkbox" name = "s1_t1" value = "{{id}}" />&nbsp;</td>
+											<td>{{last_name}}, {{first_name}} </td>
+											<td>{{email}} </td>
+											<td>{{major}}</td>
+											<td>{{year_string}} </td>
 										</tr>
-									{{/each}}
+										{{/each}}
 									</tbody>
 									<tfoot>
 									</tfoot>
 								</table>
-								{{/if}}
-								 {{#unless tutorFlag}}You have no tutors, go to Manage Tutors to add tutors.{{/unless}}
-        </div>
-      </div>
-    </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">My Classes</a>
-        </h4>
-      </div>
-      <div id="collapse2" class="panel-collapse collapse">
-        <div class="panel-body">
-        	
-        	{{#if tutorFlag}}
-        <div class="table-wrapper">
-								<table class="alt">
-									<thead>
-										<tr>
-											<th><br>Course</th>
-											<th><br>Name</th>
-											<th><br>Term</th>
-										</tr>
-									</thead>
-									<tbody>
-									{{#each courses}}
-										<tr>
-											<td>{{subject}} {{course_number}} </td>
-											<td>{{course_name}} </td>
-											<td>{{term}}</td>
-										</tr>
-									{{/each}}
-									</tbody>
-									<tfoot>
-									</tfoot>
-								</table>
-								
-								{{/if}}
-								 {{#unless tutorFlag}}You have no courses.{{/unless}}
-        </div></div>
-      </div>
-    </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">My Recent Reviews</a>
-        </h4>
-      </div>
-      <div id="collapse3" class="panel-collapse collapse">
-        <div class="panel-body">
-        {{#if reviewsFlag}}
-        	<p> These are your 3 most recent reviews</p>
-        	
-        <div class="table-wrapper">
-								<table class="alt">
-									<thead>
-										<tr>
-											<th><br>Course</th>
-											<th><br>Overall</th>
-											<th><br>Comment</th>
-										</tr>
-									</thead>
-									<tbody>
-									{{#each reviews}}
-										<tr>
-											<td>{{course}} </td>
-											<td>{{overall}} / 5</td>
-											<td>{{comment}}</td>
-										</tr>
-									{{/each}}
-									</tbody>
-									<tfoot>
-									</tfoot>
-								</table>
-								{{/if}}
-								 {{#unless reviewsFlag}}You have no recent reviews.{{/unless}}
-        </div>
-        
-        <a href="/professor/{{current_user.id}}/overview"  class="btn btn-info"> Overview
+							</div>
+							<button type="submit" class="btn btn-danger" > Remove Students  &nbsp; <span class="glyphicon glyphicon-minus"></button>
+						</form>
+					</section>
+					
+					<a href="/course/{{course.id}}/classlist"  class="btn btn-info"> Back
 											</a>
-        	
-        	
-        	
-        	
-        	
-        	
-        	
-        	
-        </div>
-      </div>
-    </div>
-  </div> 
-</div>
-		
-			
+					
+
+
   </div>
   
-    
-    
-    
-    
-		
-    
-    
-    
-  
-    
-    
-				<!-- CODE -->
+ 
 
 		<!-- Scripts -->
 			<script src="/assets/js/jquery.min.js"></script>
 			<script src="/assets/js/skel.min.js"></script>
 			<script src="/assets/js/util.js"></script>
-			<script>
+			
+			<script type="text/javascript" src="/assets/js/sortColumns.js"  ></script>
 
-// d = new Date();
+
 
 
 </script>
@@ -321,10 +236,13 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
 }
 
 
-
 </script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main2.js"></script>
+
+
+
+
+			<!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="/assets/js/main2.js"></script>
 
 	</body>
 </html>

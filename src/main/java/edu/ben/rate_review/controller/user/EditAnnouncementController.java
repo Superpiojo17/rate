@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.ben.rate_review.app.Application;
 //import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.authorization.AuthException;
 import edu.ben.rate_review.daos.AnnouncementDao;
@@ -27,16 +28,15 @@ public class EditAnnouncementController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User u = (User) session.attribute("current_user");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
 
-		if (u.getRole() != 1) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-
-		if (u != null) {
-			if (u.getRole() == 1) {
+			if (u.getRole() != 1) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			} else {
 				model.put("user_admin", true);
 			}
 		}
@@ -61,7 +61,7 @@ public class EditAnnouncementController {
 		// create the form object, put it into request
 		model.put("announcement_form", new AnnouncementForm(a));
 
-//		DaoManager dao = DaoManager.getInstance();
+		// DaoManager dao = DaoManager.getInstance();
 		// AnnouncementDao ad = dao.getAnnouncementDao();
 		List<Announcement> announcements = announcement.all();
 		model.put("announcements", announcements);
@@ -75,18 +75,21 @@ public class EditAnnouncementController {
 		AnnouncementDao ad = DaoManager.getInstance().getAnnouncementDao();
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User u = (User) session.attribute("current_user");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
 
-		if (u.getRole() != 1) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			if (u.getRole() != 1) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			}
 		}
 
 		// Authorize that the user can edit the user selected
 		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
 
-//		DaoManager dao = DaoManager.getInstance();
+		// DaoManager dao = DaoManager.getInstance();
 		// AnnouncementDao ad = dao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
@@ -117,7 +120,7 @@ public class EditAnnouncementController {
 
 		aDao.updateAnnouncement(announcement);
 
-//		DaoManager dao = DaoManager.getInstance();
+		// DaoManager dao = DaoManager.getInstance();
 		// AnnouncementDao ad = dao.getAnnouncementDao();
 		List<Announcement> announcements = aDao.all();
 		model.put("announcements", announcements);
@@ -150,7 +153,7 @@ public class EditAnnouncementController {
 
 		announceDao.save(announcement);
 
-//		DaoManager dao = DaoManager.getInstance();
+		// DaoManager dao = DaoManager.getInstance();
 		// AnnouncementDao ad = dao.getAnnouncementDao();
 		List<Announcement> announcements = announceDao.all();
 		model.put("announcements", announcements);
@@ -172,7 +175,7 @@ public class EditAnnouncementController {
 		model.put("error", "You have deleted an event");
 
 		ad.deletAnnouncement(id);
-//		DaoManager dao = DaoManager.getInstance();
+		// DaoManager dao = DaoManager.getInstance();
 		// AnnouncementDao ad = dao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);

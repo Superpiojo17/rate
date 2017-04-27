@@ -52,7 +52,7 @@
 					{{/if}}
 					
 					{{#if user_null}}
-						<li><a href="/login">Log In</a></li>
+						<li><a href="/signin">Log In</a></li>
 						<li><a href="/register">Register</a></li>
 						<li><a href="/activation">Activate Account</a></li>
 						<li><a href="/accountrecovery">Forgot Password?</a></li>
@@ -78,13 +78,29 @@
 				<h2>Rate & Review</h2>
 				<p>{{errors}}</p>
 				<p>The ratings you want, the tutoring you need</p>
-				<ul class="actions">
-					<li><a href="/login" class="button big special">Log in</a></li>
-				</ul>
-				<div name="register">
-						<h6 style='color: white'><a href = "/login"> Don't have an account? Register here!</a></h6>
+				{{#if user_null}}
+					<ul class="actions">
+						<li><a href="/signin" class="button big special">Log in</a></li>
+					</ul>
+					<div name="register">
+						<h6 style='color: white'><a href = "/register"> Don't have an account? Register here!</a></h6>
 						<h6 style='color: white'><a href = "/accountrecovery"> Forgot password? Click here!</a></h6>
 					</div>
+				{{/if}}
+				{{#unless user_null}}
+					{{#if user_admin}}
+						<a href="/admindashboard" class="button big special">My Dashboard</a>
+					{{/if}}
+					{{#if user_professor}}
+						<a href="/facultydashboard" class="button big special">My Dashboard</a>
+					{{/if}}
+					{{#if user_tutor}}
+						<a href="/tutordashboard" class="button big special">My Dashboard</a>
+					{{/if}}
+					{{#if user_student}}
+						<a href="/studentdashboard" class="button big special">My Dashboard</a>
+					{{/if}}
+				{{/unless}}
 			</section>
 			
 <main class="cd-container">
@@ -133,7 +149,7 @@
 						<a class="image"><img src="images/entrance.jpg" alt="" /></a>
 						<a class="image"><img src="images/labHome.jpg" alt="" /></a>
 						<a class="image"><img src="images/kindlonHome.jpg" alt="" /></a>
-						<a class="image"><img src="images/eaglewalkHome.jpg" alt="" /></a>
+						<a class="image"><img src="images/eagleWalkHome.jpg" alt="" /></a>
 						<a class="image"><img src="images/basketballHome.jpg" alt="" /></a>
 						<a class="image"><img src="images/BHome.jpg" alt="" /></a>
 					</div>
@@ -147,11 +163,22 @@
 			<section id="three" class="wrapper style3 special">
 				<div class="inner">
 					<header class="major narrow	">
-						<h2>Create your account now</h2>
-						<p>Set up account to starting leaving reviews or get in touch with a tutor to set up a review session!</p>
+						{{#if user_null}}
+							<h2>Create your account now</h2>
+							<p>Set up account to starting leaving reviews or get in touch with a tutor to set up a review session!</p>
+						{{/if}}
+						{{#unless user_null}}
+							<h2>View Professor Ratings</h2>
+							<p>View how Benedictine's professors have been rated by their students!</p>
+						{{/unless}}
 					</header>
 					<ul class="actions">
-						<li><a href="/register" class="button big alt">Create Account</a></li>
+						{{#if user_null}}
+							<li><a href="/register" class="button big alt">Create Account</a></li>
+						{{/if}}
+						{{#unless user_null}}
+							<li><a href="/teacher" class="button big alt">Browse Professors</a></li>
+						{{/unless}}
 					</ul>
 				</div>
 			</section>

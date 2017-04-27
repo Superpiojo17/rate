@@ -35,12 +35,15 @@ public class TutorDao implements Dao<Tutor> {
 	private Tutor mapRow(ResultSet rs) throws SQLException {
 		UserDao udao = new UserDao(conn);
 		TutorDao tDao = new TutorDao(conn);
+		CourseDao cDao = new CourseDao(conn);
 		Tutor tmp = new Tutor();
 
 		tmp.setId(rs.getLong("tutor_relationship_id"));
 		tmp.setStudent_id(rs.getLong("user_id_student"));
 		tmp.setProfessor_id(rs.getLong("user_id_professor"));
-		tmp.setCourse_name(rs.getString("course_name"));
+		tmp.setCourse_id(rs.getLong("course_id"));
+
+		tmp.setCourse_name(cDao.findById(rs.getLong("course_id")).getCourse_name());
 		tmp.setTutor_email(udao.findById(rs.getLong("user_id_student")).getEmail());
 		tmp.setTutor_first_name(udao.findById(rs.getLong("user_id_student")).getFirst_name());
 		tmp.setTutor_last_name(udao.findById(rs.getLong("user_id_student")).getLast_name());
@@ -65,14 +68,13 @@ public class TutorDao implements Dao<Tutor> {
 
 	public Tutor save(Tutor tutor) {
 		final String sql = "INSERT INTO " + TUTOR_TABLE
-				+ "(user_id_student, user_id_professor, course_name) Values(?,?,?)";
+				+ "(user_id_student, user_id_professor, course_id) Values(?,?,?)";
 
 		try {
-			System.out.println("ADDED");
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setLong(1, tutor.getStudent_id());
 			ps.setLong(2, tutor.getProfessor_id());
-			ps.setString(3, tutor.getCourse_name());
+			ps.setLong(3, tutor.getCourse_id());
 			ps.executeUpdate();
 			return tutor;
 		} catch (SQLException e) {
@@ -90,8 +92,8 @@ public class TutorDao implements Dao<Tutor> {
 	 */
 	public TutorAppointment saveTutorAppointment(TutorAppointment appointment) {
 		final String sql = "INSERT INTO " + APPOINTMENT_TABLE + "(student_id, tutor_id, date, time, student_message, "
-				+ "student_firstname, student_lastname, tutor_firstname, tutor_lastname, tutor_message, tutor_has_responded,"
-				+ " appointment_status, appointment_past, appointment_reviewed, relationship_id) Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "tutor_message, tutor_has_responded, appointment_status, appointment_past, appointment_reviewed, "
+				+ "relationship_id) Values(?,?,?,?,?,?,?,?,?,?,?)";
 
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -100,16 +102,12 @@ public class TutorDao implements Dao<Tutor> {
 			ps.setString(3, appointment.getDate());
 			ps.setString(4, appointment.getTime());
 			ps.setString(5, appointment.getStudent_message());
-			ps.setString(6, appointment.getStudent_firstname());
-			ps.setString(7, appointment.getStudent_lastname());
-			ps.setString(8, appointment.getTutor_firstname());
-			ps.setString(9, appointment.getTutor_lastname());
-			ps.setString(10, appointment.getTutor_message());
-			ps.setBoolean(11, appointment.getTutor_has_responded());
-			ps.setBoolean(12, appointment.getAppointment_status());
-			ps.setBoolean(13, appointment.isAppointment_past());
-			ps.setBoolean(14, appointment.isAppointment_reviewed());
-			ps.setLong(15, appointment.getRelationship_id());
+			ps.setString(6, appointment.getTutor_message());
+			ps.setBoolean(7, appointment.getTutor_has_responded());
+			ps.setBoolean(8, appointment.getAppointment_status());
+			ps.setBoolean(9, appointment.isAppointment_past());
+			ps.setBoolean(10, appointment.isAppointment_reviewed());
+			ps.setLong(11, appointment.getRelationship_id());
 			ps.executeUpdate();
 			return appointment;
 		} catch (SQLException e) {
@@ -156,6 +154,8 @@ public class TutorDao implements Dao<Tutor> {
 	 */
 	private TutorAppointment appointmentMapRow(ResultSet rs) throws SQLException {
 		// create student course object
+		UserDao uDao = new UserDao(conn);
+
 		TutorAppointment tmp = new TutorAppointment();
 		tmp.setAppointment_id(rs.getLong("appointment_id"));
 		tmp.setStudent_id(rs.getLong("student_id"));
@@ -168,10 +168,10 @@ public class TutorDao implements Dao<Tutor> {
 		tmp.setAppointment_status(rs.getBoolean("appointment_status"));
 		tmp.setAppointment_past(rs.getBoolean("appointment_past"));
 		tmp.setAppointment_reviewed(rs.getBoolean("appointment_reviewed"));
-		tmp.setStudent_firstname(rs.getString("student_firstname"));
-		tmp.setStudent_lastname(rs.getString("student_lastname"));
-		tmp.setTutor_firstname(rs.getString("tutor_firstname"));
-		tmp.setTutor_lastname(rs.getString("tutor_lastname"));
+		tmp.setStudent_firstname(uDao.findById(tmp.getStudent_id()).getFirst_name());
+		tmp.setStudent_lastname(uDao.findById(tmp.getStudent_id()).getLast_name());
+		tmp.setTutor_firstname(uDao.findById(tmp.getTutor_id()).getFirst_name());
+		tmp.setTutor_lastname(uDao.findById(tmp.getTutor_id()).getLast_name());
 		tmp.setRelationship_id(rs.getLong("relationship_id"));
 
 		return tmp;
@@ -235,17 +235,15 @@ public class TutorDao implements Dao<Tutor> {
 	 */
 	public TutorAppointment updateApt(TutorAppointment appointment) {
 		String sql = "UPDATE " + APPOINTMENT_TABLE
-				+ " SET tutor_id = ? , tutor_firstname = ? , tutor_lastname = ? , appointment_status = ? WHERE appointment_id = ?";
+				+ " SET tutor_id = ?, appointment_status = ? WHERE appointment_id = ?";
 
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
 			ps.setLong(1, appointment.getTutor_id());
-			ps.setString(2, appointment.getTutor_firstname());
-			ps.setString(3, appointment.getTutor_lastname());
-			ps.setBoolean(4, appointment.getAppointment_status());
-			ps.setLong(5, appointment.getAppointment_id());
+			ps.setBoolean(2, appointment.getAppointment_status());
+			ps.setLong(3, appointment.getAppointment_id());
 			// Runs query
 			ps.execute();
 			return appointment;
@@ -548,8 +546,8 @@ public class TutorDao implements Dao<Tutor> {
 	 * @param course
 	 * @return
 	 */
-	public List<Tutor> getTutorByCourseName(String course, long student_id) {
-		final String SELECT = "SELECT * FROM " + TUTOR_TABLE + " WHERE course_name = " + course + " LIMIT 1";
+	public List<Tutor> getTutorByCourseName(Long course_id) {
+		final String SELECT = "SELECT * FROM " + TUTOR_TABLE + " WHERE course_id = " + course_id + " LIMIT 1";
 
 		List<Tutor> tutors = null;
 		try {
@@ -654,8 +652,8 @@ public class TutorDao implements Dao<Tutor> {
 	 * @param id
 	 * @return
 	 */
-	public List<Tutor> listAllCourseTutors(String course) {
-		final String SELECT = "SELECT * FROM " + TUTOR_TABLE + " WHERE course_name = '" + course + "'";
+	public List<Tutor> listAllCourseTutors(Long course_id) {
+		final String SELECT = "SELECT * FROM " + TUTOR_TABLE + " WHERE course_id = '" + course_id + "'";
 
 		List<Tutor> tutors = null;
 		try {
@@ -780,13 +778,13 @@ public class TutorDao implements Dao<Tutor> {
 	}
 
 	public TutorForm updateTutor(TutorForm tutor) {
-		String sql = "UPDATE " + TUTOR_TABLE + " SET course_name = ? WHERE tutor_relationship_id = ? LIMIT 1";
+		String sql = "UPDATE " + TUTOR_TABLE + " SET course_id = ? WHERE tutor_relationship_id = ? LIMIT 1";
 
 		try {
 			// Create Prepared Statement from query
 			PreparedStatement ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
-			ps.setString(1, tutor.getCourse());
+			ps.setLong(1, tutor.getCourse_id());
 			ps.setLong(2, tutor.getId());
 
 			// Runs query

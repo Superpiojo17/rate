@@ -7,7 +7,6 @@ public class CourseForm {
 	private long id;
 	private String course_name;
 	private long professor_id;
-	// private String professor_name;
 	private String subject;
 	private String semester;
 	private long course_number;
@@ -74,10 +73,6 @@ public class CourseForm {
 		return u.getFirst_name() + " " + u.getLast_name();
 
 	}
-
-	// public void setProfessor_name(String professor_name) {
-	// this.professor_name = professor_name;
-	// }
 
 	public long getCourse_number() {
 		return course_number;

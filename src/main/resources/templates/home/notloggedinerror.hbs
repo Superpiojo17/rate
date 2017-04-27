@@ -30,12 +30,19 @@
 						<a class="image"><img src="images/entrance.jpg" alt="" /></a>
 						<a class="image"><img src="images/labHome.jpg" alt="" /></a>
 						<a class="image"><img src="images/kindlonHome.jpg" alt="" /></a>
-						<a class="image"><img src="images/eaglewalkHome.jpg" alt="" /></a>
+						<a class="image"><img src="images/eagleWalkHome.jpg" alt="" /></a>
 						<a class="image"><img src="images/basketballHome.jpg" alt="" /></a>
 						<a class="image"><img src="images/BHome.jpg" alt="" /></a>
 					</div>
 					<ul class="actions">
-						<li><a href="/login" class="button big alt">Go to Log In</a></li>
+				
+						{{#if user_null}}
+							<li><a href="/signin" class="button big alt">Go to Log In</a></li>
+						{{/if}}
+						{{#unless user_null}}
+							<li><a href="/signin" class="button big alt">Return to Dashboard</a></li>
+						{{/unless}}
+
 					</ul>
 				</div>
 			</section>

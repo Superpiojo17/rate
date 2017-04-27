@@ -59,7 +59,7 @@ public class ProfessorController {
 		uDao.close();
 		// if user attempts to access using a non-professor's ID
 		if (prof == null || prof.getRole() != 2) {
-			res.redirect("/authorizationerror");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
 		} else {
 			ProfessorReviewDao reviewDao = dao.getProfessorReviewDao();
 			// gets a list of all unique courses a given professor teaches
@@ -86,7 +86,7 @@ public class ProfessorController {
 
 			// if user attempts to access a course not offered by professor
 			if (reviews.isEmpty()) {
-				res.redirect("/authorizationerror");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
 			}
 			// lists all reviews which will be use when rendering the page
 			model.put("courses", reviews);

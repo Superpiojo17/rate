@@ -64,7 +64,7 @@ public class UserDao implements Dao<User> {
 		tmp.setNickname(rs.getString("nickname"));
 		tmp.setPersonal_email(rs.getString("personal_email"));
 		tmp.setOverall(ProfessorController.getOverall(tmp));
-		
+
 		return tmp;
 	}
 
@@ -209,6 +209,12 @@ public class UserDao implements Dao<User> {
 
 	}
 
+	/**
+	 * completes the profile of a user upon registration (tutor)
+	 * 
+	 * @param user
+	 * @return
+	 */
 	public User completeProfProfile(User user) {
 		// Declare SQL template query
 		String sql = "UPDATE " + USER_TABLE + " SET major = ? WHERE user_id= ? LIMIT 1";
@@ -230,6 +236,12 @@ public class UserDao implements Dao<User> {
 
 	}
 
+	/**
+	 * completes the profile of a user upon registration (student)
+	 * 
+	 * @param user
+	 * @return
+	 */
 	public User completeProfile(User user) {
 		// Declare SQL template query
 		String sql = "UPDATE " + USER_TABLE + " SET major = ?, school_year = ? WHERE user_id= ? LIMIT 1";
@@ -251,8 +263,10 @@ public class UserDao implements Dao<User> {
 		return null;
 
 	}
+
 	/**
 	 * method will update the users nickname and personal email
+	 * 
 	 * @param user
 	 * @return
 	 */
@@ -277,8 +291,6 @@ public class UserDao implements Dao<User> {
 		return null;
 
 	}
-	
-	
 
 	/**
 	 * Method which will deactivate an active account
@@ -335,6 +347,13 @@ public class UserDao implements Dao<User> {
 		return null;
 
 	}
+
+	/**
+	 * find a specifc user
+	 * 
+	 * @param id
+	 * @return
+	 */
 
 	public User findById(long id) {
 		// Declare SQL template query
@@ -495,6 +514,40 @@ public class UserDao implements Dao<User> {
 		return users;
 	}
 
+	/**
+	 * 
+	 * @return all users from the database.
+	 */
+
+	public List<User> CourseList(long courseID) {
+		final String SELECT = "Select * from users where user_id  in (Select student_id from student_in_course where course_id = "
+				+ courseID + ") ORDER BY last_name ASC";
+
+		List<User> users = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			users = new ArrayList<User>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					users.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return users;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+
+	/**
+	 * returns all the users of a specfic major
+	 * 
+	 * @param Major
+	 * @return
+	 */
 	public List<User> allByMajor(String Major) {
 		final String SELECT = "SELECT * FROM " + USER_TABLE + " WHERE major = '" + Major
 				+ "' AND (role_id = 3 or role_id = 4) ORDER BY role_id ASC";
@@ -520,7 +573,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * 
-	 * @return all users from the database.
+	 * @return all students from the database.
 	 */
 	public List<User> allStudentsByMajor(String Major) {
 		final String SELECT = "SELECT * FROM " + USER_TABLE + " WHERE major = '" + Major + "' AND role_id = 4";
@@ -544,10 +597,37 @@ public class UserDao implements Dao<User> {
 		return users;
 	}
 
-	public User find(Long id) {
-		return null;
+	/**
+	 * 
+	 * @return all students not in that specific course
+	 */
+	public List<User> allStudentsNotAlreadyInCourse(Long courseID) {
+		final String SELECT = "SELECT * FROM " + USER_TABLE
+				+ " WHERE role_id = 4 AND ( user_id NOT IN (SELECT student_id from student_in_course where course_id = "
+				+ courseID + ")) ORDER BY last_name ASC";
+
+		List<User> users = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement(SELECT);
+			users = new ArrayList<User>();
+			try {
+				ResultSet rs = ps.executeQuery(SELECT);
+				while (rs.next()) {
+					users.add(mapRow(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return users;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
 	}
 
+	/**
+	 * closes connection
+	 */
 	public void close() {
 		try {
 			this.conn.close();
@@ -599,6 +679,7 @@ public class UserDao implements Dao<User> {
 	}
 
 	/**
+	 * sorts users by role
 	 * 
 	 * @return all users from the database.
 	 */
@@ -625,6 +706,11 @@ public class UserDao implements Dao<User> {
 		return users;
 	}
 
+	/**
+	 * sorts users by lastname
+	 * 
+	 * @return
+	 */
 	public String sortByLastName() {
 
 		String sql = "SELECT * FROM users ORDER BY last_name";
@@ -790,6 +876,12 @@ public class UserDao implements Dao<User> {
 		return null;
 	}
 
+	/**
+	 * used by admin to mass edit the school year of users
+	 * 
+	 * @param massedit
+	 * @return
+	 */
 	public MassEditForm massEditYear(MassEditForm massedit) {
 		String sql = "UPDATE " + USER_TABLE + " SET school_year = ? WHERE school_year = ?";
 
@@ -809,6 +901,12 @@ public class UserDao implements Dao<User> {
 		return null;
 	}
 
+	/**
+	 * used by admin to mass edit the active status of users
+	 * 
+	 * @param massedit
+	 * @return
+	 */
 	public MassEditForm massEditActive(MassEditForm massedit) {
 		String sql = "UPDATE " + USER_TABLE + " SET active = ? WHERE active = ?";
 
@@ -828,6 +926,15 @@ public class UserDao implements Dao<User> {
 		return null;
 	}
 
+	/**
+	 * search bar method used to search all users
+	 * 
+	 * @param sType
+	 * @param sText
+	 * @return
+	 * @throws SQLException
+	 */
+
 	public List<User> search(String sType, String sText) throws SQLException {
 		String NAME_SQL = "SELECT * FROM users WHERE first_name LIKE '%" + sText + "%' OR last_name LIKE '%" + sText
 				+ "%' OR email LIKE '%" + sText + "%'";
@@ -837,13 +944,6 @@ public class UserDao implements Dao<User> {
 		try {
 
 			PreparedStatement ps = conn.prepareStatement(NAME_SQL);
-			// both have 1 parameter
-			// ps.setString(1, sText);
-			//
-			// // Only name search has a second parameter
-			// if (sType.equals("name")) {
-			// ps.setString(2, sText);
-			// }
 			users = new ArrayList<User>();
 			try {
 				ResultSet rs = ps.executeQuery(NAME_SQL);
@@ -860,6 +960,14 @@ public class UserDao implements Dao<User> {
 		return users;
 	}
 
+	/**
+	 * search bar method used to search all tutors
+	 * 
+	 * @param sType
+	 * @param sText
+	 * @return
+	 * @throws SQLException
+	 */
 	public List<User> searchTutor(String sType, String sText) throws SQLException {
 		String NAME_SQL = "SELECT * FROM users WHERE (role_id =3 or role_id =4) and (first_name LIKE '%" + sText
 				+ "%' OR last_name LIKE '%" + sText + "%' OR email LIKE '%" + sText + "%')";
@@ -869,13 +977,6 @@ public class UserDao implements Dao<User> {
 		try {
 
 			PreparedStatement ps = conn.prepareStatement(NAME_SQL);
-			// both have 1 parameter
-			// ps.setString(1, sText);
-			//
-			// // Only name search has a second parameter
-			// if (sType.equals("name")) {
-			// ps.setString(2, sText);
-			// }
 			users = new ArrayList<User>();
 			try {
 				ResultSet rs = ps.executeQuery(NAME_SQL);
@@ -892,6 +993,14 @@ public class UserDao implements Dao<User> {
 		return users;
 	}
 
+	/**
+	 * search bar method used to search all professors
+	 * 
+	 * @param sType
+	 * @param sText
+	 * @return
+	 * @throws SQLException
+	 */
 	public List<User> searchProf(String sType, String sText) throws SQLException {
 		String NAME_SQL = "SELECT * FROM users WHERE role_id = 2 and (first_name LIKE '%" + sText
 				+ "%' OR last_name LIKE '%" + sText + "%' OR email LIKE '%" + sText + "%' OR major LIKE '%" + sText
@@ -902,13 +1011,7 @@ public class UserDao implements Dao<User> {
 		try {
 
 			PreparedStatement ps = conn.prepareStatement(NAME_SQL);
-			// both have 1 parameter
-			// ps.setString(1, sText);
-			//
-			// // Only name search has a second parameter
-			// if (sType.equals("name")) {
-			// ps.setString(2, sText);
-			// }
+
 			users = new ArrayList<User>();
 			try {
 				ResultSet rs = ps.executeQuery(NAME_SQL);
@@ -958,6 +1061,12 @@ public class UserDao implements Dao<User> {
 		return null;
 	}
 
+	/**
+	 * gets all the tutors in the table
+	 * 
+	 * @return
+	 */
+
 	public List<User> allTutors() {
 		final String SELECT = "SELECT * FROM " + USER_TABLE + " WHERE role_id = 3 ";
 
@@ -978,5 +1087,11 @@ public class UserDao implements Dao<User> {
 			e.printStackTrace();
 		}
 		return users;
+	}
+
+	@Override
+	public User find(Long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

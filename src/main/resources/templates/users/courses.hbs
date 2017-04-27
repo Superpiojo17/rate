@@ -33,7 +33,7 @@
 				<ul class="links">
 					<li><a href="/">Home</a></li>
 					<li><a href="/admindashboard">My Dashboard</a></li>
-					<li><a href="/register">My Account</a></li>
+					<li><a href="/myaccount">My Account</a></li>
 					<li><a href="/allusers">Manage Users</a></li>
 					{{#if completeProfile }}
 					<li><a href="/completeprofileprof/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
@@ -41,8 +41,9 @@
 					<li><a href="/courseslanding">Manage Courses</a></li>
 					<li><a href="/managetutorslanding">Manage Tutors</a></li>
 					<li><a href="/announcement">Announcements</a></li>
-					<li><a href="/aboutus">Manage Apointments</a></li>
-					<li><a href="/aboutus">Manage Reviews</a></li>
+					<li><a href="/adminaptlanding">Manage Appointments</a></li>
+					<li><a href="/reviewlanding">Manage Reviews</a></li>
+					<li><a href="/analysis">Data Analysis</a></li>
 					<li><a href="/teacher">Browse Professors</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
 					<li><a href="/aboutus">About Us</a></li>
@@ -107,7 +108,7 @@
 							
 							
 							
-  <p>View and edit all the courses in the department. </p>
+  <p>View and edit all the courses in the department. Click on the list icon on the far left to view and edit the course's class list </p>
   &ensp;
    <form action="/courses/{{department}}" method="GET">
   &nbsp;&nbsp;
@@ -130,7 +131,7 @@
 									<thead>
 										<tr>
 											<th></th>
-											
+											<th></th>
 											
 											<th class=" shrink text-left"><a href="javascript:SortTable(1,'T');" class="btn btn-link" style="color:black">Course <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
 										<th class=" shrink text-left"><a href="javascript:SortTable(2,'N');" class="btn btn-link" style="color:black">Number <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
@@ -143,9 +144,11 @@
 									<tbody>
 									{{#each courses}}
 										<tr>
+											<td class="shrink  text-center">
+											<a href="/course/{{id}}/classlist"><i class="fa fa-list-alt fa-2x" title="View and edit class list" aria-hidden="true"></i></a>
+											</td>
 											
-											<td class="shrink">
-											<a href="/course/{{id}}/addstudent"><i class="fa fa-plus fa-2x" title="add students to course" aria-hidden="true"></i></a>
+											<td class="shrink  text-center">
 												<a href="/course/{{id}}/edit"  class="btn btn-info">Edit<span class="glyphicon glyphicon-pencil"></span></a>
 											</td>
 											<!-- <td class="shrink" align="center"><a href="/course/{{id}}/edit"  class="btn btn-info">Edit<span class="glyphicon glyphicon-pencil"></span></a></td> -->

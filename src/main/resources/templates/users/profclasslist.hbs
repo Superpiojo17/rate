@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Edit Course</title>
+		<title>Course Class List</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -26,24 +26,20 @@
 
 			
 		<!-- Header -->
-			<header id="adminheader">
-				<h1>Administrator Dashboard</h1>
+			<header id="facultyheader">
+				<h1>Faculty Dashboard</h1>
 			</header>
 	<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
 					<li><a href="/">Home</a></li>
 					<li><a href="/admindashboard">My Dashboard</a></li>
-					<li><a href="/register">My Account</a></li>
-					<li><a href="/allusers">Manage Users</a></li>
+					<li><a href="/myaccount">My Account</a></li>
 					{{#if completeProfile }}
 					<li><a href="/completeprofileprof/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
 					{{/if}}
-					<li><a href="/courseslanding">Manage Courses</a></li>
-					<li><a href="/managetutorslanding">Manage Tutors</a></li>
-					<li><a href="/announcement">Announcements</a></li>
-					<li><a href="/aboutus">Manage Apointments</a></li>
-					<li><a href="/aboutus">Manage Reviews</a></li>
+					<li><a href="/alltutors/{{current_user.id}}">Manage Tutors</a></li>
+					<li><a href="/professor/{{current_user.id}}/overview">View Reviews</a></li>
 					<li><a href="/teacher">Browse Professors</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
 					<li><a href="/aboutus">About Us</a></li>
@@ -54,7 +50,7 @@
 				</ul>
 			</nav>
 			<!-- Banner -->
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="adminDash">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="facultyDash">
 </div>
  <p> </p>
    
@@ -101,11 +97,11 @@
 						
 							<div class="centercol"> 
 							&ensp;
-							<h2> Add a student </h2>
+							<h2>{{course.subject}} {{course.course_number}} {{course.course_name}}</h2>
 							
 							
 							
-  <p>Add student to this course</p>
+  <p>View the class list for this course.</p>
   &ensp;
    <div name="error">
 						<p style='color: red'>{{error}}</p>
@@ -116,33 +112,35 @@
 							<form action="/course/{{course.id}}/addstudent" method="post">
 							
 							<div class="table-wrapper">
-								<table class="alt">
+							&nbsp;&nbsp;
+								<table id = "indextable" class="indextable alt">
 									<thead>
 										<tr>
-											<th><br>Course</th>
-											<th><br>Name</th>
-											<th><br>Professor</th>
-											<th><br>Term</th>
-											<th><br>Student</th>
+											<th class=" shrink text-left"><a href="javascript:SortTable(1,'T');" class="btn btn-link" style="color:black">Student Name <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
+										<th class=" shrink text-left"><a href="javascript:SortTable(2,'N');" class="btn btn-link" style="color:black">Email <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
+										<th class="shrink text-left"><a href="javascript:SortTable(3,'T');" class="btn btn-link" style="color:black" >Major <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
+<th class="shrink text-left"><a href="javascript:SortTable(4,'T');" class="btn btn-link" style="color:black" >Year <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
+											
 										</tr>
 									</thead>
 									<tbody>
+									{{#each classlist}}
 										<tr>
-											<td>{{course.subject}}{{course.course_number}} </td>
-											<td>{{course.course_name}} </td>
-											<td>{{course.professor_name}}</td>
-											<td>{{course.semester}} {{course.year}} </td>
-											<td>STUDENT DROP DOWN</td>
+											<td>{{last_name}}, {{first_name}} </td>
+											<td>{{email}} </td>
+											<td>{{major}}</td>
+											<td>{{year_string}} </td>
 										</tr>
+										{{/each}}
 									</tbody>
 									<tfoot>
 									</tfoot>
 								</table>
 							</div>
-							<button type="submit" class="btn btn-info" name="student_id" value="PASS IN STUDENT ID"><span class="glyphicon glyphicon-floppy-saved"></button>
 						</form>
 					</section>
-											
+					
+
 
   </div>
   
@@ -152,9 +150,10 @@
 			<script src="/assets/js/jquery.min.js"></script>
 			<script src="/assets/js/skel.min.js"></script>
 			<script src="/assets/js/util.js"></script>
-			<script>
+			
+			<script type="text/javascript" src="/assets/js/sortColumns.js"  ></script>
 
-// d = new Date();
+
 
 
 </script>

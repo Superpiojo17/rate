@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.authorization.AuthException;
 import edu.ben.rate_review.daos.AnnouncementDao;
 import edu.ben.rate_review.daos.DaoManager;
@@ -27,12 +28,16 @@ public class EditReviewsController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User u = (User) session.attribute("current_user");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
+			model.put("current_user", u);
 
-		if (u.getRole() != 1) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			if (u.getRole() != 1) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			}
 		}
 
 		DaoManager adao = DaoManager.getInstance();
@@ -69,7 +74,6 @@ public class EditReviewsController {
 			model.put("deptreviews", deptReviews);
 		}
 
-		model.put("current_user", u);
 		model.put("department", department);
 
 		pD.close();
@@ -86,12 +90,15 @@ public class EditReviewsController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User u = (User) session.attribute("current_user");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
 
-		if (u.getRole() != 1) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			if (u.getRole() != 1) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			}
 		}
 
 		DaoManager adao = DaoManager.getInstance();

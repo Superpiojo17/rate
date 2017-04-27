@@ -6,6 +6,7 @@ import java.util.HashMap;
 //import java.util.HashSet;
 import java.util.List;
 
+import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.authorization.AuthException;
 import edu.ben.rate_review.daos.AnnouncementDao;
 import edu.ben.rate_review.daos.CourseDao;
@@ -30,16 +31,15 @@ public class AdminEditTutorController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User u = (User) session.attribute("current_user");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
 
-		if (u.getRole() != 1) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-
-		if (u != null) {
-			if (u.getRole() == 1) {
+			if (u.getRole() != 1) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			} else {
 				model.put("user_admin", true);
 			}
 		}
@@ -122,14 +122,16 @@ public class AdminEditTutorController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User u = (User) session.attribute("current_user");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
 
-		if (u.getRole() != 1) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			if (u.getRole() != 1) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			}
 		}
-
 		UserDao user = DaoManager.getInstance().getUserDao();
 		TutorDao tutor = DaoManager.getInstance().getTutorDao();
 
@@ -176,12 +178,16 @@ public class AdminEditTutorController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User u = (User) session.attribute("current_user");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
 
-		if (u.getRole() != 1) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			if (u.getRole() != 1) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			}
+			model.put("current_user", u);
 		}
 
 		String idString = req.params("id");
@@ -198,7 +204,7 @@ public class AdminEditTutorController {
 
 		tutor.setStudent_id(Long.parseLong(req.queryParams("selecttutor")));
 		tutor.setId(id);
-		tutor.setCourse(tempTutor.getCourse_name());
+		tutor.setCourse_id(tempTutor.getCourse_id());
 
 		tDao.adminUpdateTutor(tutor);
 
@@ -234,8 +240,6 @@ public class AdminEditTutorController {
 		model.put("error", "You have assigned " + user.getFirst_name() + " " + user.getLast_name() + " to "
 				+ tempTutor.getCourse_name());
 
-		model.put("current_user", u);
-
 		tDao.close();
 		ad.close();
 		uDao.close();
@@ -250,12 +254,15 @@ public class AdminEditTutorController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User u = (User) session.attribute("current_user");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
 
-		if (u.getRole() != 1) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			if (u.getRole() != 1) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			}
 		}
 
 		DaoManager adao = DaoManager.getInstance();
@@ -282,14 +289,16 @@ public class AdminEditTutorController {
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
-		}
-		User u = (User) session.attribute("current_user");
+			// return new ModelAndView(model, "home/notauthorized.hbs");
+			res.redirect(Application.AUTHORIZATIONERROR_PATH);
+		} else {
+			User u = (User) session.attribute("current_user");
 
-		if (u.getRole() != 1) {
-			return new ModelAndView(model, "home/notauthorized.hbs");
+			if (u.getRole() != 1) {
+				// return new ModelAndView(model, "home/notauthorized.hbs");
+				res.redirect(Application.AUTHORIZATIONERROR_PATH);
+			}
 		}
-
 		DaoManager adao = DaoManager.getInstance();
 		CourseDao cDao = DaoManager.getInstance().getCourseDao();
 		UserDao user = DaoManager.getInstance().getUserDao();
@@ -341,7 +350,8 @@ public class AdminEditTutorController {
 
 		Tutor tutor = new Tutor();
 
-		tutor.setCourse_name(course.getCourse_name());
+		tutor.setCourse_id(course.getId());
+		tutor.setCourse_name(cDao.findById(course.getId()).getCourse_name());
 		tutor.setStudent_id(Long.parseLong(req.queryParams("selecttutor")));
 
 		User user = uDao.findById(Long.parseLong(req.queryParams("selecttutor")));
@@ -382,12 +392,13 @@ public class AdminEditTutorController {
 
 		DaoManager adao = DaoManager.getInstance();
 		AnnouncementDao ad = adao.getAnnouncementDao();
+		List<Announcement> announcements = ad.all();
+		model.put("announcements", announcements);
 		cDao.close();
 		tDao.close();
 		uDao.close();
 		ad.close();
-		List<Announcement> announcements = ad.all();
-		model.put("announcements", announcements);
+		
 
 		model.put("error", "You have assigned " + user.getFirst_name() + " " + user.getLast_name() + " to "
 				+ tutor.getCourse_name());

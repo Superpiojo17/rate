@@ -22,7 +22,6 @@ public class User implements AuthorizationUser {
 	private boolean confirmed;
 	private boolean active;
 	private String department;
-//	private String profilepic;
 	private double overall;
 	private boolean adminEditFlag;
 	private String nickname;
@@ -230,10 +229,6 @@ public class User implements AuthorizationUser {
 		}
 		return adminEditFlag;
 	}
-
-	// public void setProfilepic(String profilepic) {
-	// this.profilepic = profilepic;
-	// }
 
 	public void setOverall(double overall) {
 		this.overall = overall;

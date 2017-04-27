@@ -5,14 +5,13 @@ import edu.ben.rate_review.daos.UserDao;
 
 public class TutorForm {
 	private long id;
-	private String Course;
+	private long course_id;
 	private Long student_id;
 	private Long professor_id;
 	private String tutor_first_name;
 	private String tutor_last_name;
 	private String tutor_email;
-	// private String subject;
-	// private String professor_name;
+	private String course_name;
 
 	public TutorForm() {
 		super();
@@ -20,26 +19,19 @@ public class TutorForm {
 
 	public TutorForm(Tutor tutor) {
 		this.setId(tutor.getId());
-		this.setCourse(tutor.getCourse_name());
+		this.setCourse_id(tutor.getCourse_id());
 		this.setProfessor_id(tutor.getProfessor_id());
 		this.setStudent_id(tutor.getStudent_id());
 		this.setTutor_email(tutor.getTutor_email());
 		this.setTutor_first_name(tutor.getTutor_first_name());
 		this.setTutor_last_name(tutor.getTutor_last_name());
+		this.setCourse_name(tutor.getCourse_name());
 	}
 
 	public Tutor build() {
 		Tutor tutor = new Tutor();
 
 		return tutor;
-	}
-
-	public String getCourse() {
-		return Course;
-	}
-
-	public void setCourse(String course) {
-		Course = course;
 	}
 
 	public long getId() {
@@ -105,6 +97,22 @@ public class TutorForm {
 		String professor_name = user.getFirst_name() + ", " + user.getLast_name();
 		ud.close();
 		return professor_name;
+	}
+
+	public long getCourse_id() {
+		return course_id;
+	}
+
+	public void setCourse_id(long course_id) {
+		this.course_id = course_id;
+	}
+
+	public String getCourse_name() {
+		return course_name;
+	}
+
+	public void setCourse_name(String course_name) {
+		this.course_name = course_name;
 	}
 
 }
