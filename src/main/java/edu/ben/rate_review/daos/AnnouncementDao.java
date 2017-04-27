@@ -10,16 +10,22 @@ import java.util.List;
 
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.AnnouncementForm;
-//import edu.ben.rate_review.models.User;
-//import edu.ben.rate_review.models.UserForm;
 
+/**
+ * This dao manages the announcements table in the data base where the
+ * announcements on the left hand sides of many pages are found
+ * 
+ * @author Joel
+ *
+ */
 public class AnnouncementDao {
 
+	// table variable
 	String ANNOUNCEMENTS_TABLE = "announcements";
 	Connection conn = null;
 
 	/**
-	 * UserDao connection
+	 * UserDao connection create connection
 	 * 
 	 * @param conn
 	 */
@@ -27,6 +33,13 @@ public class AnnouncementDao {
 		this.conn = conn;
 	}
 
+	/**
+	 * Creates announcements
+	 * 
+	 * @param rs
+	 * @return announcement object
+	 * @throws SQLException
+	 */
 	private Announcement mapRow(ResultSet rs) throws SQLException {
 
 		// Create user object and pass to array
@@ -38,6 +51,12 @@ public class AnnouncementDao {
 		return tmp;
 	}
 
+	/**
+	 * SQL method to update an announcement
+	 * 
+	 * @param announcement
+	 * @return AnnouncementForm
+	 */
 	public AnnouncementForm updateAnnouncement(AnnouncementForm announcement) {
 		String sql = "UPDATE " + ANNOUNCEMENTS_TABLE
 				+ " SET announcement_date = ?, announcement_content = ? WHERE announcement_id = ? LIMIT 1";
@@ -61,6 +80,12 @@ public class AnnouncementDao {
 		return null;
 	}
 
+	/**
+	 * Saves an announcement
+	 * 
+	 * @param announcement
+	 * @return an annoucnemnt object
+	 */
 	public Announcement save(Announcement announcement) {
 		final String sql = "INSERT INTO " + ANNOUNCEMENTS_TABLE
 				+ " (announcement_date, announcement_content) VALUES(?,?)";
@@ -78,6 +103,12 @@ public class AnnouncementDao {
 
 	}
 
+	/**
+	 * A method to find an announcement in the db
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public Announcement findById(long id) {
 		// Declare SQL template query
 		String sql = "SELECT * FROM " + ANNOUNCEMENTS_TABLE + " WHERE announcement_id = ? LIMIT 1";
@@ -101,6 +132,12 @@ public class AnnouncementDao {
 
 	}
 
+	/**
+	 * deletes announcement from database by using the announcement ID
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public String deletAnnouncement(long id) {
 
 		String sql = "DELETE FROM " + ANNOUNCEMENTS_TABLE + " WHERE announcement_id = ? LIMIT 1";
@@ -119,7 +156,7 @@ public class AnnouncementDao {
 
 	/**
 	 * 
-	 * @return all users from the database.
+	 * @return all anouncements from the database.
 	 * @throws ParseException
 	 */
 
