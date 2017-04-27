@@ -81,100 +81,98 @@ public class Application {
 	private static AnalysisController analysisController = new AnalysisController();
 	private static MyAccountController myAccountController = new MyAccountController();
 	////////////////////////////////////////////////////////////////////////////////
-	//private static Login2Controller login2Controller = new Login2Controller();
+	// private static Login2Controller login2Controller = new
+	//////////////////////////////////////////////////////////////////////////////// Login2Controller();
 	////////////////////////////////////////////////////////////////////////////////
 	private static CompareController compareController = new CompareController();
-	
+
 	// match up paths
 	public static String DOMAIN = "http://localhost";
-	public static String HOME_PATH = "/";
-	public static String USERS_PATH = "/users";
-	public static String USER_PATH = "/user";
-	public static String LOGIN_PATH = "/signin";
-	public static String ABOUTUS_PATH = "/aboutus";
-	public static String REGISTER_PATH = "/register";
-	public static String CONTACTUS_PATH = "/contactus";
-	public static String STUDENTDASHBOARD_PATH = "/studentdashboard";
-	public static String FACULTYDASHBOARD_PATH = "/facultydashboard";
-	public static String ADMINDASHBOARD_PATH = "/admindashboard";
-	public static String TUTORDASHBOARD_PATH = "/tutordashboard";
-	public static String TEACHER_PATH = "/teacher";
-	public static String COURSESPROFESSOR_PATH = "/courseprofessors";
-	public static String MAJORTUTOR_PATH = "/majortutors";
-	public static String DEPARTMENTS_PATH = "/departments";
-	public static String TUTORS_PATH = "/tutors";
-	public static String ACTIVATION_PATH = "/activation";
-	public static String CHANGEPASSWORD_PATH = "/changepassword";
-	public static String CONFIRMATION_PATH = "/confirmation";
-	public static String DEACTIVATION_PATH = "/deactivation";
-	public static String ACCOUNTRECOVERY_PATH = "/accountrecovery";
-	public static String NEWINFO_PATH = "/newinfo";
-	public static String ALLUSERS_PATH = "/allusers";
-	public static String TEST_PATH = "/test";
-	public static String TUTOR_PATH = "/tutor";
-	public static String PROFESSOR_PATH = "/professor/:professor_id/:display";
-	public static String REVIEWPROFESSOR_PATH = "/reviewprofessor/:student_course_id/review";
-	public static String SELECTTUTOR_PATH = "/selecttutors";
-	public static String ADDPROFESSOR_PATH = "/addprofessor";
-	public static String FAQ_PATH = "/faq";
-	public static String TUTORAPPOINTMENT_PATH = "/tutorappointment";
-	public static String TEACHERADDTUTOR_PATH = "/teacheraddtutor";
-	public static String NOTLOGGEDIN_PATH = "/notloggedinerror";
-	public static String AUTHORIZATIONERROR_PATH = "/notauthorized";
-	public static String EDITUSER_PATH = "/user/:id/edit";
-	public static String DELETEUSER_PATH = "/deleteuser/:id";
-	public static String EDITANNOUNCEMENT_PATH = "/announcement/:id/edit";
-	public static String DELETEANNOUNCEMENT_PATH = "/deleteannouncement/:id";
-	public static String ANNOUNCEMENTS_PATH = "/announcement";
-	public static String SORTBYLASTNAME_PATH = "/sortbylastname";
-	public static String MASSEDITCONFIRMED_PATH = "/masseditconfirmed";
-	public static String MASSEDITACTIVE_PATH = "/masseditactive";
-	public static String MASSEDITYEAR_PATH = "/massedityear";
-	public static String MASSEDITROLE_PATH = "/masseditrole";
-	public static String ADDANNOUNCEMENT_PATH = "/addannouncement";
-	public static String ALLTUTORS_PATH = "/alltutors/:id";
-	public static String EDITTUTORS_PATH = "/tutor/:id/edit";
-	public static String DELETETUTOR_PATH = "/deletetutor/:id";
-	public static String DELETECOURSE_PATH = "/deletecourse/:id";
-	public static String ADDTUTOR_PATH = "/tutor/:id/add";
-	public static String ADDCOURSE_PATH = "/addCourse/:department";
-	public static String ALLSTUDENTS_PATH = "/selectstudents";
-	public static String APPOINTMENT_PATH = "/appointment";
-	public static String MESSAGE_PATH = "/instantmessage";
-	public static String CALENDAR_PATH = "/calendar";
-	public static String COURSELANDING_PATH = "/courseslanding";
-	public static String COURSES_PATH = "/courses/:department";
-	public static String EDITCOURSES_PATH = "/course/:id/edit";
-	public static String COMPLETEPROF_PATH = "/completeprofileprof/:id";
-	public static String COMPLETESTUDENT_PATH = "/completeprofilestudent/:id";
-	public static String COMPLETETUTOR_PATH = "/completeprofiletutor/:id";
-	public static String TUTORLANDING_PATH = "/managetutorslanding";
-	public static String ADMINTUTOR_PATH = "/tutors/:department";
-	public static String ADMINTUTOREDIT_PATH = "/adminedittutor/:id/edit";
-	public static String ADMINADDTUTORLANDING_PATH = "/adminAddTutorlanding/:department";
-	public static String ADMINADDTUTOR_PATH = "/adminaddtutor/:id";
-	public static String ADMINDELETETUTOR_PATH = "/admindeletetutor/:id";
-	public static String ANALYSIS_PATH = "/analysis";
-	public static String MYACCOUNT_PATH = "/myaccount";
-	public static String ADMINAPTLANDING_PATH = "/adminaptlanding";
-	public static String APPOINTMENTS_PATH = "/appointments/:department";
-	public static String EDITAPPOINTMENTS_PATH = "/appointment/:id/edit";
-	public static String UPDATEAPPOINTMENT_PATH = "/editapt/:id/edit";
-	public static String LOGOUT_PATH = "/logout";
-	public static String DELETEAPPOINTMENT_PATH = "/deleteapt/:id";
-	public static String TUTORREVIEW_PATH = "/tutorreview/:appointment_id";
-	public static String ADMINREVIEWLANDING_PATH = "/reviewlanding";
-	public static String DEPTREVIEWS_PATH = "/reviews/:department";
-	public static String DELETEREVIEW_PATH = "/deletereview/:student_course_id";
-	public static String ADD_STUDENT_COURSE = "/course/:id/addstudent";
-	/////////////////////////////////////////////////////////////////
-	public static String LOGIN2_PATH = "/login2";
-	/////////////////////////////////////////////////////////////////
-	public static String COMPARE_PATH = "/compare";
-	public static String CLASSLIST_PATH = "/course/:id/classlist";
-	public static String PROFCLASSLIST_PATH = "/course/:id/profclasslist";
-	public static String REMOVEFROMCLASSLIST_PATH = "/classlistremove/:id";
-	public static String ADDTOCLASSLIST_PATH = "/classlistadd/:id";
+	public static String HOME_PATH = "/rateandreview";
+	public static String USERS_PATH = HOME_PATH + "/users";
+	public static String USER_PATH = HOME_PATH + "/user";
+	public static String LOGIN_PATH = HOME_PATH + "/signin";
+	public static String ABOUTUS_PATH = HOME_PATH + "/aboutus";
+	public static String REGISTER_PATH = HOME_PATH + "/register";
+	public static String CONTACTUS_PATH = HOME_PATH + "/contactus";
+	public static String STUDENTDASHBOARD_PATH = HOME_PATH + "/studentdashboard";
+	public static String FACULTYDASHBOARD_PATH = HOME_PATH + "/facultydashboard";
+	public static String ADMINDASHBOARD_PATH = HOME_PATH + "/admindashboard";
+	public static String TUTORDASHBOARD_PATH = HOME_PATH + "/tutordashboard";
+	public static String TEACHER_PATH = HOME_PATH + "/teacher";
+	public static String COURSESPROFESSOR_PATH = HOME_PATH + "/courseprofessors";
+	public static String MAJORTUTOR_PATH = HOME_PATH + "/majortutors";
+	public static String DEPARTMENTS_PATH = HOME_PATH + "/departments";
+	public static String TUTORS_PATH = HOME_PATH + "/tutors";
+	public static String ACTIVATION_PATH = HOME_PATH + "/activation";
+	public static String CHANGEPASSWORD_PATH = HOME_PATH + "/changepassword";
+	public static String CONFIRMATION_PATH = HOME_PATH + "/confirmation";
+	public static String DEACTIVATION_PATH = HOME_PATH + "/deactivation";
+	public static String ACCOUNTRECOVERY_PATH = HOME_PATH + "/accountrecovery";
+	public static String NEWINFO_PATH = HOME_PATH + "/newinfo";
+	public static String ALLUSERS_PATH = HOME_PATH + "/allusers";
+	public static String TEST_PATH = HOME_PATH + "/test";
+	public static String TUTOR_PATH = HOME_PATH + "/tutor";
+	public static String PROFESSOR_PATH = HOME_PATH + "/professor/:professor_id/:display";
+	public static String REVIEWPROFESSOR_PATH = HOME_PATH + "/reviewprofessor/:student_course_id/review";
+	public static String SELECTTUTOR_PATH = HOME_PATH + "/selecttutors";
+	public static String ADDPROFESSOR_PATH = HOME_PATH + "/addprofessor";
+	public static String FAQ_PATH = HOME_PATH + "/faq";
+	public static String TUTORAPPOINTMENT_PATH = HOME_PATH + "/tutorappointment";
+	public static String TEACHERADDTUTOR_PATH = HOME_PATH + "/teacheraddtutor";
+	public static String NOTLOGGEDIN_PATH = HOME_PATH + "/notloggedinerror";
+	public static String AUTHORIZATIONERROR_PATH = HOME_PATH + "/notauthorized";
+	public static String EDITUSER_PATH = HOME_PATH + "/user/:id/edit";
+	public static String DELETEUSER_PATH = HOME_PATH + "/deleteuser/:id";
+	public static String EDITANNOUNCEMENT_PATH = HOME_PATH + "/announcement/:id/edit";
+	public static String DELETEANNOUNCEMENT_PATH = HOME_PATH + "/deleteannouncement/:id";
+	public static String ANNOUNCEMENTS_PATH = HOME_PATH + "/announcement";
+	public static String SORTBYLASTNAME_PATH = HOME_PATH + "/sortbylastname";
+	public static String MASSEDITCONFIRMED_PATH = HOME_PATH + "/masseditconfirmed";
+	public static String MASSEDITACTIVE_PATH = HOME_PATH + "/masseditactive";
+	public static String MASSEDITYEAR_PATH = HOME_PATH + "/massedityear";
+	public static String MASSEDITROLE_PATH = HOME_PATH + "/masseditrole";
+	public static String ADDANNOUNCEMENT_PATH = HOME_PATH + "/addannouncement";
+	public static String ALLTUTORS_PATH = HOME_PATH + "/alltutors/:id";
+	public static String EDITTUTORS_PATH = HOME_PATH + "/tutor/:id/edit";
+	public static String DELETETUTOR_PATH = HOME_PATH + "/deletetutor/:id";
+	public static String DELETECOURSE_PATH = HOME_PATH + "/deletecourse/:id";
+	public static String ADDTUTOR_PATH = HOME_PATH + "/tutor/:id/add";
+	public static String ADDCOURSE_PATH = HOME_PATH + "/addCourse/:department";
+	public static String ALLSTUDENTS_PATH = HOME_PATH + "/selectstudents";
+	public static String APPOINTMENT_PATH = HOME_PATH + "/appointment";
+	public static String MESSAGE_PATH = HOME_PATH + "/instantmessage";
+	public static String CALENDAR_PATH = HOME_PATH + "/calendar";
+	public static String COURSELANDING_PATH = HOME_PATH + "/courseslanding";
+	public static String COURSES_PATH = HOME_PATH + "/courses/:department";
+	public static String EDITCOURSES_PATH = HOME_PATH + "/course/:id/edit";
+	public static String COMPLETEPROF_PATH = HOME_PATH + "/completeprofileprof/:id";
+	public static String COMPLETESTUDENT_PATH = HOME_PATH + "/completeprofilestudent/:id";
+	public static String COMPLETETUTOR_PATH = HOME_PATH + "/completeprofiletutor/:id";
+	public static String TUTORLANDING_PATH = HOME_PATH + "/managetutorslanding";
+	public static String ADMINTUTOR_PATH = HOME_PATH + "/tutors/:department";
+	public static String ADMINTUTOREDIT_PATH = HOME_PATH + "/adminedittutor/:id/edit";
+	public static String ADMINADDTUTORLANDING_PATH = HOME_PATH + "/adminAddTutorlanding/:department";
+	public static String ADMINADDTUTOR_PATH = HOME_PATH + "/adminaddtutor/:id";
+	public static String ADMINDELETETUTOR_PATH = HOME_PATH + "/admindeletetutor/:id";
+	public static String ANALYSIS_PATH = HOME_PATH + "/analysis";
+	public static String MYACCOUNT_PATH = HOME_PATH + "/myaccount";
+	public static String ADMINAPTLANDING_PATH = HOME_PATH + "/adminaptlanding";
+	public static String APPOINTMENTS_PATH = HOME_PATH + "/appointments/:department";
+	public static String EDITAPPOINTMENTS_PATH = HOME_PATH + "/appointment/:id/edit";
+	public static String UPDATEAPPOINTMENT_PATH = HOME_PATH + "/editapt/:id/edit";
+	public static String LOGOUT_PATH = HOME_PATH + "/logout";
+	public static String DELETEAPPOINTMENT_PATH = HOME_PATH + "/deleteapt/:id";
+	public static String TUTORREVIEW_PATH = HOME_PATH + "/tutorreview/:appointment_id";
+	public static String ADMINREVIEWLANDING_PATH = HOME_PATH + "/reviewlanding";
+	public static String DEPTREVIEWS_PATH = HOME_PATH + "/reviews/:department";
+	public static String DELETEREVIEW_PATH = HOME_PATH + "/deletereview/:student_course_id";
+	public static String CLASSLIST_PATH = HOME_PATH + "/course/:id/classlist";
+	public static String PROFCLASSLIST_PATH = HOME_PATH + "/course/:id/profclasslist";
+	public static String REMOVEFROMCLASSLIST_PATH = HOME_PATH + "/classlistremove/:id";
+	public static String ADDTOCLASSLIST_PATH = HOME_PATH + "/classlistadd/:id";
+	public static String ADD_STUDENT_COURSE = HOME_PATH + "/course/:id/addstudent";
+	public static String COMPARE_PATH = HOME_PATH + "/compare";
 
 	// Main class
 	public static void main(String[] args) throws Exception {
@@ -544,11 +542,11 @@ public class Application {
 		get(MYACCOUNT_PATH, (req, res) -> myAccountController.showMyAccountPage(req, res),
 				new HandlebarsTemplateEngine());
 		post(MYACCOUNT_PATH, (req, res) -> myAccountController.completeProfile(req, res));
-		
+
 		// Compare/ Find page
-		get(COMPARE_PATH, (req, res) -> compareController.showComparePage(req, res),
-				new HandlebarsTemplateEngine());
-		//post(COMPARE_PATH, (req, res) -> compareController.completeProfile(req, res));
+		get(COMPARE_PATH, (req, res) -> compareController.showComparePage(req, res), new HandlebarsTemplateEngine());
+		// post(COMPARE_PATH, (req, res) ->
+		// compareController.completeProfile(req, res));
 		// MAYBE DELETE???
 		get(COURSESPROFESSOR_PATH, (req, res) -> studentdashController.showCourseAllProfessorsPage(req, res),
 				new HandlebarsTemplateEngine());
