@@ -80,10 +80,6 @@ public class Application {
 	private static EditTutorController edittutorController = new EditTutorController();
 	private static AnalysisController analysisController = new AnalysisController();
 	private static MyAccountController myAccountController = new MyAccountController();
-	////////////////////////////////////////////////////////////////////////////////
-	// private static Login2Controller login2Controller = new
-	//////////////////////////////////////////////////////////////////////////////// Login2Controller();
-	////////////////////////////////////////////////////////////////////////////////
 	private static CompareController compareController = new CompareController();
 
 	// match up paths
@@ -193,7 +189,7 @@ public class Application {
 	private static void configRoutes() {
 
 		// Filter that checks things right away before every request
-		before("/rateandreview/*", (request, response) -> {
+		before("/*", (request, response) -> {
 			// create the session and assign it to a variable
 			Session session = request.session(true);
 
