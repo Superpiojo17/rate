@@ -2,6 +2,7 @@ package edu.ben.rate_review.controller.home;
 
 import java.util.HashMap;
 
+import edu.ben.rate_review.app.Application;
 //import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.email.Email;
 import edu.ben.rate_review.models.User;
@@ -52,7 +53,7 @@ public class ContactUsController {
 				&& !req.queryParams("message").isEmpty()) {
 			contactUs(req.queryParams("name"), req.queryParams("email"),
 					 req.queryParams("message"));
-			res.redirect("/contactus");
+			res.redirect(Application.HOME_PATH + "/contactus");
 		} else {
 			// if something was not filled out, output error
 			req.attribute("error", "Please fill out all fields.");

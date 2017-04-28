@@ -2,6 +2,7 @@ package edu.ben.rate_review.controller.home;
 
 import java.util.HashMap;
 
+import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.models.User;
@@ -55,14 +56,14 @@ public class ConfirmationController {
 		if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()) {
 			if (LogInController.confirmRegistered(req.queryParams("email"), req.queryParams("password"))) {
 				confirmAccount(req.queryParams("email"), req.queryParams("password"));
-				res.redirect("/login");
+				res.redirect(Application.HOME_PATH + "/signin");
 			} else {
 				// email and password copy do not match any registered account
-				res.redirect("/confirmation");
+				res.redirect(Application.HOME_PATH + "/confirmation");
 			}
 		} else {
 			// fields were empty
-			res.redirect("/confirmation");
+			res.redirect(Application.HOME_PATH + "/confirmation");
 		}
 		return "";
 	}

@@ -23,16 +23,16 @@ public class ChangePasswordController {
 	public ModelAndView showChangePasswordPage(Request req, Response res) {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
-		
+
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
-		
-		if (u != null){
-			if (u.getRole() == 1){
+
+		if (u != null) {
+			if (u.getRole() == 1) {
 				model.put("user_admin", true);
-			} else if (u.getRole() == 2){
+			} else if (u.getRole() == 2) {
 				model.put("user_professor", true);
-			} else if (u.getRole() == 3){
+			} else if (u.getRole() == 3) {
 				model.put("user_tutor", true);
 			} else {
 				model.put("user_student", true);
@@ -58,17 +58,17 @@ public class ChangePasswordController {
 			if (LogInController.confirmRegistered(req.queryParams("email"), req.queryParams("password"))) {
 				if (req.queryParams("new_password").equals(req.queryParams("verify_password"))) {
 					attemptUpdatePassword(req.queryParams("email"), req.queryParams("new_password"));
-					res.redirect("/login");
+					res.redirect(Application.HOME_PATH + "/signin");
 				} else {
-					res.redirect("/changepassword");
+					res.redirect(Application.HOME_PATH + "/changepassword");
 				}
 			} else {
 				// email and password copy do not match any registered account
-				res.redirect("/changepassword");
+				res.redirect(Application.HOME_PATH + "/changepassword");
 			}
 		} else {
 			// fields were empty
-			res.redirect("/changepassword");
+			res.redirect(Application.HOME_PATH + "/changepassword");
 		}
 		return "";
 	}

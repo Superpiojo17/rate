@@ -87,10 +87,10 @@ public class TutorReviewController {
 				&& req.queryParams("prepared") != null && req.queryParams("schedule_again") != null
 				&& req.queryParams("recommend") != null) {
 			createReview(req, res);
-			res.redirect("/studentdashboard");
+			res.redirect(Application.HOME_PATH + "/studentdashboard");
 		} else {
 			// comment too long
-			res.redirect("/tutorreview/" + req.params("appointment_id"));
+			res.redirect(Application.HOME_PATH + "/tutorreview/" + req.params("appointment_id"));
 		}
 
 		return "";

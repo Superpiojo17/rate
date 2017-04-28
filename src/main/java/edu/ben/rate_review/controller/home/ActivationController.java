@@ -2,6 +2,7 @@ package edu.ben.rate_review.controller.home;
 
 import java.util.HashMap;
 
+import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.models.User;
@@ -79,14 +80,14 @@ public class ActivationController {
 		if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()) {
 			if (LogInController.confirmRegistered(req.queryParams("email"), req.queryParams("password"))) {
 				processActiveState(req.queryParams("email"), req.queryParams("password"), activated);
-				res.redirect("/login");
+				res.redirect(Application.HOME_PATH + "/signin");
 			} else {
 				// email and password copy do not match any registered account
-				res.redirect("/activation");
+				res.redirect(Application.HOME_PATH + "/activation");
 			}
 		} else {
 			// fields were empty
-			res.redirect("/activation");
+			res.redirect(Application.HOME_PATH + "/activation");
 		}
 		return "";
 	}
@@ -104,14 +105,14 @@ public class ActivationController {
 		if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()) {
 			if (LogInController.confirmRegistered(req.queryParams("email"), req.queryParams("password"))) {
 				processActiveState(req.queryParams("email"), req.queryParams("password"), activated);
-				res.redirect("/login");
+				res.redirect(Application.HOME_PATH + "/signin");
 			} else {
 				// email and password copy do not match any registered account
-				res.redirect("/deactivation");
+				res.redirect(Application.HOME_PATH + "/deactivation");
 			}
 		} else {
 			// fields were empty
-			res.redirect("/deactivation");
+			res.redirect(Application.HOME_PATH + "/deactivation");
 		}
 		return "";
 	}

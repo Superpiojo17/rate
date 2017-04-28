@@ -272,8 +272,6 @@ public class LogInController {
 				// updates user's password
 				userDao.updatePassword(user);
 				// removes requested temporary password
-				// userDao.removeRecoveryRequest(user);
-				// res.redirect(Application.LOGIN_PATH);
 
 				if (rUser != null) {
 					// if previous request in table, deletes
@@ -281,7 +279,6 @@ public class LogInController {
 				}
 				// creates entry for user attempted to recover account
 				userDao.storeTempPassword(user, tempPass);
-				// res.redirect(Application.NEWINFO_PATH);
 			} else {
 				// user not found
 				userDao.close();
