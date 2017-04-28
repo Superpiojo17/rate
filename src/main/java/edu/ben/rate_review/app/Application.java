@@ -83,7 +83,8 @@ public class Application {
 	private static CompareController compareController = new CompareController();
 
 	// match up paths
-	public static String DOMAIN = "http://localhost";
+	//public static String DOMAIN = "http://localhost";
+	public static String DOMAIN = "cs.ben.edu";
 	public static String HOME_PATH = "/";
 	public static String USERS_PATH = HOME_PATH + "users";
 	public static String USER_PATH = HOME_PATH + "user";
@@ -173,7 +174,7 @@ public class Application {
 	public static void main(String[] args) throws Exception {
 
 		// Set what port you want to run on
-		port(3000);
+		port(getHerokuAssignedPort());
 
 		// Configure your Asset folder so that your JS, CSS, Images are
 		// available from the server endpoint
@@ -181,6 +182,14 @@ public class Application {
 		configRoutes();
 		new DaoManager();
 	}
+
+  static int getHerokuAssignedPort() {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        if (processBuilder.environment().get("PORT") != null) {
+            return Integer.parseInt(processBuilder.environment().get("PORT"));
+        }
+        return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
+    }
 
 	/**
 	 * Configures the routes based on URL path
