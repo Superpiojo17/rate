@@ -27,12 +27,8 @@ import edu.ben.rate_review.controller.home.LogInController;
 import edu.ben.rate_review.controller.home.ProfessorController;
 import edu.ben.rate_review.controller.home.ProfessorReviewController;
 import edu.ben.rate_review.controller.home.RegisterController;
-//import edu.ben.rate_review.controller.home.TeacherAddTutorController;
 import edu.ben.rate_review.controller.home.TeacherController;
 import edu.ben.rate_review.controller.home.TutorReviewController;
-import edu.ben.rate_review.controller.session.Login2Controller;
-//import edu.ben.rate_review.controller.home.TutorAppointmentController;
-//import edu.ben.rate_review.controller.home.TutorsController;
 import edu.ben.rate_review.controller.session.SessionsController;
 import edu.ben.rate_review.controller.user.AccountRecoveryController;
 import edu.ben.rate_review.controller.user.AdminDashboardController;
@@ -97,9 +93,6 @@ public class Application {
 
 	private static AnalysisController analysisController = new AnalysisController();
 	private static MyAccountController myAccountController = new MyAccountController();
-	////////////////////////////////////////////////////////////////////////////////
-	private static Login2Controller login2Controller = new Login2Controller();
-	////////////////////////////////////////////////////////////////////////////////
 	private static CompareController compareController = new CompareController();
 
 	// match up paths
