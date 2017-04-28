@@ -45,7 +45,7 @@ body {
 	<!-- Header -->
 	<header id="header" class="skel-layers-fixed">
 		<h1>
-			<a href="/">RateAndReview</a>
+			<a href="/rateandreview">RateAndReview</a>
 		</h1>
 		
 		<a href="#nav">Menu</a>
@@ -140,16 +140,16 @@ body {
 					{{#unless user_null}}
 						You are already logged in.
 						{{#if user_admin}}
-						<li><a href="/admindashboard">My Dashboard</a></li>
+						<li><a href="/rateandreview/admindashboard">My Dashboard</a></li>
 						{{/if}}
 						{{#if user_professor}}
-							<li><a href="/facultydashboard">My Dashboard</a></li>
+							<li><a href="/rateandreview/facultydashboard">My Dashboard</a></li>
 						{{/if}}
 						{{#if user_tutor}}
-							<li><a href="/tutordashboard">My Dashboard</a></li>
+							<li><a href="/rateandreview/tutordashboard">My Dashboard</a></li>
 						{{/if}}
 						{{#if user_student}}
-							<li><a href="/studentdashboard">My Dashboard</a></li>
+							<li><a href="/rateandreview/studentdashboard">My Dashboard</a></li>
 						{{/if}}
 					{{/unless}}
 
@@ -255,7 +255,7 @@ body {
 
 	<script src="/assets/js/jquery.min.js"></script>
 	<script src="/assets/js/skel.min.js"></script>
-	<script src="assets/js/util.js"></script>
+	<script src="/assets/js/util.js"></script>
 	<!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js"></script><![endif]-->
 	<script src="/assets/js/main.js"></script>
 

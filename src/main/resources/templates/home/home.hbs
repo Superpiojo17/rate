@@ -19,7 +19,7 @@
 		<!-- css styles under -- >
 		
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="assets/css/main2.css" />
+		<link rel="stylesheet" href="/rateandreview/assets/css/main2.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		
@@ -80,25 +80,25 @@
 				<p>The ratings you want, the tutoring you need</p>
 				{{#if user_null}}
 					<ul class="actions">
-						<li><a href="/signin" class="button big special">Log in</a></li>
+						<li><a href="/rateandreview/signin" class="button big special">Log in</a></li>
 					</ul>
 					<div name="register">
-						<h6 style='color: white'><a href = "/register"> Don't have an account? Register here!</a></h6>
-						<h6 style='color: white'><a href = "/accountrecovery"> Forgot password? Click here!</a></h6>
+						<h6 style='color: white'><a href = "/rateandreview/register"> Don't have an account? Register here!</a></h6>
+						<h6 style='color: white'><a href = "/rateandreview/accountrecovery"> Forgot password? Click here!</a></h6>
 					</div>
 				{{/if}}
 				{{#unless user_null}}
 					{{#if user_admin}}
-						<a href="/admindashboard" class="button big special">My Dashboard</a>
+						<a href="/rateandreview/admindashboard" class="button big special">My Dashboard</a>
 					{{/if}}
 					{{#if user_professor}}
-						<a href="/facultydashboard" class="button big special">My Dashboard</a>
+						<a href="/rateandreview/facultydashboard" class="button big special">My Dashboard</a>
 					{{/if}}
 					{{#if user_tutor}}
-						<a href="/tutordashboard" class="button big special">My Dashboard</a>
+						<a href="/rateandreview/tutordashboard" class="button big special">My Dashboard</a>
 					{{/if}}
 					{{#if user_student}}
-						<a href="/studentdashboard" class="button big special">My Dashboard</a>
+						<a href="/rateandreview/studentdashboard" class="button big special">My Dashboard</a>
 					{{/if}}
 				{{/unless}}
 			</section>
@@ -115,7 +115,7 @@
 							<p>All of of our faculty ratings are verified to ensure the most honest and accurate reflections of the professors or tutors teaching style. Spam comments are removed and the enrollment of "raters" in classes are reviewed. Set up an account to leave your own review! </p>
 							<ul class="actions">
 								<li>
-									<!--<a href="/aboutus" class="button alt">More</a>-->
+									<!--<a href="/rateandreview/aboutus" class="button alt">More</a>-->
 								</li>
 							</ul>
 						</div>
@@ -127,7 +127,7 @@
 							<p>Although you can leave a rating for a tutor you've had, you may also use the ratings and comments to choose which tutor works best for you! Look up the tutors hours or request to set up an appointment.</p>
 							<ul class="actions">
 								<li>
-									<!--<a href="/aboutus" class="button alt">More</a>-->
+									<!--<a href="/rateandreview/aboutus" class="button alt">More</a>-->
 								</li>
 							</ul>
 						</div>
@@ -154,7 +154,7 @@
 						<a class="image"><img src="images/BHome.jpg" alt="" /></a>
 					</div>
 					<ul class="actions">
-						<li><a href="/aboutus" class="button big alt">About Us</a></li>
+						<li><a href="/rateandreview/aboutus" class="button big alt">About Us</a></li>
 					</ul>
 				</div>
 			</section>
@@ -174,10 +174,10 @@
 					</header>
 					<ul class="actions">
 						{{#if user_null}}
-							<li><a href="/register" class="button big alt">Create Account</a></li>
+							<li><a href="/rateandreview/register" class="button big alt">Create Account</a></li>
 						{{/if}}
 						{{#unless user_null}}
-							<li><a href="/teacher" class="button big alt">Browse Professors</a></li>
+							<li><a href="/rateandreview/teacher" class="button big alt">Browse Professors</a></li>
 						{{/unless}}
 					</ul>
 				</div>
@@ -237,11 +237,11 @@
 	</footer>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
+			<script src="/rateandreview/assets/js/jquery.min.js"></script>
+			<script src="/rateandreview/assets/js/skel.min.js"></script>
+			<script src="/rateandreview/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
+			<script src="/rateandreview/assets/js/main.js"></script>
 			
 			<!-- the scripts for scroll to top -->
 			<a href="#0" class="cd-top">Top</a>
