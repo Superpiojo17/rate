@@ -83,7 +83,8 @@ public class Application {
 	private static CompareController compareController = new CompareController();
 
 	// match up paths
-	public static String DOMAIN = "http://localhost";
+	//public static String DOMAIN = "http://localhost";
+	public static String DOMAIN = "cs.ben.edu";
 	public static String HOME_PATH = "/";
 	public static String USERS_PATH = HOME_PATH + "users";
 	public static String USER_PATH = HOME_PATH + "user";
