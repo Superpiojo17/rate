@@ -30,20 +30,20 @@
 			<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
-					<li><a href="/">Home</a></li>
-					<li><a href="/facultyashboard">My Dashboard</a></li>
-					<li><a href="/myaccount">My Account</a></li>
+					<li><a href="/rateandreview">Home</a></li>
+					<li><a href="/rateandreview/facultyashboard">My Dashboard</a></li>
+					<li><a href="/rateandreview/myaccount">My Account</a></li>
 					{{#if completeProfile }}
-					<li><a href="/completeprofileprof/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
+					<li><a href="/rateandreview/completeprofileprof/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
 					{{/if}}
-					<li><a href="/alltutors/{{current_user.id}}">Manage Tutors</a></li>
-					<li><a href="/professor/{{current_user.id}}/overview">View Reviews</a></li>
-					<li><a href="/teacher">Browse Professors</a></li>
-					<li><a href="/contactus">Contact Us</a></li>
-					<li><a href="/aboutus">About Us</a></li>
-						<li><a href="/faq">FAQ</a></li>
-					<li><a href="/deactivation">De-Activate</a></li>
-					<li><a href="/logout">Log Out</a></li>
+					<li><a href="/rateandreview/alltutors/{{current_user.id}}">Manage Tutors</a></li>
+					<li><a href="/rateandreview/professor/{{current_user.id}}/overview">View Reviews</a></li>
+					<li><a href="/rateandreview/teacher">Browse Professors</a></li>
+					<li><a href="/rateandreview/contactus">Contact Us</a></li>
+					<li><a href="/rateandreview/aboutus">About Us</a></li>
+						<li><a href="/rateandreview/faq">FAQ</a></li>
+					<li><a href="/rateandreview/deactivation">De-Activate</a></li>
+					<li><a href="/rateandreview/logout">Log Out</a></li>
 					
 				</ul>
 			</nav>
@@ -106,7 +106,7 @@
   
 							<!-- Form -->
 						<section>
-							<form action="/tutor/{{tutor_form.id}}/add" method="post">
+							<form action="/rateandreview/tutor/{{tutor_form.id}}/add" method="post">
 							
 							<div class="table-wrapper">
 								<table class="alt">
@@ -167,7 +167,7 @@
         <div class="modal-body">
           <p>Are you sure you would like to delete {{tutor_form.first_name}} {{tutor_form.last_name}} from your tutor list? You cannot recover this information.</p>
         </div>
-        	<form action="/deletetutor/{{tutor_form.id}}" method="post">
+        	<form action="/rateandreview/deletetutor/{{tutor_form.id}}" method="post">
         <div class="modal-footer">
         <ul class="actions">
           <button type="submit" class="btn btn-primary" data-dismiss="modal">Cancel</button>

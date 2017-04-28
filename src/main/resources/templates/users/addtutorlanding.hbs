@@ -31,25 +31,25 @@
 				<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
-					<li><a href="/">Home</a></li>
-					<li><a href="/admindashboard">My Dashboard</a></li>
-					<li><a href="/myaccount">My Account</a></li>
-					<li><a href="/allusers">Manage Users</a></li>
+					<li><a href="/rateandreview">Home</a></li>
+					<li><a href="/rateandreview/admindashboard">My Dashboard</a></li>
+					<li><a href="/rateandreview/myaccount">My Account</a></li>
+					<li><a href="/rateandreview/allusers">Manage Users</a></li>
 					{{#if completeProfile }}
-					<li><a href="/completeprofileprof/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
+					<li><a href="/rateandreview/completeprofileprof/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
 					{{/if}}
-					<li><a href="/courseslanding">Manage Courses</a></li>
-					<li><a href="/managetutorslanding">Manage Tutors</a></li>
-					<li><a href="/announcement">Announcements</a></li>
-					<li><a href="/adminaptlanding">Manage Appointments</a></li>
-					<li><a href="/reviewlanding">Manage Reviews</a></li>
-					<li><a href="/analysis">Data Analysis</a></li>
-					<li><a href="/teacher">Browse Professors</a></li>
-					<li><a href="/contactus">Contact Us</a></li>
-					<li><a href="/aboutus">About Us</a></li>
-						<li><a href="/faq">FAQ</a></li>
-					<li><a href="/deactivation">De-Activate</a></li>
-					<li><a href="/logout">Log Out</a></li>
+					<li><a href="/rateandreview/courseslanding">Manage Courses</a></li>
+					<li><a href="/rateandreview/managetutorslanding">Manage Tutors</a></li>
+					<li><a href="/rateandreview/announcement">Announcements</a></li>
+					<li><a href="/rateandreview/adminaptlanding">Manage Appointments</a></li>
+					<li><a href="/rateandreview/reviewlanding">Manage Reviews</a></li>
+					<li><a href="/rateandreview/analysis">Data Analysis</a></li>
+					<li><a href="/rateandreview/teacher">Browse Professors</a></li>
+					<li><a href="/rateandreview/contactus">Contact Us</a></li>
+					<li><a href="/rateandreview/aboutus">About Us</a></li>
+						<li><a href="/rateandreview/faq">FAQ</a></li>
+					<li><a href="/rateandreview/deactivation">De-Activate</a></li>
+					<li><a href="/rateandreview/logout">Log Out</a></li>
 					
 				</ul>
 			</nav>
@@ -116,7 +116,7 @@
   <select onChange="window.location.href=this.value">
    <option value="">Professor</option>
    {{#each courses}}
-    <option value="/adminaddtutor/{{id}}">{{subject}} {{course_number}} - {{professor_name}}</option>
+    <option value="/rateandreview/adminaddtutor/{{id}}">{{subject}} {{course_number}} - {{professor_name}}</option>
     {{/each}}
     
 </select>
@@ -217,7 +217,7 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
 
 
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main2.js"></script>
+			<script src="/assets/js/main2.js"></script>
 
 	</body>
 </html>

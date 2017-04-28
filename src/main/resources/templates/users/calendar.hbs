@@ -10,7 +10,7 @@
 <meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		  <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -141,8 +141,8 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-<link rel="stylesheet" href="assets/css/main.css" />
-<link rel='stylesheet' href='assets/css/fullcalendar.css' />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel='stylesheet' href='/assets/css/fullcalendar.css' />
 <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 </head>
@@ -150,7 +150,7 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
 
 	<!-- Header -->
 			<header id="header" class="skel-layers-fixed">
-				<h1><a href="/">G.O.O.D.</a></h1>
+				<h1><a href="/rateandreview">G.O.O.D.</a></h1>
 				<a href="#nav">Menu</a>
 			</header>
 
@@ -160,35 +160,35 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
 					<li><a href="/">Home</a></li>
 					
 					{{#if user_admin}}
-						<li><a href="/admindashboard">My Dashboard</a></li>
+						<li><a href="/rateandreview/admindashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_professor}}
-						<li><a href="/facultydashboard">My Dashboard</a></li>
+						<li><a href="/rateandreview/facultydashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_tutor}}
-						<li><a href="/tutordashboard">My Dashboard</a></li>
+						<li><a href="/rateandreview/tutordashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_student}}
-						<li><a href="/studentdashboard">My Dashboard</a></li>
+						<li><a href="/rateandreview/studentdashboard">My Dashboard</a></li>
 					{{/if}}
 					
 					{{#if user_null}}
-						<li><a href="/signin">Log In</a></li>
-						<li><a href="/register">Register</a></li>
-						<li><a href="/activation">Activate Account</a></li>
-						<li><a href="/accountrecovery">Forgot Password?</a></li>
+						<li><a href="/rateandreview/signin">Log In</a></li>
+						<li><a href="/rateandreview/register">Register</a></li>
+						<li><a href="/rateandreview/activation">Activate Account</a></li>
+						<li><a href="/rateandreview/accountrecovery">Forgot Password?</a></li>
 					{{/if}}
 					
-						<li><a href="/teacher">Browse Professors</a></li>
+						<li><a href="/rateandreview/teacher">Browse Professors</a></li>
 					
 					{{#unless user_admin}}
-						<li><a href="/contactus">Contact Us</a></li>
+						<li><a href="/rateandreview/contactus">Contact Us</a></li>
 					{{/unless}}
-						<li><a href="/aboutus">About Us</a></li>
-						<li><a href="/faq">FAQ</a></li>
+						<li><a href="/rateandreview/aboutus">About Us</a></li>
+						<li><a href="/rateandreview/faq">FAQ</a></li>
 					
 					{{#unless user_null}}
-						<li><a href="/logout">Log Out</a></li>
+						<li><a href="/rateandreview/logout">Log Out</a></li>
 					{{/unless}}
 				</ul>
 			</nav>
@@ -282,13 +282,13 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
 	
 
 	<!-- Scripts -->
-	<script src="assets/js/skel.min.js"></script>
-	<script src="assets/js/util.js"></script>
-	<script src='assets/js/moment.min.js'></script>
-<script src='assets/js/fullcalendar.js'></script>
-<script src='assets/js/gcal.js'></script>
+	<script src="/assets/js/skel.min.js"></script>
+	<script src="/assets/js/util.js"></script>
+	<script src='/assets/js/moment.min.js'></script>
+<script src='/assets/js/fullcalendar.js'></script>
+<script src='/assets/js/gcal.js'></script>
 	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-	<script src="assets/js/main.js"></script>
+	<script src="/assets/js/main.js"></script>
 
 </body>
 </html>

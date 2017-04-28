@@ -31,25 +31,25 @@
 		<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
-					<li><a href="/">Home</a></li>
-					<li><a href="/admindashboard">My Dashboard</a></li>
-					<li><a href="/myaccount">My Account</a></li>
-					<li><a href="/allusers">Manage Users</a></li>
+					<li><a href="/rateandreview">Home</a></li>
+					<li><a href="/rateandreview/admindashboard">My Dashboard</a></li>
+					<li><a href="/rateandreview/myaccount">My Account</a></li>
+					<li><a href="/rateandreview/allusers">Manage Users</a></li>
 					{{#if completeProfile }}
-					<li><a href="/completeprofileprof/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
+					<li><a href="/rateandreview/completeprofileprof/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
 					{{/if}}
-					<li><a href="/courseslanding">Manage Courses</a></li>
-					<li><a href="/managetutorslanding">Manage Tutors</a></li>
-					<li><a href="/announcement">Announcements</a></li>
-					<li><a href="/adminaptlanding">Manage Appointments</a></li>
-					<li><a href="/reviewlanding">Manage Reviews</a></li>
-					<li><a href="/analysis">Data Analysis</a></li>
-					<li><a href="/teacher">Browse Professors</a></li>
-					<li><a href="/contactus">Contact Us</a></li>
-					<li><a href="/aboutus">About Us</a></li>
-						<li><a href="/faq">FAQ</a></li>
-					<li><a href="/deactivation">De-Activate</a></li>
-					<li><a href="/logout">Log Out</a></li>
+					<li><a href="/rateandreview/courseslanding">Manage Courses</a></li>
+					<li><a href="/rateandreview/managetutorslanding">Manage Tutors</a></li>
+					<li><a href="/rateandreview/announcement">Announcements</a></li>
+					<li><a href="/rateandreview/adminaptlanding">Manage Appointments</a></li>
+					<li><a href="/rateandreview/reviewlanding">Manage Reviews</a></li>
+					<li><a href="/rateandreview/analysis">Data Analysis</a></li>
+					<li><a href="/rateandreview/teacher">Browse Professors</a></li>
+					<li><a href="/rateandreview/contactus">Contact Us</a></li>
+					<li><a href="/rateandreview/aboutus">About Us</a></li>
+						<li><a href="/rateandreview/faq">FAQ</a></li>
+					<li><a href="/rateandreview/deactivation">De-Activate</a></li>
+					<li><a href="/rateandreview/logout">Log Out</a></li>
 					
 				</ul>
 			</nav>
@@ -110,7 +110,7 @@
 							
   <p>View and edit all the courses in the department. Click on the list icon on the far left to view and edit the course's class list </p>
   &ensp;
-   <form action="/courses/{{department}}" method="GET">
+   <form action="/rateandreview/courses/{{department}}" method="GET">
   &nbsp;&nbsp;
   <div>
     <input type="text" name="search" placeholder="Search by Course name or number..." />
@@ -145,13 +145,13 @@
 									{{#each courses}}
 										<tr>
 											<td class="shrink  text-center">
-											<a href="/course/{{id}}/classlist"><i class="fa fa-list-alt fa-2x" title="View and edit class list" aria-hidden="true"></i></a>
+											<a href="/rateandreview/course/{{id}}/classlist"><i class="fa fa-list-alt fa-2x" title="View and edit class list" aria-hidden="true"></i></a>
 											</td>
 											
 											<td class="shrink  text-center">
-												<a href="/course/{{id}}/edit"  class="btn btn-info">Edit<span class="glyphicon glyphicon-pencil"></span></a>
+												<a href="/rateandreview/course/{{id}}/edit"  class="btn btn-info">Edit<span class="glyphicon glyphicon-pencil"></span></a>
 											</td>
-											<!-- <td class="shrink" align="center"><a href="/course/{{id}}/edit"  class="btn btn-info">Edit<span class="glyphicon glyphicon-pencil"></span></a></td> -->
+											<!-- <td class="shrink" align="center"><a href="/rateandreview/course/{{id}}/edit"  class="btn btn-info">Edit<span class="glyphicon glyphicon-pencil"></span></a></td> -->
 											<td class="shrink">{{subject}}</td>
 											<td class="shrink">{{course_number}}</td>
 											<td class="shrink">{{course_name}}</td>
@@ -169,14 +169,14 @@
 								
 							</div>
 						</section>
-						<a href="/courses/{{department}}"  class="btn btn-info"> View All
+						<a href="/rateandreview/courses/{{department}}"  class="btn btn-info"> View All
 											</a> <br/>  <br/>
-						<a href = "/addCourse/{{department}}" button type="submit" class="btn btn-info"> Add Course
+						<a href = "/rateandreview/addCourse/{{department}}" button type="submit" class="btn btn-info"> Add Course
 											<span class="glyphicon glyphicon-floppy-saved"></a></button>
 											&emsp;&emsp;
 											<br/>
 											<br/>
-						<a href="/courseslanding"  class="btn btn-info"> Back
+						<a href="/rateandreview/courseslanding"  class="btn btn-info"> Back
 											</a>
 						
 						

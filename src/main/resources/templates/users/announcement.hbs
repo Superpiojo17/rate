@@ -30,25 +30,25 @@
 		<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
-					<li><a href="/">Home</a></li>
-					<li><a href="/admindashboard">My Dashboard</a></li>
-					<li><a href="/myaccount">My Account</a></li>
-					<li><a href="/allusers">Manage Users</a></li>
+					<li><a href="/rateandreview">Home</a></li>
+					<li><a href="/rateandreview/admindashboard">My Dashboard</a></li>
+					<li><a href="/rateandreview/myaccount">My Account</a></li>
+					<li><a href="/rateandreview/allusers">Manage Users</a></li>
 					{{#if completeProfile }}
-					<li><a href="/completeprofileprof/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
+					<li><a href="/rateandreview/completeprofileprof/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
 					{{/if}}
-					<li><a href="/courseslanding">Manage Courses</a></li>
-					<li><a href="/managetutorslanding">Manage Tutors</a></li>
-					<li><a href="/announcement">Announcements</a></li>
-					<li><a href="/adminaptlanding">Manage Appointments</a></li>
-					<li><a href="/reviewlanding">Manage Reviews</a></li>
-					<li><a href="/analysis">Data Analysis</a></li>
-					<li><a href="/teacher">Browse Professors</a></li>
-					<li><a href="/contactus">Contact Us</a></li>
-					<li><a href="/aboutus">About Us</a></li>
-						<li><a href="/faq">FAQ</a></li>
-					<li><a href="/deactivation">De-Activate</a></li>
-					<li><a href="/logout">Log Out</a></li>
+					<li><a href="/rateandreview/courseslanding">Manage Courses</a></li>
+					<li><a href="/rateandreview/managetutorslanding">Manage Tutors</a></li>
+					<li><a href="/rateandreview/announcement">Announcements</a></li>
+					<li><a href="/rateandreview/adminaptlanding">Manage Appointments</a></li>
+					<li><a href="/rateandreview/reviewlanding">Manage Reviews</a></li>
+					<li><a href="/rateandreview/analysis">Data Analysis</a></li>
+					<li><a href="/rateandreview/teacher">Browse Professors</a></li>
+					<li><a href="/rateandreview/contactus">Contact Us</a></li>
+					<li><a href="/rateandreview/aboutus">About Us</a></li>
+						<li><a href="/rateandreview/faq">FAQ</a></li>
+					<li><a href="/rateandreview/deactivation">De-Activate</a></li>
+					<li><a href="/rateandreview/logout">Log Out</a></li>
 					
 				</ul>
 			</nav>
@@ -133,7 +133,7 @@
 											
 											
 											
-											<td  class="shrink"><a href="/announcement/{{id}}/edit"  class="btn btn-info">Edit<span class="glyphicon glyphicon-pencil"></span></a></td>
+											<td  class="shrink"><a href="/rateandreview/announcement/{{id}}/edit"  class="btn btn-info">Edit<span class="glyphicon glyphicon-pencil"></span></a></td>
 											<td class="shrink">{{date}}</td>
 											<td> {{{announcement_content}}} </td>
 										</tr>
@@ -145,7 +145,7 @@
 										</tr>
 									</tfoot>
 								</table>
-											<a href = "/addannouncement" button type="submit" class="btn btn-info"> Add Event
+											<a href = "/rateandreview/addannouncement" button type="submit" class="btn btn-info"> Add Event
 											<span class="glyphicon glyphicon-floppy-saved"></a></button>
 											&emsp;&emsp;
 								
@@ -158,12 +158,12 @@
 							<!-- Form -->
 						<section>
 						 <h4>Quick Add</h4>
-							<form action="/announcement" method="post">
+							<form action="/rateandreview/announcement" method="post">
 								<div class="row uniform 50%">
 									<div class="6u 12u$(xsmall)">
 									</div>
 									<section>
-							<form action="/announcement" method="post" >
+							<form action="/rateandreview/announcement" method="post" >
 								<div class="row uniform 50%">
 									<div class="6u 12u$(xsmall)">
 										<input type="date" name="date" id="date" value = "dateFormat" placeholder="Date" />
