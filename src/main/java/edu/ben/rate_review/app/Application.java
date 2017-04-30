@@ -170,7 +170,6 @@ public class Application {
 	public static String ADD_STUDENT_COURSE = HOME_PATH + "course/:id/addstudent";
 	public static String COMPARE_PATH = HOME_PATH + "compare";
 
-	// Main class
 	public static void main(String[] args) throws Exception {
 
 		// Set what port you want to run on
