@@ -424,7 +424,7 @@
 									<select style="max-width:15%; min-width:15%;" name="course_name" id="course_name" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
 										<option selected="selected">--- Select Course ---</option>
 										{{#each unique_courses}}
-										<option value="{{domain}}/rateandreview/professor/{{prof_id}}/{{this}}">{{this}}</option>
+										<option value="/professor/{{prof_id}}/{{this}}">{{this}}</option>
 										<!-- <span class="glyphicon glyphicon-triangle-bottom"></span> -->
 										{{/each}}
 									</select>

@@ -6,12 +6,12 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 import javax.sql.DataSource;
 
 public class DaoManager {
-	private final String HOST = "jdbc:mysql://localhost:3306";
-	private final String DATABASE_NAME = "rate";
-	private final String USERNAME = "root";
+	// private final String HOST = "jdbc:mysql://localhost:3306";
+	// private final String DATABASE_NAME = "rate";
+	// private final String USERNAME = "root";
 	// private final String PASSWORD = "root"; // everyone else's local
 	// private final String PASSWORD = "LiterallyAnything"; // Mike's local
-	private final String PASSWORD = "root12"; // Server
+	// private final String PASSWORD = "root12"; // Server
 
 	// Private
 	private DataSource src;
@@ -26,6 +26,10 @@ public class DaoManager {
 	 * @throws Exception
 	 */
 	public DaoManager() throws Exception {
+    final String HOST = System.getenv("DATABASE_HOST");
+    final String USERNAME = System.getenv("DATABASE_USERNAME");
+    final String PASSWORD = System.getenv("DATABASE_PASSWORD");
+    final String DATABASE_NAME = System.getenv("DATABASE_NAME");
 		if (instance == null) {
 			try {
 				MysqlDataSource mysql = new MysqlDataSource();
