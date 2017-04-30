@@ -9,21 +9,21 @@
 		<title>Rate & Review</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		
+
 			<!-- The scroll to top links below -->
-		
+
 	<link rel="stylesheet" href="back-to-top/css/reset.css"> <!-- CSS reset -->
 	<link rel="stylesheet" href="back-to-top/css/style.css"> <!-- Gem style -->
 	<script src="js/modernizr.js"></script> <!-- Modernizr -->
-		
+
 		<!-- css styles under -- >
-		
+
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="assets/css/main2.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-		
-	
+
+
 	</head>
 	<body class="landing">
 
@@ -32,42 +32,42 @@
 				<h1><a href="/rateandreview">RateAndReview</a></h1>
 				<a href="#nav">Menu</a>
 			</header>
-			
+
 		<!-- Nav -->
 			<nav id="nav">
 				<ul class="links">
 					<li><a href="/rateandreview">Home</a></li>
-					
+
 					{{#if user_admin}}
-						<li><a href="/rateandreview/admindashboard">My Dashboard</a></li>
+						<li><a href="/admindashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_professor}}
-						<li><a href="/rateandreview/facultydashboard">My Dashboard</a></li>
+						<li><a href="/facultydashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_tutor}}
-						<li><a href="/rateandreview/tutordashboard">My Dashboard</a></li>
+						<li><a href="/tutordashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_student}}
-						<li><a href="/rateandreview/studentdashboard">My Dashboard</a></li>
+						<li><a href="/studentdashboard">My Dashboard</a></li>
 					{{/if}}
-					
+
 					{{#if user_null}}
-						<li><a href="/rateandreview/signin">Log In</a></li>
-						<li><a href="/rateandreview/register">Register</a></li>
-						<li><a href="/rateandreview/activation">Activate Account</a></li>
-						<li><a href="/rateandreview/accountrecovery">Forgot Password?</a></li>
+						<li><a href="/signin">Log In</a></li>
+						<li><a href="/register">Register</a></li>
+						<li><a href="/activation">Activate Account</a></li>
+						<li><a href="/accountrecovery">Forgot Password?</a></li>
 					{{/if}}
-					
-						<li><a href="/rateandreview/teacher">Browse Professors</a></li>
-					
+
+						<li><a href="/teacher">Browse Professors</a></li>
+
 					{{#unless user_admin}}
-						<li><a href="/rateandreview/contactus">Contact Us</a></li>
+						<li><a href="/contactus">Contact Us</a></li>
 					{{/unless}}
-						<li><a href="/rateandreview/aboutus">About Us</a></li>
-						<li><a href="/rateandreview/faq">FAQ</a></li>
-					
+						<li><a href="/aboutus">About Us</a></li>
+						<li><a href="/faq">FAQ</a></li>
+
 					{{#unless user_null}}
-						<li><a href="/rateandreview/logout">Log Out</a></li>
+						<li><a href="/logout">Log Out</a></li>
 					{{/unless}}
 				</ul>
 			</nav>
@@ -80,7 +80,7 @@
 				<p>The ratings you want, the tutoring you need</p>
 				{{#if user_null}}
 					<ul class="actions">
-						<li><a href="/rateandreview/signin" class="button big special">Log in</a></li>
+						<li><a href="/signin" class="button big special">Log in</a></li>
 					</ul>
 					<div name="register">
 						<h6 style='color: white'><a href = "/rateandreview/register"> Don't have an account? Register here!</a></h6>
@@ -89,20 +89,20 @@
 				{{/if}}
 				{{#unless user_null}}
 					{{#if user_admin}}
-						<a href="/rateandreview/admindashboard" class="button big special">My Dashboard</a>
+						<a href="/admindashboard" class="button big special">My Dashboard</a>
 					{{/if}}
 					{{#if user_professor}}
-						<a href="/rateandreview/facultydashboard" class="button big special">My Dashboard</a>
+						<a href="/facultydashboard" class="button big special">My Dashboard</a>
 					{{/if}}
 					{{#if user_tutor}}
-						<a href="/rateandreview/tutordashboard" class="button big special">My Dashboard</a>
+						<a href="/tutordashboard" class="button big special">My Dashboard</a>
 					{{/if}}
 					{{#if user_student}}
-						<a href="/rateandreview/studentdashboard" class="button big special">My Dashboard</a>
+						<a href="/studentdashboard" class="button big special">My Dashboard</a>
 					{{/if}}
 				{{/unless}}
 			</section>
-			
+
 <main class="cd-container">
 
 		<!-- One -->
@@ -115,7 +115,7 @@
 							<p>All of of our faculty ratings are verified to ensure the most honest and accurate reflections of the professors or tutors teaching style. Spam comments are removed and the enrollment of "raters" in classes are reviewed. Set up an account to leave your own review! </p>
 							<ul class="actions">
 								<li>
-									<!--<a href="/rateandreview/aboutus" class="button alt">More</a>-->
+									<!--<a href="/aboutus" class="button alt">More</a>-->
 								</li>
 							</ul>
 						</div>
@@ -127,7 +127,7 @@
 							<p>Although you can leave a rating for a tutor you've had, you may also use the ratings and comments to choose which tutor works best for you! Look up the tutors hours or request to set up an appointment.</p>
 							<ul class="actions">
 								<li>
-									<!--<a href="/rateandreview/aboutus" class="button alt">More</a>-->
+									<!--<a href="/aboutus" class="button alt">More</a>-->
 								</li>
 							</ul>
 						</div>
@@ -140,7 +140,7 @@
 				<div class="inner">
 					<header class="major narrow">
 						<h2>Enhance your college experience.</h2>
-						<p>Seeking help from tutors and picking the right classes 
+						<p>Seeking help from tutors and picking the right classes
 						can be intimidating. That's where we come in.</p>
 					</header>
 					<div class="image-grid">
@@ -154,7 +154,7 @@
 						<a class="image"><img src="images/BHome.jpg" alt="" /></a>
 					</div>
 					<ul class="actions">
-						<li><a href="/rateandreview/aboutus" class="button big alt">About Us</a></li>
+						<li><a href="/aboutus" class="button big alt">About Us</a></li>
 					</ul>
 				</div>
 			</section>
@@ -174,10 +174,10 @@
 					</header>
 					<ul class="actions">
 						{{#if user_null}}
-							<li><a href="/rateandreview/register" class="button big alt">Create Account</a></li>
+							<li><a href="/register" class="button big alt">Create Account</a></li>
 						{{/if}}
 						{{#unless user_null}}
-							<li><a href="/rateandreview/teacher" class="button big alt">Browse Professors</a></li>
+							<li><a href="/teacher" class="button big alt">Browse Professors</a></li>
 						{{/unless}}
 					</ul>
 				</div>
@@ -232,7 +232,7 @@
 						class="label">LinkedIn</span>
 				</a></li>
 			</ul>
-			
+
 		</div>
 	</footer>
 
@@ -242,7 +242,7 @@
 			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
-			
+
 			<!-- the scripts for scroll to top -->
 			<a href="#0" class="cd-top">Top</a>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>

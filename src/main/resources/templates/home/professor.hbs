@@ -15,8 +15,8 @@
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
-  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
   	<style>
 	.reviewcolumns {
     	-webkit-column-count: 2; /* Chrome, Safari, Opera */
@@ -24,7 +24,7 @@
     	column-count: 2;
 	}
 	</style>
-	
+
 	 <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -71,7 +71,7 @@
         var chart = new google.visualization.BarChart(document.getElementById('chart_objective'));
         chart.draw(data, options);
       }
-      
+
       function draw_organized() {
 
         // Create the data table.
@@ -95,7 +95,7 @@
         var chart = new google.visualization.BarChart(document.getElementById('chart_organized'));
         chart.draw(data, options);
       }
-      
+
       function draw_challenging() {
 
         // Create the data table.
@@ -119,7 +119,7 @@
         var chart = new google.visualization.BarChart(document.getElementById('chart_challenging'));
         chart.draw(data, options);
       }
-      
+
       function draw_outside_work() {
 
         // Create the data table.
@@ -143,7 +143,7 @@
         var chart = new google.visualization.BarChart(document.getElementById('chart_outside_work'));
         chart.draw(data, options);
       }
-      
+
        function draw_pace() {
 
         // Create the data table.
@@ -167,7 +167,7 @@
         var chart = new google.visualization.BarChart(document.getElementById('chart_pace'));
         chart.draw(data, options);
       }
-      
+
        function draw_assignments() {
 
         // Create the data table.
@@ -191,7 +191,7 @@
         var chart = new google.visualization.BarChart(document.getElementById('chart_assignments'));
         chart.draw(data, options);
       }
-      
+
       function draw_grade_fairly() {
 
         // Create the data table.
@@ -215,7 +215,7 @@
         var chart = new google.visualization.BarChart(document.getElementById('chart_grade_fairly'));
         chart.draw(data, options);
       }
-      
+
       function draw_grade_time() {
 
         // Create the data table.
@@ -239,7 +239,7 @@
         var chart = new google.visualization.BarChart(document.getElementById('chart_grade_time'));
         chart.draw(data, options);
       }
-      
+
       function draw_accessibility() {
 
         // Create the data table.
@@ -263,7 +263,7 @@
         var chart = new google.visualization.BarChart(document.getElementById('chart_accessibility'));
         chart.draw(data, options);
       }
-      
+
       function draw_knowledge() {
 
         // Create the data table.
@@ -287,7 +287,7 @@
         var chart = new google.visualization.BarChart(document.getElementById('chart_knowledge'));
         chart.draw(data, options);
       }
-      
+
       function draw_career_development() {
 
         // Create the data table.
@@ -312,11 +312,11 @@
         chart.draw(data, options);
       }
     </script>
-	
-	
+
+
 	</head>
 	<body class="landing">
-	
+
 
 		<!-- Header -->
 			<header id="header" class="skel-layers-fixed">
@@ -327,50 +327,50 @@
 			<nav id="nav" class="visible">
 				<ul class="links">
 					<li><a href="/rateandreview">Home</a></li>
-					
+
 					{{#if user_admin}}
-						<li><a href="/rateandreview/admindashboard">My Dashboard</a></li>
+						<li><a href="/admindashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_professor}}
-						<li><a href="/rateandreview/facultydashboard">My Dashboard</a></li>
+						<li><a href="/facultydashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_tutor}}
-						<li><a href="/rateandreview/tutordashboard">My Dashboard</a></li>
+						<li><a href="/tutordashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_student}}
-						<li><a href="/rateandreview/studentdashboard">My Dashboard</a></li>
+						<li><a href="/studentdashboard">My Dashboard</a></li>
 					{{/if}}
-					
+
 					{{#if user_null}}
-						<li><a href="/rateandreview/signin">Log In</a></li>
-						<li><a href="/rateandreview/register">Register</a></li>
-						<li><a href="/rateandreview/activation">Activate Account</a></li>
-						<li><a href="/rateandreview/accountrecovery">Forgot Password?</a></li>
+						<li><a href="/signin">Log In</a></li>
+						<li><a href="/register">Register</a></li>
+						<li><a href="/activation">Activate Account</a></li>
+						<li><a href="/accountrecovery">Forgot Password?</a></li>
 					{{/if}}
-					
-						<li><a href="/rateandreview/teacher">Browse Professors</a></li>
-					
+
+						<li><a href="/teacher">Browse Professors</a></li>
+
 					{{#unless user_admin}}
-						<li><a href="/rateandreview/contactus">Contact Us</a></li>
+						<li><a href="/contactus">Contact Us</a></li>
 					{{/unless}}
-						<li><a href="/rateandreview/aboutus">About Us</a></li>
-						<li><a href="/rateandreview/faq">FAQ</a></li>
-					
+						<li><a href="/aboutus">About Us</a></li>
+						<li><a href="/faq">FAQ</a></li>
+
 					{{#unless user_null}}
-						<li><a href="/rateandreview/logout">Log Out</a></li>
+						<li><a href="/logout">Log Out</a></li>
 					{{/unless}}
 				</ul>
 			</nav>
-			
+
 			<!-- Banner -->
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="reviewprof">
-			
+
 </div>
-			
+
 		<!-- Main -->
 			<section id="main" class="wrapper">
-					<div class="leftcol"> 
-			
+					<div class="leftcol">
+
 			<!-- Button trigger modal -->
  <br>
 			&nbsp;
@@ -401,18 +401,18 @@
 										</tr>
 									</tfoot>
 								</table>
-								
+
 							</div>
-							
-							
+
+
 						</section>
 				<div class="centercol">
 					&nbsp;&nbsp;
 
 					<!-- Text -->
 						<section>
-						
-						
+
+
 							<header class="major special">
 								<h2><u>{{prof_first_name}} {{prof_last_name}}</u></h2>
 								<h4>
@@ -420,7 +420,7 @@
 										{{#if is_overview}}Overall {{/if}}{{#unless is_overview}}{{display}} {{/unless}}rating: {{overall}}/5
 									</b>
 								</h4>
-								
+
 									<select style="max-width:15%; min-width:15%;" name="course_name" id="course_name" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
 										<option selected="selected">--- Select Course ---</option>
 										{{#each unique_courses}}
@@ -428,45 +428,45 @@
 										<!-- <span class="glyphicon glyphicon-triangle-bottom"></span> -->
 										{{/each}}
 									</select>
-									
+
 							</header>
-							
-							<!-- <a href="/rateandreview/studentdashboard" class="button alt">Return To Student Dashboard</a> -->
-							 
+
+							<!-- <a href="/studentdashboard" class="button alt">Return To Student Dashboard</a> -->
+
 							<!-- <span class="stars">{{overall}}</span> -->
-								
+
 							<hr />
 							</section>
-							
+
 			<div class="reviewcolumns" align="center">
-		
+
 			<ul> <div id="chart_objective" ></div> </ul>
-			
+
 			<ul> <div id="chart_organized"></div> </ul>
-			
+
 			<ul> <div id="chart_challenging"></div> </ul>
-			
+
 			<ul> <div id="chart_outside_work"></div> </ul>
-			
+
 			<ul> <div id="chart_pace"></div> </ul>
-			
+
 			<ul> <div id="chart_assignments"></div> </ul>
-			
+
 			<ul> <div id="chart_grade_fairly"></div> </ul>
-			
+
 			<ul> <div id="chart_grade_time"></div> </ul>
-			
+
 			<ul> <div id="chart_accessibility"></div> </ul>
-			
-			<ul> <div id="chart_knowledge"></div> </ul>	
-			
+
+			<ul> <div id="chart_knowledge"></div> </ul>
+
 			</div>
 			<div align="center">
 			<!-- <ul><b> The instructor's courses are valuable for career development: {{rate_career_development}}/5</b> -->
 			<ul> <div id="chart_career_development"></div> </ul>
 			</div>
-			
-			
+
+
 			<!-- Table -->
 						<section>
 						<br>
@@ -514,14 +514,14 @@
 									<tfoot>
 									</tfoot>
 								</table>
-							</div> 
-							
-				
-			
-			
-			
+							</div>
+
+
+
+
+
 			</section>
-			
+
 
 		<!-- Scripts -->
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->

@@ -11,12 +11,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 	<!-- The scroll to top links below -->
-		
+
 	<link rel="stylesheet" href="back-to-top/css/reset.css"> <!-- CSS reset -->
 	<link rel="stylesheet" href="back-to-top/css/style.css"> <!-- Gem style -->
 	<script src="js/modernizr.js"></script> <!-- Modernizr -->
-	
-	
+
+
 <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 <link rel="stylesheet" href="assets/css/main.css" />
 <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -28,9 +28,9 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	
-	
-	
+
+
+
 
 </head>
 <style>
@@ -52,7 +52,7 @@
 
 #header > h1 a {
     font-size: 1.0em;
-  font-weight: bold; 
+  font-weight: bold;
 }
 </style>
 
@@ -70,37 +70,37 @@
 	<nav id="nav"  class="visible">
 	<ul class="links">
 					<li><a href="/rateandreview">Home</a></li>
-					
+
 					{{#if user_admin}}
-						<li><a href="/rateandreview/admindashboard">My Dashboard</a></li>
+						<li><a href="/admindashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_professor}}
-						<li><a href="/rateandreview/facultydashboard">My Dashboard</a></li>
+						<li><a href="/facultydashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_tutor}}
-						<li><a href="/rateandreview/tutordashboard">My Dashboard</a></li>
+						<li><a href="/tutordashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_student}}
-						<li><a href="/rateandreview/studentdashboard">My Dashboard</a></li>
+						<li><a href="/studentdashboard">My Dashboard</a></li>
 					{{/if}}
-					
+
 					{{#if user_null}}
-						<li><a href="/rateandreview/signin">Log In</a></li>
-						<li><a href="/rateandreview/register">Register</a></li>
-						<li><a href="/rateandreview/activation">Activate Account</a></li>
-						<li><a href="/rateandreview/accountrecovery">Forgot Password?</a></li>
+						<li><a href="/signin">Log In</a></li>
+						<li><a href="/register">Register</a></li>
+						<li><a href="/activation">Activate Account</a></li>
+						<li><a href="/accountrecovery">Forgot Password?</a></li>
 					{{/if}}
-					
-						<li><a href="/rateandreview/teacher">Browse Professors</a></li>
-					
+
+						<li><a href="/teacher">Browse Professors</a></li>
+
 					{{#unless user_admin}}
-						<li><a href="/rateandreview/contactus">Contact Us</a></li>
+						<li><a href="/contactus">Contact Us</a></li>
 					{{/unless}}
-						<li><a href="/rateandreview/aboutus">About Us</a></li>
-						<li><a href="/rateandreview/faq">FAQ</a></li>
-					
+						<li><a href="/aboutus">About Us</a></li>
+						<li><a href="/faq">FAQ</a></li>
+
 					{{#unless user_null}}
-						<li><a href="/rateandreview/logout">Log Out</a></li>
+						<li><a href="/logout">Log Out</a></li>
 					{{/unless}}
 				</ul>
 	</nav>
@@ -173,7 +173,7 @@
 		&ensp;
   <br/>
   <form action="/rateandreview/teacher" method="GET">
-  
+
   &nbsp;&nbsp;
   <div>
     <input type="text" name="search" placeholder="Search Users..." />
@@ -194,7 +194,7 @@
 			<table id="indextable" class="indextable alt">
 				<thead>
 					<tr>
-						
+
 						<th class="shrink text-left"><a
 							href="javascript:SortTable(3,'T');" class="btn btn-link" style="color:black">Image
 							<i class="fa fa-sort" aria-hidden="true"></i>
@@ -227,13 +227,13 @@
 				</thead>
 				<tbody>
 					{{#each professors}}
-					
+
 					<tr>
 
 
-						
+
 						<td class="shrink text-center"><img src="/images/{{profilepic}}.JPG"  width="55%" height="%55"></td>
-						<td class="shrink"><a href="/rateandreview/professor/{{id}}/Overview">{{last_name}} , {{first_name}}</a></td>
+						<td class="shrink"><a href="/professor/{{id}}/Overview">{{last_name}} , {{first_name}}</a></td>
 						<td class="shrink"><a
 							href="mailto:{{email}}?Subject=Rate%20and %20Review"><span
 								class="glyphicon glyphicon-envelope"></span> {{email}}</a></td>
@@ -253,10 +253,10 @@ No reviews.
 					</tr>
 					{{/each}}
 				</tbody>
-				
+
 			</table>
-			
-			
+
+
 			<a href="/teacher"  class="btn btn-info"> View All</a>
 		</div>
 </br>
@@ -280,7 +280,7 @@ No reviews.
 						class="label">LinkedIn</span>
 				</a></li>
 			</ul>
-			
+
 		</div>
 	</footer>
 
@@ -359,13 +359,13 @@ No reviews.
 
 		<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 		<script src="assets/js/main2.js"></script>
-		
+
 			<!-- the scripts for scroll to top -->
 			<a href="#0" class="cd-top">Top</a>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="back-to-top/js/main.js"></script> <!-- Gem jQuery -->
-		
-		
+
+
 </body>
 
 

@@ -36,37 +36,37 @@
 	<nav id="nav"  class="visible">
 	<ul class="links">
 					<li><a href="/rateandreview">Home</a></li>
-					
+
 					{{#if user_admin}}
-						<li><a href="/rateandreview/admindashboard">My Dashboard</a></li>
+						<li><a href="/admindashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_professor}}
-						<li><a href="/rateandreview/facultydashboard">My Dashboard</a></li>
+						<li><a href="/facultydashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_tutor}}
-						<li><a href="/rateandreview/tutordashboard">My Dashboard</a></li>
+						<li><a href="/tutordashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_student}}
-						<li><a href="/rateandreview/studentdashboard">My Dashboard</a></li>
+						<li><a href="/studentdashboard">My Dashboard</a></li>
 					{{/if}}
-					
-						<li><a href="/rateandreview/teacher">Browse Professors</a></li>
-					
+
+						<li><a href="/teacher">Browse Professors</a></li>
+
 					{{#unless user_admin}}
-						<li><a href="/rateandreview/contactus">Contact Us</a></li>
+						<li><a href="/contactus">Contact Us</a></li>
 					{{/unless}}
-						<li><a href="/rateandreview/aboutus">About Us</a></li>
-						<li><a href="/rateandreview/faq">FAQ</a></li>
-					
+						<li><a href="/aboutus">About Us</a></li>
+						<li><a href="/faq">FAQ</a></li>
+
 					{{#unless user_null}}
 					<!--
-						<li><a href="/rateandreview/changepassword">Change Password</a></li>
-						<li><a href="/rateandreview/deactivation">Deactivate Account</a></li>
+						<li><a href="/changepassword">Change Password</a></li>
+						<li><a href="/deactivation">Deactivate Account</a></li>
 					-->
-						<li><a href="/rateandreview/logout">Log Out</a></li>
+						<li><a href="/logout">Log Out</a></li>
 					{{/unless}}
-					
-					
+
+
 				</ul>
 	</nav>
 
@@ -154,7 +154,7 @@
 			<table id="indextable" class="indextable alt">
 				<thead>
 					<tr>
-						
+
 
 						<th class="shrink text-left"><a
 							href="javascript:SortTable(3,'T');" class="btn btn-link" style="color:black">Image <i class="fa fa-sort" aria-hidden="true"></i>
@@ -182,9 +182,9 @@
 					<tr>
 
 
-						
+
 						<td class="shrink text-center"><img src="/images/{{profilepic}}.JPG"  width="55%" height="%55"></td>
-						<td class="shrink"><a href="/rateandreview/professor/{{id}}/Overview">{{professor_last_name}} , {{professor_first_name}}</a></td>
+						<td class="shrink"><a href="/professor/{{id}}/Overview">{{professor_last_name}} , {{professor_first_name}}</a></td>
 						<td class="shrink"><a
 							href="mailto:{{email}}?Subject=Rate%20and %20Review"><span
 								class="glyphicon glyphicon-envelope"></span> {{professor_email}}</a></td>
@@ -211,7 +211,7 @@
 					<li class="page-item"><a class="page-link" href="#">Next</a></li>
 				</ul>
 			</nav>
-			
+
 		</div>
 
 		</section>

@@ -26,41 +26,41 @@
 			<nav id="nav" class="visible">
 				<ul class="links">
 					<li><a href="/rateandreview">Home</a></li>
-					
+
 					{{#if user_admin}}
-						<li><a href="/rateandreview/admindashboard">My Dashboard</a></li>
+						<li><a href="/admindashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_professor}}
-						<li><a href="/rateandreview/facultydashboard">My Dashboard</a></li>
+						<li><a href="/facultydashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_tutor}}
-						<li><a href="/rateandreview/tutordashboard">My Dashboard</a></li>
+						<li><a href="/tutordashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_student}}
-						<li><a href="/rateandreview/studentdashboard">My Dashboard</a></li>
+						<li><a href="/studentdashboard">My Dashboard</a></li>
 					{{/if}}
-					
+
 					{{#if user_null}}
-						<li><a href="/rateandreview/signin">Log In</a></li>
-						<li><a href="/rateandreview/register">Register</a></li>
-						<li><a href="/rateandreview/activation">Activate Account</a></li>
-						<li><a href="/rateandreview/accountrecovery">Forgot Password?</a></li>
+						<li><a href="/signin">Log In</a></li>
+						<li><a href="/register">Register</a></li>
+						<li><a href="/activation">Activate Account</a></li>
+						<li><a href="/accountrecovery">Forgot Password?</a></li>
 					{{/if}}
-					
-						<li><a href="/rateandreview/teacher">Browse Professors</a></li>
-					
+
+						<li><a href="/teacher">Browse Professors</a></li>
+
 					{{#unless user_admin}}
-						<li><a href="/rateandreview/contactus">Contact Us</a></li>
+						<li><a href="/contactus">Contact Us</a></li>
 					{{/unless}}
-						<li><a href="/rateandreview/aboutus">About Us</a></li>
-						<li><a href="/rateandreview/faq">FAQ</a></li>
-					
+						<li><a href="/aboutus">About Us</a></li>
+						<li><a href="/faq">FAQ</a></li>
+
 					{{#unless user_null}}
-						<li><a href="/rateandreview/logout">Log Out</a></li>
+						<li><a href="/logout">Log Out</a></li>
 					{{/unless}}
 				</ul>
 			</nav>
-			
+
 		<!-- Main -->
 <section id="main" class="wrapper">
 	<div class="container">
@@ -69,7 +69,7 @@
 			<h3>Course to Review<label id="course_name">{{appointment.course_name}}</label></h3>
 		</header>
 
-		<form action="/rateandreview/tutorreview/{{appointment.appointment_id}}" method="post">		
+		<form action="/rateandreview/tutorreview/{{appointment.appointment_id}}" method="post">
 			<div class="table-wrapper">
 			<table class="alt">
 				<thead>
@@ -85,11 +85,11 @@
 							</p>
 							<sup>lowest</sup>
 							<label class="radio inline"><input type="radio" name="enhance_understanding" value="1">1</label>
-							<label class="radio inline"><input type="radio" name="enhance_understanding" value="2">2</label> 
-							<label class="radio inline"><input type="radio" name="enhance_understanding" value="3">3</label> 
-							<label class="radio inline"><input type="radio" name="enhance_understanding" value="4">4</label> 
+							<label class="radio inline"><input type="radio" name="enhance_understanding" value="2">2</label>
+							<label class="radio inline"><input type="radio" name="enhance_understanding" value="3">3</label>
+							<label class="radio inline"><input type="radio" name="enhance_understanding" value="4">4</label>
 							<label class="radio inline"><input type="radio" name="enhance_understanding" value="5">5</label>
-							<sup>highest</sup>	
+							<sup>highest</sup>
 						</td>
 					</tr>
 					<tr>
@@ -101,11 +101,11 @@
 							</p>
 							<sup>lowest</sup>
 							<label class="radio inline"><input type="radio" name="simple_examples" value="1">1</label>
-							<label class="radio inline"><input type="radio" name="simple_examples" value="2">2</label> 
-							<label class="radio inline"><input type="radio" name="simple_examples" value="3">3</label> 
-							<label class="radio inline"><input type="radio" name="simple_examples" value="4">4</label> 
+							<label class="radio inline"><input type="radio" name="simple_examples" value="2">2</label>
+							<label class="radio inline"><input type="radio" name="simple_examples" value="3">3</label>
+							<label class="radio inline"><input type="radio" name="simple_examples" value="4">4</label>
 							<label class="radio inline"><input type="radio" name="simple_examples" value="5">5</label>
-							<sup>highest</sup>	
+							<sup>highest</sup>
 						</td>
 					</tr>
 					<tr>
@@ -117,11 +117,11 @@
 							</p>
 							<sup>lowest</sup>
 							<label class="radio inline"><input type="radio" name="professional" value="1">1</label>
-							<label class="radio inline"><input type="radio" name="professional" value="2">2</label> 
-							<label class="radio inline"><input type="radio" name="professional" value="3">3</label> 
-							<label class="radio inline"><input type="radio" name="professional" value="4">4</label> 
+							<label class="radio inline"><input type="radio" name="professional" value="2">2</label>
+							<label class="radio inline"><input type="radio" name="professional" value="3">3</label>
+							<label class="radio inline"><input type="radio" name="professional" value="4">4</label>
 							<label class="radio inline"><input type="radio" name="professional" value="5">5</label>
-							<sup>highest</sup>	
+							<sup>highest</sup>
 						</td>
 					</tr>
 					<tr>
@@ -133,11 +133,11 @@
 							</p>
 							<sup>lowest</sup>
 							<label class="radio inline"><input type="radio" name="prepared" value="1">1</label>
-							<label class="radio inline"><input type="radio" name="prepared" value="2">2</label> 
-							<label class="radio inline"><input type="radio" name="prepared" value="3">3</label> 
-							<label class="radio inline"><input type="radio" name="prepared" value="4">4</label> 
+							<label class="radio inline"><input type="radio" name="prepared" value="2">2</label>
+							<label class="radio inline"><input type="radio" name="prepared" value="3">3</label>
+							<label class="radio inline"><input type="radio" name="prepared" value="4">4</label>
 							<label class="radio inline"><input type="radio" name="prepared" value="5">5</label>
-							<sup>highest</sup>	
+							<sup>highest</sup>
 						</td>
 					</tr>
 					<tr>
@@ -149,11 +149,11 @@
 							</p>
 							<sup>lowest</sup>
 							<label class="radio inline"><input type="radio" name="schedule_again" value="1">1</label>
-							<label class="radio inline"><input type="radio" name="schedule_again" value="2">2</label> 
-							<label class="radio inline"><input type="radio" name="schedule_again" value="3">3</label> 
-							<label class="radio inline"><input type="radio" name="schedule_again" value="4">4</label> 
+							<label class="radio inline"><input type="radio" name="schedule_again" value="2">2</label>
+							<label class="radio inline"><input type="radio" name="schedule_again" value="3">3</label>
+							<label class="radio inline"><input type="radio" name="schedule_again" value="4">4</label>
 							<label class="radio inline"><input type="radio" name="schedule_again" value="5">5</label>
-							<sup>highest</sup>	
+							<sup>highest</sup>
 						</td>
 					</tr>
 					<tr>
@@ -165,19 +165,19 @@
 							</p>
 							<sup>lowest</sup>
 							<label class="radio inline"><input type="radio" name="recommend" value="1">1</label>
-							<label class="radio inline"><input type="radio" name="recommend" value="2">2</label> 
-							<label class="radio inline"><input type="radio" name="recommend" value="3">3</label> 
-							<label class="radio inline"><input type="radio" name="recommend" value="4">4</label> 
+							<label class="radio inline"><input type="radio" name="recommend" value="2">2</label>
+							<label class="radio inline"><input type="radio" name="recommend" value="3">3</label>
+							<label class="radio inline"><input type="radio" name="recommend" value="4">4</label>
 							<label class="radio inline"><input type="radio" name="recommend" value="5">5</label>
-							<sup>highest</sup>	
+							<sup>highest</sup>
 						</td>
 					</tr>
 				</tbody>
 				<tfoot></tfoot>
 			</table>
-			</div> 
-			
-			<div class="container"> <br> 
+			</div>
+
+			<div class="container"> <br>
 				<h4>Comment (500 character limit):</h4> <br>
 				<textarea name="comment""></textarea> <br>
 				<input type="submit" value="Submit">
@@ -185,8 +185,8 @@
 		</form>
 	</div>
 </section>
-  			
-			
+
+
 
 			<!-- Footer -->
 	<footer id="footer">
@@ -206,14 +206,14 @@
 						class="label">LinkedIn</span>
 				</a></li>
 			</ul>
-			
+
 		</div>
 	</footer>
 
 		<!-- Scripts -->
-		
+
 		<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main2.js"></script>
-		
+
 	</body>
 </html>

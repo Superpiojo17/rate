@@ -7,13 +7,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 <link rel="stylesheet" href="assets/css/main.css" />
-  
+
   <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css'>
 <link rel='stylesheet prefetch' href='https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'>
 
       <link rel="stylesheet" href="/contact-us/css/style.css">
 
-  
+
 </head>
 <style>
 input[type="text"], input[type="password"], input[type="email"], select, textarea {
@@ -55,44 +55,44 @@ input[type="text"], input[type="password"], input[type="email"], select, textare
 			<a href="/rateandreview">RateAndReview</a>
 		</h1>
 		<a href="#nav">Menu</a>
-		
+
 	</header>
 
 	<!-- Nav -->
 		<nav id="nav" class="visible">
 				<ul class="links">
 					<li><a href="/rateandreview">Home</a></li>
-					
+
 					{{#if user_admin}}
-						<li><a href="/rateandreview/admindashboard">My Dashboard</a></li>
+						<li><a href="/admindashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_professor}}
-						<li><a href="/rateandreview/facultydashboard">My Dashboard</a></li>
+						<li><a href="/facultydashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_tutor}}
-						<li><a href="/rateandreview/tutordashboard">My Dashboard</a></li>
+						<li><a href="/tutordashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_student}}
-						<li><a href="/rateandreview/studentdashboard">My Dashboard</a></li>
+						<li><a href="/studentdashboard">My Dashboard</a></li>
 					{{/if}}
-					
+
 					{{#if user_null}}
-						<li><a href="/rateandreview/signin">Log In</a></li>
-						<li><a href="/rateandreview/register">Register</a></li>
-						<li><a href="/rateandreview/activation">Activate Account</a></li>
-						<li><a href="/rateandreview/accountrecovery">Forgot Password?</a></li>
+						<li><a href="/signin">Log In</a></li>
+						<li><a href="/register">Register</a></li>
+						<li><a href="/activation">Activate Account</a></li>
+						<li><a href="/accountrecovery">Forgot Password?</a></li>
 					{{/if}}
-					
-						<li><a href="/rateandreview/teacher">Browse Professors</a></li>
-					
+
+						<li><a href="/teacher">Browse Professors</a></li>
+
 					{{#unless user_admin}}
-						<li><a href="/rateandreview/contactus">Contact Us</a></li>
+						<li><a href="/contactus">Contact Us</a></li>
 					{{/unless}}
-						<li><a href="/rateandreview/aboutus">About Us</a></li>
-						<li><a href="/rateandreview/faq">FAQ</a></li>
-					
+						<li><a href="/aboutus">About Us</a></li>
+						<li><a href="/faq">FAQ</a></li>
+
 					{{#unless user_null}}
-						<li><a href="/rateandreview/logout">Log Out</a></li>
+						<li><a href="/logout">Log Out</a></li>
 					{{/unless}}
 				</ul>
 			</nav>
@@ -107,8 +107,8 @@ input[type="text"], input[type="password"], input[type="email"], select, textare
                 </div>
             </div>
    <!--         <div id="map-canvas"></div>  -->
-            
-            
+
+
             <div class="row">
                 <form method="post" action="#" name="contactform" id="contactform">
                     <div class="col-md-6">
@@ -117,8 +117,8 @@ input[type="text"], input[type="password"], input[type="email"], select, textare
                             <br>
                             <input name="email" type="text" id="email" size="30" placeholder="Email">
                             <br>
-                        <button type="submit" class="btn btn-lg" id="submit" value="Submit">Send Message</button> 
-                        
+                        <button type="submit" class="btn btn-lg" id="submit" value="Submit">Send Message</button>
+
                         </fieldset>
                     </div>
                     <div class="col-md-6">
@@ -135,9 +135,9 @@ input[type="text"], input[type="password"], input[type="email"], select, textare
             </div>
         </div>
     </section>
-    
-    
-    
+
+
+
     	<!-- Footer -->
 	<footer id="footer">
 		<div class="inner">
@@ -156,7 +156,7 @@ input[type="text"], input[type="password"], input[type="email"], select, textare
 						class="label">LinkedIn</span>
 				</a></li>
 			</ul>
-			
+
 		</div>
 	</footer>
 
@@ -166,12 +166,12 @@ input[type="text"], input[type="password"], input[type="email"], select, textare
 	<script src="assets/js/util.js"></script>
 	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 	<script src="assets/js/main.js"></script>
-	
-	
-	
+
+
+
     <!--Google Maps API-->
    <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnycWatbGyK6ldFqErjFtko1yeMclNUOA&amp;sensor=true"></script> -->
-  
+
     <script src="/contact-us/js/index.js"></script>
 
 </body>

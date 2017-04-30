@@ -11,64 +11,64 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="assets/css/main.css" />
-		
-		
-		
-		
-		
+
+
+
+
+
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
+
 	</head>
-	
-	
+
+
 	<body>
 
 		<!-- Header -->
 			<header id="adminheader">
 				<h1>Administrator Dashboard</h1>
-				
+
 			</header>
 
 				<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
 					<li><a href="/rateandreview">Home</a></li>
-					<li><a href="/rateandreview/admindashboard">My Dashboard</a></li>
-					<li><a href="/rateandreview/myaccount">My Account</a></li>
-					<li><a href="/rateandreview/allusers">Manage Users</a></li>
+					<li><a href="/admindashboard">My Dashboard</a></li>
+					<li><a href="/myaccount">My Account</a></li>
+					<li><a href="/allusers">Manage Users</a></li>
 					{{#if completeProfile }}
-					<li><a href="/rateandreview/completeprofileprof/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
+					<li><a href="/completeprofileprof/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
 					{{/if}}
-					<li><a href="/rateandreview/courseslanding">Manage Courses</a></li>
-					<li><a href="/rateandreview/managetutorslanding">Manage Tutors</a></li>
-					<li><a href="/rateandreview/announcement">Announcements</a></li>
-					<li><a href="/rateandreview/adminaptlanding">Manage Appointments</a></li>
-					<li><a href="/rateandreview/reviewlanding">Manage Reviews</a></li>
-					<li><a href="/rateandreview/analysis">Data Analysis</a></li>
-					<li><a href="/rateandreview/teacher">Browse Professors</a></li>
-					<li><a href="/rateandreview/contactus">Contact Us</a></li>
-					<li><a href="/rateandreview/aboutus">About Us</a></li>
-						<li><a href="/rateandreview/faq">FAQ</a></li>
-					<li><a href="/rateandreview/deactivation">De-Activate</a></li>
-					<li><a href="/rateandreview/logout">Log Out</a></li>
-					
+					<li><a href="/courseslanding">Manage Courses</a></li>
+					<li><a href="/managetutorslanding">Manage Tutors</a></li>
+					<li><a href="/announcement">Announcements</a></li>
+					<li><a href="/adminaptlanding">Manage Appointments</a></li>
+					<li><a href="/reviewlanding">Manage Reviews</a></li>
+					<li><a href="/analysis">Data Analysis</a></li>
+					<li><a href="/teacher">Browse Professors</a></li>
+					<li><a href="/contactus">Contact Us</a></li>
+					<li><a href="/aboutus">About Us</a></li>
+						<li><a href="/faq">FAQ</a></li>
+					<li><a href="/deactivation">De-Activate</a></li>
+					<li><a href="/logout">Log Out</a></li>
+
 				</ul>
 			</nav>
-			
+
 			<!-- Banner -->
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="adminDash">
-			
+
 </div>
  <p> </p>
 
-  
+
 <section id="main" class="wrapper">
-			<div class="leftcol leftcol-xs-12 leftcol-md-12"> 
-			
+			<div class="leftcol leftcol-xs-12 leftcol-md-12">
+
 			<!-- Button trigger modal -->
  <br>
 			&nbsp;
@@ -99,22 +99,22 @@
 										</tr>
 									</tfoot>
 								</table>
-								
+
 							</div>
-							
-							
+
+
 						</section>
-							<div class="centercol"> 
+							<div class="centercol">
 							&ensp;
-							<h2> Welcome {{current_user.first_name}} </h2> 
+							<h2> Welcome {{current_user.first_name}} </h2>
 							<h6> You are logged in as an administrator</h6>
-							
-							
+
+
 							&ensp;
-							
+
   <p>Click on the headings below to view your relevant information.</p>
   <div class="panel-group" id="accordion">
-  
+
 <!--
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -349,7 +349,7 @@
         <span class="glyphicon glyphicon-fire" style="color:red"></span>
       </div>
     </div>
-    
+
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -387,12 +387,12 @@
 				<tfoot>
 				</tfoot>
 			</table>
-		</div> 
+		</div>
         {{/if}}
         {{#unless flagged}}No comments are currently flagged.{{/unless}}
       </div>
     </div>
-    
+
 
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -404,7 +404,7 @@
         {{#if all_comments}}
         <div class="table-wrapper">
 			<table class="alt">
-				
+
 				<div align="right">
 				<span class="glyphicon glyphicon-ok" style="color:green">:approved</span>
 				&nbsp;
@@ -414,7 +414,7 @@
 				&nbsp;
 				<span class="glyphicon glyphicon-minus" style="color:gray">:untouched</span>
 				</div>
-				
+
 				<thead>
 					<tr>
 					<th><br>Professor</th>
@@ -451,28 +451,28 @@
 				<tfoot>
 				</tfoot>
 			</table>
-		</div> 
+		</div>
         {{/if}}
         {{#unless all_comments}}There are currently no comments.{{/unless}}
       </div>
     </div>
 
 
-  </div> 
+  </div>
 </div>
 </div>
-  
-    
-    
-    
-    
-		
-    
-    
-    
-  
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
 				<!-- CODE -->
 
 		<!-- Scripts -->
@@ -492,8 +492,8 @@
 var d_names = new Array("Sunday", "Monday", "Tuesday",
 "Wednesday", "Thursday", "Friday", "Saturday");
 
-var m_names = new Array("January", "February", "March", 
-"April", "May", "June", "July", "August", "September", 
+var m_names = new Array("January", "February", "March",
+"April", "May", "June", "July", "August", "September",
 "October", "November", "December");
 
 var d = new Date();

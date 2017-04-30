@@ -15,8 +15,8 @@
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
-  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
   	<style>
   #banner {
 	padding: 5em 5 1em 0;
@@ -38,39 +38,39 @@
     	column-count: 2;
 	}
 	</style>
-	
-	
-	
-	
+
+
+
+
 	 <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
- 
+
 
       // Load the Visualization API and the corechart package.
       google.charts.load('current', {'packages':['corechart', 'bar']});
 
       // Set a callback to run when the Google Visualization API is loaded.
-      
+
       google.charts.setOnLoadCallback(draw_avg_prof_rating_by_year);
-      
-      
+
+
       google.charts.setOnLoadCallback(draw_TEST);
-      
+
         google.charts.setOnLoadCallback(draw_TEST_2);
-      
-      
+
+
       google.charts.setOnLoadCallback(draw_percentage_of_ratings_by_year);
-      
-      
+
+
        google.charts.setOnLoadCallback(draw_dep_rating);
-       
-       
+
+
        google.charts.setOnLoadCallback(draw_appointment_rate);
-       
-       
+
+
         google.charts.setOnLoadCallback(draw_app_per_tutor);
-        
+
 
         google.charts.setOnLoadCallback(draw_dep_avg);
 
@@ -80,7 +80,7 @@ function draw_avg_prof_rating_by_year() {
         data.addColumn('string', 'Rating');
         data.addColumn('number', 'Average Ratings');
         data.addRows([
-       
+
         ['Freshman', {{freshman_avg_rating}}],
         ['Sophomore', {{sophomore_avg_rating}}],
         ['Junior', {{junior_avg_rating}}],
@@ -89,11 +89,11 @@ function draw_avg_prof_rating_by_year() {
       var options = {
         title: 'Average Professor Rating by Year',
         chartArea: {width: '50%'},
-        
+
          'width':600,
          'height':300,
          colors: ['#3B3EAC'],
-        
+
         hAxis: {
        title: 'Average Student Ratings',
           minValue: 0
@@ -107,10 +107,10 @@ function draw_avg_prof_rating_by_year() {
 
       chart.draw(data, options);
     }
-    
-    
+
+
     //STUFF IS HERE
-    
+
     function draw_TEST() {
 
  var data = new google.visualization.DataTable();
@@ -152,7 +152,7 @@ function draw_avg_prof_rating_by_year() {
       chart.draw(data, options);
     }
     //MORE STUFF
-    
+
     function draw_TEST_2() {
     var data = new google.visualization.DataTable();
       data.addColumn('timeofday', 'Time of Day');
@@ -201,9 +201,9 @@ function draw_avg_prof_rating_by_year() {
       chart.draw(data, options);
       }
 
-    
+
      function draw_percentage_of_ratings_by_year() {
-     
+
        var data = new google.visualization.DataTable();
         data.addColumn('string', 'Ratings');
         data.addColumn('number', '# of ratings completed');
@@ -224,9 +224,9 @@ function draw_avg_prof_rating_by_year() {
         var chart = new google.visualization.PieChart(document.getElementById('chart_overall_prof'));
         chart.draw(data, options);
       }
-    
+
     <!-- The rating of professor by department bellow-->
-    
+
     function draw_dep_rating() {
 
 
@@ -234,22 +234,22 @@ function draw_avg_prof_rating_by_year() {
         data.addColumn('string', 'Ratings');
         data.addColumn('number', '# of ratings');
         data.addRows([
-        
+
         ['Computer Science', 4],
         ['Biology', 10],
         ['Chemistry', 6],
         ['Physics', 2],
-      
+
       ]);
 
       var options = {
         title: 'Professor rating - by departments',
         chartArea: {width: '50%'},
-        
+
          'width':600,
          'height':300,
                colors: ['gold'],
-        
+
         hAxis: {
        title: '# Of Completed Ratings',
           minValue: 0
@@ -263,15 +263,15 @@ function draw_avg_prof_rating_by_year() {
 
       chart.draw(data, options);
     }
-   
-      
+
+
      function draw_dep_avg() {
-     
+
       var data = new google.visualization.DataTable();
         data.addColumn('string', 'Department');
         data.addColumn('number', 'Average Rating');
         data.addRows([
-       
+
           ["Computer Science", 4.4],
           ["Biology", 4],
           ["Chemistry", 4.5],
@@ -282,9 +282,9 @@ function draw_avg_prof_rating_by_year() {
           title: 'Average rating per department',
           width: 500,
            'height':300,
-            
+
           legend: { position: 'none' },
-          
+
           axes: {
             x: {
               0: { side: 'bottom', label: 'Departments'} // bottom x-axis.
@@ -297,7 +297,7 @@ function draw_avg_prof_rating_by_year() {
         // Convert the Classic options to Material options.
         chart.draw(data, google.charts.Bar.convertOptions(options));
       };
-    
+
       function draw_appointment_rate() {
 
  var data = new google.visualization.DataTable();
@@ -308,17 +308,17 @@ function draw_avg_prof_rating_by_year() {
         ['Approved', {{approved}}],
         ['Denied', {{denied}}],
         ['Past', {{past}}],
-        ['Missed by Tutor', {{missed}}],  
+        ['Missed by Tutor', {{missed}}],
       ]);
 
       var options = {
         title: 'Status of Tutor Appointments',
         chartArea: {width: '50%'},
-        
+
          'width':600,
          'height':300,
-           colors: ['#00FF00'],         
-        
+           colors: ['#00FF00'],
+
         hAxis: {
        title: 'Status Ratings',
           minValue: 0
@@ -332,15 +332,15 @@ function draw_avg_prof_rating_by_year() {
 
       chart.draw(data, options);
     }
-    
+
      function draw_app_per_tutor() {
-     
+
       var data = new google.visualization.DataTable();
         data.addColumn('string', 'Task');
         data.addColumn('number', 'Appointments Per Tutor');
         data.addRows([
-     
-       
+
+
           ['Joel Sandoval', 11],
           ['Mike Webb',      9],
           ['Frank Rooks',  6],
@@ -395,11 +395,11 @@ function draw_avg_prof_rating_by_year() {
       }
        -->
     </script>
-	
-	
+
+
 	</head>
 	<body class="landing">
-	
+
 
 	<!-- Header -->
 	<header id="header" class="skel-layers-fixed">
@@ -407,50 +407,50 @@ function draw_avg_prof_rating_by_year() {
 			<a href="/rateandreview">RateAndReview</a>
 		</h1>
 		<a href="#nav">Menu</a>
-		
+
 	</header>
 
 			<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
 					<li><a href="/rateandreview">Home</a></li>
-					
+
 					{{#if user_admin}}
-						<li><a href="/rateandreview/admindashboard">My Dashboard</a></li>
+						<li><a href="/admindashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_professor}}
-						<li><a href="/rateandreview/facultydashboard">My Dashboard</a></li>
+						<li><a href="/facultydashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_tutor}}
-						<li><a href="/rateandreview/tutordashboard">My Dashboard</a></li>
+						<li><a href="/tutordashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_student}}
-						<li><a href="/rateandreview/studentdashboard">My Dashboard</a></li>
+						<li><a href="/studentdashboard">My Dashboard</a></li>
 					{{/if}}
-					
+
 					{{#if user_null}}
-						<li><a href="/rateandreview/signin">Log In</a></li>
-						<li><a href="/rateandreview/register">Register</a></li>
-						<li><a href="/rateandreview/activation">Activate Account</a></li>
-						<li><a href="/rateandreview/accountrecovery">Forgot Password?</a></li>
+						<li><a href="/signin">Log In</a></li>
+						<li><a href="/register">Register</a></li>
+						<li><a href="/activation">Activate Account</a></li>
+						<li><a href="/accountrecovery">Forgot Password?</a></li>
 					{{/if}}
-					
-						<li><a href="/rateandreview/teacher">Browse Professors</a></li>
-					
+
+						<li><a href="/teacher">Browse Professors</a></li>
+
 					{{#unless user_admin}}
-						<li><a href="/rateandreview/contactus">Contact Us</a></li>
+						<li><a href="/contactus">Contact Us</a></li>
 					{{/unless}}
-						<li><a href="/rateandreview/aboutus">About Us</a></li>
-						<li><a href="/rateandreview/faq">FAQ</a></li>
-					
+						<li><a href="/aboutus">About Us</a></li>
+						<li><a href="/faq">FAQ</a></li>
+
 					{{#unless user_null}}
-						<li><a href="/rateandreview/logout">Log Out</a></li>
+						<li><a href="/logout">Log Out</a></li>
 					{{/unless}}
 				</ul>
 			</nav>
-			
-			
-			
+
+
+
 			<!-- Banner -->
 	<section id="banner">
 
@@ -461,86 +461,86 @@ function draw_avg_prof_rating_by_year() {
 		<!-- <i class="icon fa-diamond"></i> -->
 		<h1>Analytics</h1>
 		<p>Derived from the site utilization</p>
-		
+
 	</section>
-			
-			
+
+
 </div>
-			
+
 		<!-- Main -->
 			<section id="main" class="wrapper">
-					<div class="leftcol"> 
-		
+					<div class="leftcol">
+
 
 					<!-- Text -->
 						<section>
-						
-						
+
+
 							<header class="major special">
-									
+
 								<!--
 									<select style="max-width:15%;" name="course_name" id="course_name" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
 										{{#each unique_courses}}
 										<option value="http://localhost:3000/professor/{{prof_id}}/{{this}}">{{this}}</option>
 										<!-- <span class="glyphicon glyphicon-triangle-bottom"></span> -->
 										{{/each}}
-										
+
 									</select>
 									-->
 									<table>
 									  <tr>
 									    <th><h3>Professor Rating - By Year</h3></th>
-									   
+
 									  </tr>
-									  
-									  
+
+
 									  <tr>
 									    <td><div id="chart_div"></div></td>
 									     <td><div id ="chart_overall_prof"></div></td>
 									     </tr> <tr>
-									   
-									  
+
+
 									      <td><div id ="chart_TEST"></div></td>
 									      <td><div id ="chart_TEST_2"></div></td>
 									  </tr>
 									  <tr>
 									    <th><h3>Professor Rating - BY Department</h3></th>
-									  
+
 									  </tr>
-									  	
-									  	
+
+
 									  <tr>
 									  	<td><div id="chart_dep" ></div> </td>
-									  	
+
 									  	<td><div id="chart_dep_avg" ></div> </td>
 									  </tr><tr>
 									  	<th><h3>Tutor Statistics</h3></th>
 									  </tr><tr>
 									  	<td><div id="chart_app_rate" ></div></td>
-									
+
 										<td><div id="chart_app_tutor" ></div></td>
 									  </tr>
 									 </table>
-									
+
 							</header>
-							
+
 							<!-- <a href="/studentdashboard" class="button alt">Return To Student Dashboard</a> -->
-							 
+
 							<!-- <span class="stars">{{overall}}</span> -->
-								
+
 							<hr />
 							</section>
-					
+
 				<!--	 -->
-								
+
 			<div class="reviewcolumns" align="center">
 
-		
-		<!--	<ul> <div id="chart_objective" ></div> </ul> 
-			
-		-->	
-				</div>	
-			
+
+		<!--	<ul> <div id="chart_objective" ></div> </ul>
+
+		-->
+				</div>
+
 
 		<!-- Scripts -->
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->

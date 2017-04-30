@@ -24,9 +24,9 @@
     background-image: url(/images/overlay.png), url(../../images/goodwin.jpg);
     background-size: cover;
     text-align: center;
-}	
-	
-	
+}
+
+
 .wrapper.style2 textarea {
 	background-color: #f2f2f2;
 	border-color: #63c1ae;
@@ -67,37 +67,37 @@ div.relative {
 		<nav id="nav" class="visible">
 				<ul class="links">
 					<li><a href="/rateandreview">Home</a></li>
-					
+
 					{{#if user_admin}}
-						<li><a href="/rateandreview/admindashboard">My Dashboard</a></li>
+						<li><a href="/admindashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_professor}}
-						<li><a href="/rateandreview/facultydashboard">My Dashboard</a></li>
+						<li><a href="/facultydashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_tutor}}
-						<li><a href="/rateandreview/tutordashboard">My Dashboard</a></li>
+						<li><a href="/tutordashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_student}}
-						<li><a href="/rateandreview/studentdashboard">My Dashboard</a></li>
+						<li><a href="/studentdashboard">My Dashboard</a></li>
 					{{/if}}
-					
+
 					{{#if user_null}}
-						<li><a href="/rateandreview/signin">Log In</a></li>
-						<li><a href="/rateandreview/register">Register</a></li>
-						<li><a href="/rateandreview/activation">Activate Account</a></li>
-						<li><a href="/rateandreview/accountrecovery">Forgot Password?</a></li>
+						<li><a href="/signin">Log In</a></li>
+						<li><a href="/register">Register</a></li>
+						<li><a href="/activation">Activate Account</a></li>
+						<li><a href="/accountrecovery">Forgot Password?</a></li>
 					{{/if}}
-					
-						<li><a href="/rateandreview/teacher">Browse Professors</a></li>
-					
+
+						<li><a href="/teacher">Browse Professors</a></li>
+
 					{{#unless user_admin}}
-						<li><a href="/rateandreview/contactus">Contact Us</a></li>
+						<li><a href="/contactus">Contact Us</a></li>
 					{{/unless}}
-						<li><a href="/rateandreview/aboutus">About Us</a></li>
-						<li><a href="/rateandreview/faq">FAQ</a></li>
-					
+						<li><a href="/aboutus">About Us</a></li>
+						<li><a href="/faq">FAQ</a></li>
+
 					{{#unless user_null}}
-						<li><a href="/rateandreview/logout">Log Out</a></li>
+						<li><a href="/logout">Log Out</a></li>
 					{{/unless}}
 				</ul>
 			</nav>
@@ -110,15 +110,15 @@ div.relative {
 					<header class="major special">
 						<h2>ACCOUNT RECOVERY</h2>
 						<p>Enter your email information</p>
-						
-					<div align="center">	
+
+					<div align="center">
 					<form action="/rateandreview/accountrecovery" method="POST" >
 						<div class="container 75%">
-								
+
 								<div class="6u$ 12u$(xsmall)">
 									<input name="email" placeholder="Email" type="email" />
 								</div>
-								
+
 						<ul class="actions">
 							<li><input type="submit" class="special" value="Submit" /></li>
 							<li><input type="reset" class="alt" value="Reset" /></li>
@@ -127,7 +127,7 @@ div.relative {
 					</div>
 				</header>
 
-				
+
 				</div>
 			</section>
 </section>
@@ -149,7 +149,7 @@ div.relative {
 						class="label">LinkedIn</span>
 				</a></li>
 			</ul>
-			
+
 		</div>
 	</footer>
 

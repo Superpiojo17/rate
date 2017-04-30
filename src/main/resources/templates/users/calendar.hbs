@@ -17,15 +17,15 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	
+
 	<script type="text/javascript">
 <!--
 
 var d_names = new Array("Sunday", "Monday", "Tuesday",
 "Wednesday", "Thursday", "Friday", "Saturday");
 
-var m_names = new Array("January", "February", "March", 
-"April", "May", "June", "July", "August", "September", 
+var m_names = new Array("January", "February", "March",
+"April", "May", "June", "July", "August", "September",
 "October", "November", "December");
 
 var d = new Date();
@@ -95,7 +95,7 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
         calendar.fullCalendar({
 
     //$('#calendar').fullCalendar({
-        
+
         header: {
         	left: 'prev today',
         	center: 'title',
@@ -119,7 +119,7 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
         	},
         	// US Holidays
 			events: 'en.usa#holiday@group.v.calendar.google.com',
-			
+
 			eventClick: function(event) {
 				// opens events in a popup window
 				window.open(event.url, 'gcalevent', 'width=700,height=600');
@@ -127,7 +127,7 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
 			},
         	editable: true,
         	eventLimit: true,
-        	
+
         	googleCalendarApiKey: 'AIzaSyD0S1WbQcUJ31SkY7wU8vK6MQcNFbNppdA',
        			events: {
            		 googleCalendarId: 'chaosgrunt22@gmail.com'
@@ -158,37 +158,37 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
 			<nav id="nav"  class="visible">
 				<ul class="links">
 					<li><a href="/">Home</a></li>
-					
+
 					{{#if user_admin}}
-						<li><a href="/rateandreview/admindashboard">My Dashboard</a></li>
+						<li><a href="/admindashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_professor}}
-						<li><a href="/rateandreview/facultydashboard">My Dashboard</a></li>
+						<li><a href="/facultydashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_tutor}}
-						<li><a href="/rateandreview/tutordashboard">My Dashboard</a></li>
+						<li><a href="/tutordashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_student}}
-						<li><a href="/rateandreview/studentdashboard">My Dashboard</a></li>
+						<li><a href="/studentdashboard">My Dashboard</a></li>
 					{{/if}}
-					
+
 					{{#if user_null}}
-						<li><a href="/rateandreview/signin">Log In</a></li>
-						<li><a href="/rateandreview/register">Register</a></li>
-						<li><a href="/rateandreview/activation">Activate Account</a></li>
-						<li><a href="/rateandreview/accountrecovery">Forgot Password?</a></li>
+						<li><a href="/signin">Log In</a></li>
+						<li><a href="/register">Register</a></li>
+						<li><a href="/activation">Activate Account</a></li>
+						<li><a href="/accountrecovery">Forgot Password?</a></li>
 					{{/if}}
-					
-						<li><a href="/rateandreview/teacher">Browse Professors</a></li>
-					
+
+						<li><a href="/teacher">Browse Professors</a></li>
+
 					{{#unless user_admin}}
-						<li><a href="/rateandreview/contactus">Contact Us</a></li>
+						<li><a href="/contactus">Contact Us</a></li>
 					{{/unless}}
-						<li><a href="/rateandreview/aboutus">About Us</a></li>
-						<li><a href="/rateandreview/faq">FAQ</a></li>
-					
+						<li><a href="/aboutus">About Us</a></li>
+						<li><a href="/faq">FAQ</a></li>
+
 					{{#unless user_null}}
-						<li><a href="/rateandreview/logout">Log Out</a></li>
+						<li><a href="/logout">Log Out</a></li>
 					{{/unless}}
 				</ul>
 			</nav>
@@ -199,7 +199,7 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
 
 
 		</div>
-		
+
   <div class="panel-group" id="accordion">
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -221,35 +221,35 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
 					</tr>
 				</thead>
 				<tbody>
-						{{#each appointments}}		
+						{{#each appointments}}
 							<tr>
 							<td class="shrink">{{student_firstname}} {{student_lastname}}</td>
 							<td class="shrink">{{date}}</td>
 							<td class="shrink">{{time}}</td>
 							<td>{{student_message}}</td>
 							<td>{{tutor_message}}</td>
-							</tr>				
+							</tr>
 						{{/each}}
 				</tbody>
 					<tfoot>
 					</tfoot>
 				</table>
-			</div> 
+			</div>
      	{{/if}}
 
       </div>
     </div>
-    
-        
+
+
       </div>
     </div>
-  </div> 
+  </div>
 </div>
 
 	</section>
 
-		
-	
+
+
 
 	<!-- Footer -->
 	<footer id="footer">
@@ -277,9 +277,9 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
 			</ul>
 		</div>
 	</footer>
-	
-	
-	
+
+
+
 
 	<!-- Scripts -->
 	<script src="assets/js/skel.min.js"></script>

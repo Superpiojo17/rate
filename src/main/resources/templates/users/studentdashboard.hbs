@@ -19,10 +19,10 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
+
 	</head>
-	
-	
+
+
 	<body>
 
 		<!-- Header -->
@@ -34,32 +34,32 @@
 			<nav id="nav" class="visible">
 				<ul class="links">
 					<li><a href="/rateandreview">Home</a></li>
-					<li><a href="/rateandreview/studentdashboard">My Dashboard</a></li>
-					<li><a href="/rateandreview/myaccount">My Account</a></li>
+					<li><a href="/studentdashboard">My Dashboard</a></li>
+					<li><a href="/myaccount">My Account</a></li>
 					{{#if completeProfile }}
-					<li><a href="/rateandreview/completeprofilestudent/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
+					<li><a href="/completeprofilestudent/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
 					{{/if}}
-					<li><a href="/rateandreview/teacher">Browse Professors</a></li>
-					<li><a href="/rateandreview/contactus">Contact Us</a></li>
-					<li><a href="/rateandreview/aboutus">About Us</a></li>
-						<li><a href="/rateandreview/faq">FAQ</a></li>
-					<li><a href="/rateandreview/deactivation">De-Activate</a></li>
-					<li><a href="/rateandreview/logout">Log Out</a></li>
-					
-					
+					<li><a href="/teacher">Browse Professors</a></li>
+					<li><a href="/contactus">Contact Us</a></li>
+					<li><a href="/aboutus">About Us</a></li>
+						<li><a href="/faq">FAQ</a></li>
+					<li><a href="/deactivation">De-Activate</a></li>
+					<li><a href="/logout">Log Out</a></li>
+
+
 				</ul>
 			</nav>
-			
+
 			<!-- Banner -->
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="studentDash">
 </div>
  <p> </p>
 
-   
-  
+
+
 <section id="main" class="wrapper">
-			<div class="leftcol"> 
-			
+			<div class="leftcol">
+
 			<!-- Button trigger modal -->
  <br>
 			&nbsp;
@@ -90,30 +90,30 @@
 										</tr>
 									</tfoot>
 								</table>
-								
+
 							</div>
-							
-							
-							
-							
-							
-							
-							
+
+
+
+
+
+
+
 						</section>
-							<div class="centercol"> 
+							<div class="centercol">
 							&ensp;
-							<h2> Welcome {{current_user.first_name}}</h2> 
+							<h2> Welcome {{current_user.first_name}}</h2>
 							  <h6> You are logged in as a student</h6>
 							  <br/>
 							  <div name="error">
 						<p style='color: red'>{{error}}</p>
 					</div>
-							
+
 							&ensp;
-							
+
   <p>Click on the headings below to view your relevant information.</p>
   <div class="panel-group" id="accordion">
-	
+
 	<div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -121,9 +121,9 @@
           {{#unless no_courses_to_review}} <span title="You have {{number_of_courses}} class(es) waiting to be reviewed." class="glyphicon glyphicon-exclamation-sign" style="color:orange"></span>{{/unless}}
         </h4>
       </div>
-      <div id="collapse4" class="panel-collapse {{#unless no_courses_to_review}}in{{/unless}}{{#if no_courses_to_review}}collapse{{/if}}"> 
+      <div id="collapse4" class="panel-collapse {{#unless no_courses_to_review}}in{{/unless}}{{#if no_courses_to_review}}collapse{{/if}}">
       	{{#if no_courses_to_review}}You have no more courses to review.{{/if}}
-		{{#unless no_courses_to_review}}	
+		{{#unless no_courses_to_review}}
       	<div class="table-wrapper">
 								<table class="alt">
 									<thead>
@@ -151,13 +151,13 @@
 									<tfoot>
 									</tfoot>
 								</table>
-							</div> 
+							</div>
 							{{/unless}}
       				</div>
-    	</div> 
-    
-    
-    
+    	</div>
+
+
+
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -180,7 +180,7 @@
 									</thead>
 									<tbody>
 									{{#each courses_reviewed}}
-									
+
 										<tr>
 											<td class="shrink" align="center">
 											{{#unless semester_past}}
@@ -188,7 +188,7 @@
 											<a title="edit your review" href="/rateandreview/reviewprofessor/{{student_course_id}}/review"><span class="glyphicon glyphicon-pencil fa-2x" style="color:blue"></span></a>
 											{{/unless}}
 											{{/unless}}
-											
+
 											{{#if semester_past}}
 												<a title="edit-disabled" href="/rateandreview/reviewprofessor/{{student_course_id}}/review"><i class="fa fa-eye fa-2x" aria-hidden="true" style="color:black"></i></a>
 											{{/if}}
@@ -197,7 +197,7 @@
 												<a title="edit disabled" href="/rateandreview/reviewprofessor/{{student_course_id}}/review"><i class="fa fa-eye fa-2x" aria-hidden="true" style="color:black"></i></a>
 											{{/if}}
 											{{/unless}}
-											
+
 											</td>
 											<td>{{professor_first_name}} {{professor_last_name}}</td>
 											<td>{{course_subject_number}}</td>
@@ -209,16 +209,16 @@
 									<tfoot>
 									</tfoot>
 								</table>
-							</div> 
+							</div>
 							{{/unless}}
       		</div>
   	</div>
-  
-  
-  
-   
-    
-    
+
+
+
+
+
+
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -226,7 +226,7 @@
         </h4>
       </div>
 		<div id="collapse2" class="panel-collapse collapse">
-		
+
 		{{#unless available_tutors}}No available tutors at this time.{{/unless}}
 		{{#if available_tutors}}
       	 <div class="table-wrapper">
@@ -245,7 +245,7 @@
 				</thead>
 				<tbody>
 						{{#each tutors}}
-						
+
 							<tr>
 							<form action="/rateandreview/studentdashboard" method="post">
 							<td class="shrink">{{tutor_first_name}} {{tutor_last_name}}</td>
@@ -260,17 +260,17 @@
 							</td>
 							</form>
 							</tr>
-						
+
 						{{/each}}
 				</tbody>
 					<tfoot>
 					</tfoot>
 				</table>
-			</div> 
+			</div>
 			{{/if}}
 		</div>
 		</div>
-		
+
 		<div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -278,10 +278,10 @@
         </h4>
       </div>
       <div id="collapse1" class="panel-collapse collapse collapse">
-        
-        
+
+
        {{#unless upcoming_appointments_scheduled}}You have no appointments listed.{{/unless}}
-       {{#if upcoming_appointments_scheduled}} 
+       {{#if upcoming_appointments_scheduled}}
         <div class="table-wrapper">
 			<table class="alt">
 				<thead>
@@ -315,7 +315,7 @@
 										<i title="tutor did not see request, and the date has passed" class="fa fa-eye-slash fa-2x" aria-hidden="true"></i>
 									{{/if}}
 									{{/unless}}
-									{{#if tutor_has_responded}} 
+									{{#if tutor_has_responded}}
 										{{#unless appointment_status}}
 											<span title="declined" class="glyphicon glyphicon-remove fa-2x" style="color:red"></span>
 										{{/unless}}
@@ -329,7 +329,7 @@
 										{{/if}}
 									{{/if}}
 								</td>
-								
+
 								<td class="shrink">
 									{{#if tutor_has_responded}}
 										{{#if appointment_status}}
@@ -375,16 +375,16 @@
 					<tfoot>
 					</tfoot>
 				</table>
-			</div> 
-    		{{/if}}   
-  
-        
+			</div>
+    		{{/if}}
+
+
       </div>
-	
+
     </div>
-    
-    
-    
+
+
+
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -393,7 +393,7 @@
         </h4>
       </div>
 		<div id="collapse5" class="panel-collapse collapse">
-		
+
 		{{#unless appointments_not_reviewed}}No appointments to review.{{/unless}}
 		{{#if appointments_not_reviewed}}
       	 <div class="table-wrapper">
@@ -410,7 +410,7 @@
 				</thead>
 				<tbody>
 						{{#each appointments_not_reviewed}}
-						
+
 							<tr>
 							<form action="/rateandreview/studentdashboard" method="post">
 							<td>{{tutor_firstname}} {{tutor_lastname}}</td>
@@ -423,34 +423,34 @@
 							</td>
 							</form>
 							</tr>
-						
+
 						{{/each}}
 				</tbody>
 					<tfoot>
 					</tfoot>
 				</table>
-			</div> 
+			</div>
 			{{/if}}
 		</div>
 		</div>
-    
-    
-    
-    
+
+
+
+
     </div>
-    
-    
-    
-    
-    
-    	
-    		
-	</div>		
+
+
+
+
+
+
+
+	</div>
   </div>
-  
-    
-    
-    
+
+
+
+
 				<!-- CODE -->
 
 		<!-- Scripts -->
@@ -470,8 +470,8 @@
 var d_names = new Array("Sunday", "Monday", "Tuesday",
 "Wednesday", "Thursday", "Friday", "Saturday");
 
-var m_names = new Array("January", "February", "March", 
-"April", "May", "June", "July", "August", "September", 
+var m_names = new Array("January", "February", "March",
+"April", "May", "June", "July", "August", "September",
 "October", "November", "December");
 
 var d = new Date();

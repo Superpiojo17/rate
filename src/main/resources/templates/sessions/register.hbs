@@ -31,7 +31,7 @@
 
 
 </head>
-<style> 
+<style>
 #header > h1 a {
     font-size: 0.65em;
 }
@@ -48,9 +48,9 @@ body {
 		<h1>
 			<a href="/">RateAndReview</a>
 		</h1>
-		
+
 		<a href="#nav">Menu</a>
-		
+
 	</header>
 
 
@@ -58,37 +58,37 @@ body {
 			<nav id="nav"  class="visible">
 				<ul class="links">
 					<li><a href="/rateandreview">Home</a></li>
-					
+
 					{{#if user_admin}}
-						<li><a href="/rateandreview/admindashboard">My Dashboard</a></li>
+						<li><a href="/admindashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_professor}}
-						<li><a href="/rateandreview/facultydashboard">My Dashboard</a></li>
+						<li><a href="/facultydashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_tutor}}
-						<li><a href="/rateandreview/tutordashboard">My Dashboard</a></li>
+						<li><a href="/tutordashboard">My Dashboard</a></li>
 					{{/if}}
 					{{#if user_student}}
-						<li><a href="/rateandreview/studentdashboard">My Dashboard</a></li>
+						<li><a href="/studentdashboard">My Dashboard</a></li>
 					{{/if}}
-					
+
 					{{#if user_null}}
-						<li><a href="/rateandreview/signin">Log In</a></li>
-						<li><a href="/rateandreview/register">Register</a></li>
-						<li><a href="/rateandreview/activation">Activate Account</a></li>
-						<li><a href="/rateandreview/accountrecovery">Forgot Password?</a></li>
+						<li><a href="/signin">Log In</a></li>
+						<li><a href="/register">Register</a></li>
+						<li><a href="/activation">Activate Account</a></li>
+						<li><a href="/accountrecovery">Forgot Password?</a></li>
 					{{/if}}
-					
-						<li><a href="/rateandreview/teacher">Browse Professors</a></li>
-					
+
+						<li><a href="/teacher">Browse Professors</a></li>
+
 					{{#unless user_admin}}
-						<li><a href="/rateandreview/contactus">Contact Us</a></li>
+						<li><a href="/contactus">Contact Us</a></li>
 					{{/unless}}
-						<li><a href="/rateandreview/aboutus">About Us</a></li>
-						<li><a href="/rateandreview/faq">FAQ</a></li>
-					
+						<li><a href="/aboutus">About Us</a></li>
+						<li><a href="/faq">FAQ</a></li>
+
 					{{#unless user_null}}
-						<li><a href="/rateandreview/logout">Log Out</a></li>
+						<li><a href="/logout">Log Out</a></li>
 					{{/unless}}
 				</ul>
 			</nav>
@@ -106,8 +106,8 @@ body {
 				</ul>
 
 				<div class="tab-content">
-			
-					
+
+
 							<div id="signup">
 						<h1>Sign Up for Free</h1>
 
@@ -134,12 +134,12 @@ body {
 								<label> Password<span class="req">*</span>
 								</label> <input name = "password" type="password" required autocomplete="off" />
 							</div>
-							
+
 							<div class="field-wrap">
 								<label> Confirm Password<span class="req">*</span>
 								</label> <input name = "verify_password" type="password" required autocomplete="off" />
 							</div>
-							
+
 										<div class="field-wrap">
 								<select name = "role_id" >
 								<option value="">Role*</option>
@@ -148,9 +148,9 @@ body {
   <option value="4">Student</option>
 </select>
 	</div>
-							
-							
-							
+
+
+
 
 							<button type="submit" class="button button-block" />
 							Get Started
@@ -186,16 +186,16 @@ body {
 							{{#unless user_null}}
 						You are already logged in.
 						{{#if user_admin}}
-						<li><a href="/rateandreview/admindashboard">My Dashboard</a></li>
+						<li><a href="/admindashboard">My Dashboard</a></li>
 						{{/if}}
 						{{#if user_professor}}
-							<li><a href="/rateandreview/facultydashboard">My Dashboard</a></li>
+							<li><a href="/facultydashboard">My Dashboard</a></li>
 						{{/if}}
 						{{#if user_tutor}}
-							<li><a href="/rateandreview/tutordashboard">My Dashboard</a></li>
+							<li><a href="/tutordashboard">My Dashboard</a></li>
 						{{/if}}
 						{{#if user_student}}
-							<li><a href="/rateandreview/studentdashboard">My Dashboard</a></li>
+							<li><a href="/studentdashboard">My Dashboard</a></li>
 						{{/if}}
 					{{/unless}}
 
@@ -234,7 +234,7 @@ body {
 						class="label">LinkedIn</span>
 				</a></li>
 			</ul>
-			
+
 		</div>
 	</footer>
 

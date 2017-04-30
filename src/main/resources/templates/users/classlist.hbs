@@ -16,15 +16,15 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
+
 	</head>
-	
-	
+
+
 	<body>
 
-	
 
-			
+
+
 		<!-- Header -->
 			<header id="adminheader">
 				<h1>Administrator Dashboard</h1>
@@ -33,36 +33,36 @@
 			<nav id="nav" class="visible">
 				<ul class="links">
 					<li><a href="/rateandreview">Home</a></li>
-					<li><a href="/rateandreview/admindashboard">My Dashboard</a></li>
-					<li><a href="/rateandreview/myaccount">My Account</a></li>
-					<li><a href="/rateandreview/allusers">Manage Users</a></li>
+					<li><a href="/admindashboard">My Dashboard</a></li>
+					<li><a href="/myaccount">My Account</a></li>
+					<li><a href="/allusers">Manage Users</a></li>
 					{{#if completeProfile }}
-					<li><a href="/rateandreview/completeprofileprof/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
+					<li><a href="/completeprofileprof/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
 					{{/if}}
-					<li><a href="/rateandreview/courseslanding">Manage Courses</a></li>
-					<li><a href="/rateandreview/managetutorslanding">Manage Tutors</a></li>
-					<li><a href="/rateandreview/announcement">Announcements</a></li>
-					<li><a href="/rateandreview/adminaptlanding">Manage Appointments</a></li>
-					<li><a href="/rateandreview/reviewlanding">Manage Reviews</a></li>
-					<li><a href="/rateandreview/analysis">Data Analysis</a></li>
-					<li><a href="/rateandreview/teacher">Browse Professors</a></li>
-					<li><a href="/rateandreview/contactus">Contact Us</a></li>
-					<li><a href="/rateandreview/aboutus">About Us</a></li>
-						<li><a href="/rateandreview/faq">FAQ</a></li>
-					<li><a href="/rateandreview/deactivation">De-Activate</a></li>
-					<li><a href="/rateandreview/logout">Log Out</a></li>
-					
+					<li><a href="/courseslanding">Manage Courses</a></li>
+					<li><a href="/managetutorslanding">Manage Tutors</a></li>
+					<li><a href="/announcement">Announcements</a></li>
+					<li><a href="/adminaptlanding">Manage Appointments</a></li>
+					<li><a href="/reviewlanding">Manage Reviews</a></li>
+					<li><a href="/analysis">Data Analysis</a></li>
+					<li><a href="/teacher">Browse Professors</a></li>
+					<li><a href="/contactus">Contact Us</a></li>
+					<li><a href="/aboutus">About Us</a></li>
+						<li><a href="/faq">FAQ</a></li>
+					<li><a href="/deactivation">De-Activate</a></li>
+					<li><a href="/logout">Log Out</a></li>
+
 				</ul>
 			</nav>
 			<!-- Banner -->
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="adminDash">
 </div>
  <p> </p>
-   
-  
+
+
 <section id="main" class="wrapper">
-			<div class="leftcol"> 
-			
+			<div class="leftcol">
+
 			<!-- Button trigger modal -->
  <br>
 			&nbsp;
@@ -71,7 +71,7 @@
       <a href="#announcement" class="btn btn-info" data-toggle="collapse">Announcements</a>
   <div id="announcement" class="collapse">
   &nbsp;
-  
+
 							<div class="table-wrapper">
 								<table class="alt">
 									<thead>
@@ -94,32 +94,32 @@
 										</tr>
 									</tfoot>
 								</table>
-								
+
 							</div>
-							
-							
+
+
 						</section>
-						
-							<div class="centercol"> 
+
+							<div class="centercol">
 							&ensp;
 							<h2>{{course.subject}} {{course.course_number}} {{course.course_name}}</h2>
-							
-							
-							
+
+
+
   <p>View the class list and choose to remove/add students to the course.</p>
   &ensp;
    <div name="error">
 						<p style='color: red'>{{error}}</p>
 					</div>
-					
+
 					<div name="message">
 						<p style='color: green'>{{message}}</p>
 					</div>
-  
+
 							<!-- Form -->
 						<section>
 							<form action="/rateandreview/course/{{course.id}}/addstudent" method="post">
-							
+
 							<div class="table-wrapper">
 							&nbsp;&nbsp;
 								<table id = "indextable" class="indextable alt">
@@ -129,7 +129,7 @@
 										<th class=" shrink text-left"><a href="javascript:SortTable(2,'N');" class="btn btn-link" style="color:black">Email <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
 										<th class="shrink text-left"><a href="javascript:SortTable(3,'T');" class="btn btn-link" style="color:black" >Major <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
 <th class="shrink text-left"><a href="javascript:SortTable(4,'T');" class="btn btn-link" style="color:black" >Year <i class="fa fa-sort" aria-hidden="true"></i></button></a></th>
-											
+
 										</tr>
 									</thead>
 									<tbody>
@@ -148,25 +148,25 @@
 							</div>
 						</form>
 					</section>
-					
+
 					<a href = "/rateandreview/classlistadd/{{id}}"> <button type="submit" class="btn btn-info"> Add Students  &nbsp; <span class="glyphicon glyphicon-plus"></button></a>
 					<br/>
 					<br/>
-					<a href="/rateandreview/classlistremove/{{id}}" ><button type="submit" class="btn btn-danger" > Remove Students  &nbsp; <span class="glyphicon glyphicon-minus"></button></a>
+					<a href="/classlistremove/{{id}}" ><button type="submit" class="btn btn-danger" > Remove Students  &nbsp; <span class="glyphicon glyphicon-minus"></button></a>
 					<br/>
 					<br/>
 <a href="/courses/{{course.subject}}"  class="btn btn-info"> Back
 											</a>
 
   </div>
-  
- 
+
+
 
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
-			
+
 			<script type="text/javascript" src="assets/js/sortColumns.js"  ></script>
 
 
@@ -180,8 +180,8 @@
 var d_names = new Array("Sunday", "Monday", "Tuesday",
 "Wednesday", "Thursday", "Friday", "Saturday");
 
-var m_names = new Array("January", "February", "March", 
-"April", "May", "June", "July", "August", "September", 
+var m_names = new Array("January", "February", "March",
+"April", "May", "June", "July", "August", "September",
 "October", "November", "December");
 
 var d = new Date();
