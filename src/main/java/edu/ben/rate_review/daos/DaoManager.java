@@ -1,7 +1,7 @@
 package edu.ben.rate_review.daos;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.net.*;
+import java.sql.*;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import javax.sql.DataSource;
 
@@ -41,15 +41,25 @@ public class DaoManager {
 		}
 	}
 
+  private static Connection getConnection() throws URISyntaxException, SQLException {
+    URI dbUri = new URI(System.getenv("CLEARDB_DATABASE_URL"));
+
+    String username = dbUri.getUserInfo().split(":")[0];
+    String password = dbUri.getUserInfo().split(":")[1];
+    String dbUrl = "jdbc:mysql://" + dbUri.getHost() + dbUri.getPath();
+
+    return DriverManager.getConnection(dbUrl, username, password);
+  }
+
 	/**
 	 * gets instance of user dao
-	 * 
+	 *
 	 * @return
 	 */
 	public UserDao getUserDao() {
 		try {
-			return new UserDao(this.src.getConnection());
-		} catch (SQLException e) {
+			return new UserDao(DaoManager.getConnection());
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -57,13 +67,13 @@ public class DaoManager {
 
 	/**
 	 * gets instance of course dao
-	 * 
+	 *
 	 * @return
 	 */
 	public CourseDao getCourseDao() {
 		try {
 			return new CourseDao(this.src.getConnection());
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -71,13 +81,13 @@ public class DaoManager {
 
 	/**
 	 * gets instance of student in course dao
-	 * 
+	 *
 	 * @return
 	 */
 	public StudentInCourseDao getStudentInCourseDao() {
 		try {
 			return new StudentInCourseDao(this.src.getConnection());
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -85,13 +95,13 @@ public class DaoManager {
 
 	/**
 	 * gets instance of announcement dao
-	 * 
+	 *
 	 * @return
 	 */
 	public AnnouncementDao getAnnouncementDao() {
 		try {
 			return new AnnouncementDao(this.src.getConnection());
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -99,13 +109,13 @@ public class DaoManager {
 
 	/**
 	 * gets instance of tutor dao
-	 * 
+	 *
 	 * @return
 	 */
 	public TutorDao getTutorDao() {
 		try {
 			return new TutorDao(this.src.getConnection());
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -113,13 +123,13 @@ public class DaoManager {
 
 	/**
 	 * gets instance of professor review dao
-	 * 
+	 *
 	 * @return
 	 */
 	public ProfessorReviewDao getProfessorReviewDao() {
 		try {
 			return new ProfessorReviewDao(this.src.getConnection());
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -144,7 +154,7 @@ public class DaoManager {
 			if (this.con == null || this.con.isClosed()) {
 				this.con = src.getConnection();
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			throw e;
 		}
 	}
@@ -159,7 +169,7 @@ public class DaoManager {
 			if (this.con != null && !this.con.isClosed()) {
 				this.con.close();
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			throw e;
 		}
 	}
