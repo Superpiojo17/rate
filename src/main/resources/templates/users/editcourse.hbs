@@ -32,7 +32,7 @@
 	<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
-					<li><a href="/rateandreview">Home</a></li>
+					<li><a href="/">Home</a></li>
 					<li><a href="/admindashboard">My Dashboard</a></li>
 					<li><a href="/myaccount">My Account</a></li>
 					<li><a href="/allusers">Manage Users</a></li>
@@ -114,7 +114,7 @@
 
 							<!-- Form -->
 						<section>
-							<form action="/rateandreview/course/{{course_form.id}}/edit" method="post">
+							<form action="//course/{{course_form.id}}/edit" method="post">
 
 							<div class="table-wrapper">
 								<table class="alt">
@@ -181,7 +181,7 @@
         <div class="modal-body">
           <p>Are you sure you would like to delete {{course_form.course_name}} from the course list? You cannot recover this information.</p>
         </div>
-        	<form action="/rateandreview/deletecourse/{{course_form.id}}" method="post">
+        	<form action="//deletecourse/{{course_form.id}}" method="post">
         <div class="modal-footer">
         <ul class="actions">
           <button type="submit" class="btn btn-primary" data-dismiss="modal">Cancel</button>

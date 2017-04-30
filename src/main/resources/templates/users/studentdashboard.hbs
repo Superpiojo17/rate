@@ -33,7 +33,7 @@
 			<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
-					<li><a href="/rateandreview">Home</a></li>
+					<li><a href="/">Home</a></li>
 					<li><a href="/studentdashboard">My Dashboard</a></li>
 					<li><a href="/myaccount">My Account</a></li>
 					{{#if completeProfile }}
@@ -143,7 +143,7 @@
 											<td>{{course_subject_number}}</td>
 											<td>{{semester}}</td>
 											<td>{{year}}</td>
-											<td class="shrink"><a title="click here to review" href="/rateandreview/reviewprofessor/{{student_course_id}}/review"><i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i></a></td>
+											<td class="shrink"><a title="click here to review" href="//reviewprofessor/{{student_course_id}}/review"><i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i></a></td>
 										</tr>
 									{{/unless}}
 									{{/each}}
@@ -185,16 +185,16 @@
 											<td class="shrink" align="center">
 											{{#unless semester_past}}
 											{{#unless disable_edit}}
-											<a title="edit your review" href="/rateandreview/reviewprofessor/{{student_course_id}}/review"><span class="glyphicon glyphicon-pencil fa-2x" style="color:blue"></span></a>
+											<a title="edit your review" href="//reviewprofessor/{{student_course_id}}/review"><span class="glyphicon glyphicon-pencil fa-2x" style="color:blue"></span></a>
 											{{/unless}}
 											{{/unless}}
 
 											{{#if semester_past}}
-												<a title="edit-disabled" href="/rateandreview/reviewprofessor/{{student_course_id}}/review"><i class="fa fa-eye fa-2x" aria-hidden="true" style="color:black"></i></a>
+												<a title="edit-disabled" href="//reviewprofessor/{{student_course_id}}/review"><i class="fa fa-eye fa-2x" aria-hidden="true" style="color:black"></i></a>
 											{{/if}}
 											{{#unless semester_past}}
 											{{#if disable_edit}}
-												<a title="edit disabled" href="/rateandreview/reviewprofessor/{{student_course_id}}/review"><i class="fa fa-eye fa-2x" aria-hidden="true" style="color:black"></i></a>
+												<a title="edit disabled" href="//reviewprofessor/{{student_course_id}}/review"><i class="fa fa-eye fa-2x" aria-hidden="true" style="color:black"></i></a>
 											{{/if}}
 											{{/unless}}
 
@@ -247,7 +247,7 @@
 						{{#each tutors}}
 
 							<tr>
-							<form action="/rateandreview/studentdashboard" method="post">
+							<form action="//studentdashboard" method="post">
 							<td class="shrink">{{tutor_first_name}} {{tutor_last_name}}</td>
 							<td class="shrink">{{subject}}</td>
 							<td class="shrink">{{course_name}}</td>
@@ -299,7 +299,7 @@
 				<tbody>
 						{{#each upcoming_appointments}}
 							<tr>
-								<form action="/rateandreview/studentdashboard" method="post">
+								<form action="//studentdashboard" method="post">
 								<td class="shrink">{{tutor_firstname}} {{tutor_lastname}}</td>
 								<td class="shrink">{{course_name}}</td>
 								<td class="shrink">{{date}}</td>
@@ -368,7 +368,7 @@
 										<button title="delete request" class="btn btn-link" type="submit" name="tutor_id" value="-{{appointment_id}},0"><span class="glyphicon glyphicon-trash fa-2x" style="color:red"></span></button>
 									{{/unless}}
 								</td>
-									<form action="/rateandreview/studentdashboard" method="post">
+									<form action="//studentdashboard" method="post">
 								</tr>
 						{{/each}}
 				</tbody>
@@ -412,14 +412,14 @@
 						{{#each appointments_not_reviewed}}
 
 							<tr>
-							<form action="/rateandreview/studentdashboard" method="post">
+							<form action="//studentdashboard" method="post">
 							<td>{{tutor_firstname}} {{tutor_lastname}}</td>
 							<td>{{department}}</td>
 							<td>{{course_name}}</td>
 							<td>{{date}}</td>
 							<td>{{time}}</td>
 							<td class="shrink">
-								<a title="click here to review" href="/rateandreview/tutorreview/{{appointment_id}}"><i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i></a>
+								<a title="click here to review" href="//tutorreview/{{appointment_id}}"><i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i></a>
 							</td>
 							</form>
 							</tr>

@@ -38,7 +38,7 @@
 					<li><a href="/allusers">My Classes</a></li>
 					<li><a href="/contactus">Contact Us</a></li>
 					<li><a href="/deactivation">De-Activate</a></li>
-					<li><a href="/rateandreview">Home</a></li>
+					<li><a href="/">Home</a></li>
 					<li><a href="/studentdashboard">My Dashboard</a></li>
 					<li><a href="/register">My Account</a></li>
 					{{#if completeProfile }}
@@ -132,7 +132,7 @@
 						{{#each approved_appointments}}
 						{{#unless appointment_past}}
 							<tr>
-							<form action="/rateandreview/tutordashboard" method="post">
+							<form action="//tutordashboard" method="post">
 								<td class="shrink">{{student_firstname}} {{student_lastname}}</td>
 								<td class="shrink">{{date}}</td>
 								<td class="shrink">{{time}}</td>
@@ -200,7 +200,7 @@
 						{{#unless tutor_has_responded}}
 						{{#unless appointment_past}}
 							<tr>
-							<form action="/rateandreview/tutordashboard" method="post">
+							<form action="//tutordashboard" method="post">
 							<td class="shrink">{{student_firstname}} {{student_lastname}}</td>
 							<td class="shrink">{{date}}</td>
 							<td class="shrink">{{time}}</td>

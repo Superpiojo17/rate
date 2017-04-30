@@ -16,7 +16,7 @@ import edu.ben.rate_review.models.UserForm;
 
 /**
  * UserDao is a dao that will connect and provide interaction to the database
- * 
+ *
  * @author Mike
  * @version 2-2-2017
  */
@@ -27,7 +27,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * UserDao connection
-	 * 
+	 *
 	 * @param conn
 	 */
 	public UserDao(Connection conn) {
@@ -37,7 +37,7 @@ public class UserDao implements Dao<User> {
 	/**
 	 * When searching the database, this method creates a user object to pass to
 	 * methods.
-	 * 
+	 *
 	 * @param rs
 	 * @return
 	 * @throws SQLException
@@ -92,7 +92,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * Creates and returns an object for a recovering user
-	 * 
+	 *
 	 * @param rs
 	 * @return
 	 * @throws SQLException
@@ -108,7 +108,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * Searched by email in the account recovery table
-	 * 
+	 *
 	 * @param email
 	 * @return
 	 */
@@ -136,7 +136,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * Stores temporary password in the database
-	 * 
+	 *
 	 * @param user
 	 * @param pass
 	 * @return
@@ -158,7 +158,7 @@ public class UserDao implements Dao<User> {
 	/**
 	 * Method which will confirm a new account in the database. Will not allow
 	 * reversing of confirmation.
-	 * 
+	 *
 	 * @param email
 	 * @return
 	 */
@@ -184,7 +184,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * Method which will activate a deactivated account
-	 * 
+	 *
 	 * @param email
 	 * @return
 	 */
@@ -211,7 +211,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * completes the profile of a user upon registration (tutor)
-	 * 
+	 *
 	 * @param user
 	 * @return
 	 */
@@ -238,7 +238,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * completes the profile of a user upon registration (student)
-	 * 
+	 *
 	 * @param user
 	 * @return
 	 */
@@ -266,7 +266,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * method will update the users nickname and personal email
-	 * 
+	 *
 	 * @param user
 	 * @return
 	 */
@@ -294,7 +294,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * Method which will deactivate an active account
-	 * 
+	 *
 	 * @param email
 	 * @return
 	 */
@@ -321,7 +321,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * Searched the database for a user by using the user's email
-	 * 
+	 *
 	 * @param email
 	 * @return
 	 */
@@ -350,7 +350,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * find a specifc user
-	 * 
+	 *
 	 * @param id
 	 * @return
 	 */
@@ -379,7 +379,7 @@ public class UserDao implements Dao<User> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return all users from the database.
 	 */
 
@@ -406,7 +406,7 @@ public class UserDao implements Dao<User> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return all professors from the database.
 	 */
 
@@ -433,7 +433,7 @@ public class UserDao implements Dao<User> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return all professors from the database.
 	 */
 
@@ -460,7 +460,7 @@ public class UserDao implements Dao<User> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return all professors from the database.
 	 */
 
@@ -488,7 +488,7 @@ public class UserDao implements Dao<User> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return all users from the database.
 	 */
 
@@ -515,7 +515,7 @@ public class UserDao implements Dao<User> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return all users from the database.
 	 */
 
@@ -544,7 +544,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * returns all the users of a specfic major
-	 * 
+	 *
 	 * @param Major
 	 * @return
 	 */
@@ -572,7 +572,7 @@ public class UserDao implements Dao<User> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return all students from the database.
 	 */
 	public List<User> allStudentsByMajor(String Major) {
@@ -598,7 +598,7 @@ public class UserDao implements Dao<User> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return all students not in that specific course
 	 */
 	public List<User> allStudentsNotAlreadyInCourse(Long courseID) {
@@ -638,7 +638,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * Removes recovery requests that have expired
-	 * 
+	 *
 	 * @param user
 	 * @return
 	 */
@@ -658,7 +658,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * Removes recovery requests that have expired
-	 * 
+	 *
 	 * @param user
 	 * @return
 	 */
@@ -680,7 +680,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * sorts users by role
-	 * 
+	 *
 	 * @return all users from the database.
 	 */
 
@@ -708,7 +708,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * sorts users by lastname
-	 * 
+	 *
 	 * @return
 	 */
 	public String sortByLastName() {
@@ -753,7 +753,7 @@ public class UserDao implements Dao<User> {
 	 * Called when user has successfully recovered their account, or they
 	 * request a new temporary password before using their previously requested
 	 * password before it has expired.
-	 * 
+	 *
 	 * @param user
 	 * @return
 	 */
@@ -778,7 +778,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * Updates user's password to their new password
-	 * 
+	 *
 	 * @param user
 	 * @return
 	 */
@@ -803,7 +803,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * Updates user's password to their new password
-	 * 
+	 *
 	 * @param user
 	 * @return
 	 */
@@ -828,7 +828,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * Updates user's password to their new password
-	 * 
+	 *
 	 * @param user
 	 * @return
 	 */
@@ -853,7 +853,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * Updates user's password to their new password
-	 * 
+	 *
 	 * @param user
 	 * @return
 	 */
@@ -878,7 +878,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * used by admin to mass edit the school year of users
-	 * 
+	 *
 	 * @param massedit
 	 * @return
 	 */
@@ -903,7 +903,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * used by admin to mass edit the active status of users
-	 * 
+	 *
 	 * @param massedit
 	 * @return
 	 */
@@ -928,7 +928,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * search bar method used to search all users
-	 * 
+	 *
 	 * @param sType
 	 * @param sText
 	 * @return
@@ -962,7 +962,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * search bar method used to search all tutors
-	 * 
+	 *
 	 * @param sType
 	 * @param sText
 	 * @return
@@ -995,7 +995,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * search bar method used to search all professors
-	 * 
+	 *
 	 * @param sType
 	 * @param sText
 	 * @return
@@ -1030,7 +1030,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * Updates user's password to their new password
-	 * 
+	 *
 	 * @param user
 	 * @return
 	 */
@@ -1063,7 +1063,7 @@ public class UserDao implements Dao<User> {
 
 	/**
 	 * gets all the tutors in the table
-	 * 
+	 *
 	 * @return
 	 */
 

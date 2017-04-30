@@ -18,14 +18,14 @@
 
 			<!-- Header -->
 			<header id="header" class="skel-layers-fixed">
-				<h1><a href="/rateandreview">RateAndReview</a></h1>
+				<h1><a href="/">RateAndReview</a></h1>
 				<a href="#nav">Menu</a>
 			</header>
 
 		<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
-					<li><a href="/rateandreview">Home</a></li>
+					<li><a href="/">Home</a></li>
 
 					{{#if user_admin}}
 						<li><a href="/admindashboard">My Dashboard</a></li>
@@ -69,7 +69,7 @@
 			<h3>Course to Review<label id="course_name">{{appointment.course_name}}</label></h3>
 		</header>
 
-		<form action="/rateandreview/tutorreview/{{appointment.appointment_id}}" method="post">
+		<form action="//tutorreview/{{appointment.appointment_id}}" method="post">
 			<div class="table-wrapper">
 			<table class="alt">
 				<thead>
