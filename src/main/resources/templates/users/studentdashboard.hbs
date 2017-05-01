@@ -247,7 +247,7 @@
 						{{#each tutors}}
 
 							<tr>
-							<form action="//studentdashboard" method="post">
+							<form action="/studentdashboard" method="post">
 							<td class="shrink">{{tutor_first_name}} {{tutor_last_name}}</td>
 							<td class="shrink">{{subject}}</td>
 							<td class="shrink">{{course_name}}</td>
@@ -299,7 +299,7 @@
 				<tbody>
 						{{#each upcoming_appointments}}
 							<tr>
-								<form action="//studentdashboard" method="post">
+								<form action="/studentdashboard" method="post">
 								<td class="shrink">{{tutor_firstname}} {{tutor_lastname}}</td>
 								<td class="shrink">{{course_name}}</td>
 								<td class="shrink">{{date}}</td>
@@ -368,7 +368,7 @@
 										<button title="delete request" class="btn btn-link" type="submit" name="tutor_id" value="-{{appointment_id}},0"><span class="glyphicon glyphicon-trash fa-2x" style="color:red"></span></button>
 									{{/unless}}
 								</td>
-									<form action="//studentdashboard" method="post">
+									<form action="/studentdashboard" method="post">
 								</tr>
 						{{/each}}
 				</tbody>
@@ -412,7 +412,7 @@
 						{{#each appointments_not_reviewed}}
 
 							<tr>
-							<form action="//studentdashboard" method="post">
+							<form action="/studentdashboard" method="post">
 							<td>{{tutor_firstname}} {{tutor_lastname}}</td>
 							<td>{{department}}</td>
 							<td>{{course_name}}</td>

@@ -115,7 +115,7 @@
 
 							<!-- Form -->
 						<section>
-							<form action="//adminedittutor/{{tutor_form.id}}/edit" method="post">
+							<form action="/adminedittutor/{{tutor_form.id}}/edit" method="post">
 
 							<div class="table-wrapper">
 								<table class="alt">
@@ -183,7 +183,7 @@
         <div class="modal-body">
           <p>Are you sure you would like to remove {{tutor_form.tutor_first_name}} {{tutor_form.tutor_last_name}} from this course taught by {{tutor_form.professor_name}}? You cannot recover this information.</p>
         </div>
-        	<form action="//admindeletetutor/{{tutor_form.id}}" method="post">
+        	<form action="/admindeletetutor/{{tutor_form.id}}" method="post">
         <div class="modal-footer">
         <ul class="actions">
           <button type="submit" class="btn btn-primary" data-dismiss="modal">Cancel</button>

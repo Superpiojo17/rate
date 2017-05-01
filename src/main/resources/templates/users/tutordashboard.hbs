@@ -132,7 +132,7 @@
 						{{#each approved_appointments}}
 						{{#unless appointment_past}}
 							<tr>
-							<form action="//tutordashboard" method="post">
+							<form action="/tutordashboard" method="post">
 								<td class="shrink">{{student_firstname}} {{student_lastname}}</td>
 								<td class="shrink">{{date}}</td>
 								<td class="shrink">{{time}}</td>
@@ -200,7 +200,7 @@
 						{{#unless tutor_has_responded}}
 						{{#unless appointment_past}}
 							<tr>
-							<form action="//tutordashboard" method="post">
+							<form action="/tutordashboard" method="post">
 							<td class="shrink">{{student_firstname}} {{student_lastname}}</td>
 							<td class="shrink">{{date}}</td>
 							<td class="shrink">{{time}}</td>

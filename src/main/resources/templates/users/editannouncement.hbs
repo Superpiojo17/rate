@@ -114,7 +114,7 @@
 
 						<section>
 
-							<form action="//announcement/{{announcement_form.id}}/edit" method="post">
+							<form action="/announcement/{{announcement_form.id}}/edit" method="post">
 								<div class="row uniform 50%">
 									<div class="6u 12u$(xsmall)">
 									<input type="date" name="date" id="date" value="{{announcement_form.formatdate}}" placeholder="Date" />
@@ -156,7 +156,7 @@
         <div class="modal-body">
           <p>Are you sure you would like to delete the announcement on {{announcement_form.date}} ? You cannot recover this information.</p>
         </div>
-        	<form action="//deleteannouncement/{{announcement_form.id}}" method="post">
+        	<form action="/deleteannouncement/{{announcement_form.id}}" method="post">
         <div class="modal-footer">
         <ul class="actions">
           <button type="submit" class="btn btn-primary" data-dismiss="modal">Cancel</button>

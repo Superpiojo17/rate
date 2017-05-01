@@ -190,7 +190,7 @@
         <div class="modal-body">
           <p>Are you sure you would like to delete {{user_form.first_name}} {{user_form.last_name}}'s account? You cannot recover this information.</p>
         </div>
-        	<form action="//deleteuser/{{user_form.id}}" method="post">
+        	<form action="/deleteuser/{{user_form.id}}" method="post">
         <div class="modal-footer">
         <ul class="actions">
           <button type="submit" class="btn btn-primary" data-dismiss="modal">Cancel</button>
