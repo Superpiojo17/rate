@@ -11,10 +11,10 @@
 		<title>Student Dashboard</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="/assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.css" /><![endif]-->
 		  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -143,7 +143,7 @@
 											<td>{{course_subject_number}}</td>
 											<td>{{semester}}</td>
 											<td>{{year}}</td>
-											<td class="shrink"><a title="click here to review" href="//reviewprofessor/{{student_course_id}}/review"><i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i></a></td>
+											<td class="shrink"><a title="click here to review" href="/reviewprofessor/{{student_course_id}}/review"><i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i></a></td>
 										</tr>
 									{{/unless}}
 									{{/each}}
@@ -185,16 +185,16 @@
 											<td class="shrink" align="center">
 											{{#unless semester_past}}
 											{{#unless disable_edit}}
-											<a title="edit your review" href="//reviewprofessor/{{student_course_id}}/review"><span class="glyphicon glyphicon-pencil fa-2x" style="color:blue"></span></a>
+											<a title="edit your review" href="/reviewprofessor/{{student_course_id}}/review"><span class="glyphicon glyphicon-pencil fa-2x" style="color:blue"></span></a>
 											{{/unless}}
 											{{/unless}}
 
 											{{#if semester_past}}
-												<a title="edit-disabled" href="//reviewprofessor/{{student_course_id}}/review"><i class="fa fa-eye fa-2x" aria-hidden="true" style="color:black"></i></a>
+												<a title="edit-disabled" href="/reviewprofessor/{{student_course_id}}/review"><i class="fa fa-eye fa-2x" aria-hidden="true" style="color:black"></i></a>
 											{{/if}}
 											{{#unless semester_past}}
 											{{#if disable_edit}}
-												<a title="edit disabled" href="//reviewprofessor/{{student_course_id}}/review"><i class="fa fa-eye fa-2x" aria-hidden="true" style="color:black"></i></a>
+												<a title="edit disabled" href="/reviewprofessor/{{student_course_id}}/review"><i class="fa fa-eye fa-2x" aria-hidden="true" style="color:black"></i></a>
 											{{/if}}
 											{{/unless}}
 
@@ -419,7 +419,7 @@
 							<td>{{date}}</td>
 							<td>{{time}}</td>
 							<td class="shrink">
-								<a title="click here to review" href="//tutorreview/{{appointment_id}}"><i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i></a>
+								<a title="click here to review" href="/tutorreview/{{appointment_id}}"><i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i></a>
 							</td>
 							</form>
 							</tr>
@@ -454,9 +454,9 @@
 				<!-- CODE -->
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
+			<script src="/assets/js/jquery.min.js"></script>
+			<script src="/assets/js/skel.min.js"></script>
+			<script src="/assets/js/util.js"></script>
 			<script>
 
 // d = new Date();
@@ -533,8 +533,8 @@ document.getElementById("hour").innerHTML = curr_hour + " : " + curr_min + " " +
 
 
 </script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main2.js"></script>
+			<!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="/assets/js/main2.js"></script>
 
 	</body>
 </html>
