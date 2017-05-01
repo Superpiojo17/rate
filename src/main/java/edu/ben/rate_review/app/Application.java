@@ -83,7 +83,7 @@ public class Application {
 	private static CompareController compareController = new CompareController();
 
 	// match up paths
-	//public static String DOMAIN = "http://localhost";
+	// public static String DOMAIN = "http://localhost";
 	public static String DOMAIN = "cs.ben.edu";
 	public static String HOME_PATH = "/";
 	public static String USERS_PATH = HOME_PATH + "users";
@@ -183,13 +183,25 @@ public class Application {
 		new DaoManager();
 	}
 
-  static int getHerokuAssignedPort() {
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        if (processBuilder.environment().get("PORT") != null) {
-            return Integer.parseInt(processBuilder.environment().get("PORT"));
-        }
-        return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
-    }
+	static int getHerokuAssignedPort() {
+		ProcessBuilder processBuilder = new ProcessBuilder();
+		if (processBuilder.environment().get("PORT") != null) {
+			return Integer.parseInt(processBuilder.environment().get("PORT"));
+		}
+		return 4567; // return default port if heroku-port isn't set (i.e. on
+						// localhost)
+	}
+
+	/**
+	 * Adds domain to the redirection route
+	 * 
+	 * @param path
+	 * @return
+	 */
+	public static String route(String path) {
+		String domain = "http://rateandreview.herokuapp.com";
+		return domain + path;
+	}
 
 	/**
 	 * Configures the routes based on URL path

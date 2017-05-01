@@ -37,7 +37,7 @@ public class LogInController {
 		HashMap<String, Object> model = new HashMap<>();
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
-		
+
 		if (u != null) {
 			if (u.getRole() == 1) {
 				model.put("user_admin", true);
@@ -51,16 +51,16 @@ public class LogInController {
 		} else {
 			model.put("user_null", true);
 		}
-		
+
 		if (u != null) {
 			if (u.getRole() == 1) {
-				res.redirect(Application.ADMINDASHBOARD_PATH);
+				res.redirect(Application.route(Application.ADMINDASHBOARD_PATH));
 			} else if (u.getRole() == 2) {
-				res.redirect(Application.PROFESSOR_PATH);
+				res.redirect(Application.route(Application.PROFESSOR_PATH));
 			} else if (u.getRole() == 3) {
-				res.redirect(Application.TUTOR_PATH);
+				res.redirect(Application.route(Application.TUTOR_PATH));
 			} else {
-				res.redirect(Application.STUDENTDASHBOARD_PATH);
+				res.redirect(Application.route(Application.STUDENTDASHBOARD_PATH));
 			}
 		}
 		if (req.queryParams("email") != null && req.queryParams("password") != null) {
@@ -111,13 +111,13 @@ public class LogInController {
 				session.attribute("current_user", u);
 
 				if (u.getRole() == 4) {
-					res.redirect(Application.STUDENTDASHBOARD_PATH);
+					res.redirect(Application.route(Application.STUDENTDASHBOARD_PATH));
 				} else if (u.getRole() == 3) {
-					res.redirect(Application.TUTOR_PATH);
+					res.redirect(Application.route(Application.TUTOR_PATH));
 				} else if (u.getRole() == 2) {
-					res.redirect(Application.FACULTYDASHBOARD_PATH);
+					res.redirect(Application.route(Application.FACULTYDASHBOARD_PATH));
 				} else if (u.getRole() == 1) {
-					res.redirect(Application.ADMINDASHBOARD_PATH);
+					res.redirect(Application.route(Application.ADMINDASHBOARD_PATH));
 
 				}
 
@@ -160,7 +160,7 @@ public class LogInController {
 				// "Incorrect E-mail or Password. Please try again."
 			}
 		} else {
-			res.redirect(Application.LOGIN_PATH);
+			res.redirect(Application.route(Application.LOGIN_PATH));
 		}
 		return "";
 	}
