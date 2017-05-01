@@ -13,6 +13,7 @@ import edu.ben.rate_review.encryption.SecurePassword;
 import edu.ben.rate_review.models.RecoveringUser;
 import edu.ben.rate_review.models.User;
 //import edu.ben.rate_review.policy.AuthPolicyManager;
+import static spark.Spark.*;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -26,8 +27,8 @@ import spark.Session;
  * @version 2-2-2017
  */
 public class LogInController {
-	private static int wrongCount = 0;
-	private static String checkEmail = "";
+//	private static int wrongCount = 0;
+//	private static String checkEmail = "";
 
 	/**
 	 * Show log in page
@@ -38,46 +39,53 @@ public class LogInController {
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 
+//		if (u != null) {
+//			if (u.getRole() == 1) {
+//				model.put("user_admin", true);
+//			} else if (u.getRole() == 2) {
+//				model.put("user_professor", true);
+//			} else if (u.getRole() == 3) {
+//				model.put("user_tutor", true);
+//			} else {
+//				model.put("user_student", true);
+//			}
+//		} else {
+//			model.put("user_null", true);
+//		}
+
 		if (u != null) {
 			if (u.getRole() == 1) {
-				model.put("user_admin", true);
+				res.redirect(Application.ADMINDASHBOARD_PATH);
+				halt();
 			} else if (u.getRole() == 2) {
-				model.put("user_professor", true);
+				res.redirect(Application.PROFESSOR_PATH);
+				halt();
 			} else if (u.getRole() == 3) {
-				model.put("user_tutor", true);
-			} else {
-				model.put("user_student", true);
+				res.redirect(Application.TUTOR_PATH);
+				halt();
+			} else if (u.getRole() == 4){
+				res.redirect(Application.STUDENTDASHBOARD_PATH);
+				halt();
 			}
 		} else {
 			model.put("user_null", true);
 		}
-
-		if (u != null) {
-			if (u.getRole() == 1) {
-				res.redirect(Application.route(Application.ADMINDASHBOARD_PATH));
-			} else if (u.getRole() == 2) {
-				res.redirect(Application.route(Application.PROFESSOR_PATH));
-			} else if (u.getRole() == 3) {
-				res.redirect(Application.route(Application.TUTOR_PATH));
-			} else {
-				res.redirect(Application.route(Application.STUDENTDASHBOARD_PATH));
-			}
-		}
-		if (req.queryParams("email") != null && req.queryParams("password") != null) {
-
-			if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()) {
-				if (login(req, res) == "error") {
-
-					model.put("error", "Invalid Username or Password Entries: " + wrongCount + "/3");
-
-				}
-				if (wrongCount == 0) {
-					model.put("error", "Account has been LOCKED");
-				}
-			} else {
-				model.put("error", "error");
-			}
-		}
+//		if (req.queryParams("email") != null && req.queryParams("password") != null) {
+//
+//			if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()) {
+//				if (login(req, res) == "error") {
+//
+//					model.put("error", "Invalid Username or Password Entries: " + wrongCount + "/3");
+//
+//				}
+//				if (wrongCount == 0) {
+//					model.put("error", "Account has been LOCKED");
+//				}
+//			} 
+////			else {
+////				model.put("error", "error");
+////			}
+//		}
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "sessions/signin.hbs");
 	}
@@ -92,8 +100,9 @@ public class LogInController {
 	 * @param res
 	 * @return
 	 */
-	public String login(Request req, Response res) {
-		// HashMap<String, Object> model = new HashMap<>();
+	public ModelAndView login(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+		Session session = req.session();
 
 		// checks the email and password fields are filled out
 		if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()) {
@@ -105,64 +114,73 @@ public class LogInController {
 				// int role = getAccountType(req.queryParams("email"),
 				// req.queryParams("password"));
 				// directs user to correct dashboard
-				Session session = req.session();
 				UserDao ud = DaoManager.getInstance().getUserDao();
 				User u = ud.findByEmail(req.queryParams("email"));
-				session.attribute("current_user", u);
-
-				if (u.getRole() == 4) {
-					res.redirect(Application.route(Application.STUDENTDASHBOARD_PATH));
-				} else if (u.getRole() == 3) {
-					res.redirect(Application.route(Application.TUTOR_PATH));
-				} else if (u.getRole() == 2) {
-					res.redirect(Application.route(Application.FACULTYDASHBOARD_PATH));
-				} else if (u.getRole() == 1) {
-					res.redirect(Application.route(Application.ADMINDASHBOARD_PATH));
-
-				}
-
-				wrongCount = 0;
-				checkEmail = "";
-				ud.close();
-			} else {
-				if (checkEmail.equalsIgnoreCase("")) {
-					System.out.println("set new email");
-					checkEmail = req.queryParams("email");
-					wrongCount++;
+				if (u != null) {
+					session.attribute("current_user", u);
+					if (u.getRole() == 4) {
+						res.redirect(Application.STUDENTDASHBOARD_PATH);
+						halt();
+					} else if (u.getRole() == 3) {
+						res.redirect(Application.TUTOR_PATH);
+						halt();
+					} else if (u.getRole() == 2) {
+						res.redirect(Application.FACULTYDASHBOARD_PATH);
+						halt();
+					} else if (u.getRole() == 1) {
+						res.redirect(Application.ADMINDASHBOARD_PATH);
+						halt();
+					} else {
+						res.redirect(Application.LOGIN_PATH);
+						halt();
+					}
 				} else {
-					if (checkEmail.equalsIgnoreCase(req.queryParams("email"))) {
-						wrongCount++;
-					}
-					// else if
-					// (!checkEmail.equalsIgnoreCase(req.queryParams("email")))
-					// {
-					else {
-						System.out.println("email did not match must be new sp SET new email");
-						wrongCount = 0;
-						checkEmail = "";
-						checkEmail = req.queryParams("email");
-						wrongCount++;
-					}
-					// if count increases 3 times generate a temp password and
-					// replace the users password
-					if (wrongCount == 3) {
-						System.out.println("Account is now locked");
-						enterEmailRecoverAccount(req, res);
-						wrongCount = 0;
-						checkEmail = "";
-					}
+					model.put("error_message", "Invalid User Credentials");
+				}
+				
+				ud.close();
+
+				
+
+//				wrongCount = 0;
+//				checkEmail = "";
+				
+//				if (checkEmail.equalsIgnoreCase("")) {
+//					System.out.println("set new email");
+//					checkEmail = req.queryParams("email");
+//					wrongCount++;
+//				} else {
+//					if (checkEmail.equalsIgnoreCase(req.queryParams("email"))) {
+//						wrongCount++;
+//					}
+//					// else if
+//					// (!checkEmail.equalsIgnoreCase(req.queryParams("email")))
+//					// {
+//					else {
+//						System.out.println("email did not match must be new sp SET new email");
+//						wrongCount = 0;
+//						checkEmail = "";
+//						checkEmail = req.queryParams("email");
+//						wrongCount++;
+//					}
+//					// if count increases 3 times generate a temp password and
+//					// replace the users password
+//					if (wrongCount == 3) {
+//						System.out.println("Account is now locked");
+//						enterEmailRecoverAccount(req, res);
+//						wrongCount = 0;
+//						checkEmail = "";
+//					}
 				}
 				// showLoginPage(req, res);
 				// model.put("error", error)
-				return "error";
+//				return "error";
 				// res.redirect("/login");
 
 				// "Incorrect E-mail or Password. Please try again."
-			}
-		} else {
-			res.redirect(Application.route(Application.LOGIN_PATH));
+//			}
 		}
-		return "";
+		return new ModelAndView(model, "sessions/signin.hbs");
 	}
 
 	/**

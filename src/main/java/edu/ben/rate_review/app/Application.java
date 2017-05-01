@@ -174,7 +174,7 @@ public class Application {
 	public static void main(String[] args) throws Exception {
 
 		// Set what port you want to run on
-		port(getHerokuAssignedPort());
+		port(getEnvironmentPort());
 
 		// Configure your Asset folder so that your JS, CSS, Images are
 		// available from the server endpoint
@@ -183,24 +183,13 @@ public class Application {
 		new DaoManager();
 	}
 
-	static int getHerokuAssignedPort() {
+	static int getEnvironmentPort() {
 		ProcessBuilder processBuilder = new ProcessBuilder();
 		if (processBuilder.environment().get("PORT") != null) {
 			return Integer.parseInt(processBuilder.environment().get("PORT"));
 		}
 		return 4567; // return default port if heroku-port isn't set (i.e. on
 						// localhost)
-	}
-
-	/**
-	 * Adds domain to the redirection route
-	 * 
-	 * @param path
-	 * @return
-	 */
-	public static String route(String path) {
-		String domain = "http://rateandreview.herokuapp.com";
-		return domain + path;
 	}
 
 	/**

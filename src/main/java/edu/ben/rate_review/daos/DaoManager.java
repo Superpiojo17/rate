@@ -45,16 +45,6 @@ public class DaoManager {
 		}
 	}
 
-  private static Connection getConnection() throws URISyntaxException, SQLException {
-    URI dbUri = new URI(System.getenv("CLEARDB_DATABASE_URL"));
-
-    String username = dbUri.getUserInfo().split(":")[0];
-    String password = dbUri.getUserInfo().split(":")[1];
-    String dbUrl = "jdbc:mysql://" + dbUri.getHost() + dbUri.getPath();
-
-    return DriverManager.getConnection(dbUrl, username, password);
-  }
-
 	/**
 	 * gets instance of user dao
 	 *
@@ -62,7 +52,7 @@ public class DaoManager {
 	 */
 	public UserDao getUserDao() {
 		try {
-			return new UserDao(DaoManager.getConnection());
+			return new UserDao(this.src.getConnection());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
