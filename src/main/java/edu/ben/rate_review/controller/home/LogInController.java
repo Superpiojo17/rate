@@ -19,7 +19,6 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.Session;
-//import spark.template.handlebars.HandlebarsTemplateEngine;
 
 /**
  * Login controller
