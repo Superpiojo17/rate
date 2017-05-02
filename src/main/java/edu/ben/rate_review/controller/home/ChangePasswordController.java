@@ -60,20 +60,20 @@ public class ChangePasswordController {
 			if (LogInController.confirmRegistered(req.queryParams("email"), req.queryParams("password"))) {
 				if (req.queryParams("new_password").equals(req.queryParams("verify_password"))) {
 					attemptUpdatePassword(req.queryParams("email"), req.queryParams("new_password"));
-					res.redirect(Application.HOME_PATH + "/signin");
+					res.redirect(Application.HOME_PATH + "signin");
 					halt();
 				} else {
-					res.redirect(Application.HOME_PATH + "/changepassword");
+					res.redirect(Application.HOME_PATH + "changepassword");
 					halt();
 				}
 			} else {
 				// email and password copy do not match any registered account
-				res.redirect(Application.HOME_PATH + "/changepassword");
+				res.redirect(Application.HOME_PATH + "changepassword");
 				halt();
 			}
 		} else {
 			// fields were empty
-			res.redirect(Application.HOME_PATH + "/changepassword");
+			res.redirect(Application.HOME_PATH + "changepassword");
 			halt();
 		}
 		return "";

@@ -147,7 +147,7 @@ public class ProfessorController {
         ProfessorReview review = reviewDao.findReview(id);
         reviewDao.setCommentFlagged(review);
         // redirects back to same professor page
-        res.redirect(Application.HOME_PATH + "/professor/" + req.params("professor_id") + "/" + display);
+        res.redirect(Application.HOME_PATH + "professor/" + req.params("professor_id") + "/" + display);
         halt();
         return "";
     }

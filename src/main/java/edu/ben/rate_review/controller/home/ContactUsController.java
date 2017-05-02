@@ -53,7 +53,7 @@ public class ContactUsController {
                 && !req.queryParams("message").isEmpty()) {
             contactUs(req.queryParams("name"), req.queryParams("email"),
                     req.queryParams("message"));
-            res.redirect(Application.HOME_PATH + "/contactus");
+            res.redirect(Application.HOME_PATH + "contactus");
             halt();
         } else {
             // if something was not filled out, output error

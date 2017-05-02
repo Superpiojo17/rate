@@ -57,16 +57,16 @@ public class ConfirmationController {
         if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()) {
             if (LogInController.confirmRegistered(req.queryParams("email"), req.queryParams("password"))) {
                 confirmAccount(req.queryParams("email"), req.queryParams("password"));
-                res.redirect(Application.HOME_PATH + "/signin");
+                res.redirect(Application.HOME_PATH + "signin");
                 halt();
             } else {
                 // email and password copy do not match any registered account
-                res.redirect(Application.HOME_PATH + "/confirmation");
+                res.redirect(Application.HOME_PATH + "confirmation");
                 halt();
             }
         } else {
             // fields were empty
-            res.redirect(Application.HOME_PATH + "/confirmation");
+            res.redirect(Application.HOME_PATH + "confirmation");
             halt();
         }
         return "";

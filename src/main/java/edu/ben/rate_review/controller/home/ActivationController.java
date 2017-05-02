@@ -82,16 +82,16 @@ public class ActivationController {
 		if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()) {
 			if (LogInController.confirmRegistered(req.queryParams("email"), req.queryParams("password"))) {
 				processActiveState(req.queryParams("email"), req.queryParams("password"), activated);
-				res.redirect(Application.HOME_PATH + "/signin");
+				res.redirect(Application.HOME_PATH + "signin");
 				halt();
 			} else {
 				// email and password copy do not match any registered account
-				res.redirect(Application.HOME_PATH + "/activation");
+				res.redirect(Application.HOME_PATH + "activation");
 				halt();
 			}
 		} else {
 			// fields were empty
-			res.redirect(Application.HOME_PATH + "/activation");
+			res.redirect(Application.HOME_PATH + "activation");
 			halt();
 		}
 		return "";
@@ -110,16 +110,16 @@ public class ActivationController {
 		if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()) {
 			if (LogInController.confirmRegistered(req.queryParams("email"), req.queryParams("password"))) {
 				processActiveState(req.queryParams("email"), req.queryParams("password"), activated);
-				res.redirect(Application.HOME_PATH + "/signin");
+				res.redirect(Application.HOME_PATH + "signin");
 				halt();
 			} else {
 				// email and password copy do not match any registered account
-				res.redirect(Application.HOME_PATH + "/deactivation");
+				res.redirect(Application.HOME_PATH + "deactivation");
 				halt();
 			}
 		} else {
 			// fields were empty
-			res.redirect(Application.HOME_PATH + "/deactivation");
+			res.redirect(Application.HOME_PATH + "deactivation");
 			halt();
 		}
 		return "";
