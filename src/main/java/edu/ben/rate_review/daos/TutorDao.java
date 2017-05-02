@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
+
+import edu.ben.rate_review.models.Course;
 import edu.ben.rate_review.models.Tutor;
 import edu.ben.rate_review.models.TutorAppointment;
 import edu.ben.rate_review.models.TutorForm;
@@ -38,13 +40,34 @@ public class TutorDao extends BaseDao implements Dao<Tutor> {
 		tmp.setProfessor_id(rs.getLong("user_id_professor"));
 		tmp.setCourse_id(rs.getLong("course_id"));
 
-		tmp.setCourse_name(cDao.findById(rs.getLong("course_id")).getCourse_name());
-		tmp.setTutor_email(udao.findById(rs.getLong("user_id_student")).getEmail());
-		tmp.setTutor_first_name(udao.findById(rs.getLong("user_id_student")).getFirst_name());
-		tmp.setTutor_last_name(udao.findById(rs.getLong("user_id_student")).getLast_name());
-		tmp.setSubject(udao.findById(tmp.getProfessor_id()).getMajor());
-		tmp.setProfessor_name(udao.findById(tmp.getProfessor_id()).getFirst_name() + " "
-				+ udao.findById(tmp.getProfessor_id()).getLast_name());
+		Course course = cDao.findById(tmp.getCourse_id());
+
+		if (course != null) {
+			tmp.setCourse_name(course.getCourse_name());
+		}
+
+		User tutor = udao.findById(tmp.getStudent_id());
+
+		if (tutor != null) {
+			tmp.setTutor_email(tutor.getEmail());
+			tmp.setTutor_first_name(tutor.getFirst_name());
+			tmp.setTutor_last_name(tutor.getLast_name());
+		}
+
+		User professor = udao.findById(tmp.getProfessor_id());
+
+		if (professor != null) {
+			tmp.setSubject(professor.getMajor());
+			tmp.setProfessor_name(professor.getFirst_name() + " " + professor.getLast_name());
+		}
+		// tmp.setCourse_name(cDao.findById(rs.getLong("course_id")).getCourse_name());
+		// tmp.setTutor_email(udao.findById(rs.getLong("user_id_student")).getEmail());
+		// tmp.setTutor_first_name(udao.findById(rs.getLong("user_id_student")).getFirst_name());
+		// tmp.setTutor_last_name(udao.findById(rs.getLong("user_id_student")).getLast_name());
+		// tmp.setSubject(udao.findById(tmp.getProfessor_id()).getMajor());
+		// tmp.setProfessor_name(udao.findById(tmp.getProfessor_id()).getFirst_name()
+		// + " "
+		// + udao.findById(tmp.getProfessor_id()).getLast_name());
 
 		int numOfReviews = tDao.listTutorReviewsByTutor(tmp.getStudent_id()).size();
 		float sumOfReviews = tDao.getTutorAverageRating(tmp.getStudent_id());
@@ -162,10 +185,24 @@ public class TutorDao extends BaseDao implements Dao<Tutor> {
 		tmp.setAppointment_status(rs.getBoolean("appointment_status"));
 		tmp.setAppointment_past(rs.getBoolean("appointment_past"));
 		tmp.setAppointment_reviewed(rs.getBoolean("appointment_reviewed"));
-		tmp.setStudent_firstname(uDao.findById(tmp.getStudent_id()).getFirst_name());
-		tmp.setStudent_lastname(uDao.findById(tmp.getStudent_id()).getLast_name());
-		tmp.setTutor_firstname(uDao.findById(tmp.getTutor_id()).getFirst_name());
-		tmp.setTutor_lastname(uDao.findById(tmp.getTutor_id()).getLast_name());
+
+		User student = uDao.findById(tmp.getStudent_id());
+
+		if (student != null) {
+			tmp.setStudent_firstname(student.getFirst_name());
+			tmp.setStudent_lastname(student.getLast_name());
+		}
+
+		User tutor = uDao.findById(tmp.getTutor_id());
+
+		if (tutor != null) {
+			tmp.setTutor_firstname(tutor.getFirst_name());
+			tmp.setTutor_lastname(tutor.getLast_name());
+		}
+		// tmp.setStudent_firstname(uDao.findById(tmp.getStudent_id()).getFirst_name());
+		// tmp.setStudent_lastname(uDao.findById(tmp.getStudent_id()).getLast_name());
+		// tmp.setTutor_firstname(uDao.findById(tmp.getTutor_id()).getFirst_name());
+		// tmp.setTutor_lastname(uDao.findById(tmp.getTutor_id()).getLast_name());
 		tmp.setRelationship_id(rs.getLong("relationship_id"));
 
 		return tmp;

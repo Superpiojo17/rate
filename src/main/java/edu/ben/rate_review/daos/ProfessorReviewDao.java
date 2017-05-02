@@ -92,8 +92,13 @@ public class ProfessorReviewDao extends BaseDao {
 		tmp.setComment_flagged(rs.getBoolean("comment_flagged"));
 		tmp.setComment_removed(rs.getBoolean("comment_removed"));
 		tmp.setComment_approved(rs.getBoolean("comment_approved"));
-		tmp.setStudentName(uDao.findById(tmp.getStudent_id()).getFirst_name() + " "
-				+ uDao.findById(tmp.getStudent_id()).getLast_name());
+
+		User user = uDao.findById(tmp.getStudent_id());
+
+		if (user != null) {
+			tmp.setStudentName(user.getFirst_name() + " " + user.getLast_name());
+		}
+
 		tmp.setUnformattedOverall((float) (tmp.getRate_accessibility() + tmp.getRate_assignments()
 				+ tmp.getRate_career_development() + tmp.getRate_challenging() + tmp.getRate_grade_fairly()
 				+ tmp.getRate_grade_time() + tmp.getRate_knowledge() + tmp.getRate_objectives()
