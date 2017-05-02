@@ -179,6 +179,7 @@ public class TutorDao extends BaseDao implements Dao<Tutor> {
 	 */
 	public TutorAppointment findAppointmentByID(long id) {
 		// Declare SQL template query
+		TutorAppointment appointment = null;
 		String sql = "SELECT * FROM " + APPOINTMENT_TABLE + " WHERE appointment_id = ? LIMIT 1";
 		try (Connection conn = this.db.getConnection()) {
 			// Create Prepared Statement from query
@@ -187,13 +188,13 @@ public class TutorDao extends BaseDao implements Dao<Tutor> {
 
 			ResultSet rs = q.executeQuery();
 			if (rs.next()) {
+				appointment = appointmentMapRow(rs);
 				q.close();
-				return appointmentMapRow(rs);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return appointment;
 
 	}
 
@@ -667,6 +668,7 @@ public class TutorDao extends BaseDao implements Dao<Tutor> {
 
 	public Tutor findByStudentId(long id) {
 		// Declare SQL template query
+		Tutor tutor = null;
 		String sql = "SELECT * FROM " + TUTOR_TABLE + " WHERE user_id_student = ? LIMIT 1";
 		try (Connection conn = this.db.getConnection()) {
 			// Create Prepared Statement from query
@@ -677,20 +679,21 @@ public class TutorDao extends BaseDao implements Dao<Tutor> {
 			// Run your shit
 			ResultSet rs = q.executeQuery();
 			if (rs.next()) {
+				tutor = mapRow(rs);
 				q.close();
-				return mapRow(rs);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		// If you don't find a model
-		return null;
+		return tutor;
 
 	}
 
 	public Long getStudentId(long id) {
 		// Declare SQL template query
+		long studentID = -1;
 		String sql = "SELECT USER_ID_STUDENT FROM " + TUTOR_TABLE + " WHERE tutor_relationship_id = ? LIMIT 1";
 		try (Connection conn = this.db.getConnection()) {
 			// Create Prepared Statement from query
@@ -701,15 +704,15 @@ public class TutorDao extends BaseDao implements Dao<Tutor> {
 			// Run your shit
 			ResultSet rs = q.executeQuery();
 			if (rs.next()) {
+				studentID = rs.getLong(1);
 				q.close();
-				return rs.getLong(1);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		// If you don't find a model
-		return (long) -1;
+		return studentID;
 
 	}
 
@@ -866,6 +869,7 @@ public class TutorDao extends BaseDao implements Dao<Tutor> {
 
 	@Override
 	public Tutor find(Long id) {
+		Tutor tutor = null;
 		String sql = "SELECT * FROM " + TUTOR_TABLE + " WHERE tutor_relationship_id = ? LIMIT 1";
 		try (Connection conn = this.db.getConnection()) {
 			// Create Prepared Statement from query
@@ -876,13 +880,13 @@ public class TutorDao extends BaseDao implements Dao<Tutor> {
 			// Run your shit
 			ResultSet rs = q.executeQuery();
 			if (rs.next()) {
+				tutor = mapRow(rs);
 				q.close();
-				return mapRow(rs);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return tutor;
 	}
 
 	@Override
@@ -1003,6 +1007,7 @@ public class TutorDao extends BaseDao implements Dao<Tutor> {
 	 * @return
 	 */
 	public float getTutorAverageRating(long tutor_id) {
+		float average = 0;
 		String sql = "SELECT SUM(enhance_understanding + simple_examples + professional + "
 				+ "prepared + schedule_again + recommend) FROM " + REVIEW_TABLE + "  WHERE tutor_id = ?";
 
@@ -1012,14 +1017,14 @@ public class TutorDao extends BaseDao implements Dao<Tutor> {
 
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
+				average = rs.getFloat(1);
 				ps.close();
-				return rs.getFloat(1);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return 0;
+		return average;
 	}
 }

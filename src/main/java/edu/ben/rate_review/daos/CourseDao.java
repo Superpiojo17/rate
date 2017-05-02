@@ -116,6 +116,7 @@ public class CourseDao extends BaseDao {
     public Course findById(long id) {
         // Declare SQL template query
         String sql = "SELECT * FROM " + COURSES_TABLE + " WHERE course_id = ? LIMIT 1";
+        Course course = null;
         try (Connection conn = this.db.getConnection()) {
             // Create Prepared Statement from query
             PreparedStatement q = conn.prepareStatement(sql);
@@ -125,15 +126,15 @@ public class CourseDao extends BaseDao {
             // Run your shit
             ResultSet rs = q.executeQuery();
             if (rs.next()) {
-            	q.close();
-                return mapRow(rs);
+               course = mapRow(rs);
+               q.close();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         // If you don't find a model
-        return null;
+        return course;
 
     }
 

@@ -155,6 +155,7 @@ public class ProfessorReviewDao extends BaseDao {
 	 */
 	public ProfessorReview findReview(long student_course_id) {
 		// Declare SQL template query
+		ProfessorReview review = null;
 		String sql = "SELECT * FROM " + REVIEW_PROFESSOR_TABLE + " WHERE student_course_id = ?";
 		try (Connection conn = this.db.getConnection()) {
 			// Create Prepared Statement from query
@@ -165,15 +166,15 @@ public class ProfessorReviewDao extends BaseDao {
 			// Runs query
 			ResultSet rs = q.executeQuery();
 			if (rs.next()) {
+				review = reviewMapRow(rs);
 				q.close();
-				return reviewMapRow(rs);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		// If you don't find a model
-		return null;
+		return review;
 
 	}
 
@@ -496,6 +497,7 @@ public class ProfessorReviewDao extends BaseDao {
 	 * @return
 	 */
 	public double avgRate(User prof, String column, String display) {
+		double rating = 0;
 		String sql = "SELECT AVG(" + column + ") FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ? ";
 
 		if (!display.equalsIgnoreCase("overview")) {
@@ -513,13 +515,13 @@ public class ProfessorReviewDao extends BaseDao {
 			// Runs query
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
+				rating = rs.getDouble(1);
 				ps.close();
-				return rs.getDouble(1);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return 0;
+		return rating;
 	}
 
 	/**
@@ -531,7 +533,7 @@ public class ProfessorReviewDao extends BaseDao {
 	 * @return
 	 */
 	public int allRatings(User prof, String column, int ratingScore, String display) {
-
+		int score = 0;
 		String sql = "SELECT COUNT(" + column + ") FROM " + REVIEW_PROFESSOR_TABLE + " WHERE professor_email = ? AND "
 				+ column + " = ?";
 
@@ -551,13 +553,13 @@ public class ProfessorReviewDao extends BaseDao {
 			// Runs query
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
+				score = rs.getInt(1);
 				ps.close();
-				return rs.getInt(1);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return 0;
+		return score;
 	}
 
 	/**

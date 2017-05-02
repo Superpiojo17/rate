@@ -156,6 +156,7 @@ public class AnnouncementDao extends BaseDao implements Dao<Announcement> {
 	@Override
 	public Announcement find(Long id) {
 		String sql = "SELECT * FROM " + ANNOUNCEMENTS_TABLE + " WHERE announcement_id = ? LIMIT 1";
+		Announcement announcement = null;
 		PreparedStatement q;
 		try (Connection conn = this.db.getConnection()) {
 			q = conn.prepareStatement(sql);
@@ -164,16 +165,14 @@ public class AnnouncementDao extends BaseDao implements Dao<Announcement> {
 
 			// Run your shit
 			ResultSet rs = q.executeQuery();
-			q.close();
 			if (rs.next()) {
-				return mapRow(rs);
+				announcement = mapRow(rs);
+				q.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		// If you don't find a model
-		return null;
+		return announcement;
 	}
 
 }
