@@ -143,9 +143,8 @@ public class ProfessorReviewDao extends BaseDao {
 				ps.setLong(19, review.getStudent_course_id());
 				ps.setString(20, review.getProfessor_email());
 
-				ps.close();
 				ps.executeUpdate();
-
+				ps.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

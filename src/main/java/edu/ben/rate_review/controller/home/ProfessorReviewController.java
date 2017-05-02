@@ -261,11 +261,11 @@ public class ProfessorReviewController {
                     Integer.parseInt(req.queryParams("rate_knowledge")),
                     Integer.parseInt(req.queryParams("rate_career_development")));
 
-            res.redirect(Application.HOME_PATH + "/professor/" + professorID + "/overview");
+            res.redirect(Application.HOME_PATH + "professor/" + professorID + "/overview");
             halt();
         } else {
             // comment too long
-            res.redirect(Application.HOME_PATH + "/reviewprofessor/" + req.params("student_course_id") + "/review");
+            res.redirect(Application.HOME_PATH + "reviewprofessor/" + req.params("student_course_id") + "/review");
             halt();
         }
 
