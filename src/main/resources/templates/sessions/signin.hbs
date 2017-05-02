@@ -1,4 +1,3 @@
-
 <!DOCTYPE HTML>
 <!--
 	Retrospect by TEMPLATED
@@ -7,257 +6,231 @@
 -->
 <html>
 <head>
+    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<meta charset="UTF-8">
-
-<title>Login</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-
-<!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js"></script><![endif]-->
-<link rel="stylesheet" href="/assets/css/main.css" />
-<!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
-<!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.css" /><![endif]-->
-
-
-<link
-	href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600'
-	rel='stylesheet' type='text/css'>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <!--[if lte IE 8]>
+    <script src="/assets/js/ie/html5shiv.js"></script><![endif]-->
+    <link rel="stylesheet" href="/assets/css/main.css"/>
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="/assets/css/ie8.css"/><![endif]-->
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/assets/css/ie9.css"/><![endif]-->
 
 
-<link rel="stylesheet" href="/assets/login/css/style.css">
-
-
+    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"/>
+    <link rel="stylesheet" href="/assets/login/css/style.css">
 </head>
+
 <style>
-#header > h1 a {
-    font-size: 0.65em;
-}
-body {
-    background-color: #fff;
-    color: #8f959a;
-}
+    #header > h1 a {
+        font-size: 0.65em;
+    }
+
+    body {
+        background-color: #fff;
+        color: #8f959a;
+    }
 </style>
-<body >
+<body>
 
-	<!-- Header -->
-	<header id="header" class="skel-layers-fixed">
-		<h1>
-			<a href="/">RateAndReview</a>
-		</h1>
-
-		<a href="#nav">Menu</a>
-
-	</header>
+<!-- Header -->
+<header id="header" class="skel-layers-fixed">
+    <h1>
+        <a href="/">RateAndReview</a>
+    </h1>
+    <a href="#nav">Menu</a>
+</header>
 
 
-	<!-- Nav -->
-			<nav id="nav"  class="visible">
-				<ul class="links">
-					<li><a href="/">Home</a></li>
+<!-- Nav -->
+<nav id="nav" class="visible">
+    <ul class="links">
+        <li><a href="/">Home</a></li>
 
-					{{#if user_admin}}
-						<li><a href="/admindashboard">My Dashboard</a></li>
-					{{/if}}
-					{{#if user_professor}}
-						<li><a href="/facultydashboard">My Dashboard</a></li>
-					{{/if}}
-					{{#if user_tutor}}
-						<li><a href="/tutordashboard">My Dashboard</a></li>
-					{{/if}}
-					{{#if user_student}}
-						<li><a href="/studentdashboard">My Dashboard</a></li>
-					{{/if}}
+        {{#if user_admin}}
+            <li><a href="/admindashboard">My Dashboard</a></li>
+        {{/if}}
+        {{#if user_professor}}
+            <li><a href="/facultydashboard">My Dashboard</a></li>
+        {{/if}}
+        {{#if user_tutor}}
+            <li><a href="/tutordashboard">My Dashboard</a></li>
+        {{/if}}
+        {{#if user_student}}
+            <li><a href="/studentdashboard">My Dashboard</a></li>
+        {{/if}}
 
-					{{#if user_null}}
-						<li><a href="/signin">Log In</a></li>
-						<li><a href="/register">Register</a></li>
-						<li><a href="/activation">Activate Account</a></li>
-						<li><a href="/accountrecovery">Forgot Password?</a></li>
-					{{/if}}
+        {{#if user_null}}
+            <li><a href="/signin">Log In</a></li>
+            <li><a href="/register">Register</a></li>
+            <li><a href="/activation">Activate Account</a></li>
+            <li><a href="/accountrecovery">Forgot Password?</a></li>
+        {{/if}}
 
-						<li><a href="/teacher">Browse Professors</a></li>
+        <li><a href="/teacher">Browse Professors</a></li>
 
-					{{#unless user_admin}}
-						<li><a href="/contactus">Contact Us</a></li>
-					{{/unless}}
-						<li><a href="/aboutus">About Us</a></li>
-						<li><a href="/faq">FAQ</a></li>
+        {{#unless user_admin}}
+            <li><a href="/contactus">Contact Us</a></li>
+        {{/unless}}
+        <li><a href="/aboutus">About Us</a></li>
+        <li><a href="/faq">FAQ</a></li>
 
-					{{#unless user_null}}
-						<li><a href="/logout">Log Out</a></li>
-					{{/unless}}
-				</ul>
-			</nav>
+        {{#unless user_null}}
+            <li><a href="/logout">Log Out</a></li>
+        {{/unless}}
+    </ul>
+</nav>
 
 
 <!-- Main -->
-	<section id="main" class="wrapper">
-		<div class="container">
+<section id="main" class="wrapper">
+    <div class="container">
 
-			<div class="form">
+        <div class="form">
 
-				<ul class="tab-group">
-					<li class="tab active"><a href="#login">Log In</a></li>
-					<li class="tab"><a href="#signup">Sign Up</a></li>
-				</ul>
+            <ul class="tab-group">
+                <li class="tab"><a href="#login">Log In</a></li>
+                <li class="tab active"><a href="#signup">Sign Up</a></li>
+            </ul>
 
-				<div class="tab-content">
-
-					<div id="login">
-						<h1>Welcome Back!</h1>
-
-						<form action="/signin" method="post">
-
-							<div class="field-wrap">
-								<label> Email Address<span class="req">*</span>
-								</label> <input name = "email" type="email" required autocomplete="off" />
-							</div>
-
-							<div class="field-wrap">
-								<label> Password<span class="req">*</span>
-								</label> <input name = "password" type="password" required autocomplete="off" />
-							</div>
-
-							<p class="forgot">
-								<a href="/accountrecovery">Forgot Password?</a>
-							</p>
-
-							<div name="error">
-						<p style='color: white'>{{error}}</p>
-					</div>
+            <div class="tab-content">
 
 
+                <div id="signup">
+                    <h1>Sign Up for Free</h1>
 
-					{{#if user_null}}
-							<button class="button button-block" />
-							Log In
-							</button>
+                    <form action="/register" method="post">
 
-					{{/if}}
-					{{#unless user_null}}
-						You are already logged in.
-						{{#if user_admin}}
-						<li><a href="/admindashboard">My Dashboard</a></li>
-						{{/if}}
-						{{#if user_professor}}
-							<li><a href="/facultydashboard">My Dashboard</a></li>
-						{{/if}}
-						{{#if user_tutor}}
-							<li><a href="/tutordashboard">My Dashboard</a></li>
-						{{/if}}
-						{{#if user_student}}
-							<li><a href="/studentdashboard">My Dashboard</a></li>
-						{{/if}}
-					{{/unless}}
+                        <div class="top-row">
+                            <div class="field-wrap">
+                                <label> First Name<span class="req">*</span>
+                                </label> <input name="first_name" type="text" required autocomplete="off"/>
+                            </div>
 
+                            <div class="field-wrap">
+                                <label> Last Name<span class="req">*</span>
+                                </label> <input name="last_name" type="text" required autocomplete="off"/>
+                            </div>
+                        </div>
 
+                        <div class="field-wrap">
+                            <label> Email Address<span class="req">*</span>
+                            </label> <input name="email" type="email" required autocomplete="off"/>
+                        </div>
 
+                        <div class="field-wrap">
+                            <label> Password<span class="req">*</span>
+                            </label> <input name="password" type="password" required autocomplete="off"/>
+                        </div>
 
+                        <div class="field-wrap">
+                            <label> Confirm Password<span class="req">*</span>
+                            </label> <input name="verify_password" type="password" required autocomplete="off"/>
+                        </div>
 
-
-						</form>
-
-					</div>
-							<div id="signup">
-						<h1>Sign Up for Free</h1>
-
-						<form action="/register" method="post">
-
-							<div class="top-row">
-								<div class="field-wrap">
-									<label> First Name<span class="req">*</span>
-									</label> <input  name = "first_name" type="text" required autocomplete="off" />
-								</div>
-
-								<div class="field-wrap">
-									<label> Last Name<span class="req">*</span>
-									</label> <input name = "last_name" type="text" required autocomplete="off" />
-								</div>
-							</div>
-
-							<div class="field-wrap">
-								<label> Email Address<span class="req">*</span>
-								</label> <input name = "email" type="email" required autocomplete="off" />
-							</div>
-
-							<div class="field-wrap">
-								<label> Password<span class="req">*</span>
-								</label> <input name = "password" type="password" required autocomplete="off" />
-							</div>
-
-							<div class="field-wrap">
-								<label> Confirm Password<span class="req">*</span>
-								</label> <input name = "verify_password" type="password" required autocomplete="off" />
-							</div>
-
-							<div class="field-wrap">
-								<select name = "role_id" >
-								<option value="">Role*</option>
-  <option value="2">Faculty</option>
-  <option value="3">Tutor</option>
-  <option value="4">Student</option>
-</select>
-							</div>
-
-							<button type="submit" class="button button-block" />
-							Get Started
-							</button>
-
-						</form>
-
-					</div>
+                        <div class="field-wrap">
+                            <select name="role_id">
+                                <option value="">Role*</option>
+                                <option value="2">Faculty</option>
+                                <option value="3">Tutor</option>
+                                <option value="4">Student</option>
+                            </select>
+                        </div>
 
 
-				</div>
-				<!-- tab-content -->
+                        <button type="submit" class="button button-block"/>
+                        Get Started
+                        </button>
 
-			</div>
-			<!-- /form -->
-			<script
-				src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+                    </form>
 
-			<script src="js/index.js"></script>
+                </div>
+                <div id="login">
+                    <h1>Welcome Back!</h1>
+
+                    <form action="/signin" method="post">
+
+                        <div class="field-wrap">
+                            <label> Email Address<span class="req">*</span>
+                            </label> <input name="email" type="email" required autocomplete="off"/>
+                        </div>
+
+                        <div class="field-wrap">
+                            <label> Password<span class="req">*</span>
+                            </label> <input name="password" type="password" required autocomplete="off"/>
+                        </div>
+
+                        <p class="forgot">
+                            <a href="/accountrecovery">Forgot Password?</a>
+                        </p>
+
+                        {{#if user_null}}
+                            <button class="button button-block"/>
+                            Log In
+                            </button>
+                        {{/if}}
+                        {{#unless user_null}}
+                            You are already logged in.
+                            {{#if user_admin}}
+                                <li><a href="/admindashboard">My Dashboard</a></li>
+                            {{/if}}
+                            {{#if user_professor}}
+                                <li><a href="/facultydashboard">My Dashboard</a></li>
+                            {{/if}}
+                            {{#if user_tutor}}
+                                <li><a href="/tutordashboard">My Dashboard</a></li>
+                            {{/if}}
+                            {{#if user_student}}
+                                <li><a href="/studentdashboard">My Dashboard</a></li>
+                            {{/if}}
+                        {{/unless}}
+
+                    </form>
+
+                </div>
+
+            </div>
+            <!-- tab-content -->
+
+        </div>
 
 
-		</div>
-	</section>
-		<!-- Footer -->
-	<footer id="footer">
-		<div class="inner">
-			<ul class="icons">
-				<li><a href="https://www.facebook.com/Rateandreview-1894488470796383/?ref=aymt_homepage_panel
+    </div>
+</section>
+<!-- Footer -->
+<footer id="footer">
+    <div class="inner">
+        <ul class="icons">
+            <li><a href="https://www.facebook.com/Rateandreview-1894488470796383/?ref=aymt_homepage_panel
 				" class="icon fa-facebook"> <span
-						class="label">Facebook</span>
-				</a></li>
-				<li><a href="https://twitter.com/RateAndReview17" class="icon fa-twitter"> <span
-						class="label">Twitter</span>
-				</a></li>
-				<li><a href="https://www.instagram.com/rateandreview17/" class="icon fa-instagram"> <span
-						class="label">Instagram</span>
-				</a></li>
-				<li><a href="https://www.linkedin.com/in/rateandreview-capstone-b78751139" class="icon fa-linkedin"> <span
-						class="label">LinkedIn</span>
-				</a></li>
-			</ul>
+                    class="label">Facebook</span>
+            </a></li>
+            <li><a href="https://twitter.com/RateAndReview17" class="icon fa-twitter"> <span
+                    class="label">Twitter</span>
+            </a></li>
+            <li><a href="https://www.instagram.com/rateandreview17/" class="icon fa-instagram"> <span
+                    class="label">Instagram</span>
+            </a></li>
+            <li><a href="https://www.linkedin.com/in/rateandreview-capstone-b78751139" class="icon fa-linkedin"> <span
+                    class="label">LinkedIn</span>
+            </a></li>
+        </ul>
 
-		</div>
-	</footer>
+    </div>
+</footer>
 
-	<!-- Scripts -->
-	<script
-		src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-
-	<script src="/assets/login/js/index.js"></script>
-
-
-	<script src="/assets/js/jquery.min.js"></script>
-	<script src="/assets/js/skel.min.js"></script>
-	<script src="/assets/js/util.js"></script>
-	<!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js"></script><![endif]-->
-	<script src="/assets/js/main.js"></script>
+<!-- Scripts -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="/assets/login/js/index.js"></script>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/skel.min.js"></script>
+<script src="/assets/js/util.js"></script>
+<!--[if lte IE 8]>
+<script src="/assets/js/ie/respond.min.js"></script><![endif]-->
+<script src="/assets/js/main.js"></script>
 
 </body>
 </html>
