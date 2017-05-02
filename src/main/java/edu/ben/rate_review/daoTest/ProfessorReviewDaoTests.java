@@ -35,7 +35,6 @@ public class ProfessorReviewDaoTests {
 		} else {
 			System.out.println("fail");
 		}
-		reviewDao.close();
 	}
 
 	/**
@@ -52,7 +51,6 @@ public class ProfessorReviewDaoTests {
 		} else {
 			System.out.println("fail");
 		}
-		reviewDao.close();
 	}
 
 	/**
@@ -69,6 +67,5 @@ public class ProfessorReviewDaoTests {
 		} else {
 			System.out.println("fail");
 		}
-		reviewDao.close();
 	}
 }

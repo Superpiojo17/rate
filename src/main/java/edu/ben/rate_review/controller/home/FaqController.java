@@ -11,14 +11,14 @@ import spark.Session;
 
 public class FaqController {
 
-	public ModelAndView showFaqPage(Request req, Response res) throws Exception {
+	public static ModelAndView showFaqPage(Request req, Response res) throws Exception {
 		//System.out.println("HELLO");
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
-		
+
 		if (u != null){
 			if (u.getRole() == 1){
 				model.put("user_admin", true);

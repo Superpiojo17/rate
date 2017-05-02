@@ -23,7 +23,7 @@ import spark.Session;
 
 public class DepartmentsController {
 
-	public ModelAndView showDepartmentsPage(Request req, Response res) {
+	public static ModelAndView showDepartmentsPage(Request req, Response res) {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 
@@ -89,14 +89,12 @@ public class DepartmentsController {
 			double career = rd.avgRate(temp, "rate_career_development", "overview");
 			double overall = ((objectives + organized + challenging + outside + pace + assignments + grade_fairly
 					+ grade_time + accessibility + knowledge + career) / 11);
-			rd.close();
 			DecimalFormat df = new DecimalFormat("0.#");
 
 			model.put("overall", df.format(overall));
 		}
 		model.put("users", professors);
 
-		uDao.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "home/departments.hbs");
 	}

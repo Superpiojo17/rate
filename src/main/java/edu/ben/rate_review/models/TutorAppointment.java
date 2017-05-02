@@ -160,7 +160,6 @@ public class TutorAppointment {
 	public String getCourse_name() {
 		TutorDao tDao = DaoManager.getInstance().getTutorDao();
 		Tutor t = tDao.findById(relationship_id);
-		tDao.close();
 		return t.getCourse_name();
 	}
 
@@ -170,8 +169,6 @@ public class TutorAppointment {
 		UserDao uDao = dao.getUserDao();
 		Tutor tutor = tDao.findById(relationship_id);
 		User tutor_account = uDao.findById(tutor.getProfessor_id());
-		tDao.close();
-		uDao.close();
 		return tutor_account.getMajor();
 	}
 

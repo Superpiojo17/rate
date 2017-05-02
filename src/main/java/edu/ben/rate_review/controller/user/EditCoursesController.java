@@ -28,7 +28,7 @@ import spark.Response;
 import spark.Session;
 
 public class EditCoursesController {
-	public ModelAndView showDeptCoursesPage(Request req, Response res) throws AuthException, SQLException {
+	public static ModelAndView showDeptCoursesPage(Request req, Response res) throws AuthException, SQLException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 
@@ -88,13 +88,11 @@ public class EditCoursesController {
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
-		cd.close();
-		ad.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/courses.hbs");
 	}
 
-	public ModelAndView showEditCoursesPage(Request req, Response res) throws AuthException {
+	public static ModelAndView showEditCoursesPage(Request req, Response res) throws AuthException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 
@@ -131,14 +129,11 @@ public class EditCoursesController {
 		AnnouncementDao ad = adao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
-		cd.close();
-		ud.close();
-		ad.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/editcourse.hbs");
 	}
 
-	public ModelAndView showAddCoursesPage(Request req, Response res) throws AuthException {
+	public static ModelAndView showAddCoursesPage(Request req, Response res) throws AuthException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 
@@ -168,13 +163,11 @@ public class EditCoursesController {
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
 
-		ud.close();
-		ad.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/addCourse.hbs");
 	}
 
-	public ModelAndView updateCourse(Request req, Response res) {
+	public static ModelAndView updateCourse(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
 
 		// Session session = req.session();
@@ -211,14 +204,12 @@ public class EditCoursesController {
 
 		model.put("error",
 				"You just edited " + c.getSubject() + " " + " " + c.getCourse_number() + " " + c.getCourse_name());
-		courseDao.close();
-		ad.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/courses.hbs");
 
 	}
 
-	public ModelAndView addCourse(Request req, Response res) {
+	public static ModelAndView addCourse(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
 
 		// Session session = req.session();
@@ -259,8 +250,6 @@ public class EditCoursesController {
 			model.put("announcements", announcements);
 
 			model.put("error", "You may not leave field blank");
-			ud.close();
-			cd.close();
 			return new ModelAndView(model, "users/addcourse.hbs");
 		}
 		DaoManager adao = DaoManager.getInstance();
@@ -275,14 +264,12 @@ public class EditCoursesController {
 		model.put("error", "You just added " + course.getSubject() + " " + " " + course.getCourse_number() + " "
 				+ course.getCourse_name() + " to " + course.getProfessor_name());
 
-		cd.close();
-		ad.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/courses.hbs");
 
 	}
 
-	public ModelAndView deleteCourse(Request req, Response res) {
+	public static ModelAndView deleteCourse(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
 
 		// Session session = req.session();
@@ -309,8 +296,6 @@ public class EditCoursesController {
 
 		model.put("error", "You just deleted " + c.getSubject() + " " + " " + c.getCourse_number() + " "
 				+ c.getCourse_name() + " taught by " + c.getProfessor_name());
-		cd.close();
-		ad.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "users/courses.hbs");
 
@@ -318,13 +303,13 @@ public class EditCoursesController {
 
 	/**
 	 * Displays the add students page
-	 * 
+	 *
 	 * @param req
 	 * @param res
 	 * @return
 	 * @throws AuthException
 	 */
-	public ModelAndView showClassListPage(Request req, Response res) throws AuthException {
+	public static ModelAndView showClassListPage(Request req, Response res) throws AuthException {
 
 		HashMap<String, Object> model = new HashMap<>();
 
@@ -354,21 +339,18 @@ public class EditCoursesController {
 		List<Announcement> announcements = aDao.all();
 		model.put("announcements", announcements);
 
-		cDao.close();
-		uDao.close();
-		aDao.close();
 		return new ModelAndView(model, "users/classlist.hbs");
 	}
 
 	/**
 	 * Displays the add students page
-	 * 
+	 *
 	 * @param req
 	 * @param res
 	 * @return
 	 * @throws AuthException
 	 */
-	public ModelAndView showProfClassListPage(Request req, Response res) throws AuthException {
+	public static ModelAndView showProfClassListPage(Request req, Response res) throws AuthException {
 
 		HashMap<String, Object> model = new HashMap<>();
 
@@ -398,13 +380,10 @@ public class EditCoursesController {
 		List<Announcement> announcements = aDao.all();
 		model.put("announcements", announcements);
 
-		cDao.close();
-		uDao.close();
-		aDao.close();
 		return new ModelAndView(model, "users/profclasslist.hbs");
 	}
 
-	public ModelAndView showRemoveFromClassListPage(Request req, Response res) throws AuthException {
+	public static ModelAndView showRemoveFromClassListPage(Request req, Response res) throws AuthException {
 
 		HashMap<String, Object> model = new HashMap<>();
 
@@ -432,13 +411,10 @@ public class EditCoursesController {
 		List<Announcement> announcements = aDao.all();
 		model.put("announcements", announcements);
 
-		cDao.close();
-		uDao.close();
-		aDao.close();
 		return new ModelAndView(model, "users/removefromclasslist.hbs");
 	}
 
-	public ModelAndView showAddToClassListPage(Request req, Response res) throws AuthException {
+	public static ModelAndView showAddToClassListPage(Request req, Response res) throws AuthException {
 
 		HashMap<String, Object> model = new HashMap<>();
 
@@ -468,21 +444,17 @@ public class EditCoursesController {
 		List<Announcement> announcements = aDao.all();
 		model.put("announcements", announcements);
 
-		cDao.close();
-		uDao.close();
-		aDao.close();
-
 		return new ModelAndView(model, "users/addtoclasslist.hbs");
 	}
 
 	/**
 	 * Post method to add a student to the course
-	 * 
+	 *
 	 * @param req
 	 * @param res
 	 * @return
 	 */
-	public ModelAndView addStudentToCourse(Request req, Response res) {
+	public static ModelAndView addStudentToCourse(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
 
 		String idString = req.params("id");
@@ -528,20 +500,17 @@ public class EditCoursesController {
 		// grab student id from the form
 		// make student_in_course object using course and student id
 
-		cDao.close();
-		sDao.close();
-		uDao.close();
 		return new ModelAndView(model, "users/classlist.hbs");
 	}
 
 	/**
 	 * Post method to add a student to the course
-	 * 
+	 *
 	 * @param req
 	 * @param res
 	 * @return
 	 */
-	public ModelAndView removeStudentFromCourse(Request req, Response res) {
+	public static ModelAndView removeStudentFromCourse(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
 
 		String idString = req.params("id");
@@ -580,10 +549,6 @@ public class EditCoursesController {
 		List<Announcement> announcements = aDao.all();
 		model.put("announcements", announcements);
 
-		cDao.close();
-		sDao.close();
-		uDao.close();
-		aDao.close();
 		model.put("error", "You have removed a student from this course");
 		return new ModelAndView(model, "users/classlist.hbs");
 	}

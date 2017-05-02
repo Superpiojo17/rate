@@ -12,13 +12,13 @@ public class RegisterController {
 	/**
 	 * Show Register page
 	 */
-	public ModelAndView showRegisterPage(Request req, Response res) {
+	public static ModelAndView showRegisterPage(Request req, Response res) {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
-		
+
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
-		
+
 		if (u != null){
 			if (u.getRole() == 1){
 				model.put("user_admin", true);
@@ -35,7 +35,7 @@ public class RegisterController {
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "sessions/register.hbs");
 	}
-	
-	
+
+
 
 }

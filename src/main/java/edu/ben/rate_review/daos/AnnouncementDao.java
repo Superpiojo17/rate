@@ -8,185 +8,165 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.cj.jdbc.MysqlDataSource;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.AnnouncementForm;
 
 /**
  * This dao manages the announcements table in the data base where the
  * announcements on the left hand sides of many pages are found
- * 
- * @author Joel
  *
+ * @author Joel
  */
-public class AnnouncementDao {
+public class AnnouncementDao extends BaseDao implements Dao<Announcement> {
 
-	// table variable
-	String ANNOUNCEMENTS_TABLE = "announcements";
-	Connection conn = null;
+    // table variable
+    private final String ANNOUNCEMENTS_TABLE = "announcements";
 
-	/**
-	 * UserDao connection create connection
-	 * 
-	 * @param conn
-	 */
-	public AnnouncementDao(Connection conn) {
-		this.conn = conn;
-	}
+    public AnnouncementDao(MysqlDataSource db) {
+        super(db);
+    }
 
-	/**
-	 * Creates announcements
-	 * 
-	 * @param rs
-	 * @return announcement object
-	 * @throws SQLException
-	 */
-	private Announcement mapRow(ResultSet rs) throws SQLException {
+    /**
+     * Creates announcements
+     *
+     * @param rs
+     * @return announcement object
+     * @throws SQLException
+     */
+    private Announcement mapRow(ResultSet rs) throws SQLException {
 
-		// Create user object and pass to array
-		Announcement tmp = new Announcement();
-		tmp.setDate(rs.getString("announcement_date"));
-		tmp.setAnnouncement_content(rs.getString("announcement_content"));
-		tmp.setId(rs.getLong("announcement_id"));
+        // Create user object and pass to array
+        Announcement tmp = new Announcement();
+        tmp.setDate(rs.getString("announcement_date"));
+        tmp.setAnnouncement_content(rs.getString("announcement_content"));
+        tmp.setId(rs.getLong("announcement_id"));
 
-		return tmp;
-	}
+        return tmp;
+    }
 
-	/**
-	 * SQL method to update an announcement
-	 * 
-	 * @param announcement
-	 * @return AnnouncementForm
-	 */
-	public AnnouncementForm updateAnnouncement(AnnouncementForm announcement) {
-		String sql = "UPDATE " + ANNOUNCEMENTS_TABLE
-				+ " SET announcement_date = ?, announcement_content = ? WHERE announcement_id = ? LIMIT 1";
+    /**
+     * SQL method to update an announcement
+     *
+     * @param announcement
+     * @return AnnouncementForm
+     */
+    public AnnouncementForm updateAnnouncement(AnnouncementForm announcement) {
+        String sql = "UPDATE " + ANNOUNCEMENTS_TABLE + " SET announcement_date = ?, announcement_content = ? WHERE announcement_id = ? LIMIT 1";
 
-		try {
-			// Create Prepared Statement from query
-			PreparedStatement ps = conn.prepareStatement(sql);
-			// Fill in the ? with the parameters you want
-			ps.setString(1, announcement.getDate());
-			ps.setString(2, announcement.getAnnouncement_content());
+        try (Connection conn = this.db.getConnection()) {
+            // Create Prepared Statement from query
+            PreparedStatement ps = conn.prepareStatement(sql);
+            // Fill in the ? with the parameters you want
+            ps.setString(1, announcement.getDate());
+            ps.setString(2, announcement.getAnnouncement_content());
+            ps.setLong(3, announcement.getId());
 
-			ps.setLong(3, announcement.getId());
+            // Runs query
+            ps.execute();
+            return announcement;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // If you don't find a model
+        return null;
+    }
 
-			// Runs query
-			ps.execute();
-			return announcement;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		// If you don't find a model
-		return null;
-	}
+    /**
+     * Saves an announcement
+     *
+     * @param announcement
+     * @return an annoucnemnt object
+     */
+    public Announcement save(Announcement announcement) {
+        final String sql = "INSERT INTO " + ANNOUNCEMENTS_TABLE + " (announcement_date, announcement_content) VALUES(?,?)";
+        try (Connection conn = this.db.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, announcement.getDate());
+            ps.setString(2, announcement.getAnnouncement_content());
+            ps.executeUpdate();
+            return announcement;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
 
-	/**
-	 * Saves an announcement
-	 * 
-	 * @param announcement
-	 * @return an annoucnemnt object
-	 */
-	public Announcement save(Announcement announcement) {
-		final String sql = "INSERT INTO " + ANNOUNCEMENTS_TABLE
-				+ " (announcement_date, announcement_content) VALUES(?,?)";
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, announcement.getDate());
-			ps.setString(2, announcement.getAnnouncement_content());
-			;
-			ps.executeUpdate();
-			return announcement;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
+    }
 
-	}
+    /**
+     * A method to find an announcement in the db
+     *
+     * @param id
+     * @return
+     */
+    public Announcement findById(long id) {
+        return find(id);
+    }
 
-	/**
-	 * A method to find an announcement in the db
-	 * 
-	 * @param id
-	 * @return
-	 */
-	public Announcement findById(long id) {
-		// Declare SQL template query
-		String sql = "SELECT * FROM " + ANNOUNCEMENTS_TABLE + " WHERE announcement_id = ? LIMIT 1";
-		try {
-			// Create Prepared Statement from query
-			PreparedStatement q = conn.prepareStatement(sql);
-			// Fill in the ? with the parameters you want
-			q.setLong(1, id);
+    /**
+     * deletes announcement from database by using the announcement ID
+     *
+     * @param id
+     * @return
+     */
+    public Boolean deleteAnnouncement(long id) {
 
-			// Run your shit
-			ResultSet rs = q.executeQuery();
-			if (rs.next()) {
-				return mapRow(rs);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        String sql = "DELETE FROM " + ANNOUNCEMENTS_TABLE + " WHERE announcement_id = ? LIMIT 1";
 
-		// If you don't find a model
-		return null;
+        try (Connection conn = this.db.getConnection()) {
+            // Create Prepared Statement from query
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setLong(1, id);
+            // Runs query
+            return ps.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
-	}
+    /**
+     * @return all anouncements from the database.
+     * @throws ParseException
+     */
+    public List<Announcement> all() {
+        final String SELECT = "SELECT * FROM " + ANNOUNCEMENTS_TABLE + " order by announcement_date asc";
+        List<Announcement> announcements = new ArrayList<>();
 
-	/**
-	 * deletes announcement from database by using the announcement ID
-	 * 
-	 * @param id
-	 * @return
-	 */
-	public String deletAnnouncement(long id) {
+        try (Connection conn = this.db.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(SELECT);
+            ResultSet rs = ps.executeQuery(SELECT);
+            while (rs.next()) {
+                announcements.add(mapRow(rs));
+            }
+            return announcements;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return announcements;
+    }
 
-		String sql = "DELETE FROM " + ANNOUNCEMENTS_TABLE + " WHERE announcement_id = ? LIMIT 1";
+    @Override
+    public Announcement find(Long id) {
+        String sql = "SELECT * FROM " + ANNOUNCEMENTS_TABLE + " WHERE announcement_id = ? LIMIT 1";
+        PreparedStatement q;
+        try (Connection conn = this.db.getConnection()) {
+            q = conn.prepareStatement(sql);
+            // Fill in the ? with the parameters you want
+            q.setLong(1, id);
 
-		try {
-			// Create Prepared Statement from query
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setLong(1, id);
-			// Runs query
-			ps.execute();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return " ";
-	}
+            // Run your shit
+            ResultSet rs = q.executeQuery();
+            q.close();
+            if (rs.next()) {
+                return mapRow(rs);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-	/**
-	 * 
-	 * @return all anouncements from the database.
-	 * @throws ParseException
-	 */
-
-	public List<Announcement> all() {
-		final String SELECT = "SELECT * FROM " + ANNOUNCEMENTS_TABLE + " order by announcement_date asc";
-		List<Announcement> announcements = null;
-		try {
-			PreparedStatement ps = conn.prepareStatement(SELECT);
-			announcements = new ArrayList<Announcement>();
-			try {
-				ResultSet rs = ps.executeQuery(SELECT);
-				while (rs.next()) {
-					announcements.add(mapRow(rs));
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			return announcements;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return announcements;
-	}
-
-	public void close() {
-		try {
-			this.conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+        // If you don't find a model
+        return null;
+    }
 
 }

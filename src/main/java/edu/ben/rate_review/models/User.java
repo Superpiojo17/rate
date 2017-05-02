@@ -217,7 +217,6 @@ public class User implements AuthorizationUser {
 		if (ud.getPicString(id) != null) {
 			return ud.getPicString(id);
 		}
-		ud.close();
 		return "logo";
 	}
 

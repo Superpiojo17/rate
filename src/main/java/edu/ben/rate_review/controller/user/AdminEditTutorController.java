@@ -23,440 +23,425 @@ import spark.Request;
 import spark.Response;
 import spark.Session;
 
+import static spark.Spark.halt;
+
 public class AdminEditTutorController {
 
-	public ModelAndView showDeptTutorsPage(Request req, Response res) throws AuthException, SQLException {
-		// Just a hash to pass data from the servlet to the page
-		HashMap<String, Object> model = new HashMap<>();
-
-		Session session = req.session();
-		if (session.attribute("current_user") == null) {
-			// return new ModelAndView(model, "home/notauthorized.hbs");
-			res.redirect(Application.AUTHORIZATIONERROR_PATH);
-		} else {
-			User u = (User) session.attribute("current_user");
-
-			if (u.getRole() != 1) {
-				// return new ModelAndView(model, "home/notauthorized.hbs");
-				res.redirect(Application.AUTHORIZATIONERROR_PATH);
-			} else {
-				model.put("user_admin", true);
-			}
-		}
-
-		String department = req.params("department");
-
-		DaoManager dao = DaoManager.getInstance();
-		TutorDao td = dao.getTutorDao();
-		if (req.queryParams("search") != null) {
-			String searchType = "name";
-			String searchTxt = req.queryParams("search").toLowerCase();
-			// Make sure you
-			if (searchType.equalsIgnoreCase("email") || searchType.equalsIgnoreCase("name") && searchTxt.length() > 0) {
-				// valid search, can proceed
-				List<Tutor> tutors = new ArrayList<Tutor>();
-				List<Tutor> searchTutors = td.search(searchType, searchTxt);
-				for (int i = 0; i < searchTutors.size(); i++) {
+    public static ModelAndView showDeptTutorsPage(Request req, Response res) throws AuthException, SQLException {
+        // Just a hash to pass data from the servlet to the page
+        HashMap<String, Object> model = new HashMap<>();
+
+        Session session = req.session();
+        if (session.attribute("current_user") == null) {
+            // return new ModelAndView(model, "home/notauthorized.hbs");
+            res.redirect(Application.AUTHORIZATIONERROR_PATH);
+            halt();
+        } else {
+            User u = (User) session.attribute("current_user");
+
+            if (u.getRole() != 1) {
+                // return new ModelAndView(model, "home/notauthorized.hbs");
+                res.redirect(Application.AUTHORIZATIONERROR_PATH);
+                halt();
+            } else {
+                model.put("user_admin", true);
+            }
+        }
+
+        String department = req.params("department");
+
+        DaoManager dao = DaoManager.getInstance();
+        TutorDao td = dao.getTutorDao();
+        if (req.queryParams("search") != null) {
+            String searchType = "name";
+            String searchTxt = req.queryParams("search").toLowerCase();
+            // Make sure you
+            if (searchType.equalsIgnoreCase("email") || searchType.equalsIgnoreCase("name") && searchTxt.length() > 0) {
+                // valid search, can proceed
+                List<Tutor> tutors = new ArrayList<Tutor>();
+                List<Tutor> searchTutors = td.search(searchType, searchTxt);
+                for (int i = 0; i < searchTutors.size(); i++) {
+                    if (searchTutors.get(i).getSubject().equalsIgnoreCase(department)) {
+                        tutors.add(searchTutors.get(i));
+                    }
+                }
+                if (tutors.size() > 0) {
+                    model.put("tutors", tutors);
+                } else {
+                    List<Tutor> Temptutors = td.search(searchType, searchTxt);
+                    model.put("searchmessage", "No Results Found");
+                    model.put("tutors", Temptutors);
+                }
+            } else {
+                List<Tutor> tutors = new ArrayList<Tutor>();
+                List<Tutor> Temptutors = td.listAllTutors();
+
+                for (int i = 0; i < Temptutors.size(); i++) {
+                    if (Temptutors.get(i).getSubject().equalsIgnoreCase(department)) {
+                        tutors.add(Temptutors.get(i));
+                    }
+                }
+                model.put("searchmessage", "Cannot leave search bar blank");
+                model.put("tutors", tutors);
+
+            }
+        } else {
+            List<Tutor> tutors = new ArrayList<Tutor>();
+            List<Tutor> Temptutors = td.listAllTutors();
+
+            for (int i = 0; i < Temptutors.size(); i++) {
+
+                if (Temptutors.get(i).getSubject().equalsIgnoreCase(department)) {
+
+                    tutors.add(Temptutors.get(i));
+
+                }
+            }
+
+            model.put("tutors", tutors);
+
+        }
+
+        model.put("department", department);
+
+        DaoManager adao = DaoManager.getInstance();
+        AnnouncementDao ad = adao.getAnnouncementDao();
+        List<Announcement> announcements = ad.all();
+        model.put("announcements", announcements);
+
+        // Tell the server to render the index page with the data in the model
+        return new ModelAndView(model, "users/tutors.hbs");
+    }
+
+    public static ModelAndView showAdminEditTutorPage(Request req, Response res) throws AuthException {
+        HashMap<String, Object> model = new HashMap<>();
+
+        Session session = req.session();
+        if (session.attribute("current_user") == null) {
+            // return new ModelAndView(model, "home/notauthorized.hbs");
+            res.redirect(Application.AUTHORIZATIONERROR_PATH);
+            halt();
+        } else {
+            User u = (User) session.attribute("current_user");
+
+            if (u.getRole() != 1) {
+                // return new ModelAndView(model, "home/notauthorized.hbs");
+                res.redirect(Application.AUTHORIZATIONERROR_PATH);
+                halt();
+            }
+        }
+        UserDao user = DaoManager.getInstance().getUserDao();
+        TutorDao tutor = DaoManager.getInstance().getTutorDao();
 
-					if (searchTutors.get(i).getSubject().equalsIgnoreCase(department)) {
+        // Get the :id from the url
+        String idString = req.params("id");
 
-						tutors.add(searchTutors.get(i));
+        // Convert to Long
+        // /user/uh-oh/edit for example
+        long id = Long.parseLong(idString);
 
-					}
-				}
-				if (tutors.size() > 0) {
-					model.put("tutors", tutors);
-				} else {
-					List<Tutor> Temptutors = td.search(searchType, searchTxt);
-					model.put("searchmessage", "No Results Found");
-					model.put("tutors", Temptutors);
-				}
-			} else {
-				List<Tutor> tutors = new ArrayList<Tutor>();
-				List<Tutor> Temptutors = td.listAllTutors();
+        Tutor t = tutor.findById(id);
 
-				for (int i = 0; i < Temptutors.size(); i++) {
+        String department = t.getSubject();
 
-					if (Temptutors.get(i).getSubject().equalsIgnoreCase(department)) {
+        model.put("tutor_form", new TutorForm(t));
 
-						tutors.add(Temptutors.get(i));
+        List<User> deptstudents = user.allByMajor(department);
 
-					}
-				}
-				model.put("searchmessage", "Cannot leave search bar blank");
-				model.put("tutors", tutors);
+        model.put("department", department);
 
-			}
-		} else {
-			List<Tutor> tutors = new ArrayList<Tutor>();
-			List<Tutor> Temptutors = td.listAllTutors();
-
-			for (int i = 0; i < Temptutors.size(); i++) {
-
-				if (Temptutors.get(i).getSubject().equalsIgnoreCase(department)) {
-
-					tutors.add(Temptutors.get(i));
-
-				}
-			}
-
-			model.put("tutors", tutors);
+        model.put("deptstudents", deptstudents);
+        // Authorize that the user can edit the user selected
+        // AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
 
-		}
+        // create the form object, put it into request
+        // model.put("tutor_form", new TutorForm(u));
 
-		model.put("department", department);
+        DaoManager adao = DaoManager.getInstance();
+        AnnouncementDao ad = adao.getAnnouncementDao();
+        List<Announcement> announcements = ad.all();
 
-		DaoManager adao = DaoManager.getInstance();
-		AnnouncementDao ad = adao.getAnnouncementDao();
-		List<Announcement> announcements = ad.all();
-		td.close();
-		ad.close();
-		model.put("announcements", announcements);
+        model.put("announcements", announcements);
 
-		// Tell the server to render the index page with the data in the model
-		return new ModelAndView(model, "users/tutors.hbs");
-	}
+        // Render the page
+        return new ModelAndView(model, "users/adminedittutor.hbs");
 
-	public ModelAndView showAdminEditTutorPage(Request req, Response res) throws AuthException {
-		HashMap<String, Object> model = new HashMap<>();
+    }
 
-		Session session = req.session();
-		if (session.attribute("current_user") == null) {
-			// return new ModelAndView(model, "home/notauthorized.hbs");
-			res.redirect(Application.AUTHORIZATIONERROR_PATH);
-		} else {
-			User u = (User) session.attribute("current_user");
+    public static ModelAndView adminUpdateTutor(Request req, Response res) {
+        HashMap<String, Object> model = new HashMap<>();
 
-			if (u.getRole() != 1) {
-				// return new ModelAndView(model, "home/notauthorized.hbs");
-				res.redirect(Application.AUTHORIZATIONERROR_PATH);
-			}
-		}
-		UserDao user = DaoManager.getInstance().getUserDao();
-		TutorDao tutor = DaoManager.getInstance().getTutorDao();
+        Session session = req.session();
+        if (session.attribute("current_user") == null) {
+            // return new ModelAndView(model, "home/notauthorized.hbs");
+            res.redirect(Application.AUTHORIZATIONERROR_PATH);
+            halt();
+        } else {
+            User u = (User) session.attribute("current_user");
 
-		// Get the :id from the url
-		String idString = req.params("id");
+            if (u.getRole() != 1) {
+                // return new ModelAndView(model, "home/notauthorized.hbs");
+                res.redirect(Application.AUTHORIZATIONERROR_PATH);
+                halt();
+            }
+            model.put("current_user", u);
+        }
 
-		// Convert to Long
-		// /user/uh-oh/edit for example
-		long id = Long.parseLong(idString);
+        String idString = req.params("id");
+        long id = Long.parseLong(idString);
+        TutorDao tDao = DaoManager.getInstance().getTutorDao();
+        UserDao uDao = DaoManager.getInstance().getUserDao();
+        TutorForm tutor = new TutorForm();
 
-		Tutor t = tutor.findById(id);
+        Tutor tempTutor = tDao.findById(id);
 
-		String department = t.getSubject();
+        String department = tempTutor.getSubject();
 
-		model.put("tutor_form", new TutorForm(t));
+        model.put("department", tempTutor.getSubject());
 
-		List<User> deptstudents = user.allByMajor(department);
+        tutor.setStudent_id(Long.parseLong(req.queryParams("selecttutor")));
+        tutor.setId(id);
+        tutor.setCourse_id(tempTutor.getCourse_id());
 
-		model.put("department", department);
+        tDao.adminUpdateTutor(tutor);
 
-		model.put("deptstudents", deptstudents);
-		// Authorize that the user can edit the user selected
-		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+        User user = uDao.findById(Long.parseLong(req.queryParams("selecttutor")));
 
-		// create the form object, put it into request
-		// model.put("tutor_form", new TutorForm(u));
+        if (user.getRole() == 4) {
 
-		DaoManager adao = DaoManager.getInstance();
-		AnnouncementDao ad = adao.getAnnouncementDao();
-		List<Announcement> announcements = ad.all();
+            uDao.updateRole(user, 3);
+            model.put("message",
+                    "You have turned " + user.getFirst_name() + " " + user.getLast_name() + " into a tutor");
+        }
 
-		user.close();
-		tutor.close();
-		ad.close();
-		model.put("announcements", announcements);
+        // DaoManager dao = DaoManager.getInstance();
+        // TutorDao td = dao.getTutorDao();
+        List<Tutor> tutors = new ArrayList<Tutor>();
+        List<Tutor> Temptutors = tDao.listAllTutors();
+        for (int i = 0; i < Temptutors.size(); i++) {
 
-		// Render the page
-		return new ModelAndView(model, "users/adminedittutor.hbs");
+            if (Temptutors.get(i).getSubject().equalsIgnoreCase(department)) {
 
-	}
+                tutors.add(Temptutors.get(i));
 
-	public ModelAndView adminUpdateTutor(Request req, Response res) {
-		HashMap<String, Object> model = new HashMap<>();
+            }
+        }
 
-		Session session = req.session();
-		if (session.attribute("current_user") == null) {
-			// return new ModelAndView(model, "home/notauthorized.hbs");
-			res.redirect(Application.AUTHORIZATIONERROR_PATH);
-		} else {
-			User u = (User) session.attribute("current_user");
+        model.put("tutors", tutors);
 
-			if (u.getRole() != 1) {
-				// return new ModelAndView(model, "home/notauthorized.hbs");
-				res.redirect(Application.AUTHORIZATIONERROR_PATH);
-			}
-			model.put("current_user", u);
-		}
+        DaoManager adao = DaoManager.getInstance();
+        AnnouncementDao ad = adao.getAnnouncementDao();
+        List<Announcement> announcements = ad.all();
+        model.put("announcements", announcements);
 
-		String idString = req.params("id");
-		long id = Long.parseLong(idString);
-		TutorDao tDao = DaoManager.getInstance().getTutorDao();
-		UserDao uDao = DaoManager.getInstance().getUserDao();
-		TutorForm tutor = new TutorForm();
+        model.put("error", "You have assigned " + user.getFirst_name() + " " + user.getLast_name() + " to "
+                + tempTutor.getCourse_name());
 
-		Tutor tempTutor = tDao.findById(id);
+        // Tell the server to render the index page with the data in the model
+        return new ModelAndView(model, "users/tutors.hbs");
 
-		String department = tempTutor.getSubject();
+    }
 
-		model.put("department", tempTutor.getSubject());
+    public static ModelAndView showAddTutorsLandingPage(Request req, Response res) throws AuthException {
+        // Just a hash to pass data from the servlet to the page
+        HashMap<String, Object> model = new HashMap<>();
 
-		tutor.setStudent_id(Long.parseLong(req.queryParams("selecttutor")));
-		tutor.setId(id);
-		tutor.setCourse_id(tempTutor.getCourse_id());
+        Session session = req.session();
+        if (session.attribute("current_user") == null) {
+            // return new ModelAndView(model, "home/notauthorized.hbs");
+            res.redirect(Application.AUTHORIZATIONERROR_PATH);
+            halt();
+        } else {
+            User u = (User) session.attribute("current_user");
 
-		tDao.adminUpdateTutor(tutor);
+            if (u.getRole() != 1) {
+                // return new ModelAndView(model, "home/notauthorized.hbs");
+                res.redirect(Application.AUTHORIZATIONERROR_PATH);
+                halt();
+            }
+        }
 
-		User user = uDao.findById(Long.parseLong(req.queryParams("selecttutor")));
+        DaoManager adao = DaoManager.getInstance();
+        CourseDao cDao = DaoManager.getInstance().getCourseDao();
+        AnnouncementDao ad = adao.getAnnouncementDao();
+        List<Announcement> announcements = ad.all();
+        model.put("announcements", announcements);
 
-		if (user.getRole() == 4) {
+        String department = req.params("department");
 
-			uDao.updateRole(user, 3);
-			model.put("message",
-					"You have turned " + user.getFirst_name() + " " + user.getLast_name() + " into a tutor");
-		}
+        model.put("department", department);
 
-		// DaoManager dao = DaoManager.getInstance();
-		// TutorDao td = dao.getTutorDao();
-		List<Tutor> tutors = new ArrayList<Tutor>();
-		List<Tutor> Temptutors = tDao.listAllTutors();
-		for (int i = 0; i < Temptutors.size(); i++) {
+        List<Course> courses = cDao.allByDept(department);
+        model.put("courses", courses);
+        // Render the page
+        return new ModelAndView(model, "users/addtutorlanding.hbs");
+    }
 
-			if (Temptutors.get(i).getSubject().equalsIgnoreCase(department)) {
+    public static ModelAndView showAddTutorsPage(Request req, Response res) throws AuthException {
+        // Just a hash to pass data from the servlet to the page
+        HashMap<String, Object> model = new HashMap<>();
 
-				tutors.add(Temptutors.get(i));
+        Session session = req.session();
+        if (session.attribute("current_user") == null) {
+            // return new ModelAndView(model, "home/notauthorized.hbs");
+            res.redirect(Application.AUTHORIZATIONERROR_PATH);
+            halt();
+        } else {
+            User u = (User) session.attribute("current_user");
 
-			}
-		}
+            if (u.getRole() != 1) {
+                // return new ModelAndView(model, "home/notauthorized.hbs");
+                res.redirect(Application.AUTHORIZATIONERROR_PATH);
+                halt();
+            }
+        }
+        DaoManager adao = DaoManager.getInstance();
+        CourseDao cDao = DaoManager.getInstance().getCourseDao();
+        UserDao user = DaoManager.getInstance().getUserDao();
+        TutorDao tutor = DaoManager.getInstance().getTutorDao();
+        AnnouncementDao ad = adao.getAnnouncementDao();
+        List<Announcement> announcements = ad.all();
+        model.put("announcements", announcements);
 
-		model.put("tutors", tutors);
+        // Get the :id from the url
+        String idString = req.params("id");
 
-		DaoManager adao = DaoManager.getInstance();
-		AnnouncementDao ad = adao.getAnnouncementDao();
-		List<Announcement> announcements = ad.all();
-		model.put("announcements", announcements);
+        // Convert to Long
+        // /user/uh-oh/edit for example
+        long id = Long.parseLong(idString);
 
-		model.put("error", "You have assigned " + user.getFirst_name() + " " + user.getLast_name() + " to "
-				+ tempTutor.getCourse_name());
+        Course course = cDao.findById(id);
 
-		tDao.close();
-		ad.close();
-		uDao.close();
-		// Tell the server to render the index page with the data in the model
-		return new ModelAndView(model, "users/tutors.hbs");
+        String department = course.getSubject();
 
-	}
+        model.put("department", department);
 
-	public ModelAndView showAddTutorsLandingPage(Request req, Response res) throws AuthException {
-		// Just a hash to pass data from the servlet to the page
-		HashMap<String, Object> model = new HashMap<>();
+        List<User> deptstudents = user.allByMajor(department);
 
-		Session session = req.session();
-		if (session.attribute("current_user") == null) {
-			// return new ModelAndView(model, "home/notauthorized.hbs");
-			res.redirect(Application.AUTHORIZATIONERROR_PATH);
-		} else {
-			User u = (User) session.attribute("current_user");
+        model.put("deptstudents", deptstudents);
 
-			if (u.getRole() != 1) {
-				// return new ModelAndView(model, "home/notauthorized.hbs");
-				res.redirect(Application.AUTHORIZATIONERROR_PATH);
-			}
-		}
+        model.put("course", course);
+        // Render the page
+        return new ModelAndView(model, "users/adminaddtutor.hbs");
+    }
 
-		DaoManager adao = DaoManager.getInstance();
-		CourseDao cDao = DaoManager.getInstance().getCourseDao();
-		AnnouncementDao ad = adao.getAnnouncementDao();
-		List<Announcement> announcements = ad.all();
-		model.put("announcements", announcements);
+    public static ModelAndView adminAddTutor(Request req, Response res) {
+        HashMap<String, Object> model = new HashMap<>();
+        CourseDao cDao = DaoManager.getInstance().getCourseDao();
+        TutorDao tDao = DaoManager.getInstance().getTutorDao();
+        UserDao uDao = DaoManager.getInstance().getUserDao();
 
-		String department = req.params("department");
+        // Get the :id from the url
+        String idString = req.params("id");
 
-		model.put("department", department);
+        // Convert to Long
+        // /user/uh-oh/edit for example
+        long id = Long.parseLong(idString);
 
-		List<Course> courses = cDao.allByDept(department);
-		model.put("courses", courses);
-		cDao.close();
-		ad.close();
-		// Render the page
-		return new ModelAndView(model, "users/addtutorlanding.hbs");
-	}
+        Course course = cDao.findById(id);
 
-	public ModelAndView showAddTutorsPage(Request req, Response res) throws AuthException {
-		// Just a hash to pass data from the servlet to the page
-		HashMap<String, Object> model = new HashMap<>();
+        Tutor tutor = new Tutor();
 
-		Session session = req.session();
-		if (session.attribute("current_user") == null) {
-			// return new ModelAndView(model, "home/notauthorized.hbs");
-			res.redirect(Application.AUTHORIZATIONERROR_PATH);
-		} else {
-			User u = (User) session.attribute("current_user");
+        tutor.setCourse_id(course.getId());
+        tutor.setCourse_name(cDao.findById(course.getId()).getCourse_name());
+        tutor.setStudent_id(Long.parseLong(req.queryParams("selecttutor")));
 
-			if (u.getRole() != 1) {
-				// return new ModelAndView(model, "home/notauthorized.hbs");
-				res.redirect(Application.AUTHORIZATIONERROR_PATH);
-			}
-		}
-		DaoManager adao = DaoManager.getInstance();
-		CourseDao cDao = DaoManager.getInstance().getCourseDao();
-		UserDao user = DaoManager.getInstance().getUserDao();
-		TutorDao tutor = DaoManager.getInstance().getTutorDao();
-		AnnouncementDao ad = adao.getAnnouncementDao();
-		List<Announcement> announcements = ad.all();
-		model.put("announcements", announcements);
+        User user = uDao.findById(Long.parseLong(req.queryParams("selecttutor")));
 
-		// Get the :id from the url
-		String idString = req.params("id");
+        if (user.getRole() == 4) {
 
-		// Convert to Long
-		// /user/uh-oh/edit for example
-		long id = Long.parseLong(idString);
+            uDao.updateRole(user, 3);
+            model.put("message",
+                    "You have turned " + user.getFirst_name() + " " + user.getLast_name() + " into a tutor");
+        }
 
-		Course course = cDao.findById(id);
+        tutor.setProfessor_id(course.getProfessor_id());
 
-		String department = course.getSubject();
+        tDao.save(tutor);
 
-		model.put("department", department);
+        String department = course.getSubject();
 
-		List<User> deptstudents = user.allByMajor(department);
+        // Session session = req.session();
+        // User u = (User) session.attribute("current_user");
+        // AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
 
-		model.put("deptstudents", deptstudents);
+        // DaoManager dao = DaoManager.getInstance();
+        // TutorDao td = dao.getTutorDao();
+        List<Tutor> tutors = new ArrayList<Tutor>();
+        List<Tutor> Temptutors = tDao.listAllTutors();
+        for (int i = 0; i < Temptutors.size(); i++) {
 
-		model.put("course", course);
-		cDao.close();
-		user.close();
-		tutor.close();
-		ad.close();
-		// Render the page
-		return new ModelAndView(model, "users/adminaddtutor.hbs");
-	}
+            if (Temptutors.get(i).getSubject().equalsIgnoreCase(department)) {
 
-	public ModelAndView adminAddTutor(Request req, Response res) {
-		HashMap<String, Object> model = new HashMap<>();
-		CourseDao cDao = DaoManager.getInstance().getCourseDao();
-		TutorDao tDao = DaoManager.getInstance().getTutorDao();
-		UserDao uDao = DaoManager.getInstance().getUserDao();
+                tutors.add(Temptutors.get(i));
 
-		// Get the :id from the url
-		String idString = req.params("id");
+            }
+        }
 
-		// Convert to Long
-		// /user/uh-oh/edit for example
-		long id = Long.parseLong(idString);
+        model.put("tutors", tutors);
 
-		Course course = cDao.findById(id);
+        model.put("department", department);
 
-		Tutor tutor = new Tutor();
+        DaoManager adao = DaoManager.getInstance();
+        AnnouncementDao ad = adao.getAnnouncementDao();
+        List<Announcement> announcements = ad.all();
+        model.put("announcements", announcements);
 
-		tutor.setCourse_id(course.getId());
-		tutor.setCourse_name(cDao.findById(course.getId()).getCourse_name());
-		tutor.setStudent_id(Long.parseLong(req.queryParams("selecttutor")));
+        model.put("error", "You have assigned " + user.getFirst_name() + " " + user.getLast_name() + " to "
+                + tutor.getCourse_name());
 
-		User user = uDao.findById(Long.parseLong(req.queryParams("selecttutor")));
+        return new ModelAndView(model, "users/tutors.hbs");
 
-		if (user.getRole() == 4) {
+    }
 
-			uDao.updateRole(user, 3);
-			model.put("message",
-					"You have turned " + user.getFirst_name() + " " + user.getLast_name() + " into a tutor");
-		}
+    public static ModelAndView adminDeleteTutor(Request req, Response res) {
+        HashMap<String, Object> model = new HashMap<>();
 
-		tutor.setProfessor_id(course.getProfessor_id());
+        // Session session = req.session();
+        // User u = (User) session.attribute("current_user");
+        String idString = req.params("id");
+        long id = Long.parseLong(idString);
+        TutorDao tutorDao = DaoManager.getInstance().getTutorDao();
+        Long studentID = tutorDao.getStudentId(id);
+        Tutor tempTutor = tutorDao.findById(id);
+        String department = tempTutor.getSubject();
 
-		tDao.save(tutor);
+        tutorDao.deleteTutor(id);
 
-		String department = course.getSubject();
+        if (tutorDao.findByStudentId(studentID) == null) {
+            tutorDao.changeTutorRole(studentID);
 
-		// Session session = req.session();
-		// User u = (User) session.attribute("current_user");
-		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
+        }
 
-		// DaoManager dao = DaoManager.getInstance();
-		// TutorDao td = dao.getTutorDao();
-		List<Tutor> tutors = new ArrayList<Tutor>();
-		List<Tutor> Temptutors = tDao.listAllTutors();
-		for (int i = 0; i < Temptutors.size(); i++) {
+        // AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
 
-			if (Temptutors.get(i).getSubject().equalsIgnoreCase(department)) {
+        // DaoManager dao = DaoManager.getInstance();
+        // TutorDao td = dao.getTutorDao();
+        List<Tutor> tutors = new ArrayList<Tutor>();
+        List<Tutor> Temptutors = tutorDao.listAllTutors();
+        for (int i = 0; i < Temptutors.size(); i++) {
 
-				tutors.add(Temptutors.get(i));
+            if (Temptutors.get(i).getSubject().equalsIgnoreCase(department)) {
 
-			}
-		}
+                tutors.add(Temptutors.get(i));
 
-		model.put("tutors", tutors);
+            }
+        }
 
-		model.put("department", department);
+        model.put("message", "You have removed " + tempTutor.getTutor_first_name() + " "
+                + tempTutor.getTutor_last_name() + " from " + tempTutor.getCourse_name());
 
-		DaoManager adao = DaoManager.getInstance();
-		AnnouncementDao ad = adao.getAnnouncementDao();
-		List<Announcement> announcements = ad.all();
-		model.put("announcements", announcements);
-		cDao.close();
-		tDao.close();
-		uDao.close();
-		ad.close();
-		
+        model.put("tutors", tutors);
 
-		model.put("error", "You have assigned " + user.getFirst_name() + " " + user.getLast_name() + " to "
-				+ tutor.getCourse_name());
+        model.put("department", department);
 
-		return new ModelAndView(model, "users/tutors.hbs");
+        DaoManager adao = DaoManager.getInstance();
+        AnnouncementDao ad = adao.getAnnouncementDao();
+        List<Announcement> announcements = ad.all();
+        model.put("announcements", announcements);
 
-	}
+        return new ModelAndView(model, "users/tutors.hbs");
 
-	public ModelAndView adminDeleteTutor(Request req, Response res) {
-		HashMap<String, Object> model = new HashMap<>();
-
-		// Session session = req.session();
-		// User u = (User) session.attribute("current_user");
-		String idString = req.params("id");
-		long id = Long.parseLong(idString);
-		TutorDao tutorDao = DaoManager.getInstance().getTutorDao();
-		Long studentID = tutorDao.getStudentId(id);
-		Tutor tempTutor = tutorDao.findById(id);
-		String department = tempTutor.getSubject();
-
-		tutorDao.deleteTutor(id);
-
-		if (tutorDao.findByStudentId(studentID) == null) {
-			tutorDao.changeTutorRole(studentID);
-
-		}
-
-		// AuthPolicyManager.getInstance().getUserPolicy().showAdminDashboardPage();
-
-		// DaoManager dao = DaoManager.getInstance();
-		// TutorDao td = dao.getTutorDao();
-		List<Tutor> tutors = new ArrayList<Tutor>();
-		List<Tutor> Temptutors = tutorDao.listAllTutors();
-		for (int i = 0; i < Temptutors.size(); i++) {
-
-			if (Temptutors.get(i).getSubject().equalsIgnoreCase(department)) {
-
-				tutors.add(Temptutors.get(i));
-
-			}
-		}
-
-		model.put("message", "You have removed " + tempTutor.getTutor_first_name() + " "
-				+ tempTutor.getTutor_last_name() + " from " + tempTutor.getCourse_name());
-
-		model.put("tutors", tutors);
-
-		model.put("department", department);
-
-		DaoManager adao = DaoManager.getInstance();
-		AnnouncementDao ad = adao.getAnnouncementDao();
-		List<Announcement> announcements = ad.all();
-		model.put("announcements", announcements);
-
-		tutorDao.close();
-		ad.close();
-		return new ModelAndView(model, "users/tutors.hbs");
-
-	}
+    }
 
 }

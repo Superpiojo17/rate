@@ -58,7 +58,6 @@ public class MassRegistration {
 
 			// User u = user.save(newUser);
 
-			user.close();
 			System.out.println(tmp.getFirst_name() + " " + tmp.getLast_name() + " " + tmp.getEmail() + " "
 					+ tmp.getEncryptedPassword() + " " + tmp.getRole());
 		}

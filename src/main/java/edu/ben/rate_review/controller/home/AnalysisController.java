@@ -17,13 +17,13 @@ import spark.Session;
 
 /**
  * Controller for the data analytics page
- * 
+ *
  * @author Mike
  * @version 4-25-2017
  */
 public class AnalysisController {
 
-	public ModelAndView showAnalysisPage(Request req, Response res) {
+	public static ModelAndView showAnalysisPage(Request req, Response res) {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 
@@ -63,21 +63,18 @@ public class AnalysisController {
 		// status of tutor appointments bar graph
 		putAppointmentStatus(model, tDao, appointments);
 
-		tDao.close();
-		uDao.close();
-		reviewDao.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "home/analysis.hbs");
 	}
 
 	/**
 	 * Gets the count of each tutor appointment status
-	 * 
+	 *
 	 * @param model
 	 * @param tDao
 	 * @param appointments
 	 */
-	private void putAppointmentStatus(HashMap<String, Object> model, TutorDao tDao,
+	private static void putAppointmentStatus(HashMap<String, Object> model, TutorDao tDao,
 			List<TutorAppointment> appointments) {
 		int count_approved = 0;
 		int count_denied = 0;
@@ -110,12 +107,12 @@ public class AnalysisController {
 
 	/**
 	 * Handles average professor rating by year in school
-	 * 
+	 *
 	 * @param model
 	 * @param uDao
 	 * @param reviews
 	 */
-	private void putAverageRatingByYear(HashMap<String, Object> model, UserDao uDao, List<ProfessorReview> reviews) {
+	private static void putAverageRatingByYear(HashMap<String, Object> model, UserDao uDao, List<ProfessorReview> reviews) {
 		int freshman_count = 0;
 		float freshman_score = 0;
 		int sophomore_count = 0;
@@ -152,7 +149,7 @@ public class AnalysisController {
 	/**
 	 * This method gets the number of ratings per year in school for the first
 	 * graphic
-	 * 
+	 *
 	 * @param model
 	 * @param req
 	 * @param res
@@ -160,7 +157,7 @@ public class AnalysisController {
 	 * @param uDao
 	 * @param reviews
 	 */
-	private void putCountOfRatingsByYear(HashMap<String, Object> model, UserDao uDao, List<ProfessorReview> reviews) {
+	private static void putCountOfRatingsByYear(HashMap<String, Object> model, UserDao uDao, List<ProfessorReview> reviews) {
 
 		int freshman_count = 0;
 		int sophomore_count = 0;

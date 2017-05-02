@@ -61,7 +61,6 @@ public class EditDaoTest {
 		// ud.accountConfirmed(us);
 		// ud.save(us);
 		List<User> so = ud.all();
-		ud.close();
 		for (int i = 0; i < so.size(); i++) {
 			User temp = so.get(i);
 

@@ -18,16 +18,16 @@ import spark.Session;
 public class TeacherController {
 	/**
 	 * Show log in page
-	 * 
+	 *
 	 * @throws SQLException
 	 */
-	public ModelAndView showTeacherPage(Request req, Response res) throws SQLException {
+	public static ModelAndView showTeacherPage(Request req, Response res) throws SQLException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
-		
+
 		if (u != null){
 			if (u.getRole() == 1){
 				model.put("user_admin", true);
@@ -78,8 +78,6 @@ public class TeacherController {
 
 		model.put("current_user", u);
 
-		ad.close();
-		ud.close();
 		// Tell the server to render the index page with the data in the model
 		return new ModelAndView(model, "home/teacher.hbs");
 	}

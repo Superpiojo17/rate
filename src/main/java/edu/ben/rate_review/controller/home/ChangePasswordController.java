@@ -12,15 +12,17 @@ import spark.Request;
 import spark.Response;
 import spark.Session;
 
+import static spark.Spark.halt;
+
 /**
  * Controller for the change password page
- * 
+ *
  * @author Mike
  * @version 2-3-2017
  */
 public class ChangePasswordController {
 
-	public ModelAndView showChangePasswordPage(Request req, Response res) {
+	public static ModelAndView showChangePasswordPage(Request req, Response res) {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 
@@ -47,28 +49,32 @@ public class ChangePasswordController {
 	/**
 	 * Method which checks completion of change password form and necessary
 	 * validations.
-	 * 
+	 *
 	 * @param req
 	 * @param res
 	 * @return
 	 */
-	public String changePassword(Request req, Response res) {
+	public static String changePassword(Request req, Response res) {
 		if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()
 				&& !req.queryParams("new_password").isEmpty() && !req.queryParams("verify_password").isEmpty()) {
 			if (LogInController.confirmRegistered(req.queryParams("email"), req.queryParams("password"))) {
 				if (req.queryParams("new_password").equals(req.queryParams("verify_password"))) {
 					attemptUpdatePassword(req.queryParams("email"), req.queryParams("new_password"));
 					res.redirect(Application.HOME_PATH + "/signin");
+					halt();
 				} else {
 					res.redirect(Application.HOME_PATH + "/changepassword");
+					halt();
 				}
 			} else {
 				// email and password copy do not match any registered account
 				res.redirect(Application.HOME_PATH + "/changepassword");
+				halt();
 			}
 		} else {
 			// fields were empty
 			res.redirect(Application.HOME_PATH + "/changepassword");
+			halt();
 		}
 		return "";
 	}
@@ -76,7 +82,7 @@ public class ChangePasswordController {
 	/**
 	 * Method which interacts with the dao to attempt to update the user's
 	 * password
-	 * 
+	 *
 	 * @param email
 	 */
 	public static void attemptUpdatePassword(String email, String password) {
@@ -89,12 +95,11 @@ public class ChangePasswordController {
 			userDao.updatePassword(user);
 			sendConfirmChangePasswordEmail(user);
 		}
-		userDao.close();
 	}
 
 	/**
 	 * Send email to user confirming their change of password.
-	 * 
+	 *
 	 * @param user
 	 */
 	private static void sendConfirmChangePasswordEmail(User user) {

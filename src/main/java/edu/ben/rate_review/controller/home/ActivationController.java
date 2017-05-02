@@ -11,12 +11,14 @@ import spark.Request;
 import spark.Response;
 import spark.Session;
 
+import static spark.Spark.halt;
+
 public class ActivationController {
 
 	/**
 	 * Show activation page
 	 */
-	public ModelAndView showActivationPage(Request req, Response res) {
+	public static ModelAndView showActivationPage(Request req, Response res) {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 
@@ -43,7 +45,7 @@ public class ActivationController {
 	/**
 	 * Show deactivation page
 	 */
-	public ModelAndView showDeActivationPage(Request req, Response res) {
+	public static ModelAndView showDeActivationPage(Request req, Response res) {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 
@@ -69,50 +71,56 @@ public class ActivationController {
 
 	/**
 	 * Activates a deactivated account
-	 * 
+	 *
 	 * @param req
 	 * @param res
 	 * @return
 	 */
-	public String activate(Request req, Response res) {
+	public static String activate(Request req, Response res) {
 		boolean activated = false;
 		// checks the email and password fields are filled out
 		if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()) {
 			if (LogInController.confirmRegistered(req.queryParams("email"), req.queryParams("password"))) {
 				processActiveState(req.queryParams("email"), req.queryParams("password"), activated);
 				res.redirect(Application.HOME_PATH + "/signin");
+				halt();
 			} else {
 				// email and password copy do not match any registered account
 				res.redirect(Application.HOME_PATH + "/activation");
+				halt();
 			}
 		} else {
 			// fields were empty
 			res.redirect(Application.HOME_PATH + "/activation");
+			halt();
 		}
 		return "";
 	}
 
 	/**
 	 * Deactivates an active account
-	 * 
+	 *
 	 * @param req
 	 * @param res
 	 * @return
 	 */
-	public String deactivate(Request req, Response res) {
+	public static String deactivate(Request req, Response res) {
 		boolean activated = true;
 		// checks the email and password fields are filled out
 		if (!req.queryParams("email").isEmpty() && !req.queryParams("password").isEmpty()) {
 			if (LogInController.confirmRegistered(req.queryParams("email"), req.queryParams("password"))) {
 				processActiveState(req.queryParams("email"), req.queryParams("password"), activated);
 				res.redirect(Application.HOME_PATH + "/signin");
+				halt();
 			} else {
 				// email and password copy do not match any registered account
 				res.redirect(Application.HOME_PATH + "/deactivation");
+				halt();
 			}
 		} else {
 			// fields were empty
 			res.redirect(Application.HOME_PATH + "/deactivation");
+			halt();
 		}
 		return "";
 	}
@@ -121,7 +129,7 @@ public class ActivationController {
 	 * Method which will send the user to the activation or deactivation
 	 * methods. If user is found, it checks that their activity status matches
 	 * what they're trying to accomplish. If it does not, no processing happens.
-	 * 
+	 *
 	 * @param email
 	 * @param password
 	 * @param currentActivity
@@ -138,7 +146,6 @@ public class ActivationController {
 				userDao.activateAccount(user);
 			}
 		}
-		userDao.close();
 	}
 
 }

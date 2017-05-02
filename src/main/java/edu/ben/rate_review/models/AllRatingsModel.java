@@ -38,7 +38,6 @@ public class AllRatingsModel {
 		for (int i = 0; i < 5; i++) {
 			objectives[i] = rDao.allRatings(professor, column, i + 1, display);
 		}
-		rDao.close();
 		return objectives;
 	}
 
@@ -56,7 +55,6 @@ public class AllRatingsModel {
 		for (int i = 0; i < 5; i++) {
 			organized[i] = rDao.allRatings(professor, column, i + 1, display);
 		}
-		rDao.close();
 		return organized;
 	}
 
@@ -74,7 +72,6 @@ public class AllRatingsModel {
 		for (int i = 0; i < 5; i++) {
 			challenging[i] = rDao.allRatings(professor, column, i + 1, display);
 		}
-		rDao.close();
 		return challenging;
 	}
 
@@ -92,7 +89,6 @@ public class AllRatingsModel {
 		for (int i = 0; i < 5; i++) {
 			outside_work[i] = rDao.allRatings(professor, column, i + 1, display);
 		}
-		rDao.close();
 		return outside_work;
 	}
 
@@ -110,7 +106,6 @@ public class AllRatingsModel {
 		for (int i = 0; i < 5; i++) {
 			pace[i] = rDao.allRatings(professor, column, i + 1, display);
 		}
-		rDao.close();
 		return pace;
 	}
 
@@ -128,7 +123,6 @@ public class AllRatingsModel {
 		for (int i = 0; i < 5; i++) {
 			assignments[i] = rDao.allRatings(professor, column, i + 1, display);
 		}
-		rDao.close();
 		return assignments;
 	}
 
@@ -146,7 +140,6 @@ public class AllRatingsModel {
 		for (int i = 0; i < 5; i++) {
 			grade_fairly[i] = rDao.allRatings(professor, column, i + 1, display);
 		}
-		rDao.close();
 		return grade_fairly;
 	}
 
@@ -164,7 +157,6 @@ public class AllRatingsModel {
 		for (int i = 0; i < 5; i++) {
 			grade_time[i] = rDao.allRatings(professor, column, i + 1, display);
 		}
-		rDao.close();
 		return grade_time;
 	}
 
@@ -182,7 +174,6 @@ public class AllRatingsModel {
 		for (int i = 0; i < 5; i++) {
 			accessibility[i] = rDao.allRatings(professor, column, i + 1, display);
 		}
-		rDao.close();
 		return accessibility;
 	}
 
@@ -200,7 +191,6 @@ public class AllRatingsModel {
 		for (int i = 0; i < 5; i++) {
 			knowledge[i] = rDao.allRatings(professor, column, i + 1, display);
 		}
-		rDao.close();
 		return knowledge;
 	}
 
@@ -218,7 +208,6 @@ public class AllRatingsModel {
 		for (int i = 0; i < 5; i++) {
 			career_development[i] = rDao.allRatings(professor, column, i + 1, display);
 		}
-		rDao.close();
 		return career_development;
 	}
 

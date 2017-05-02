@@ -24,7 +24,6 @@ public class userDaoTest {
 		// Use normally
 		UserDao ud = DaoManager.getInstance().getUserDao();
 		ud.findById(6);
-		ud.close();
 	}
 
 }

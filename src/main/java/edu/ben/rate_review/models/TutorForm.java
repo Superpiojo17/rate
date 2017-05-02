@@ -86,7 +86,6 @@ public class TutorForm {
 		DaoManager dao = DaoManager.getInstance();
 		UserDao ud = dao.getUserDao();
 		User user = ud.findById(professor_id);
-		ud.close();
 		return user.getMajor();
 	}
 
@@ -95,7 +94,6 @@ public class TutorForm {
 		UserDao ud = dao.getUserDao();
 		User user = ud.findById(professor_id);
 		String professor_name = user.getFirst_name() + ", " + user.getLast_name();
-		ud.close();
 		return professor_name;
 	}
 

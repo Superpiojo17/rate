@@ -14,7 +14,7 @@ import spark.Session;
 
 public class UnauthorizedController {
 
-	public ModelAndView showNotLoggedIn(Request req, Response res) throws AuthException {
+	public static ModelAndView showNotLoggedIn(Request req, Response res) throws AuthException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 
@@ -28,7 +28,7 @@ public class UnauthorizedController {
 		return new ModelAndView(model, "home/notloggedinerror.hbs");
 	}
 
-	public ModelAndView showNotAuthorized(Request req, Response res) throws AuthException {
+	public static ModelAndView showNotAuthorized(Request req, Response res) throws AuthException {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 

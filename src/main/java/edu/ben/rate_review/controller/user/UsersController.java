@@ -8,7 +8,6 @@ import java.util.List;
 
 import edu.ben.rate_review.app.Application;
 import edu.ben.rate_review.authorization.AuthException;
-import edu.ben.rate_review.controller.BaseController;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.UserDao;
 import edu.ben.rate_review.models.User;
@@ -18,10 +17,12 @@ import spark.Request;
 import spark.Response;
 import spark.Session;
 
+import static spark.Spark.halt;
+
 /**
  * UsersController is a controller used to process requests from the end-user
  */
-public class UsersController implements BaseController {
+public class UsersController {
 
 	// private static Logger logger =
 	// LoggerFactory.getLogger(UsersController.class);
@@ -29,7 +30,7 @@ public class UsersController implements BaseController {
 	/**
 	 * Show page to list all Users
 	 */
-	public ModelAndView index(Request req, Response res) {
+	public static ModelAndView index(Request req, Response res) {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 
@@ -53,7 +54,6 @@ public class UsersController implements BaseController {
 		DaoManager dao = DaoManager.getInstance();
 		UserDao ud = dao.getUserDao();
 		List<User> users = ud.all();
-		ud.close();
 
 		// Attach users to an attribute to be accessed in the view
 		model.put("users", users);
@@ -65,7 +65,7 @@ public class UsersController implements BaseController {
 	/**
 	 * Shows form page to create new user
 	 */
-	public ModelAndView newEntity(Request req, Response res) {
+	public static ModelAndView newEntity(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
 
 		Session session = req.session();
@@ -92,15 +92,16 @@ public class UsersController implements BaseController {
 	/**
 	 * Performs the creation of the user and saves to database
 	 */
-	public String create(Request req, Response res) {
+	public static String create(Request req, Response res) {
 		res.redirect(Application.USERS_PATH);
+		halt();
 		return "";
 	}
 
 	/**
 	 * Shows the page to view a single user
 	 */
-	public ModelAndView show(Request req, Response res) {
+	public static ModelAndView show(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
 
 		model.put("user_id", req.params("id"));
@@ -115,7 +116,7 @@ public class UsersController implements BaseController {
 	 * @param res
 	 * @return
 	 */
-	public ModelAndView edit(Request req, Response res) {
+	public static ModelAndView edit(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
 
 		Session session = req.session();
@@ -147,9 +148,10 @@ public class UsersController implements BaseController {
 	 * @param res
 	 * @throws AuthException
 	 */
-	public String update(Request req, Response res) throws AuthException {
+	public static String update(Request req, Response res) throws AuthException {
 		AuthPolicyManager.getInstance().getUserPolicy().edit(new User());
 		res.redirect(Application.USERS_PATH);
+		halt();
 		return "";
 	}
 
@@ -159,8 +161,9 @@ public class UsersController implements BaseController {
 	 * @param req
 	 * @param res
 	 */
-	public String destroy(Request req, Response res) {
+	public static String destroy(Request req, Response res) {
 		res.redirect(Application.USERS_PATH);
+		halt();
 		return "";
 	}
 

@@ -68,7 +68,5 @@ public class MassEnroll {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		sDao.close();
 	}
 }

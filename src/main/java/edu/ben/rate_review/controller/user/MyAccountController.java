@@ -23,24 +23,24 @@ import spark.Request;
 import spark.Response;
 import spark.Session;
 
+import static spark.Spark.halt;
+
 /**
  * Account Recovery controller
- * 
+ *
  * @author Dex
  * @version
  */
 public class MyAccountController {
 	/**
 	 * Displays view for my account page
-	 * 
+	 *
 	 * @param req
 	 * @param res
 	 * @return
 	 */
-	public ModelAndView showMyAccountPage(Request req, Response res) {
-		// Just a hash to pass data from the servlet to the page
+	public static ModelAndView showMyAccountPage(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
-		/////////////////////////////////////////////////////////////////
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 
@@ -57,11 +57,6 @@ public class MyAccountController {
 		} else {
 			model.put("user_null", true);
 		}
-		// AuthPolicyManager.getInstance().getUserPolicy().showStudentDashboardPage();
-
-		// DaoManager dao = DaoManager.getInstance();
-
-		// DaoManager adao = DaoManager.getInstance();
 
 		model.put("current_user", u);
 
@@ -73,7 +68,7 @@ public class MyAccountController {
 	 * Complete profile Utilizing the code one of the other guys made to update
 	 * the fields
 	 */
-	public String completeProfile(Request req, Response res) {
+	public static String completeProfile(Request req, Response res) {
 		UserDao uDao = DaoManager.getInstance().getUserDao();
 		String idString = req.params("id");
 		long id = Long.parseLong(idString);
@@ -81,15 +76,15 @@ public class MyAccountController {
 		//UserForm user = new UserForm();
 		User user = new User();
 
-		
+
 		user.setNickname(req.queryParams("nickname"));
 		user.setId(id);
 		user.setPersonal_email(req.queryParams("personal_email"));
-		
+
 		uDao.completeProfile2(user);
 //uDao.updateUser(user);
-		uDao.close();
 		res.redirect(Application.STUDENTDASHBOARD_PATH);
+		halt();
 		return "";
 	}
 
