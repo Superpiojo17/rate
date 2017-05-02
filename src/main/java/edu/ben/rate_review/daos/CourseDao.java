@@ -70,6 +70,7 @@ public class CourseDao extends BaseDao {
 
             // Runs query
             ps.execute();
+            ps.close();
             return course;
         } catch (Exception e) {
             e.printStackTrace();
@@ -97,6 +98,7 @@ public class CourseDao extends BaseDao {
             ps.setInt(6, course.getYear());
             ;
             ps.executeUpdate();
+            ps.close();
             return course;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -123,6 +125,7 @@ public class CourseDao extends BaseDao {
             // Run your shit
             ResultSet rs = q.executeQuery();
             if (rs.next()) {
+            	q.close();
                 return mapRow(rs);
             }
         } catch (Exception e) {
@@ -150,6 +153,7 @@ public class CourseDao extends BaseDao {
             ps.setLong(1, id);
             // Runs query
             ps.execute();
+            ps.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -176,6 +180,7 @@ public class CourseDao extends BaseDao {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            ps.close();
             return courses;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -202,6 +207,7 @@ public class CourseDao extends BaseDao {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            ps.close();
             return courses;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -228,6 +234,7 @@ public class CourseDao extends BaseDao {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            ps.close();
             return courses;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -255,6 +262,7 @@ public class CourseDao extends BaseDao {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            ps.close();
             return courses;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -281,6 +289,7 @@ public class CourseDao extends BaseDao {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            ps.close();
             return courses;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -313,6 +322,7 @@ public class CourseDao extends BaseDao {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            ps.close();
             return courses;
         } catch (SQLException e) {
             e.printStackTrace();

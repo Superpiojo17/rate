@@ -62,6 +62,7 @@ public class StudentInCourseDao extends BaseDao {
             ps.setBoolean(5, studentInCourse.isSemester_past());
             ;
             ps.executeUpdate();
+            ps.close();
             return studentInCourse;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -87,6 +88,7 @@ public class StudentInCourseDao extends BaseDao {
             ps.setLong(2, course_id);
             // Runs query
             ps.execute();
+            ps.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -106,6 +108,7 @@ public class StudentInCourseDao extends BaseDao {
             ps.setLong(1, studentInCourse.getCourse_id());
             ps.setLong(2, studentInCourse.getStudent_id());
             ps.executeUpdate();
+            ps.close();
             return studentInCourse;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -136,6 +139,7 @@ public class StudentInCourseDao extends BaseDao {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            ps.close();
             return studentInCourses;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -158,6 +162,7 @@ public class StudentInCourseDao extends BaseDao {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            ps.close();
             return courses;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -180,6 +185,7 @@ public class StudentInCourseDao extends BaseDao {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            ps.close();
             return courses;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -199,6 +205,7 @@ public class StudentInCourseDao extends BaseDao {
             // Runs query
             ResultSet rs = q.executeQuery();
             if (rs.next()) {
+            	q.close();
                 return mapRow(rs);
             }
         } catch (Exception e) {
@@ -221,6 +228,7 @@ public class StudentInCourseDao extends BaseDao {
             ps.setLong(1, course.getStudent_course_id());
             // Runs query
             ps.execute();
+            ps.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -237,6 +245,7 @@ public class StudentInCourseDao extends BaseDao {
             ps.setLong(1, course.getStudent_course_id());
             // Runs query
             ps.execute();
+            ps.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -253,6 +262,7 @@ public class StudentInCourseDao extends BaseDao {
             ps.setLong(1, review.getStudent_course_id());
             // Runs query
             ps.execute();
+            ps.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -269,6 +279,7 @@ public class StudentInCourseDao extends BaseDao {
             ps.setLong(1, review.getStudent_course_id());
             // Runs query
             ps.execute();
+            ps.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -297,8 +308,10 @@ public class StudentInCourseDao extends BaseDao {
             }
 
             if (studentInCourses.size() > 0) {
+            	ps.close();
                 return true;
             } else {
+            	ps.close();
                 return false;
             }
         } catch (SQLException e) {
