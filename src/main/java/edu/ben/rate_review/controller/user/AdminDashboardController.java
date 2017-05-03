@@ -552,7 +552,7 @@ public class AdminDashboardController {
         // Just a hash to pass data from the servlet to the page
         // HashMap<String, Object> model = new HashMap<>();
         MassRegistration.massRegisterUsers();
-        res.redirect(Application.HOME_PATH + "/allusers");
+        res.redirect(Application.HOME_PATH + "allusers");
         halt();
         // Tell the server to render the index page with the data in the model
         return "";
@@ -596,7 +596,7 @@ public class AdminDashboardController {
         DaoManager dao = DaoManager.getInstance();
         UserDao ud = dao.getUserDao();
         ud.sortByLastName();
-        res.redirect(Application.HOME_PATH + "/allusers");
+        res.redirect(Application.HOME_PATH + "allusers");
         halt();
         return "";
 
