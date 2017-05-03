@@ -313,7 +313,9 @@ public class LogInController {
 		String messageFooter = "<br /><p>Sincerely,</p><p>The Rate&Review Team</p>";
 		String message = messageHeader + messageBody + temporaryPassword + messageFooter;
 		System.out.println(tempPassword);
-		Email.deliverEmail(user.getFirst_name(), user.getEmail(), subject, message);
+		if (Application.ALLOW_EMAIL) {
+			Email.deliverEmail(user.getFirst_name(), user.getEmail(), subject, message);
+		}
 		return tempPassword;
 	}
 

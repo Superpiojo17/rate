@@ -112,6 +112,8 @@ public class ChangePasswordController {
 		String messageFooter = "<br /><p>Sincerely,</p><p>The Rate&Review Team</p>";
 		String message = messageHeader + messageBody + messageFooter;
 
-		Email.deliverEmail(user.getFirst_name(), user.getEmail(), subject, message);
+		if (Application.ALLOW_EMAIL) {
+			Email.deliverEmail(user.getFirst_name(), user.getEmail(), subject, message);
+		}
 	}
 }

@@ -14,74 +14,73 @@ import spark.Session;
 import static spark.Spark.halt;
 
 public class ContactUsController {
-    /**
-     * Show log in page
-     */
-    public static ModelAndView showContactUsPage(Request req, Response res) {
-        // Just a hash to pass data from the servlet to the page
-        HashMap<String, Object> model = new HashMap<>();
+	/**
+	 * Show log in page
+	 */
+	public static ModelAndView showContactUsPage(Request req, Response res) {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
 
-        Session session = req.session();
-        User u = (User) session.attribute("current_user");
+		Session session = req.session();
+		User u = (User) session.attribute("current_user");
 
-        if (u != null) {
-            if (u.getRole() == 1) {
-                model.put("user_admin", true);
-            } else if (u.getRole() == 2) {
-                model.put("user_professor", true);
-            } else if (u.getRole() == 3) {
-                model.put("user_tutor", true);
-            } else {
-                model.put("user_student", true);
-            }
-        } else {
-            model.put("user_null", true);
-        }
-        // Tell the server to render the index page with the data in the model
-        return new ModelAndView(model, "home/contactus.hbs");
-    }
+		if (u != null) {
+			if (u.getRole() == 1) {
+				model.put("user_admin", true);
+			} else if (u.getRole() == 2) {
+				model.put("user_professor", true);
+			} else if (u.getRole() == 3) {
+				model.put("user_tutor", true);
+			} else {
+				model.put("user_student", true);
+			}
+		} else {
+			model.put("user_null", true);
+		}
+		// Tell the server to render the index page with the data in the model
+		return new ModelAndView(model, "home/contactus.hbs");
+	}
 
+	/**
+	 * @param req
+	 * @param res
+	 * @return
+	 */
+	// if you need something, do request.getParamter and its ID name on the JSP
+	public static String contact(Request req, Response res) {
+		if (!req.queryParams("name").isEmpty() && !req.queryParams("email").isEmpty()
+				&& !req.queryParams("message").isEmpty()) {
+			contactUs(req.queryParams("name"), req.queryParams("email"), req.queryParams("message"));
+			res.redirect(Application.HOME_PATH + "contactus");
+			halt();
+		} else {
+			// if something was not filled out, output error
+			req.attribute("error", "Please fill out all fields.");
 
-    /**
-     * @param req
-     * @param res
-     * @return
-     */
-    // if you need something, do request.getParamter and its ID name on the JSP
-    public static String contact(Request req, Response res) {
-        if (!req.queryParams("name").isEmpty() && !req.queryParams("email").isEmpty()
-                && !req.queryParams("message").isEmpty()) {
-            contactUs(req.queryParams("name"), req.queryParams("email"),
-                    req.queryParams("message"));
-            res.redirect(Application.HOME_PATH + "contactus");
-            halt();
-        } else {
-            // if something was not filled out, output error
-            req.attribute("error", "Please fill out all fields.");
+		}
+		return "";
 
-        }
-        return "";
+	}
 
-    }
+	/**
+	 * Method which will send an email to the registering user.
+	 *
+	 * @param first_name
+	 * @param email
+	 * @param role_id
+	 */
+	private static void contactUs(String name, String email, String message) {
 
-    /**
-     * Method which will send an email to the registering user.
-     *
-     * @param first_name
-     * @param email
-     * @param role_id
-     */
-    private static void contactUs(String name, String email, String message) {
+		String subject = "Rate&Review from: " + name;
+		String header = "Sent from:\n " + email;
 
-        String subject = "Rate&Review from: " + name;
-        String header = "Sent from:\n " + email;
+		String messageBody = "<p>" + message + "</p>";
+		String finalMessage = header + messageBody;
 
-        String messageBody = "<p>" + message + "</p>";
-        String finalMessage = header + messageBody;
+		if (Application.ALLOW_EMAIL) {
+			Email.deliverEmail(name, "ratereviewsite@gmail.com", subject, finalMessage);
+		}
 
-        Email.deliverEmail(name, "ratereviewsite@gmail.com", subject, finalMessage);
-
-    }
-
+	}
 
 }
