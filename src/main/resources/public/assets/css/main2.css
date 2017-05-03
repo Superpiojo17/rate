@@ -3305,7 +3305,7 @@ span.stars span {
 			background-color: #1E2832;
 			color: rgba(255, 255, 255, 0.75);
 			background-attachment: fixed;
-			background-image: url("images/overlay.png"), url("../../images/lowerbannerHome.jpg");
+			background-image: url("images/overlay.png"), url("https://scontent-ord1-1.xx.fbcdn.net/v/t1.0-9/18221738_10212703016511704_3968652492117327605_n.jpg?oh=769eb379bacbf0ef339042687bb2c6ed&oe=59BA222A");
 			background-size: cover;
 		}
 
@@ -4123,7 +4123,7 @@ buttontest{
 		background-color: #1E2832;
 		color: rgba(255, 255, 255, 0.75);
 		background-attachment: fixed;
-		background-image: url("images/overlay.png"), url("../../images/BUbanner2.jpg");
+		background-image: url("images/overlay.png"), url("https://scontent-ord1-1.xx.fbcdn.net/v/t31.0-8/18278711_10212702981390826_9115397497087694201_o.jpg?oh=18ee6b97e809d14bf31d69fa0111f29c&oe=59C0A10F");
 		background-size: cover;
 		text-align: center;
 	}
