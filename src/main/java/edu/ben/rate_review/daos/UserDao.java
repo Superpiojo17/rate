@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mysql.cj.jdbc.MysqlDataSource;
+import com.zaxxer.hikari.HikariDataSource;
 import edu.ben.rate_review.controller.home.ProfessorController;
 import edu.ben.rate_review.encryption.SecurePassword;
 import edu.ben.rate_review.models.MassEditForm;
@@ -25,7 +25,7 @@ public class UserDao extends BaseDao implements Dao<User> {
 	private final String USER_TABLE = "users";
 	private final String ACCOUNT_RECOVERY_TABLE = "account_recovery";
 
-	public UserDao(MysqlDataSource db) {
+	public UserDao(HikariDataSource db) {
 		super(db);
 	}
 

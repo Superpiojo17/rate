@@ -8,7 +8,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mysql.cj.jdbc.MysqlDataSource;
+import com.zaxxer.hikari.HikariDataSource;
 import edu.ben.rate_review.models.Announcement;
 import edu.ben.rate_review.models.AnnouncementForm;
 
@@ -23,7 +23,7 @@ public class AnnouncementDao extends BaseDao implements Dao<Announcement> {
 	// table variable
 	private final String ANNOUNCEMENTS_TABLE = "announcements";
 
-	public AnnouncementDao(MysqlDataSource db) {
+	public AnnouncementDao(HikariDataSource db) {
 		super(db);
 	}
 

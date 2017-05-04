@@ -1,14 +1,14 @@
 package edu.ben.rate_review.daos;
 
-import com.mysql.cj.jdbc.MysqlDataSource;
+import com.zaxxer.hikari.HikariDataSource;
 
 public class BaseDao {
-    protected MysqlDataSource db;
+    protected HikariDataSource db;
 
     public BaseDao() {
     }
 
-    public BaseDao(MysqlDataSource db) {
+    public BaseDao(HikariDataSource db) {
         // Configure MySQL data source
         if (db != null) {
             this.db = db;

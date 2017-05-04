@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mysql.cj.jdbc.MysqlDataSource;
+import com.zaxxer.hikari.HikariDataSource;
 import edu.ben.rate_review.models.ProfessorReview;
 import edu.ben.rate_review.models.User;
 
@@ -21,7 +21,7 @@ public class ProfessorReviewDao extends BaseDao {
 
 	private String REVIEW_PROFESSOR_TABLE = "professor_review";
 
-	public ProfessorReviewDao(MysqlDataSource db) {
+	public ProfessorReviewDao(HikariDataSource db) {
 		super(db);
 	}
 

@@ -9,8 +9,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mysql.cj.jdbc.MysqlDataSource;
-
+import com.zaxxer.hikari.HikariDataSource;
 import edu.ben.rate_review.models.Course;
 import edu.ben.rate_review.models.Tutor;
 import edu.ben.rate_review.models.TutorAppointment;
@@ -25,7 +24,7 @@ public class TutorDao extends BaseDao implements Dao<Tutor> {
 	private final String APPOINTMENT_TABLE = "tutor_appointment";
 	private final String REVIEW_TABLE = "tutor_review";
 
-	public TutorDao(MysqlDataSource db) {
+	public TutorDao(HikariDataSource db) {
 		super(db);
 	}
 

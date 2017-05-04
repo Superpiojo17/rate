@@ -3,16 +3,15 @@ package edu.ben.rate_review.daos;
 import java.sql.*;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
-import javax.sql.DataSource;
 
 public class DaoManager {
 
     // Private
-    private MysqlDataSource src;
-    private Connection con;
+    private HikariDataSource src;
     private static DaoManager instance = null;
-    // private static Logger logger = LoggerFactory.getLogger(DaoManager.class);
 
     /**
      * Constructor that will create the singleton instance if it doesn't exist
@@ -27,12 +26,26 @@ public class DaoManager {
         final String DATABASE_NAME = System.getenv("DATABASE_NAME");
         if (instance == null) {
             try {
+                HikariConfig config = new HikariConfig();
+                config.setJdbcUrl(HOST + "/" + DATABASE_NAME);
+                config.setUsername(USERNAME);
+                config.setPassword(PASSWORD);
+                config.setMaximumPoolSize(10);
+                config.setAutoCommit(false);
+                config.addDataSourceProperty("cachePrepStmts", "true");
+                config.addDataSourceProperty("prepStmtCacheSize", "250");
+                config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+
+                HikariDataSource ds = new HikariDataSource(config);
+
+
                 MysqlDataSource mysql = new MysqlDataSource();
                 mysql.setURL(HOST + "/" + DATABASE_NAME);
                 mysql.setDatabaseName(DATABASE_NAME);
                 mysql.setUser(USERNAME);
                 mysql.setPassword(PASSWORD);
-                this.src = mysql;
+
+                this.src = ds;
                 instance = this;
             } catch (Exception e) {
                 throw e;

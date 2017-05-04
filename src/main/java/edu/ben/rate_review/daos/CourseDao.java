@@ -8,7 +8,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mysql.cj.jdbc.MysqlDataSource;
+import com.zaxxer.hikari.HikariDataSource;
 import edu.ben.rate_review.models.Course;
 import edu.ben.rate_review.models.CourseForm;
 
@@ -24,7 +24,7 @@ public class CourseDao extends BaseDao {
 
     private String COURSES_TABLE = "courses";
 
-    public CourseDao(MysqlDataSource db) {
+    public CourseDao(HikariDataSource db) {
         super(db);
     }
 

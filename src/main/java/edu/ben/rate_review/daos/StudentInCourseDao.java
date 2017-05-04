@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //import edu.ben.rate_review.models.Course;
-import com.mysql.cj.jdbc.MysqlDataSource;
+import com.zaxxer.hikari.HikariDataSource;
 import edu.ben.rate_review.models.Course;
 import edu.ben.rate_review.models.ProfessorReview;
 import edu.ben.rate_review.models.StudentInCourse;
@@ -18,7 +18,7 @@ public class StudentInCourseDao extends BaseDao {
 
     private String STUDENTINCOURSES_TABLE = "student_in_course";
 
-    public StudentInCourseDao(MysqlDataSource db) {
+    public StudentInCourseDao(HikariDataSource db) {
         super(db);
     }
 
