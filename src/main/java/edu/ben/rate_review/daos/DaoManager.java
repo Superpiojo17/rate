@@ -30,7 +30,7 @@ public class DaoManager {
                 config.setJdbcUrl(HOST + "/" + DATABASE_NAME);
                 config.setUsername(USERNAME);
                 config.setPassword(PASSWORD);
-                config.setMaximumPoolSize(10);
+                config.setMaximumPoolSize(9);
                 config.setAutoCommit(false);
                 config.addDataSourceProperty("cachePrepStmts", "true");
                 config.addDataSourceProperty("prepStmtCacheSize", "250");
@@ -39,11 +39,12 @@ public class DaoManager {
                 HikariDataSource ds = new HikariDataSource(config);
 
 
-                MysqlDataSource mysql = new MysqlDataSource();
-                mysql.setURL(HOST + "/" + DATABASE_NAME);
-                mysql.setDatabaseName(DATABASE_NAME);
-                mysql.setUser(USERNAME);
-                mysql.setPassword(PASSWORD);
+
+//                MysqlDataSource mysql = new MysqlDataSource();
+//                mysql.setURL(HOST + "/" + DATABASE_NAME);
+//                mysql.setDatabaseName(DATABASE_NAME);
+//                mysql.setUser(USERNAME);
+//                mysql.setPassword(PASSWORD);
 
                 this.src = ds;
                 instance = this;
