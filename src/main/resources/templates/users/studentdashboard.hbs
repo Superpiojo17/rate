@@ -263,8 +263,6 @@
 
 						{{/each}}
 				</tbody>
-					<tfoot>
-					</tfoot>
 				</table>
 			</div>
 			{{/if}}
@@ -299,7 +297,6 @@
 				<tbody>
 						{{#each upcoming_appointments}}
 							<tr>
-								<form action="/studentdashboard" method="post">
 								<td class="shrink">{{tutor_firstname}} {{tutor_lastname}}</td>
 								<td class="shrink">{{course_name}}</td>
 								<td class="shrink">{{date}}</td>
@@ -334,7 +331,9 @@
 									{{#if tutor_has_responded}}
 										{{#if appointment_status}}
 										{{#unless appointment_past}}
-											<button title="cancel appointment" class="btn btn-link" type="submit" name="tutor_id" value="-{{appointment_id}},0"><span class="glyphicon glyphicon-remove fa-2x" style="color:black"></span></button>
+                                            <form action="/studentdashboard" method="post">
+                                                <button title="cancel appointment" class="btn btn-link" type="submit" name="tutor_id" value="-{{appointment_id}},0"><span class="glyphicon glyphicon-remove fa-2x" style="color:black"></span></button>
+                                            </form>
 										{{/unless}}
 			<!--						{{#if appointment_past}}
 											<button class="btn btn-link disabled" type="button"><span class="glyphicon glyphicon-remove fa-2x" style="color:black"></span></button>
@@ -352,7 +351,9 @@
 			-->
 									{{#if tutor_has_responded}}
 										{{#unless appointment_status}}
+                                        <form action="/studentdashboard" method="post">
 											<button title="delete denied appointment" class="btn btn-link" type="submit" name="tutor_id" value="-{{appointment_id}},0"><span class="glyphicon glyphicon-trash fa-2x" style="color:red"></span></button>
+                                        </form>
 										{{/unless}}
 										{{#if appointment_status}}
 			<!--						{{#unless appointment_past}}
@@ -360,15 +361,18 @@
 										{{/unless}}
 			-->
 										{{#if appointment_past}}
+                                        <form action="/studentdashboard" method="post">
 											<button title="remove past appointment" class="btn btn-link" type="submit" name="tutor_id" value="-{{appointment_id}},0"><span class="glyphicon glyphicon-trash fa-2x" style="color:red"></span></button>
+                                        </form>
 										{{/if}}
 										{{/if}}
 									{{/if}}
 									{{#unless tutor_has_responded}}
-										<button title="delete request" class="btn btn-link" type="submit" name="tutor_id" value="-{{appointment_id}},0"><span class="glyphicon glyphicon-trash fa-2x" style="color:red"></span></button>
+                                        <form action="/studentdashboard" method="post">
+                                            <button title="delete request" class="btn btn-link" type="submit" name="tutor_id" value="-{{appointment_id}},0"><span class="glyphicon glyphicon-trash fa-2x" style="color:red"></span></button>
+                                        </form>
 									{{/unless}}
 								</td>
-									<form action="/studentdashboard" method="post">
 								</tr>
 						{{/each}}
 				</tbody>
@@ -412,22 +416,18 @@
 						{{#each appointments_not_reviewed}}
 
 							<tr>
-							<form action="/studentdashboard" method="post">
-							<td>{{tutor_firstname}} {{tutor_lastname}}</td>
-							<td>{{department}}</td>
-							<td>{{course_name}}</td>
-							<td>{{date}}</td>
-							<td>{{time}}</td>
-							<td class="shrink">
-								<a title="click here to review" href="/tutorreview/{{appointment_id}}"><i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i></a>
-							</td>
-							</form>
+                                <td>{{tutor_firstname}} {{tutor_lastname}}</td>
+                                <td>{{department}}</td>
+                                <td>{{course_name}}</td>
+                                <td>{{date}}</td>
+                                <td>{{time}}</td>
+                                <td class="shrink">
+                                    <a title="click here to review" href="/tutorreview/{{appointment_id}}"><i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i></a>
+                                </td>
 							</tr>
 
 						{{/each}}
 				</tbody>
-					<tfoot>
-					</tfoot>
 				</table>
 			</div>
 			{{/if}}
