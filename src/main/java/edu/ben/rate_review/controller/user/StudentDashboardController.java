@@ -237,7 +237,7 @@ public class StudentDashboardController {
 		DaoManager dao = DaoManager.getInstance();
 		TutorDao tDao = dao.getTutorDao();
 		UserDao uDao = dao.getUserDao();
-
+    System.out.println(req.queryParams("appointment_id"));
 		if (req.queryParams("appointment_id") == null) {
 			// enters if not for a tutor review
 

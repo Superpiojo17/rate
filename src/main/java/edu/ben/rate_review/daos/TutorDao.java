@@ -294,15 +294,16 @@ public class TutorDao extends BaseDao implements Dao<Tutor> {
 	 * @param appointment_id
 	 */
 	public void cancelTutorAppointment(long appointment_id) {
-		String sql = "DELETE FROM " + APPOINTMENT_TABLE + " WHERE appointment_id = ? LIMIT 1";
+		final String sql = "DELETE FROM `" + APPOINTMENT_TABLE + "` WHERE `appointment_id` = ?";
 
+    PreparedStatement ps;
 		try (Connection conn = this.db.getConnection()) {
 			// Create Prepared Statement from query
-			PreparedStatement ps = conn.prepareStatement(sql);
+			ps = conn.prepareStatement(sql);
 			// Fill in the ? with the parameters you want
 			ps.setLong(1, appointment_id);
 			// Runs query
-			ps.executeUpdate();
+			int status = ps.executeUpdate();
 			ps.close();
 		} catch (Exception e) {
 			e.printStackTrace();

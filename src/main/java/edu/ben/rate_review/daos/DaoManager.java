@@ -32,6 +32,7 @@ public class DaoManager {
                 config.setPassword(PASSWORD);
                 config.setMaximumPoolSize(9);
                 config.setAutoCommit(false);
+                config.setConnectionTimeout(1000 * 15);
                 config.addDataSourceProperty("cachePrepStmts", "true");
                 config.addDataSourceProperty("prepStmtCacheSize", "250");
                 config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
