@@ -22,6 +22,8 @@ public class Application {
 
 	// static variables to control email functionality
 	public static boolean ALLOW_EMAIL = false;
+	// SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
+	// "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"
 	public static String DOMAIN = "http://rateandreview.herokuapp.com";
 	// match up paths
 	public static String HOME_PATH = "/";
