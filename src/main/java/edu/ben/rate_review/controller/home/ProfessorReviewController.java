@@ -327,7 +327,7 @@ public class ProfessorReviewController {
         review.setProfessor_email(uDao.findById(c.getProfessor_id()).getEmail());
 
         // if review already exists, this will remove previous review
-        if (reviewDao.findReview(course.getCourse_id()) != null) {
+        if (reviewDao.findReview(course.getStudent_course_id()) != null) {
             reviewDao.removeProfessorReview(review);
         }
 
