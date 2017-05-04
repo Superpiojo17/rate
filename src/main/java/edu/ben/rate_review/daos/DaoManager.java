@@ -27,16 +27,11 @@ public class DaoManager {
 			try {
 				HikariConfig config = new HikariConfig();
 				config.setJdbcUrl(HOST + "/" + DATABASE_NAME + "?autoReconnect=true&useSSL=false");
-				// config.setUsername(USERNAME);
-				// config.setPassword(PASSWORD);
-				// config.setMaximumPoolSize(9);
-				// config.setAutoCommit(false);
-				// config.setConnectionTimeout(1000 * 15);
-				// config.setDriverClassName ("com.mysql.cj.jdbc.Driver");
+
 				config.setMinimumIdle(1);
 				config.setMaximumPoolSize(9);
 				config.setDriverClassName("com.mysql.cj.jdbc.Driver");
-				config.addDataSourceProperty("serverName", "localhost");
+				// config.addDataSourceProperty("serverName", "localhost");
 				config.addDataSourceProperty("port", "3306");
 				config.addDataSourceProperty("databaseName", DATABASE_NAME);
 				config.addDataSourceProperty("user", USERNAME);
@@ -46,12 +41,6 @@ public class DaoManager {
 				config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
 
 				HikariDataSource ds = new HikariDataSource(config);
-
-				// MysqlDataSource mysql = new MysqlDataSource();
-				// mysql.setURL(HOST + "/" + DATABASE_NAME);
-				// mysql.setDatabaseName(DATABASE_NAME);
-				// mysql.setUser(USERNAME);
-				// mysql.setPassword(PASSWORD);
 
 				this.src = ds;
 				instance = this;

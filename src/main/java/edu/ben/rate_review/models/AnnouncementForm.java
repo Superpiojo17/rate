@@ -109,7 +109,9 @@ public class AnnouncementForm {
 		SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		try {
-			formatdate = myFormat.format(fromUser.parse(date));
+			if (date != null) {
+				formatdate = myFormat.format(fromUser.parse(date));
+			}
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
