@@ -302,7 +302,7 @@ public class TutorDao extends BaseDao implements Dao<Tutor> {
 			// Fill in the ? with the parameters you want
 			ps.setLong(1, appointment_id);
 			// Runs query
-			ps.execute();
+			ps.executeUpdate();
 			ps.close();
 		} catch (Exception e) {
 			e.printStackTrace();
