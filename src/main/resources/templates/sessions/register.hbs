@@ -166,28 +166,9 @@
                         <p class="forgot">
                             <a href="/accountrecovery">Forgot Password?</a>
                         </p>
-
-                        {{#if user_null}}
                             <button class="button button-block"/>
                             Log In
                             </button>
-                        {{/if}}
-                        {{#unless user_null}}
-                            You are already logged in.
-                            {{#if user_admin}}
-                                <li><a href="/admindashboard">My Dashboard</a></li>
-                            {{/if}}
-                            {{#if user_professor}}
-                                <li><a href="/facultydashboard">My Dashboard</a></li>
-                            {{/if}}
-                            {{#if user_tutor}}
-                                <li><a href="/tutordashboard">My Dashboard</a></li>
-                            {{/if}}
-                            {{#if user_student}}
-                                <li><a href="/studentdashboard">My Dashboard</a></li>
-                            {{/if}}
-                        {{/unless}}
-
                     </form>
 
                 </div>
