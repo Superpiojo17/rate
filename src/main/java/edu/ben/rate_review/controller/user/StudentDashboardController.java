@@ -14,7 +14,7 @@ import edu.ben.rate_review.daos.ProfessorReviewDao;
 import edu.ben.rate_review.daos.StudentInCourseDao;
 import edu.ben.rate_review.daos.TutorDao;
 import edu.ben.rate_review.daos.UserDao;
-import edu.ben.rate_review.email.Email;
+import edu.ben.rate_review.email.SendGridManager;
 import edu.ben.rate_review.formatTime.CheckIfExpired;
 import edu.ben.rate_review.formatTime.FormatTimeAndDate;
 import edu.ben.rate_review.models.Announcement;
@@ -312,8 +312,13 @@ public class StudentDashboardController {
 		String messageFooter = "<br /><p>Sincerely,</p><p>The Rate&Review Team</p>";
 		String message = messageHeader + messageBody + messageFooter;
 
+		HashMap<String, String> params = new HashMap<>();
+		params.put("name", tutor.getFirst_name());
+		params.put("subject", subject);
+		params.put("to", tutor.getEmail());
+		params.put("message", message);
 		if (Application.ALLOW_EMAIL) {
-			Email.deliverEmail(tutor.getFirst_name(), tutor.getEmail(), subject, message);
+			SendGridManager.getInstance().send(params);
 		}
 
 	}
@@ -338,8 +343,13 @@ public class StudentDashboardController {
 		String messageFooter = "<br /><p>Sincerely,</p><p>The Rate&Review Team</p>";
 		String message = messageHeader + messageBody + messageFooter;
 
+		HashMap<String, String> params = new HashMap<>();
+		params.put("name", tutor.getFirst_name());
+		params.put("subject", subject);
+		params.put("to", tutor.getEmail());
+		params.put("message", message);
 		if (Application.ALLOW_EMAIL) {
-			Email.deliverEmail(tutor.getFirst_name(), tutor.getEmail(), subject, message);
+			SendGridManager.getInstance().send(params);
 		}
 
 	}

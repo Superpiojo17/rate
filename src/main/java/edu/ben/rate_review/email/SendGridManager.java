@@ -58,7 +58,7 @@ public class SendGridManager {
         if (!params.containsKey("message") || params.get("message") == null) {
             throw new NullPointerException("Missing message content");
         }
-        content = new Content("text/plain", params.get("message"));
+        content = new Content("text/html", params.get("message"));
 
 
         // Create the mail message

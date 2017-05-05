@@ -8,7 +8,7 @@ import edu.ben.rate_review.app.Application;
 //import java.util.HashMap;
 import edu.ben.rate_review.daos.DaoManager;
 import edu.ben.rate_review.daos.UserDao;
-import edu.ben.rate_review.email.Email;
+import edu.ben.rate_review.email.SendGridManager;
 import edu.ben.rate_review.encryption.SecurePassword;
 import edu.ben.rate_review.models.RecoveringUser;
 import edu.ben.rate_review.models.User;
@@ -303,7 +303,6 @@ public class LogInController {
 
 		String tempPassword = createTempPass(user);
 
-		String subject = "Rate&Review Password Recovery";
 		String messageHeader = "<p>Hello " + user.getFirst_name() + ",</p><br />";
 		String messageBody = "<p>Your account has been locked due too many " + " inccorect password entries."
 				+ " Please change your password to regain access to your account by following the link below. "
@@ -312,9 +311,15 @@ public class LogInController {
 		String temporaryPassword = "<p>Temporary password: " + tempPassword + "</p>";
 		String messageFooter = "<br /><p>Sincerely,</p><p>The Rate&Review Team</p>";
 		String message = messageHeader + messageBody + temporaryPassword + messageFooter;
-		System.out.println(tempPassword);
+
+
+		HashMap<String, String> params = new HashMap<>();
+		params.put("name", user.getFirst_name());
+		params.put("subject", "Rate & Review Password Recovery");
+		params.put("to", user.getEmail());
+		params.put("message", message);
 		if (Application.ALLOW_EMAIL) {
-			Email.deliverEmail(user.getFirst_name(), user.getEmail(), subject, message);
+			SendGridManager.getInstance().send(params);
 		}
 		return tempPassword;
 	}
