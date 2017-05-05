@@ -9,7 +9,7 @@ import java.util.HashMap;
  * SendGrid
  */
 public class SendGridManager {
-    public static final String FROM_EMAIL = "test@example.com";
+    public static final String FROM_EMAIL = "ratereviewtest@gmail.com";
     private static SendGridManager manager;
     private SendGrid mailer = null;
 
