@@ -184,6 +184,13 @@ public class TutorDao extends BaseDao implements Dao<Tutor> {
 		tmp.setAppointment_status(rs.getBoolean("appointment_status"));
 		tmp.setAppointment_past(rs.getBoolean("appointment_past"));
 		tmp.setAppointment_reviewed(rs.getBoolean("appointment_reviewed"));
+		tmp.setRelationship_id(Long.parseLong(rs.getString("relationship_id")));
+		
+		Tutor t = findById(tmp.getRelationship_id());
+		
+		if (t != null){
+			tmp.setCourse_name(t.getCourse_name());
+		}
 
 		User student = uDao.findById(tmp.getStudent_id());
 

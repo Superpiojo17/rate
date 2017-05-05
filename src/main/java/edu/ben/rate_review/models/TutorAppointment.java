@@ -28,6 +28,11 @@ public class TutorAppointment {
 	private String student_lastname;
 	private String tutor_firstname;
 	private String tutor_lastname;
+	private String course_name;
+
+	public void setCourse_name(String course_name) {
+		this.course_name = course_name;
+	}
 
 	public long getRelationship_id() {
 		return relationship_id;
@@ -158,9 +163,7 @@ public class TutorAppointment {
 	}
 
 	public String getCourse_name() {
-		TutorDao tDao = DaoManager.getInstance().getTutorDao();
-		Tutor t = tDao.findById(relationship_id);
-		return t.getCourse_name();
+		return course_name;
 	}
 
 	public String getDepartment() {
