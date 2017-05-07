@@ -116,7 +116,7 @@
               style="color:orange"></span>{{/unless}}
           </h4>
         </div>
-        <div id="collapse4" class="panel-collapse {{#unless no_courses_to_review}}in{{/unless}}{{#if no_courses_to_review}}collapse{{/if}}">
+        <div id="collapse4" class="panel-collapse {{#unless appointment_error}}{{#unless no_courses_to_review}}in{{/unless}}{{#if no_courses_to_review}}collapse{{/if}}{{/unless}}{{#if appointment_error}}collapse{{/if}}">
           {{#if no_courses_to_review}}You have no more courses to review.{{/if}} {{#unless no_courses_to_review}}
           <div class="table-wrapper">
             <table class="alt">
@@ -156,7 +156,7 @@
             <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">My Recent Reviews</a>
           </h4>
         </div>
-        <div id="collapse3" class="panel-collapse {{#unless no_courses_to_review}}collapse{{/unless}}{{#if no_courses_to_review}}in{{/if}}">
+        <div id="collapse3" class="panel-collapse {{#unless appointment_error}}{{#unless no_courses_to_review}}collapse{{/unless}}{{#if no_courses_to_review}}in{{/if}}{{/unless}}{{#if appointment_error}}collapse{{/if}}">
           {{#if no_courses_reviewed}}You do not have any recent reviews.{{/if}} {{#unless no_courses_reviewed}}
           <div class="table-wrapper">
             <table class="alt">
@@ -206,7 +206,7 @@
             <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Request Tutor Appointment</a>
           </h4>
         </div>
-        <div id="collapse2" class="panel-collapse collapse">
+        <div id="collapse2" class="panel-collapse {{#unless appointment_error}}collapse{{/unless}}{{#if appointment_error}}in{{/if}}">
 
           {{#unless available_tutors}}No available tutors at this time.{{/unless}} {{#if available_tutors}}
           <div class="table-wrapper">
@@ -227,7 +227,7 @@
                 {{#each tutors}}
 
                 <tr>
-                  <form action="/studentdashboard" method="post">
+                  <form action="/studentdashboard/appointment" method="post">
                     <td class="shrink">{{tutor_first_name}} {{tutor_last_name}}</td>
                     <td class="shrink">{{subject}}</td>
                     <td class="shrink">{{course_name}}</td>
@@ -296,7 +296,7 @@
 
                   <td class="shrink">
                     {{#if tutor_has_responded}} {{#if appointment_status}} {{#unless appointment_past}}
-                    <form action="/studentdashboard" method="post">
+                    <form action="/studentdashboard/appointment" method="post">
                       <button title="cancel appointment" class="btn btn-link" type="submit" name="tutor_id" value="-{{appointment_id}},0"><span class="glyphicon glyphicon-remove fa-2x" style="color:black"></span></button>
                     </form>
                     {{/unless}}
@@ -315,7 +315,7 @@
 									{{/unless}}
 			-->
                     {{#if tutor_has_responded}} {{#unless appointment_status}}
-                    <form action="/studentdashboard" method="post">
+                    <form action="/studentdashboard/appointment" method="post">
                       <button title="delete denied appointment" class="btn btn-link" type="submit" name="tutor_id" value="-{{appointment_id}},0"><span class="glyphicon glyphicon-trash fa-2x" style="color:red"></span></button>
                     </form>
                     {{/unless}} {{#if appointment_status}}
@@ -324,11 +324,11 @@
 										{{/unless}}
 			-->
                     {{#if appointment_past}}
-                    <form action="/studentdashboard" method="post">
+                    <form action="/studentdashboard/appointment" method="post">
                       <button title="remove past appointment" class="btn btn-link" type="submit" name="tutor_id" value="-{{appointment_id}},0"><span class="glyphicon glyphicon-trash fa-2x" style="color:red"></span></button>
                     </form>
                     {{/if}} {{/if}} {{/if}} {{#unless tutor_has_responded}}
-                    <form action="/studentdashboard" method="post">
+                    <form action="/studentdashboard/appointment" method="post">
                       <button title="delete request" class="btn btn-link" type="submit" name="tutor_id" value="-{{appointment_id}},0"><span class="glyphicon glyphicon-trash fa-2x" style="color:red"></span></button>
                     </form>
                     {{/unless}}

@@ -34,6 +34,9 @@ import static spark.Spark.halt;
 
 public class StudentDashboardController {
 
+	// stores model of student dashboard to be used in the post
+	static HashMap<String, Object> model = null;
+
 	/**
 	 * Show log in page
 	 *
@@ -41,7 +44,7 @@ public class StudentDashboardController {
 	 */
 	public static ModelAndView showStudentDashboardPage(Request req, Response res) throws AuthException {
 		// Just a hash to pass data from the servlet to the page
-		HashMap<String, Object> model = new HashMap<>();
+		model = new HashMap<>();
 
 		Session session = req.session();
 		if (session.attribute("current_user") == null) {
@@ -64,7 +67,6 @@ public class StudentDashboardController {
 			// AuthPolicyManager.getInstance().getUserPolicy().showStudentDashboardPage();
 
 			DaoManager dao = DaoManager.getInstance();
-			ProfessorReviewDao reviewDao = dao.getProfessorReviewDao();
 			StudentInCourseDao sDao = dao.getStudentInCourseDao();
 			flagPastCourses(sDao);
 
@@ -230,14 +232,16 @@ public class StudentDashboardController {
 	 * @param res
 	 * @return
 	 */
-	public static String requestAppointment(Request req, Response res) {
+	public static ModelAndView requestAppointment(Request req, Response res) throws AuthException {
+
+		showStudentDashboardPage(req, res);
 
 		Session session = req.session();
 		User u = (User) session.attribute("current_user");
 		DaoManager dao = DaoManager.getInstance();
 		TutorDao tDao = dao.getTutorDao();
 		UserDao uDao = dao.getUserDao();
-    System.out.println(req.queryParams("appointment_id"));
+
 		if (req.queryParams("appointment_id") == null) {
 			// enters if not for a tutor review
 
@@ -247,7 +251,6 @@ public class StudentDashboardController {
 
 			// this check is for a student scheduling an appointment
 			if (Long.parseLong(splitTutorId[0]) > 0) {
-				User tutor = uDao.findById(Long.parseLong(splitTutorId[0]));
 
 				if (!req.queryParams("date").isEmpty() && !req.queryParams("time").isEmpty()) {
 
@@ -265,14 +268,22 @@ public class StudentDashboardController {
 						if (appointment.getStudent_message().length() < 200) {
 							tDao.saveTutorAppointment(appointment);
 							emailAppointmentRequest(appointment, uDao);
+							res.redirect(Application.STUDENTDASHBOARD_PATH);
+							halt();
 						} else {
 							// message - comment too long
+							model.put("error", "Comment was too long. Please submit another appointment request.");
+							model.put("appointment_error", true);
 						}
 					} else {
 						// meeting time is outside of 8AM-8PM window
+						model.put("error", "Invalid date/time. Please select an upcoming date, between 8AM and 8PM.");
+						model.put("appointment_error", true);
 					}
 				} else {
 					// message - please set a date
+					model.put("error", "Please set a date AND time for your appointment.");
+					model.put("appointment_error", true);
 				}
 			} else {
 				// if tutor_id is negative, it is a student canceling an
@@ -284,14 +295,14 @@ public class StudentDashboardController {
 					emailCancelAppointment(appointment_id, uDao, tDao);
 				}
 				tDao.cancelTutorAppointment(appointment_id);
+				res.redirect(Application.STUDENTDASHBOARD_PATH);
+				halt();
 			}
 		} else {
 			// handles tutor review
-			System.out.println(req.queryParams("appointment_id"));
 		}
-		res.redirect(Application.STUDENTDASHBOARD_PATH);
-		halt();
-		return "";
+
+		return new ModelAndView(model, "users/studentdashboard.hbs");
 	}
 
 	/**
@@ -442,7 +453,6 @@ public class StudentDashboardController {
 		model.put("announcements", announcements);
 
 		UserDao ud = dao.getUserDao();
-		TutorDao tDao = dao.getTutorDao();
 
 		model.put("current_user", u);
 
@@ -486,8 +496,6 @@ public class StudentDashboardController {
 		AnnouncementDao ad = dao.getAnnouncementDao();
 		List<Announcement> announcements = ad.all();
 		model.put("announcements", announcements);
-
-		UserDao ud = dao.getUserDao();
 
 		model.put("current_user", u);
 
