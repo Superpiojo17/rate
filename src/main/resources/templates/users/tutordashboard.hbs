@@ -97,7 +97,9 @@
 							<div class="centercol">
 							&ensp;
 							<h2> Welcome {{current_user.first_name}} </h2> <h6> You are logged in as a tutor</h6>
-
+<div name="error">
+      <p style='color: red'>{{error}}</p>
+    </div>
 							&ensp;
 
   <p>Click on the headings below to view your relevant information.</p>
@@ -108,7 +110,7 @@
           <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">My Upcoming Appointments</a>
         </h4>
       </div>
-      <div id="collapse1" class="panel-collapse collapse in">
+      <div id="collapse1" class="panel-collapse collapse {{#unless response_error}}in{{/unless}}{{#if response_error}}collapse{{/if}}">
 		{{#unless upcoming_appointments}}You do not currently have any scheduled appointments.{{/unless}}
 		{{#if upcoming_appointments}}
 		<div class="table-wrapper">
@@ -128,7 +130,7 @@
 						{{#each approved_appointments}}
 						{{#unless appointment_past}}
 							<tr>
-							<form action="/tutordashboard" method="post">
+							<form action="/tutordashboard/appointment" method="post">
 								<td class="shrink">{{student_firstname}} {{student_lastname}}</td>
 								<td class="shrink">{{course_name}}</td>
 								<td class="shrink">{{date}}</td>
@@ -157,19 +159,6 @@
       </div>
     </div>
 
-<!--
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">My Classes</a>
-        </h4>
-      </div>
-      <div id="collapse2" class="panel-collapse collapse">
-        <div class="panel-body">You have not added any classes to your profile. Click on My Classes on the side menu to add your courses!</div>
-      </div>
-    </div>
-
--->
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -177,7 +166,7 @@
           {{#if appointments_requested}} <span title="You have {{number_of_requests}} appointment request(s) waiting for you." class="glyphicon glyphicon-alert" style="color:red"></span>{{/if}}
         </h4>
       </div>
-      <div id="collapse3" class="panel-collapse collapse">
+      <div id="collapse3" class="panel-collapse {{#unless response_error}}collapse{{/unless}}{{#if response_error}}in{{/if}}">
 	{{#unless appointments_requested}}You do not currently have any appointment requests.{{/unless}}
 	{{#if appointments_requested}}
         <div class="table-wrapper">
@@ -198,7 +187,7 @@
 						{{#unless tutor_has_responded}}
 						{{#unless appointment_past}}
 							<tr>
-							<form action="/tutordashboard" method="post">
+							<form action="/tutordashboard/appointment" method="post">
 							<td class="shrink">{{student_firstname}} {{student_lastname}}</td>
 							<td class="shrink">{{course_name}}</td>
 							<td class="shrink">{{date}}</td>

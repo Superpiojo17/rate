@@ -122,6 +122,7 @@ public class Application {
 
 	public static String COMPARE_PATH = HOME_PATH + "compare";
 	public static String STUDENTDASHBOARD_APPOINTMENT_PATH = HOME_PATH + "studentdashboard/appointment";
+	public static String TUTORDASHBOARD_APPOINTMENT_PATH = HOME_PATH + "tutordashboard/appointment";
 
 	public static void main(String[] args) throws Exception {
 
@@ -360,7 +361,10 @@ public class Application {
 		// path for tutor dashboards
 		get(TUTORDASHBOARD_PATH, TutorDashboardController::showTutorDashboardPage, new HandlebarsTemplateEngine());
 		post(TUTORDASHBOARD_PATH, TutorDashboardController::replyToRequest);
-		post(TUTORDASHBOARD_PATH, TutorDashboardController::replyToRequest);
+
+		get(TUTORDASHBOARD_APPOINTMENT_PATH, TutorDashboardController::showTutorDashboardPage,
+				new HandlebarsTemplateEngine());
+		post(TUTORDASHBOARD_APPOINTMENT_PATH, TutorDashboardController::replyToRequest, new HandlebarsTemplateEngine());
 
 		// paths for student dashboard
 		get(STUDENTDASHBOARD_PATH, StudentDashboardController::showStudentDashboardPage,
