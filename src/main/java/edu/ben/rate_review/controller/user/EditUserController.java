@@ -204,8 +204,11 @@ public class EditUserController {
         AnnouncementDao ad = adao.getAnnouncementDao();
         List<Announcement> announcements = ad.all();
         model.put("announcements", announcements);
+        
+    	List<User> users = ud.sortbyRole();
+		model.put("users", users);
 
-        return new ModelAndView(model, "users/edituser.hbs");
+        return new ModelAndView(model, "users/allusers.hbs");
 
     }
 

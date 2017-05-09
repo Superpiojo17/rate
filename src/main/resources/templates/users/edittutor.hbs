@@ -27,11 +27,12 @@
 				<h1>Faculty Dashboard</h1>
 			</header>
 
-		<!-- Nav -->
+		
+			<!-- Nav -->
 			<nav id="nav" class="visible">
 				<ul class="links">
 					<li><a href="/">Home</a></li>
-					<li><a href="/facultyashboard">My Dashboard</a></li>
+					<li><a href="/facultydashboard">My Dashboard</a></li>
 					<li><a href="/myaccount">My Account</a></li>
 					{{#if completeProfile }}
 					<li><a href="/completeprofileprof/{{current_user.id}}"><span class="glyphicon glyphicon-alert icon-failure"></span>Complete profile</a></li>
@@ -47,6 +48,7 @@
 
 				</ul>
 			</nav>
+
 
 			<!-- Banner -->
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="facultyDash">
@@ -150,6 +152,9 @@
 
 											<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#myModal" > Remove Tutor
 											<span class="glyphicon glyphicon-remove"> </button>
+											<br/><br/>
+											<a href="/alltutors/{{tutor_form.professor_id}}" button type="submit" class="btn btn-info" data-toggle="modal"  > Back
+											</button></a>
 
 
 											<!-- Modal -->

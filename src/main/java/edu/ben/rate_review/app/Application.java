@@ -24,9 +24,10 @@ public class Application {
 	public static boolean ALLOW_EMAIL = true;
 	// SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
 	// "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"
-	public static String DOMAIN = "http://rateandreview.herokuapp.com";
+	public static String DOMAIN = "rateandreview.herokuapp.com";
 	// match up paths
 	public static String HOME_PATH = "/";
+	public static String NOTFOUND_HOME_PATH = "/notfound";
 	public static String USERS_PATH = HOME_PATH + "users";
 	public static String USER_PATH = HOME_PATH + "user";
 	public static String EDITUSER_PATH = HOME_PATH + "user/:id/edit";
@@ -170,6 +171,7 @@ public class Application {
 		after((request, response) -> {
 			response.header("Content-Encoding", "gzip");
 		});
+		
 
 		exception(AuthException.class, (exception, request, response) -> {
 			System.out.println(exception.getMessage());
@@ -186,6 +188,11 @@ public class Application {
 
 		notFound((req, res) -> {
 			res.type("application/json");
+			
+			// page not found - kicks out to home
+			res.redirect(NOTFOUND_HOME_PATH);
+			halt();
+			
 			return "{\"message\":\"Custom 404\"}";
 		});
 
@@ -343,6 +350,7 @@ public class Application {
 
 		// path for the home page
 		get(HOME_PATH, HomeController::showHomePage, new HandlebarsTemplateEngine());
+		get(NOTFOUND_HOME_PATH, HomeController::showHomePage, new HandlebarsTemplateEngine());
 
 		// paths for the admin dash boards
 
