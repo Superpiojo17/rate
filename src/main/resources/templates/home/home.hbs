@@ -1,252 +1,79 @@
+
 <!DOCTYPE HTML>
 <!--
-	Retrospect by TEMPLATED
+	Intensify by TEMPLATED
 	templated.co @templatedco
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 -->
 <html>
 	<head>
-		<title>Rate & Review</title>
+		<title>Generic - Intensify by TEMPLATED</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-
-			<!-- The scroll to top links below -->
-
-	<link rel="stylesheet" href="back-to-top/css/reset.css"> <!-- CSS reset -->
-	<link rel="stylesheet" href="back-to-top/css/style.css"> <!-- Gem style -->
-	<script src="js/modernizr.js"></script> <!-- Modernizr -->
-
-		<!-- css styles under -- >
-
-		<!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="/assets/css/main2.css" />
-		<!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
-		<!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.css" /><![endif]-->
-
-
+		<link rel="stylesheet" href="assets/css/main.css" />
 	</head>
-	<body class="landing">
+	<body class="subpage">
 
 		<!-- Header -->
-			<header id="header" class="alt">
-				<h1><a href="/">RateAndReview</a></h1>
-				<a href="#nav">Menu</a>
+			<header id="header">
+				<nav class="left">
+					<a href="#menu"><span>Menu</span></a>
+				</nav>
+				<a href="index.html" class="logo">intensify</a>
+				<nav class="right">
+					<a href="#" class="button alt">Log in</a>
+				</nav>
 			</header>
 
-		<!-- Nav -->
-			<nav id="nav">
+		<!-- Menu -->
+			<nav id="menu">
 				<ul class="links">
-					<li><a href="/">Home</a></li>
-
-					{{#if user_admin}}
-						<li><a href="/admindashboard">My Dashboard</a></li>
-					{{/if}}
-					{{#if user_professor}}
-						<li><a href="/facultydashboard">My Dashboard</a></li>
-					{{/if}}
-					{{#if user_tutor}}
-						<li><a href="/tutordashboard">My Dashboard</a></li>
-					{{/if}}
-					{{#if user_student}}
-						<li><a href="/studentdashboard">My Dashboard</a></li>
-					{{/if}}
-
-					{{#if user_null}}
-						<li><a href="/signin">Log In</a></li>
-						<li><a href="/register">Register</a></li>
-						<li><a href="/activation">Activate Account</a></li>
-						<li><a href="/accountrecovery">Forgot Password?</a></li>
-					{{/if}}
-
-						<li><a href="/teacher">Browse Professors</a></li>
-
-					{{#unless user_admin}}
-						<li><a href="/contactus">Contact Us</a></li>
-					{{/unless}}
-						<li><a href="/aboutus">About Us</a></li>
-						<li><a href="/faq">FAQ</a></li>
-
-					{{#unless user_null}}
-						<li><a href="/logout">Log Out</a></li>
-					{{/unless}}
+					<li><a href="index.html">Home</a></li>
+					<li><a href="generic.html">Generic</a></li>
+					<li><a href="elements.html">Elements</a></li>
+				</ul>
+				<ul class="actions vertical">
+					<li><a href="#" class="button fit">Login</a></li>
 				</ul>
 			</nav>
 
-		<!-- Banner -->
-			<section id="banner">
-				<i class="icon fa-book"></i>
-				<h2>Rate & Review</h2>
-				<p>{{errors}}</p>
-				<p>Erika </p>
-				{{#if user_null}}
-					<ul class="actions">
-						<li><a href="/signin" class="button big special">Log in</a></li>
-					</ul>
-					<div name="register">
-						<h6 style='color: white'><a href = "/register"> Don't have an account? Register here!</a></h6>
-						<h6 style='color: white'><a href = "/accountrecovery"> Forgot password? Click here!</a></h6>
+		<!-- Main -->
+			<section id="main" class="wrapper">
+				<div class="inner">
+					<header class="align-center">
+						<h1>Generic Page</h1>
+						<p>Lorem ipsum dolor sit amet nullam id egestas urna aliquam</p>
+					</header>
+					<div class="image fit">
+						<img src="images/pic05.jpg" alt="" />
 					</div>
-				{{/if}}
-				{{#unless user_null}}
-					{{#if user_admin}}
-						<a href="/admindashboard" class="button big special">My Dashboard</a>
-					{{/if}}
-					{{#if user_professor}}
-						<a href="/facultydashboard" class="button big special">My Dashboard</a>
-					{{/if}}
-					{{#if user_tutor}}
-						<a href="/tutordashboard" class="button big special">My Dashboard</a>
-					{{/if}}
-					{{#if user_student}}
-						<a href="/studentdashboard" class="button big special">My Dashboard</a>
-					{{/if}}
-				{{/unless}}
-			</section>
-
-<main class="cd-container">
-
-		<!-- One -->
-			<section id="one" class="wrapper style1">
-				<div class="inner">
-					<article class="feature left">
-						<span class="image"><img src="https://scontent-ord1-1.xx.fbcdn.net/v/t1.0-9/18274810_10212702818306749_6909109968087127223_n.jpg?oh=403841301d05c10513cc357478b657f6&oe=59B7EF4E" alt="" /></span>
-						<div class="content">
-							<h2>Rate: Dependable ratings on professors and tutors</h2>
-							<p>All of of our faculty ratings are verified to ensure the most honest and accurate reflections of the professors or tutors teaching style. Spam comments are removed and the enrollment of "raters" in classes are reviewed. Set up an account to leave your own review! </p>
-							<ul class="actions">
-								<li>
-									<!--<a href="/aboutus" class="button alt">More</a>-->
-								</li>
-							</ul>
-						</div>
-					</article>
-					<article class="feature right">
-						<span class="image"><img src="https://scontent-ord1-1.xx.fbcdn.net/v/t1.0-9/18274810_10212702818306749_6909109968087127223_n.jpg?oh=403841301d05c10513cc357478b657f6&oe=59B7EF4E" alt="" /></span>
-						<div class="content">
-							<h2>Review: Set up and appointment with the right tutor </h2>
-							<p>Although you can leave a rating for a tutor you've had, you may also use the ratings and comments to choose which tutor works best for you! Look up the tutors hours or request to set up an appointment.</p>
-							<ul class="actions">
-								<li>
-									<!--<a href="/aboutus" class="button alt">More</a>-->
-								</li>
-							</ul>
-						</div>
-					</article>
+					<p>Nunc lacinia ante nunc ac lobortis. Interdum adipiscing gravida odio porttitor sem non mi integer non faucibus ornare mi ut ante amet placerat aliquet. Volutpat eu sed ante lacinia sapien lorem accumsan varius montes viverra nibh in adipiscing blandit tempus accumsan.</p>
+					<p> Aenean iaculis, neque sed pretium egestas, nunc lacus tempus enim, nec tincidunt urna massa a libero. Aenean mattis bibendum est, a pharetra elit. Morbi commodo lectus quis blandit mattis. Cras pharetra quam quis tincidunt tempus. Donec a sem magna. Nullam purus purus, fermentum id lorem sit amet, porta elementum neque. Proin vulputate metus ac faucibus luctus.</p>
+					<p>Ut congue purus sed elit consectetur tempus. Duis convallis, quam quis pellentesque vestibulum, tellus arcu hendrerit ante, sed dictum felis nisl vitae magna. Integer et sapien a erat molestie tempor. Cras est odio, suscipit id porttitor id, mollis et ligula. Curabitur molestie mi molestie accumsan faucibus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer porta malesuada pellentesque. Morbi imperdiet dictum velit, eu volutpat sem posuere non. Fusce ullamcorper gravida velit, sed sollicitudin libero iaculis id. Ut eu neque non odio fringilla faucibus nec quis neque. Quisque et nisi fermentum, tincidunt libero a, condimentum ligula. Quisque ultrices blandit lacinia. Nulla velit lorem, placerat nec eros ut, fermentum pharetra dolor. Maecenas arcu ipsum, mattis et suscipit sed, convallis nec lectus. Nulla facilisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; </p>
 				</div>
 			</section>
 
-		<!-- Two -->
-			<section id="two" class="wrapper special">
-				<div class="inner">
-					<header class="major narrow">
-						<h2>Enhance your college experience.</h2>
-						<p>Seeking help from tutors and picking the right classes
-						can be intimidating. That's where we come in.</p>
-					</header>
-					<div class="image-grid">
-						<a class="image"><img src="https://scontent-ord1-1.xx.fbcdn.net/v/t1.0-9/18268671_10212702723904389_4623586911380880601_n.jpg?oh=976abc5b0ef9e2be6d0503657461f4b1&oe=5988EFD0" alt="" /></a>
-						<a class="image"><img src="https://scontent-ord1-1.xx.fbcdn.net/v/t1.0-9/18199540_10212702783625882_3762705145698406961_n.jpg?oh=ffa0e114d878a4f5cd71fb0d881b5409&oe=59825264" alt="" /></a>
-						<a class="image"><img src="https://scontent-ord1-1.xx.fbcdn.net/v/t1.0-9/18195116_10212702794826162_3958902628513262956_n.jpg?oh=b4401664bd49fa28e7daf9167e2776a9&oe=598004AD" alt="" /></a>
-						<a class="image"><img src="https://scontent-ord1-1.xx.fbcdn.net/v/t1.0-9/18198639_10212702800546305_1623205099288993818_n.jpg?oh=764993cb714bf888236c6a5881de7025&oe=597D047B" alt="" /></a>
-						<a class="image"><img src="https://scontent-ord1-1.xx.fbcdn.net/v/t1.0-9/18268228_10212702804906414_1581200576555719710_n.jpg?oh=5718a1396b3a338b4141e7175bd6a8c5&oe=5978795C" alt="" /></a>
-						<a class="image"><img src="https://scontent-ord1-1.xx.fbcdn.net/v/t1.0-9/18268621_10212702807426477_1542228425950945240_n.jpg?oh=cbf317405c79125105a7fad3f6c69865&oe=597893E1" alt="" /></a>
-						<a class="image"><img src="https://scontent-ord1-1.xx.fbcdn.net/v/t1.0-9/18198623_10212702809906539_35585217906927304_n.jpg?oh=4913ac1fa5b81739a472ee5bb66fc6ec&oe=5974DB81" alt="" /></a>
-						<a class="image"><img src="https://scontent-ord1-1.xx.fbcdn.net/v/t1.0-9/18274823_10212702813226622_1846832872402173930_n.jpg?oh=992ed8c8cbb142effb0e5d23eda8ea97&oe=597C3CF5" alt="" /></a>
-					</div>
-					<ul class="actions">
-						<li><a href="/aboutus" class="button big alt">About Us</a></li>
-					</ul>
-				</div>
-			</section>
-
-		<!-- Three -->
-			<section id="three" class="wrapper style3 special">
-				<div class="inner">
-					<header class="major narrow	">
-						{{#if user_null}}
-							<h2>Create your account now</h2>
-							<p>Set up account to starting leaving reviews or get in touch with a tutor to set up a review session!</p>
-						{{/if}}
-						{{#unless user_null}}
-							<h2>View Professor Ratings</h2>
-							<p>View how Benedictine's professors have been rated by their students!</p>
-						{{/unless}}
-					</header>
-					<ul class="actions">
-						{{#if user_null}}
-							<li><a href="/register" class="button big alt">Create Account</a></li>
-						{{/if}}
-						{{#unless user_null}}
-							<li><a href="/teacher" class="button big alt">Browse Professors</a></li>
-						{{/unless}}
-					</ul>
-				</div>
-			</section>
-
-		<!-- Four -->
-<!--
-			<section id="four" class="wrapper style2 special">
-				<div class="inner">
-					<header class="major narrow">
-						<h2>Get in touch</h2>
-						<p>If you have any questions, drop us a message below!</p>
-					</header>
-					<form action="" method="POST">
-						<div class="container 75%">
-							<div class="row uniform 50%">
-								<div class="6u 12u$(xsmall)">
-									<input name="name" placeholder="Name" type="text" />
-								</div>
-								<div class="6u$ 12u$(xsmall)">
-									<input name="email" placeholder="Email" type="email" />
-								</div>
-								<div class="12u$">
-									<textarea name="message" placeholder="Message" rows="4"></textarea>
-								</div>
-							</div>
-						</div>
-						<ul class="actions">
-							<li><input type="submit" class="special" value="Submit" /></li>
-							<li><input type="reset" class="alt" value="Reset" /></li>
-						</ul>
-					</form>
-				</div>
-			</section>
--->
-</main>
 		<!-- Footer -->
-	<footer id="footer">
-		<div class="inner">
-			<ul class="icons">
-				<li><a href="https://www.facebook.com/Rateandreview-1894488470796383/?ref=aymt_homepage_panel
-				" class="icon fa-facebook"> <span
-						class="label">Facebook</span>
-				</a></li>
-				<li><a href="https://twitter.com/RateAndReview17" class="icon fa-twitter"> <span
-						class="label">Twitter</span>
-				</a></li>
-				<li><a href="https://www.instagram.com/rateandreview17/" class="icon fa-instagram"> <span
-						class="label">Instagram</span>
-				</a></li>
-				<li><a href="https://www.linkedin.com/in/rateandreview-capstone-b78751139" class="icon fa-linkedin"> <span
-						class="label">LinkedIn</span>
-				</a></li>
-			</ul>
-
-		</div>
-	</footer>
+			<footer id="footer">
+				<div class="inner">
+					<h2>Get In Touch</h2>
+					<ul class="actions">
+						<li><span class="icon fa-phone"></span> <a href="#">(000) 000-0000</a></li>
+						<li><span class="icon fa-envelope"></span> <a href="#">information@untitled.tld</a></li>
+						<li><span class="icon fa-map-marker"></span> 123 Somewhere Road, Nashville, TN 00000</li>
+					</ul>
+				</div>
+				<div class="copyright">
+					&copy; Untitled. Design <a href="https://templated.co">TEMPLATED</a>. Images <a href="https://unsplash.com">Unsplash</a>.
+				</div>
+			</footer>
 
 		<!-- Scripts -->
-			<script src="/assets/js/jquery.min.js"></script>
-			<script src="/assets/js/skel.min.js"></script>
-			<script src="/assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="/assets/js/main.js"></script>
-
-			<!-- the scripts for scroll to top -->
-			<a href="#0" class="cd-top">Top</a>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="back-to-top/js/main.js"></script> <!-- Gem jQuery -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
 
 	</body>
 </html>
