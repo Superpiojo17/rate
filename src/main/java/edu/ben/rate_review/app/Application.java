@@ -25,7 +25,7 @@ public class Application {
 	public static String HOMEWORK_PATH = HOME_PATH + "homework";
 
 	public static String SCHEDULE_PATH = HOME_PATH + "schedule";
-	public static String SUPPLIES_PATH = HOME_PATH + "supplies";
+	public static String WELCOME_PATH = HOME_PATH + "welcome";
 	public static String RULES_PATH = HOME_PATH + "rules";
 
 	public static String ABOUTME_PATH = HOME_PATH + "aboutme";
@@ -91,31 +91,30 @@ public class Application {
 		// path for homework
 
 		get(HOMEWORK_PATH, HomeController::showHomework, new HandlebarsTemplateEngine());
-		
-		
+
 		// path for class schedule
 		get(SCHEDULE_PATH, HomeController::showClassSchedule, new HandlebarsTemplateEngine());
 
 		// path for supplies
-		get(SUPPLIES_PATH, HomeController::showSupply, new HandlebarsTemplateEngine());
-		
-		//path for rules
+		get(WELCOME_PATH, HomeController::showWelcome, new HandlebarsTemplateEngine());
+
+		// path for rules
 		get(RULES_PATH, HomeController::showRules, new HandlebarsTemplateEngine());
-		
-		//path for about me
+
+		// path for about me
 		get(ABOUTME_PATH, HomeController::showAboutMe, new HandlebarsTemplateEngine());
-		
-		//path for show other
+
+		// path for show other
 		get(OTHER_PATH, HomeController::showOther, new HandlebarsTemplateEngine());
-		
-		//path for data
-		
+
+		// path for data
+
 		get(DATA_PATH, HomeController::showData, new HandlebarsTemplateEngine());
-		
-		//path for behavior
+
+		// path for behavior
 		get(BEHAVIOR_PATH, HomeController::showBehavior, new HandlebarsTemplateEngine());
-		
-		//path for our classroom
+
+		// path for our classroom
 		get(OURCLASSROOM_PATH, HomeController::showOurClassroom, new HandlebarsTemplateEngine());
 
 	}

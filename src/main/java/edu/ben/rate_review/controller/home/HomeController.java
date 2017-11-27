@@ -31,11 +31,11 @@ public class HomeController {
 		return new ModelAndView(model, "home/schedule.hbs");
 	}
 
-	public static ModelAndView showSupply(Request req, Response res) throws Exception {
+	public static ModelAndView showWelcome(Request req, Response res) throws Exception {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 
-		return new ModelAndView(model, "home/supplies.hbs");
+		return new ModelAndView(model, "home/welcome.hbs");
 	}
 
 	public static ModelAndView showRules(Request req, Response res) throws Exception {
