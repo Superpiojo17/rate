@@ -278,8 +278,6 @@ public class Application {
 		// mass enroll students as an admin
 		post(COURSELANDING_PATH, AdminDashboardController::massEnrollStudents);
 
-		// Faq path
-		get(FAQ_PATH, FaqController::showFaqPage, new HandlebarsTemplateEngine());
 
 		// path for faculty to add a tutor
 		get(ALLSTUDENTS_PATH, FacultyDashboardController::showSelectStudentsPage, new HandlebarsTemplateEngine());
