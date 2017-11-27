@@ -2,8 +2,6 @@ package edu.ben.rate_review.controller.home;
 
 import java.util.HashMap;
 
-import edu.ben.rate_review.models.User;
-//import edu.ben.rate_review.policy.AuthPolicyManager;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -16,6 +14,70 @@ public class HomeController {
 		HashMap<String, Object> model = new HashMap<>();
 
 		return new ModelAndView(model, "home/home.hbs");
+	}
+	
+	public static ModelAndView showHomework(Request req, Response res) throws Exception {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+
+		return new ModelAndView(model, "home/homework.hbs");
+	}
+
+
+	public static ModelAndView showClassSchedule(Request req, Response res) throws Exception {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+
+		return new ModelAndView(model, "home/schedule.hbs");
+	}
+
+	public static ModelAndView showSupply(Request req, Response res) throws Exception {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+
+		return new ModelAndView(model, "home/supplies.hbs");
+	}
+
+	public static ModelAndView showRules(Request req, Response res) throws Exception {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+
+		return new ModelAndView(model, "home/rules.hbs");
+	}
+
+	public static ModelAndView showAboutMe(Request req, Response res) throws Exception {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+
+		return new ModelAndView(model, "home/aboutme.hbs");
+	}
+
+	public static ModelAndView showOther(Request req, Response res) throws Exception {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+
+		return new ModelAndView(model, "home/other.hbs");
+	}
+
+	public static ModelAndView showData(Request req, Response res) throws Exception {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+
+		return new ModelAndView(model, "home/data.hbs");
+	}
+
+	public static ModelAndView showBehavior(Request req, Response res) throws Exception {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+
+		return new ModelAndView(model, "home/behavior.hbs");
+	}
+
+	public static ModelAndView showOurClassroom(Request req, Response res) throws Exception {
+		// Just a hash to pass data from the servlet to the page
+		HashMap<String, Object> model = new HashMap<>();
+
+		return new ModelAndView(model, "home/ourclassroom.hbs");
 	}
 
 }
