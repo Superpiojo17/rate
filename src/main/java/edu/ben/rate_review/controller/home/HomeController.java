@@ -16,11 +16,11 @@ public class HomeController {
 		return new ModelAndView(model, "home/home.hbs");
 	}
 	
-	public static ModelAndView showHomework(Request req, Response res) throws Exception {
+	public static ModelAndView showCalendar(Request req, Response res) throws Exception {
 		// Just a hash to pass data from the servlet to the page
 		HashMap<String, Object> model = new HashMap<>();
 
-		return new ModelAndView(model, "home/homework.hbs");
+		return new ModelAndView(model, "home/calendar.hbs");
 	}
 
 

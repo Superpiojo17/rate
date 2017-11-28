@@ -22,7 +22,7 @@ public class Application {
 	// match up paths
 	public static String HOME_PATH = "/";
 	public static String NOTFOUND_HOME_PATH = "/notfound";
-	public static String HOMEWORK_PATH = HOME_PATH + "homework";
+	public static String CALENDAR_PATH = HOME_PATH + "calendar";
 
 	public static String SCHEDULE_PATH = HOME_PATH + "schedule";
 	public static String WELCOME_PATH = HOME_PATH + "welcome";
@@ -90,7 +90,7 @@ public class Application {
 
 		// path for homework
 
-		get(HOMEWORK_PATH, HomeController::showHomework, new HandlebarsTemplateEngine());
+		get(CALENDAR_PATH, HomeController::showCalendar, new HandlebarsTemplateEngine());
 
 		// path for class schedule
 		get(SCHEDULE_PATH, HomeController::showClassSchedule, new HandlebarsTemplateEngine());
