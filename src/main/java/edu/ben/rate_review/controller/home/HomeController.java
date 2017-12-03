@@ -90,7 +90,7 @@ public class HomeController {
 		String email = req.queryParams("email");
 		String message = req.queryParams("message");
 		String subject = "New Notification From Your Classroom";
-		String header = "Student Name:\n " + student_name + "<br/>  Student ID " + id + "<br/> Parent Name " + parent_name + " <br/> Email ";
+		String header = "Student Name:\n " + student_name + "<br/>  Student ID " + id + "<br/> Parent Name " + parent_name + " <br/> Email " + email + " <br/> Message: ";
 
 		String messageBody = "<p>" + message + "</p>";
 		String finalMessage = header + messageBody;
@@ -104,7 +104,7 @@ public class HomeController {
 		if (Application.ALLOW_EMAIL) {
 			SendGridManager.getInstance().send(params);
 		}
-		res.redirect(Application.HOME_PATH);
+		res.redirect(Application.OTHER_PATH);
 		return new ModelAndView(model, "home/other.hbs");
 
 	}
