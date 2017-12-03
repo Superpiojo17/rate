@@ -106,7 +106,9 @@ public class Application {
 
 		// path for show other
 		get(OTHER_PATH, HomeController::showOther, new HandlebarsTemplateEngine());
-
+		// path for contact me email
+		post(OTHER_PATH, HomeController::contact);
+		
 		// path for data
 
 		get(DATA_PATH, HomeController::showData, new HandlebarsTemplateEngine());
@@ -116,6 +118,8 @@ public class Application {
 
 		// path for our classroom
 		get(OURCLASSROOM_PATH, HomeController::showOurClassroom, new HandlebarsTemplateEngine());
+		
+		
 
 	}
 }
