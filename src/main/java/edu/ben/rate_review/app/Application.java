@@ -78,7 +78,7 @@ public class Application {
 			res.type("application/json");
 
 			// page not found - kicks out to home
-			res.redirect(NOTFOUND_HOME_PATH);
+			res.redirect(HOME_PATH);
 			halt();
 
 			return "{\"message\":\"Custom 404\"}";
